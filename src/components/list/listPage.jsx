@@ -1,9 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NewItemForm from './newItemForm';
 import ItemList from './itemList';
 
 export default function ListPage() {
-    const [listItems, setListItems] = useState([]);
+    const [listItems, setListItems] = useState(() => {
+        const storedListItems = localStorage.getItem('listItems');
+
+        if (storedListItems) {
+            return JSON.parse(storedListItems);
+        }
+        return [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('listItems', JSON.stringify(listItems));
+    }, [listItems]);
 
     function addItem(title) {
         setListItems((currentListItems) => {
