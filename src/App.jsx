@@ -1,6 +1,6 @@
 import './styles/global.scss';
-import List from './components/list/list';
+import ListPage from './components/list/listPage';
 
 export default function App() {
-    return <List />;
+    return <ListPage />;
 }
