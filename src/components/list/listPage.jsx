@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import loadListsFromFirestore from '../../services/firestore';
 import NewItemForm from './newItemForm';
 import ItemList from './itemList';
 
 export default function ListPage() {
     const [listItems, setListItems] = useState(() => {
         const storedListItems = localStorage.getItem('listItems');
+        loadListsFromFirestore();
 
         if (storedListItems) {
             return JSON.parse(storedListItems);
