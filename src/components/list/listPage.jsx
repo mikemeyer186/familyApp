@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
-import loadListsFromFirestore from '../../services/firestore';
 import NewItemForm from './newItemForm';
 import ItemList from './itemList';
+import loadListsFromFirestore from '../../services/firestore';
 
 export default function ListPage() {
-    const [listItems, setListItems] = useState(() => {
-        const storedListItems = localStorage.getItem('listItems');
-        loadListsFromFirestore();
-
-        if (storedListItems) {
-            return JSON.parse(storedListItems);
-        }
-        return [];
-    });
+    const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
-        localStorage.setItem('listItems', JSON.stringify(listItems));
-    }, [listItems]);
+        getListItems();
+    }, []);
+
+    /**
+     * Fetches the lists from firestore and sets the state (service/firestore.js)
+     */
+    const getListItems = async () => {
+        const listItems = await loadListsFromFirestore();
+        console.log(listItems); // to be removed
+        setListItems(listItems);
+    };
 
     function addItem(title) {
         setListItems((currentListItems) => {
