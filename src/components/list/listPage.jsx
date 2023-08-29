@@ -2,52 +2,76 @@ import { useEffect, useState } from 'react';
 import NewItemForm from './newItemForm';
 import ItemList from './itemList';
 import loadListsFromFirestore from '../../services/firestore';
+import { updateListInFirestore } from '../../services/firestore';
 
 export default function ListPage() {
+    let currentUser = 'Mike';
+    let category = 'Lebensmittel';
+
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
         getListItems();
     }, []);
 
-    /**
-     * Fetches the lists from firestore and sets the state (service/firestore.js)
-     */
     const getListItems = async () => {
         const listItems = await loadListsFromFirestore();
-        console.log(listItems); // to be removed
         setListItems(listItems);
     };
 
     function addItem(title) {
         setListItems((currentListItems) => {
-            return [
+            let list = [
                 ...currentListItems,
                 {
                     id: crypto.randomUUID(),
-                    title,
+                    title: title,
                     done: false,
+                    user: currentUser,
+                    date: new Date().toISOString(),
+                    category: category,
+                    color: setColorOfCategory(category),
+                    amount: 1,
                 },
             ];
+            updateListInFirestore(list);
+            return list;
         });
     }
 
     function toggleItem(itemId, done) {
         setListItems((currentListItems) => {
-            return currentListItems.map((item) => {
+            let list = currentListItems.map((item) => {
                 if (item.id === itemId) {
                     return { ...item, done };
                 }
-
                 return item;
             });
+            updateListInFirestore(list);
+            return list;
         });
     }
 
     function deleteItem(itemId) {
         setListItems((currentListItems) => {
-            return currentListItems.filter((item) => item.id !== itemId);
+            let list = currentListItems.filter((item) => item.id !== itemId);
+            updateListInFirestore(list);
+            return list;
         });
+    }
+
+    function setColorOfCategory() {
+        if (category === 'Lebensmittel') {
+            return 'red';
+        } else if (category === 'Haushalt') {
+            return 'blue';
+        } else if (category === 'Kleidung') {
+            return 'green';
+        } else if (category === 'Drogerie') {
+            return 'yellow';
+        } else if (category === 'Sonstiges') {
+            return 'purple';
+        }
     }
 
     return (
