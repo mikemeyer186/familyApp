@@ -32,6 +32,7 @@ export default function ListPage() {
                     category: category,
                     color: setColorOfCategory(category),
                     amount: 1,
+                    prority: 'normal',
                 },
             ];
             updateListInFirestore(list);
