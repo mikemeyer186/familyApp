@@ -1,0 +1,57 @@
+.itemDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px;
+    gap: 8px;
+
+    .category {
+        font-size: 0.7rem;
+        font-weight: 300;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px 8px 4px 8px;
+    }
+
+    .title {
+        padding-left: 4px;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #595959;
+    }
+}
+
+.itemClickable {
+    transition: all 125ms ease-in-out;
+    &:hover {
+        background-color: rgba(200, 200, 200, 0.1);
+    }
+}
+
+//colors for categories
+
+.Lebensmittel {
+    background-color: #d05252;
+}
+
+.Haushalt {
+    background-color: #418dcf;
+}
+
+.Hygiene {
+    background-color: #4a9872;
+}
+
+.Schule {
+    background-color: #4298a0;
+}
+
+.Hund {
+    background-color: #a47248;
+}
+
+.Sonstiges {
+    background-color: #9e689e;
+}

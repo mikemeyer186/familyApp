@@ -6,7 +6,6 @@ import { updateListInFirestore } from '../../services/firestore';
 
 export default function ListPage() {
     const [currentUser] = useState('Mike');
-    const [category] = useState('Lebensmittel');
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
@@ -18,7 +17,7 @@ export default function ListPage() {
         setListItems(listItems);
     }
 
-    function addItem(title) {
+    function addItem(title, category) {
         setListItems((currentListItems) => {
             const list = [
                 ...currentListItems,
@@ -29,7 +28,6 @@ export default function ListPage() {
                     user: currentUser,
                     date: new Date().toISOString(),
                     category: category,
-                    color: setColorOfCategory(category),
                     amount: 1,
                     prority: 'normal',
                 },
@@ -58,20 +56,6 @@ export default function ListPage() {
             updateListInFirestore(list);
             return list;
         });
-    }
-
-    function setColorOfCategory() {
-        if (category === 'Lebensmittel') {
-            return 'red';
-        } else if (category === 'Haushalt') {
-            return 'blue';
-        } else if (category === 'Kleidung') {
-            return 'green';
-        } else if (category === 'Drogerie') {
-            return 'yellow';
-        } else if (category === 'Sonstiges') {
-            return 'purple';
-        }
     }
 
     return (
