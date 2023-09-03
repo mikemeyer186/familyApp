@@ -104,8 +104,9 @@ $maxWidth: 550px;
 .itemAmount {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    padding-right: 20px;
     width: 130px;
     gap: 4px;
     z-index: 2 !important;
@@ -131,14 +132,21 @@ $maxWidth: 550px;
         justify-content: center;
 
         .arrow {
-            width: 2rem;
-            height: 2rem;
+            width: 3rem;
+            height: 3rem;
             opacity: 0.3;
             cursor: pointer;
             transition: all 125ms ease-in-out;
             &:hover {
                 transform: scale(1.2);
             }
+        }
+
+        .arrow-disabled {
+            width: 3rem;
+            height: 3rem;
+            opacity: 0.1;
+            cursor: default;
         }
     }
 }

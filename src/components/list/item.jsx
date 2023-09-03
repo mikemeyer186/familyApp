@@ -45,7 +45,12 @@ export default function Item({ item, updateItem, deleteItem }) {
                     <span>{amount}</span>
                     <div className="amountArrows">
                         <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
-                        <img className="arrow" src="/assets/icons/caret-down-fill.svg" alt="down" onClick={handleDecreaseAmount} />
+                        <img
+                            className={amount === 1 ? 'arrow-disabled' : 'arrow'}
+                            src="/assets/icons/caret-down-fill.svg"
+                            alt="down"
+                            onClick={handleDecreaseAmount}
+                        />
                     </div>
                 </div>
             </div>
