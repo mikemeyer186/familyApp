@@ -133,6 +133,7 @@ $maxWidth: 550px;
         .arrow {
             width: 2rem;
             height: 2rem;
+            opacity: 0.3;
             cursor: pointer;
             transition: all 125ms ease-in-out;
             &:hover {

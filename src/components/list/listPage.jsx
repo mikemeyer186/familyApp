@@ -37,11 +37,11 @@ export default function ListPage() {
         });
     }
 
-    function toggleItem(itemId, done) {
+    function updateItem(itemId, done, amount) {
         setListItems((currentListItems) => {
             const list = currentListItems.map((item) => {
                 if (item.id === itemId) {
-                    return { ...item, done };
+                    return { ...item, done, amount };
                 }
                 return item;
             });
@@ -63,7 +63,7 @@ export default function ListPage() {
             <div className="container py-4 px-3 mx-auto">
                 <NewItemForm addItem={addItem} />
                 <h3 className="px-1 mb-2 mt-5">Einkaufsliste</h3>
-                <ItemList listItems={listItems} toggleItem={toggleItem} deleteItem={deleteItem} />
+                <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} />
             </div>
         </>
     );
