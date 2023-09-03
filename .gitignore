@@ -26,3 +26,5 @@ dist-ssr
 # Configs
 .env
 src/config/keys.js
+
+notes.txt

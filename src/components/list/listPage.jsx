@@ -5,23 +5,22 @@ import loadListsFromFirestore from '../../services/firestore';
 import { updateListInFirestore } from '../../services/firestore';
 
 export default function ListPage() {
-    let currentUser = 'Mike';
-    let category = 'Lebensmittel';
-
+    const [currentUser] = useState('Mike');
+    const [category] = useState('Lebensmittel');
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
         getListItems();
     }, []);
 
-    const getListItems = async () => {
+    async function getListItems() {
         const listItems = await loadListsFromFirestore();
         setListItems(listItems);
-    };
+    }
 
     function addItem(title) {
         setListItems((currentListItems) => {
-            let list = [
+            const list = [
                 ...currentListItems,
                 {
                     id: crypto.randomUUID(),
@@ -42,7 +41,7 @@ export default function ListPage() {
 
     function toggleItem(itemId, done) {
         setListItems((currentListItems) => {
-            let list = currentListItems.map((item) => {
+            const list = currentListItems.map((item) => {
                 if (item.id === itemId) {
                     return { ...item, done };
                 }
@@ -55,7 +54,7 @@ export default function ListPage() {
 
     function deleteItem(itemId) {
         setListItems((currentListItems) => {
-            let list = currentListItems.filter((item) => item.id !== itemId);
+            const list = currentListItems.filter((item) => item.id !== itemId);
             updateListInFirestore(list);
             return list;
         });
@@ -78,7 +77,7 @@ export default function ListPage() {
     return (
         <>
             <div className="container py-4 px-3 mx-auto">
-                <NewItemForm onSubmit={addItem} />
+                <NewItemForm addItem={addItem} />
                 <h3 className="px-1 mb-2 mt-5">Einkaufsliste</h3>
                 <ItemList listItems={listItems} toggleItem={toggleItem} deleteItem={deleteItem} />
             </div>

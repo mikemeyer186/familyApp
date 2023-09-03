@@ -1,22 +1,21 @@
 import { useState } from 'react';
 
-export default function NewItemForm({ onSubmit }) {
+export default function NewItemForm({ addItem }) {
     const [newItem, setNewItem] = useState('');
 
-    function submitItem(event) {
+    function handleSubmit(event) {
         event.preventDefault();
 
         if (newItem === '') {
             return;
+        } else {
+            addItem(newItem);
+            setNewItem('');
         }
-
-        onSubmit(newItem);
-
-        setNewItem('');
     }
 
     return (
-        <form onSubmit={submitItem}>
+        <form onSubmit={handleSubmit}>
             <label className="px-1 mb-2" htmlFor="newListItemInput">
                 Der Einkaufsliste hinzufügen:
             </label>
