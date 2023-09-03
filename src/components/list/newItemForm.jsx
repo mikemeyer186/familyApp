@@ -26,7 +26,7 @@ export default function NewItemForm({ addItem }) {
                 Der Einkaufsliste hinzufügen:
             </label>
 
-            <div className="input-group mb-3">
+            <div className="input-group mb-3 newInput">
                 <button
                     className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
                     type="button"

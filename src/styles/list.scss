@@ -1,3 +1,17 @@
+$maxWidth: 550px;
+
+.newInput {
+    max-width: $maxWidth;
+}
+
+.itemContentWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
 .itemDescription {
     display: flex;
     flex-direction: column;
@@ -26,7 +40,7 @@
         text-decoration: line-through;
         padding-left: 4px;
         font-size: 1.3rem;
-        font-weight: 500;
+        font-weight: 300;
         color: #949494;
     }
 }
@@ -40,8 +54,13 @@
 
 .itemClickable {
     transition: all 125ms ease-in-out;
+    max-width: $maxWidth;
     &:hover {
         background-color: rgba(200, 200, 200, 0.1);
+    }
+
+    .label {
+        width: 100%;
     }
 }
 
@@ -79,6 +98,47 @@
 
     &:checked::before {
         transform: scale(1.4);
+    }
+}
+
+.itemAmount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    gap: 4px;
+    z-index: 2 !important;
+
+    .amountTitle {
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: #7f7f7f;
+    }
+
+    .amountAdjust {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .amountArrows {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .arrow {
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+            transition: all 125ms ease-in-out;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
     }
 }
 
