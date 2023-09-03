@@ -21,6 +21,21 @@
         font-weight: 500;
         color: #595959;
     }
+
+    .line-through {
+        text-decoration: line-through;
+        padding-left: 4px;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #949494;
+    }
+}
+
+.itemSubDescription {
+    padding-left: 4px;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #7f7f7f;
 }
 
 .itemClickable {
@@ -30,10 +45,47 @@
     }
 }
 
+.checkbox {
+    appearance: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid #d9d9d9;
+    background-color: #ffffff;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+
+    &::before {
+        content: '';
+        width: 0.65em;
+        height: 0.65em;
+        transform: scale(0);
+        transition: all 250ms ease-in-out;
+        box-shadow: inset 1em 1em #ffffff;
+        transform-origin: center;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+
+    &:checked {
+        border: 1px solid #2fac50;
+        background-color: #2fac50;
+    }
+
+    &:checked::before {
+        transform: scale(1.4);
+    }
+}
+
 //colors for categories
 
 .Lebensmittel {
-    background-color: #d05252;
+    background-color: #cc435a;
 }
 
 .Haushalt {

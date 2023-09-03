@@ -27,7 +27,7 @@ export default function ListPage() {
                     done: false,
                     user: currentUser,
                     date: new Date().toISOString(),
-                    category: category,
+                    category: category === 'Kategorie' ? 'Sonstiges' : category,
                     amount: 1,
                     prority: 'normal',
                 },
