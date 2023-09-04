@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import NewItemForm from './newItemForm';
 import ItemList from './itemList';
 import loadListsFromFirestore from '../../services/firestore';
 import { updateListInFirestore } from '../../services/firestore';
@@ -15,6 +14,22 @@ export default function ListPage() {
     async function getListItems() {
         const listItems = await loadListsFromFirestore();
         setListItems(listItems);
+    }
+
+    function sortItems() {
+        setListItems((currentListItems) => {
+            const list = currentListItems.sort((a, b) => {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                if (a.title < b.title) {
+                    return -1;
+                }
+                return 0;
+            });
+            updateListInFirestore(list);
+            return list;
+        });
     }
 
     function addItem(title, category) {
@@ -58,13 +73,5 @@ export default function ListPage() {
         });
     }
 
-    return (
-        <>
-            <div className="container py-4 px-3 mx-auto">
-                <NewItemForm addItem={addItem} />
-                <h3 className="px-1 mb-2 mt-5">Einkaufsliste</h3>
-                <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} />
-            </div>
-        </>
-    );
+    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} sortItems={sortItems} />;
 }

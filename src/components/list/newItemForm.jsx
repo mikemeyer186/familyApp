@@ -40,9 +40,7 @@ export default function NewItemForm({ addItem }) {
                     {defaultCategories.map((category) => {
                         return (
                             <li key={category} onClick={() => handelCategorySelection(category)}>
-                                <a className="dropdown-item" href="#">
-                                    {category}
-                                </a>
+                                <span className="dropdown-item pointer">{category}</span>
                             </li>
                         );
                     })}
