@@ -29,7 +29,7 @@ export default function ListPage() {
                     date: new Date().toISOString(),
                     category: category === 'Kategorie' ? 'Sonstiges' : category,
                     amount: 1,
-                    prority: 'normal',
+                    priority: false,
                 },
             ];
             updateListInFirestore(list);
@@ -37,11 +37,11 @@ export default function ListPage() {
         });
     }
 
-    function updateItem(itemId, done, amount) {
+    function updateItem(itemId, done, amount, priority) {
         setListItems((currentListItems) => {
             const list = currentListItems.map((item) => {
                 if (item.id === itemId) {
-                    return { ...item, done, amount };
+                    return { ...item, done, amount, priority };
                 }
                 return item;
             });

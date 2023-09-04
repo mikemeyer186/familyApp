@@ -10,24 +10,30 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     function handleIncreaseAmount() {
         setAmount(amount + 1);
-        updateItem(item.id, item.done, amount + 1);
+        updateItem(item.id, item.done, amount + 1, item.priority);
     }
 
     function handleDecreaseAmount() {
         if (amount >= 2) {
             setAmount(amount - 1);
-            updateItem(item.id, item.done, amount - 1);
+            updateItem(item.id, item.done, amount - 1, item.priority);
         }
+    }
+
+    function handlePriorityChange() {
+        item.priority = !item.priority;
+        updateItem(item.id, item.done, amount, item.priority);
     }
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
+            <div className={`itemPriority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
             <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
                 <input
                     className="checkbox me-1"
                     type="checkbox"
                     defaultChecked={item.done}
-                    onChange={(e) => updateItem(item.id, e.target.checked, amount)}
+                    onChange={(e) => updateItem(item.id, e.target.checked, amount, item.priority)}
                 />
                 <div className="itemContentWrapper">
                     <div className="itemDescription">

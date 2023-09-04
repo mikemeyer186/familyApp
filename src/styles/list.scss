@@ -53,6 +53,7 @@ $maxWidth: 550px;
 }
 
 .itemClickable {
+    overflow: hidden;
     transition: all 125ms ease-in-out;
     max-width: $maxWidth;
     &:hover {
@@ -74,7 +75,6 @@ $maxWidth: 550px;
     height: 30px;
     border-radius: 100%;
     border: 1px solid #d9d9d9;
-    background-color: #ffffff;
     display: grid;
     place-content: center;
     cursor: pointer;
@@ -149,6 +149,24 @@ $maxWidth: 550px;
             cursor: default;
         }
     }
+}
+
+.itemPriority {
+    position: absolute;
+    top: -12px;
+    left: -15px;
+    width: 50px;
+    height: 30px;
+    transform: rotate(-37deg);
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.red {
+    background-color: #ff4866b2;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #ff92a4b2;
 }
 
 //colors for categories
