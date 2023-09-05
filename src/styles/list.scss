@@ -1,13 +1,36 @@
 $maxWidth: 550px;
+$thinBorder: 1px solid #d9d9d9;
 
 .listHeader {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    max-width: $maxWidth;
+
+    .sortOptions {
+        width: 120px;
+        padding: 3px 5px 1px 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+
+        &:focus {
+            border: $thinBorder;
+            outline: none;
+            box-shadow: none;
+        }
+    }
 }
 
 .newInput {
     max-width: $maxWidth;
+
+    .textInput {
+        &:focus {
+            border: $thinBorder;
+            outline: none;
+            box-shadow: none;
+        }
+    }
 }
 
 .itemContentWrapper {
@@ -59,6 +82,7 @@ $maxWidth: 550px;
 }
 
 .itemClickable {
+    padding-left: 32px;
     overflow: hidden;
     transition: all 125ms ease-in-out;
     max-width: $maxWidth;
@@ -80,7 +104,7 @@ $maxWidth: 550px;
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    border: 1px solid #d9d9d9;
+    border: transparent;
     display: grid;
     place-content: center;
     cursor: pointer;

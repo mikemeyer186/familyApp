@@ -16,22 +16,6 @@ export default function ListPage() {
         setListItems(listItems);
     }
 
-    function sortItems() {
-        setListItems((currentListItems) => {
-            const list = currentListItems.sort((a, b) => {
-                if (a.title > b.title) {
-                    return 1;
-                }
-                if (a.title < b.title) {
-                    return -1;
-                }
-                return 0;
-            });
-            updateListInFirestore(list);
-            return list;
-        });
-    }
-
     function addItem(title, category) {
         setListItems((currentListItems) => {
             const list = [
@@ -73,5 +57,5 @@ export default function ListPage() {
         });
     }
 
-    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} sortItems={sortItems} />;
+    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} />;
 }

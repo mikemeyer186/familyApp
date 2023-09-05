@@ -48,7 +48,7 @@ export default function NewItemForm({ addItem }) {
 
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control textInput"
                     placeholder="Schreib etwas..."
                     id="newListItemInput"
                     value={newItem || ''}
