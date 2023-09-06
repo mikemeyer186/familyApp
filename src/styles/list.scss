@@ -1,11 +1,38 @@
 $maxWidth: 550px;
 $thinBorder: 1px solid #d9d9d9;
 
+.listContainer {
+    border: $thinBorder;
+    box-shadow: 0px 4px 12px 0px rgba(119, 119, 119, 0.4);
+    padding: 18px !important;
+    position: relative;
+    border-radius: 8px;
+}
+
+.listMenu {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+
+    .menuIcon {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+}
+
 .listHeader {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: baseline;
     max-width: $maxWidth;
+
+    .sortLabel {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: #7f7f7f;
+        padding-right: 8px;
+    }
 
     .sortOptions {
         width: 120px;

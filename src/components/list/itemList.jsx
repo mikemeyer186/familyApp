@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Item from './item';
 import NewItemForm from './newItemForm';
+import ListMenu from './listMenu';
 
-export default function ItemList({ listItems, updateItem, deleteItem, addItem }) {
+export default function ItemList({ listItems, updateItem, deleteItem, addItem, clearList }) {
     const [sortBy, setSortBy] = useState('date');
 
     let sortedItems;
@@ -13,10 +14,12 @@ export default function ItemList({ listItems, updateItem, deleteItem, addItem })
     if (sortBy === 'priority') sortedItems = listItems.slice().sort((a, b) => Number(b.priority) - Number(a.priority));
 
     return (
-        <div className="container py-4 px-3 mx-auto">
+        <div className="container py-4 px-3 mx-auto listContainer">
+            <h3 className="px-1 mb-3">Einkaufsliste</h3>
+            <ListMenu clearList={clearList} />
             <NewItemForm addItem={addItem} />
-            <div className="listHeader">
-                <h3 className="px-1 mb-2 mt-5">Einkaufsliste</h3>
+            <div className="listHeader mb-2">
+                <span className="sortLabel">Sortierung nach: </span>
                 <select value={sortBy} className="form-select sortOptions" onChange={(e) => setSortBy(e.target.value)}>
                     <option value="date">Datum</option>
                     <option value="category">Kategorie</option>

@@ -57,5 +57,13 @@ export default function ListPage() {
         });
     }
 
-    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} />;
+    function clearList() {
+        setListItems(() => {
+            const list = [];
+            updateListInFirestore(list);
+            return list;
+        });
+    }
+
+    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} clearList={clearList} />;
 }

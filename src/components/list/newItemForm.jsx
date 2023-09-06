@@ -22,10 +22,6 @@ export default function NewItemForm({ addItem }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <label className="px-1 mb-2" htmlFor="newListItemInput">
-                Der Einkaufsliste hinzufügen:
-            </label>
-
             <div className="input-group mb-3 newInput">
                 <button
                     className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
@@ -49,7 +45,7 @@ export default function NewItemForm({ addItem }) {
                 <input
                     type="text"
                     className="form-control textInput"
-                    placeholder="Schreib etwas..."
+                    placeholder="Füge etwas hinzu..."
                     id="newListItemInput"
                     value={newItem || ''}
                     onChange={(event) => setNewItem(event.target.value)}
