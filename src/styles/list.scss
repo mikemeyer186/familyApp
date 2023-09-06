@@ -1,12 +1,15 @@
 $maxWidth: 550px;
 $thinBorder: 1px solid #d9d9d9;
+$shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
 
 .listContainer {
     border: $thinBorder;
-    box-shadow: 0px 4px 12px 0px rgba(119, 119, 119, 0.4);
+    box-shadow: $shadow;
     padding: 18px !important;
     position: relative;
     border-radius: 8px;
+    max-width: $maxWidth;
+    background-color: #ffffff;
 }
 
 .listMenu {

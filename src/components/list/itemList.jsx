@@ -18,7 +18,7 @@ export default function ItemList({ listItems, updateItem, deleteItem, addItem, c
             <h3 className="px-1 mb-3">Einkaufsliste</h3>
             <ListMenu clearList={clearList} />
             <NewItemForm addItem={addItem} />
-            <div className="listHeader mb-2">
+            <div className="listHeader mb-2 mt-4">
                 <span className="sortLabel">Sortierung nach: </span>
                 <select value={sortBy} className="form-select sortOptions" onChange={(e) => setSortBy(e.target.value)}>
                     <option value="date">Datum</option>

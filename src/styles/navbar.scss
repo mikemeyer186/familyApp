@@ -1,0 +1,17 @@
+.navbarBg {
+    background-color: #fff;
+    box-shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
+}
+
+.navbarMenuIcon {
+    transition: all 125ms ease-in-out;
+    &:hover {
+        border: 1px solid #969696;
+    }
+
+    &:focus {
+        border: $thinBorder;
+        outline: none;
+        box-shadow: none;
+    }
+}

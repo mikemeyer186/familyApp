@@ -1,0 +1,19 @@
+$navbarHeight: 56px;
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $navbarHeight;
+    padding: 0 1rem;
+}
+
+.listPage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: calc(100svh - $navbarHeight);
+    padding-top: 50px;
+    background-color: #fafafa;
+}
