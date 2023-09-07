@@ -1,69 +1,48 @@
 import { useEffect, useState } from 'react';
+import { loadListsFromFirestore } from '../../services/firestore';
+import { addListInFirestore } from '../../services/firestore';
 import ItemList from './itemList';
-import loadListsFromFirestore from '../../services/firestore';
-import { updateListInFirestore } from '../../services/firestore';
 
 export default function ListPage() {
     const [currentUser] = useState('Mike');
-    const [listItems, setListItems] = useState([]);
+    const [lists, setLists] = useState([]);
 
     useEffect(() => {
-        getListItems();
+        getLists();
     }, []);
 
-    async function getListItems() {
-        const listItems = await loadListsFromFirestore();
-        setListItems(listItems);
+    async function getLists() {
+        const lists = await loadListsFromFirestore();
+        setLists(lists);
     }
 
-    function addItem(title, category) {
-        setListItems((currentListItems) => {
-            const list = [
-                ...currentListItems,
+    function addNewList() {
+        const title = prompt('Wie soll die neue Liste heißen?');
+        const id = crypto.randomUUID();
+        const list = [];
+
+        setLists((currentLists) => {
+            const lists = [
+                ...currentLists,
                 {
-                    id: crypto.randomUUID(),
+                    id: id,
                     title: title,
-                    done: false,
-                    user: currentUser,
-                    date: new Date().toISOString(),
-                    category: category === 'Kategorie' ? 'Sonstiges' : category,
-                    amount: 1,
-                    priority: false,
+                    list: list,
                 },
             ];
-            updateListInFirestore(list);
-            return list;
+            addListInFirestore(list, id, title);
+            return lists;
         });
     }
 
-    function updateItem(itemId, done, amount, priority) {
-        setListItems((currentListItems) => {
-            const list = currentListItems.map((item) => {
-                if (item.id === itemId) {
-                    return { ...item, done, amount, priority };
-                }
-                return item;
-            });
-            updateListInFirestore(list);
-            return list;
-        });
-    }
-
-    function deleteItem(itemId) {
-        setListItems((currentListItems) => {
-            const list = currentListItems.filter((item) => item.id !== itemId);
-            updateListInFirestore(list);
-            return list;
-        });
-    }
-
-    function clearList() {
-        setListItems(() => {
-            const list = [];
-            updateListInFirestore(list);
-            return list;
-        });
-    }
-
-    return <ItemList listItems={listItems} updateItem={updateItem} deleteItem={deleteItem} addItem={addItem} clearList={clearList} />;
+    return (
+        <>
+            <button type="button" className="btn btn-primary" onClick={addNewList}>
+                Neu
+            </button>
+            {lists.map((list) => {
+                return <ItemList key={list.id} list={list} currentUser={currentUser} />;
+            })}
+        </>
+    );
 }
