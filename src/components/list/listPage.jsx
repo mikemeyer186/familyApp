@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { loadListsFromFirestore } from '../../services/firestore';
 import { addListInFirestore } from '../../services/firestore';
 import ItemList from './itemList';
+import DialogNewList from './dialogNewList';
 
 export default function ListPage() {
     const [currentUser] = useState('Mike');
@@ -16,8 +17,8 @@ export default function ListPage() {
         setLists(lists);
     }
 
-    function addNewList() {
-        const title = prompt('Wie soll die neue Liste heißen?');
+    function addNewList(newListTitle) {
+        const title = newListTitle;
         const id = crypto.randomUUID();
         const list = [];
 
@@ -37,9 +38,13 @@ export default function ListPage() {
 
     return (
         <>
-            <button type="button" className="btn btn-primary" onClick={addNewList}>
-                Neu
+            <DialogNewList addNewList={addNewList} />
+
+            <button type="button" className="btn btn-secondary newList-button" data-bs-toggle="modal" data-bs-target="#newListModal">
+                <span>Neue Liste</span>
+                <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New list" />
             </button>
+
             {lists.map((list) => {
                 return <ItemList key={list.id} list={list} currentUser={currentUser} />;
             })}
