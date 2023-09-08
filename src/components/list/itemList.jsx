@@ -7,8 +7,8 @@ import ListMenu from './listMenu';
 export default function ItemList({ list, currentUser }) {
     const [sortBy, setSortBy] = useState('date');
     const [listItems, setListItems] = useState(list.list);
-    const listID = list.id;
-    const listTitle = list.title;
+    const [listTitle, setListTitle] = useState(list.title);
+    const [listID] = useState(list.id);
     let sortedItems;
 
     function addItem(title, category) {
@@ -60,6 +60,11 @@ export default function ItemList({ list, currentUser }) {
         });
     }
 
+    function renameList(newListTitle) {
+        setListTitle(newListTitle);
+        updateListInFirestore(list.list, listID, newListTitle);
+    }
+
     if (sortBy === 'date') sortedItems = listItems;
     if (sortBy === 'category') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));
     if (sortBy === 'done') sortedItems = listItems.slice().sort((a, b) => Number(a.done) - Number(b.done));
@@ -68,7 +73,7 @@ export default function ItemList({ list, currentUser }) {
     return (
         <div className="container py-4 px-3 mx-auto listContainer">
             <h3 className="px-1 mb-3">{listTitle}</h3>
-            <ListMenu clearList={clearList} />
+            <ListMenu listTitle={listTitle} clearList={clearList} renameList={renameList} />
             <NewItemForm addItem={addItem} />
             <div className="listHeader mb-2 mt-4">
                 <span className="sortLabel">Sortierung nach: </span>

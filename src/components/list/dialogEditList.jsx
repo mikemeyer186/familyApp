@@ -1,36 +1,35 @@
 import { useState } from 'react';
 
-export default function DialogNewList({ addNewList }) {
-    const [title, setTitle] = useState('');
+export default function DialogEditList({ listTitle, renameList }) {
+    const [newTitle, setNewTitle] = useState(listTitle);
 
-    function handleAddNewList(e) {
+    function handleRenameList(e) {
         e.preventDefault();
-        addNewList(title);
-        setTitle('');
+        renameList(newTitle);
     }
 
     return (
-        <div className="modal fade" id="newListModal" tabIndex="-1" aria-labelledby="newListModalLabel" aria-hidden="true">
+        <div className="modal fade" id="editListModal" tabIndex="-1" aria-labelledby="editListModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="newListModalLabel">
-                            Neue Liste
+                        <h1 className="modal-title fs-5" id="editListModalLabel">
+                            Liste umbenennen
                         </h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleAddNewList}>
+                        <form onSubmit={handleRenameList}>
                             <div className="mb-3">
-                                <label htmlFor="list-name" className="col-form-label">
-                                    Wie möchtest du die neue Liste nennen?
+                                <label htmlFor="new-list-name" className="col-form-label">
+                                    Wie möchtest du die Liste nennen?
                                 </label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="list-name"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    id="new-list-name"
+                                    value={newTitle}
+                                    onChange={(e) => setNewTitle(e.target.value)}
                                     required
                                 />
                             </div>
@@ -39,7 +38,7 @@ export default function DialogNewList({ addNewList }) {
                                     Abbrechen
                                 </button>
                                 <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
-                                    Erstellen
+                                    Umbenennen
                                 </button>
                             </div>
                         </form>
