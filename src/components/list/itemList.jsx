@@ -8,7 +8,7 @@ export default function ItemList({ list, currentUser }) {
     const [sortBy, setSortBy] = useState('date');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
-    const [listID] = useState(list.id);
+    const listID = list.id;
     let sortedItems;
 
     function addItem(title, category) {
@@ -73,7 +73,7 @@ export default function ItemList({ list, currentUser }) {
     return (
         <div className="container py-4 px-3 mx-auto listContainer">
             <h3 className="px-1 mb-3">{listTitle}</h3>
-            <ListMenu listTitle={listTitle} clearList={clearList} renameList={renameList} />
+            <ListMenu listID={listID} listTitle={listTitle} clearList={clearList} renameList={renameList} />
             <NewItemForm addItem={addItem} />
             <div className="listHeader mb-2 mt-4">
                 <span className="sortLabel">Sortierung nach: </span>

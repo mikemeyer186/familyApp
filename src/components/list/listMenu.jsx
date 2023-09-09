@@ -1,9 +1,9 @@
 import DialogEditList from './dialogEditList';
 
-export default function ListMenu({ listTitle, clearList, renameList }) {
+export default function ListMenu({ listID, listTitle, clearList, renameList }) {
     return (
         <>
-            <DialogEditList listTitle={listTitle} renameList={renameList} />
+            <DialogEditList listID={listID} listTitle={listTitle} renameList={renameList} />
 
             <div className="dropdown listMenu">
                 <img
@@ -18,7 +18,7 @@ export default function ListMenu({ listTitle, clearList, renameList }) {
                         <button className="dropdown-item" type="button" onClick={clearList}>
                             Liste leeren
                         </button>
-                        <button className="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#editListModal">
+                        <button className="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target={`#editListModal${listID}`}>
                             Liste umbenennen
                         </button>
                         <button className="dropdown-item" type="button">

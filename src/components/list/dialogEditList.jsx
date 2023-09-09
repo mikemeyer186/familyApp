@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function DialogEditList({ listTitle, renameList }) {
+export default function DialogEditList({ listID, listTitle, renameList }) {
     const [newTitle, setNewTitle] = useState(listTitle);
 
     function handleRenameList(e) {
@@ -9,7 +9,7 @@ export default function DialogEditList({ listTitle, renameList }) {
     }
 
     return (
-        <div className="modal fade" id="editListModal" tabIndex="-1" aria-labelledby="editListModalLabel" aria-hidden="true">
+        <div className="modal fade" id={`editListModal${listID}`} tabIndex="-1" aria-labelledby="editListModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
