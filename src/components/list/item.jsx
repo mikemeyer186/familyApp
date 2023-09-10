@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export default function Item({ item, updateItem, deleteItem }) {
     const [amount, setAmount] = useState(item.amount);
@@ -6,6 +7,10 @@ export default function Item({ item, updateItem, deleteItem }) {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
+    });
+    const time = new Date(item.date).toLocaleTimeString('de-DE', {
+        hour: '2-digit',
+        minute: '2-digit',
     });
 
     function handleIncreaseAmount() {
@@ -25,6 +30,11 @@ export default function Item({ item, updateItem, deleteItem }) {
         updateItem(item.id, item.done, amount, item.priority);
     }
 
+    useEffect(() => {
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        [...popoverTriggerList].map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
+    }, []);
+
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
             <div className={`itemPriority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
@@ -37,12 +47,25 @@ export default function Item({ item, updateItem, deleteItem }) {
                 />
                 <div className="itemContentWrapper">
                     <div className="itemDescription">
-                        <span className={`badge rounded-pill category ${item.category}`}>{item.category}</span>
-                        <span className={item.done ? 'line-through' : 'title'}>{item.title}</span>
-                        <div className="itemSubDescription">
-                            <span>Hinzugefügt von {item.user} </span>
-                            <span>am {date}</span>
+                        <div className="itemInfoBadges">
+                            <span className={`badge rounded-pill category ${item.category}`}>{item.category}</span>
+                            <div
+                                src="/assets/icons/info-circle.svg"
+                                alt="info"
+                                tabIndex="0"
+                                className="badge rounded-pill infoIcon"
+                                role="button"
+                                data-bs-container="body"
+                                data-bs-html="true"
+                                data-bs-toggle="popover"
+                                data-bs-trigger="hover"
+                                data-bs-title="Info"
+                                data-bs-content={`Hinzugefügt von ${item.user} <br/> am ${date} um ${time} Uhr`}
+                            >
+                                Info
+                            </div>
                         </div>
+                        <span className={item.done ? 'line-through' : 'title'}>{item.title}</span>
                     </div>
                 </div>
             </label>

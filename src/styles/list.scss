@@ -93,15 +93,6 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
     padding: 8px;
     gap: 8px;
 
-    .category {
-        font-size: 0.7rem;
-        font-weight: 300;
-        color: #ffffff;
-        text-align: center;
-        vertical-align: middle;
-        padding: 5px 8px 4px 8px;
-    }
-
     .title {
         padding-left: 4px;
         font-size: 1.3rem;
@@ -118,11 +109,33 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
     }
 }
 
-.itemSubDescription {
+.itemInfoBadges {
     padding-left: 4px;
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: #7f7f7f;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+
+    .category {
+        font-size: 0.7rem;
+        font-weight: 300;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px 8px 4px 8px;
+    }
+
+    .infoIcon {
+        font-size: 0.7rem;
+        font-weight: 300;
+        color: #a1a1a1;
+        text-align: center;
+        vertical-align: middle;
+        padding: 4px 8px 3px 8px;
+        background-color: #ffffff;
+        border: 1px solid #c2c2c2;
+    }
 }
 
 .itemClickable {
@@ -130,6 +143,7 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
     overflow: hidden;
     transition: all 125ms ease-in-out;
     max-width: $maxWidth;
+    height: 114px;
     &:hover {
         background-color: rgba(200, 200, 200, 0.1);
     }

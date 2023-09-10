@@ -1,5 +1,6 @@
 import './styles/global.scss';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import ListPage from './components/list/listPage';
 import Navbar from './components/main/navbar';
 
