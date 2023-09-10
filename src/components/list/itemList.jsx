@@ -4,7 +4,7 @@ import Item from './item';
 import NewItemForm from './newItemForm';
 import ListMenu from './listMenu';
 
-export default function ItemList({ list, currentUser }) {
+export default function ItemList({ list, currentUser, deleteList }) {
     const [sortBy, setSortBy] = useState('date');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
@@ -62,7 +62,7 @@ export default function ItemList({ list, currentUser }) {
 
     function renameList(newListTitle) {
         setListTitle(newListTitle);
-        updateListInFirestore(list.list, listID, newListTitle);
+        updateListInFirestore(listItems, listID, newListTitle);
     }
 
     if (sortBy === 'date') sortedItems = listItems;
@@ -73,7 +73,7 @@ export default function ItemList({ list, currentUser }) {
     return (
         <div className="container py-4 px-3 mx-auto listContainer">
             <h3 className="px-1 mb-3">{listTitle}</h3>
-            <ListMenu listID={listID} listTitle={listTitle} clearList={clearList} renameList={renameList} />
+            <ListMenu listID={listID} listTitle={listTitle} clearList={clearList} renameList={renameList} deleteList={deleteList} />
             <NewItemForm addItem={addItem} />
             <div className="listHeader mb-2 mt-4">
                 <span className="sortLabel">Sortierung nach: </span>

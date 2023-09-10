@@ -9,13 +9,11 @@ export default function DialogEditList({ listID, listTitle, renameList }) {
     }
 
     return (
-        <div className="modal fade" id={`editListModal${listID}`} tabIndex="-1" aria-labelledby="editListModalLabel" aria-hidden="true">
+        <div className="modal fade" id={`editListModal${listID}`} tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="editListModalLabel">
-                            Liste umbenennen
-                        </h1>
+                        <h1 className="modal-title fs-5">Liste umbenennen</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
@@ -25,7 +23,6 @@ export default function DialogEditList({ listID, listTitle, renameList }) {
                                     Wie möchtest du die Liste nennen?
                                 </label>
                                 <input
-                                    type="text"
                                     className="form-control"
                                     id="new-list-name"
                                     value={newTitle}

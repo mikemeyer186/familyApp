@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadListsFromFirestore } from '../../services/firestore';
 import { addListInFirestore } from '../../services/firestore';
+import { deleteListInFirestore } from '../../services/firestore';
 import ItemList from './itemList';
 import DialogNewList from './dialogNewList';
 
@@ -36,6 +37,14 @@ export default function ListPage() {
         });
     }
 
+    function deleteList(listId) {
+        setLists((currentLists) => {
+            const lists = currentLists.filter((list) => list.id !== listId);
+            deleteListInFirestore(listId);
+            return lists;
+        });
+    }
+
     return (
         <>
             <DialogNewList addNewList={addNewList} />
@@ -46,7 +55,7 @@ export default function ListPage() {
             </button>
 
             {lists.map((list) => {
-                return <ItemList key={list.id} list={list} currentUser={currentUser} />;
+                return <ItemList key={list.id} list={list} currentUser={currentUser} deleteList={deleteList} />;
             })}
         </>
     );
