@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { Popover } from 'bootstrap';
 
 export default function Item({ item, updateItem, deleteItem }) {
     const [amount, setAmount] = useState(item.amount);
@@ -32,7 +32,7 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     useEffect(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-        [...popoverTriggerList].map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
+        [...popoverTriggerList].map((popoverTriggerEl) => new Popover(popoverTriggerEl));
     }, []);
 
     return (
