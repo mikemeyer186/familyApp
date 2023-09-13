@@ -1,4 +1,4 @@
-import { collection, deleteDoc, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -10,15 +10,15 @@ export async function loadListsFromFirestore() {
 
 export async function updateListInFirestore(list, id, title) {
     try {
-        await setDoc(doc(db, 'lists', id), { list, title, id: id });
+        await updateDoc(doc(db, 'lists', id), { list, title, id: id });
     } catch (e) {
         console.error('Error updating document: ', e);
     }
 }
 
-export async function addListInFirestore(list, id, title) {
+export async function addListInFirestore(list, id, title, date) {
     try {
-        await setDoc(doc(db, 'lists', id), { list, title, id: id });
+        await setDoc(doc(db, 'lists', id), { list, title, id: id, date });
     } catch (e) {
         console.error('Error updating document: ', e);
     }

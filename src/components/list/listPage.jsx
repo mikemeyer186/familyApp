@@ -8,6 +8,9 @@ import DialogNewList from './dialogNewList';
 export default function ListPage() {
     const [currentUser] = useState('Mike');
     const [lists, setLists] = useState([]);
+    const [sortBy, setSortBy] = useState('Datum');
+    const sortCategories = ['Datum', 'Alphabet'];
+    let sortedLists;
 
     useEffect(() => {
         getLists();
@@ -21,6 +24,7 @@ export default function ListPage() {
     function addNewList(newListTitle) {
         const title = newListTitle;
         const id = crypto.randomUUID();
+        const date = new Date().toISOString();
         const list = [];
 
         setLists((currentLists) => {
@@ -30,9 +34,10 @@ export default function ListPage() {
                     id: id,
                     title: title,
                     list: list,
+                    date: date,
                 },
             ];
-            addListInFirestore(list, id, title);
+            addListInFirestore(list, id, title, date);
             return lists;
         });
     }
@@ -45,6 +50,12 @@ export default function ListPage() {
         });
     }
 
+    function handleSorting(category) {
+        setSortBy(category);
+    }
+    if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
+    if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => Number(a.date) - Number(b.date));
+
     return (
         <>
             <DialogNewList addNewList={addNewList} />
@@ -54,7 +65,26 @@ export default function ListPage() {
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New list" />
             </button>
 
-            {lists.map((list) => {
+            <button className="btn dropdown-toggle btn-secondary sortList-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {sortBy}
+                {sortBy === 'Datum' ? (
+                    <img src="/assets/icons/sort-numeric-down.svg" alt="Sort by date" />
+                ) : (
+                    <img src="/assets/icons/sort-alpha-down.svg" alt="Sort alphabetically" />
+                )}
+            </button>
+
+            <ul className="dropdown-menu">
+                {sortCategories.map((category) => {
+                    return (
+                        <li key={category} onClick={() => handleSorting(category)}>
+                            <span className="dropdown-item pointer">{category}</span>
+                        </li>
+                    );
+                })}
+            </ul>
+
+            {sortedLists.map((list) => {
                 return <ItemList key={list.id} list={list} currentUser={currentUser} deleteList={deleteList} />;
             })}
         </>

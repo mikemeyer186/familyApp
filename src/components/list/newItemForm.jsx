@@ -16,7 +16,7 @@ export default function NewItemForm({ addItem }) {
         }
     }
 
-    function handelCategorySelection(category) {
+    function handleCategorySelection(category) {
         setSelectedCategory(category);
     }
 
@@ -35,7 +35,7 @@ export default function NewItemForm({ addItem }) {
                 <ul className="dropdown-menu">
                     {defaultCategories.map((category) => {
                         return (
-                            <li key={category} onClick={() => handelCategorySelection(category)}>
+                            <li key={category} onClick={() => handleCategorySelection(category)}>
                                 <span className="dropdown-item pointer">{category}</span>
                             </li>
                         );
