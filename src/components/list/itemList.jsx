@@ -3,12 +3,14 @@ import { updateListInFirestore } from '../../services/firestore';
 import Item from './item';
 import NewItemForm from './newItemForm';
 import ListMenu from './listMenu';
+import ListHeader from './listHeader';
 
 export default function ItemList({ list, currentUser, deleteList }) {
-    const [sortBy, setSortBy] = useState('date');
+    const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
     const listID = list.id;
+    const sortCategories = ['Datum', 'Kategorie', 'Erledigt', 'Priorität'];
     let sortedItems;
 
     function addItem(title, category) {
@@ -65,25 +67,24 @@ export default function ItemList({ list, currentUser, deleteList }) {
         updateListInFirestore(listItems, listID, newListTitle);
     }
 
-    if (sortBy === 'date') sortedItems = listItems;
-    if (sortBy === 'category') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));
-    if (sortBy === 'done') sortedItems = listItems.slice().sort((a, b) => Number(a.done) - Number(b.done));
-    if (sortBy === 'priority') sortedItems = listItems.slice().sort((a, b) => Number(b.priority) - Number(a.priority));
+    function handleSorting(category) {
+        setSortBy(category);
+    }
+
+    if (sortBy === 'Datum') sortedItems = listItems;
+    if (sortBy === 'Kategorie') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));
+    if (sortBy === 'Erledigt') sortedItems = listItems.slice().sort((a, b) => Number(a.done) - Number(b.done));
+    if (sortBy === 'Priorität') sortedItems = listItems.slice().sort((a, b) => Number(b.priority) - Number(a.priority));
 
     return (
         <div className="container py-4 px-3 mx-auto listContainer">
             <h3 className="px-1 mb-3">{listTitle}</h3>
+
             <ListMenu listID={listID} listTitle={listTitle} clearList={clearList} renameList={renameList} deleteList={deleteList} />
             <NewItemForm addItem={addItem} />
-            <div className="listHeader mb-2 mt-4">
-                <span className="sortLabel">Sortierung nach: </span>
-                <select value={sortBy} className="form-select sortOptions" onChange={(e) => setSortBy(e.target.value)}>
-                    <option value="date">Datum</option>
-                    <option value="category">Kategorie</option>
-                    <option value="done">Erledigt</option>
-                    <option value="priority">Priorität</option>
-                </select>
-            </div>
+
+            <ListHeader sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
+
             <ul className="list-group">
                 {sortedItems.length === 0 && <span className="px-1">Es sind keine Einträge vorhanden.</span>}
                 {sortedItems.map((item) => {

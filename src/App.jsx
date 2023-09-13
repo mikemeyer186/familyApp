@@ -11,9 +11,7 @@ export default function App() {
                 <Navbar />
             </div>
             <div className="listPage-container">
-                <div className="listPage-wrapper">
-                    <ListPage />
-                </div>
+                <ListPage />
             </div>
         </>
     );
