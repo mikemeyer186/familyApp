@@ -5,16 +5,20 @@ import { deleteListInFirestore } from '../../services/firestore';
 import ItemList from './itemList';
 import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
+import Spinner from '../global/spinner';
 
 export default function ListPage() {
     const [currentUser] = useState('Mike');
     const [lists, setLists] = useState([]);
     const [sortBy, setSortBy] = useState('Datum');
+    const [isLoaded, setIsLoaded] = useState(false);
     const sortCategories = ['Datum', 'Alphabet'];
     let sortedLists;
 
     useEffect(() => {
-        getLists();
+        getLists().then(() => {
+            setIsLoaded(true);
+        });
     }, []);
 
     async function getLists() {
@@ -66,9 +70,22 @@ export default function ListPage() {
                     <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
                 </div>
 
-                {sortedLists.map((list) => {
-                    return <ItemList key={list.id} list={list} currentUser={currentUser} deleteList={deleteList} />;
-                })}
+                {!isLoaded ? (
+                    <Spinner />
+                ) : (
+                    <div className="listCollection">
+                        {sortedLists.length == 0 ? (
+                            <span className="emptyListCollection">
+                                Es sind gerade keine Listen gespeichert. Du kannst eine neue Liste hinzufügen, indem du auf den Button &quot;Neue
+                                Liste&quot; klickst.
+                            </span>
+                        ) : (
+                            sortedLists.map((list) => {
+                                return <ItemList key={list.id} list={list} currentUser={currentUser} deleteList={deleteList} />;
+                            })
+                        )}
+                    </div>
+                )}
             </div>
         </>
     );
