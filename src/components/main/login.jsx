@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react';
-import { signIn } from '../../services/auth';
-import { authState } from '../../services/auth';
+import { useState } from 'react';
 
-export default function Login({ onAuth }) {
+export default function Login({ signInUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit(e) {
         e.preventDefault();
-        signIn(email, password).then(() => {
-            onAuth(true);
-        });
+        signInUser(email, password);
         setEmail('');
         setPassword('');
     }

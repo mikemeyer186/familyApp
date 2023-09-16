@@ -1,4 +1,8 @@
-export default function Navbar() {
+export default function Navbar({ signOutUser }) {
+    function handleSignOut() {
+        signOutUser();
+    }
+
     return (
         <>
             <nav className="navbar fixed-top navbarBg">
@@ -27,12 +31,12 @@ export default function Navbar() {
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
                                     <a className="nav-link active" aria-current="page" href="#">
-                                        Home
+                                        Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">
-                                        Link
+                                        Listen
                                     </a>
                                 </li>
                                 <li className="nav-item dropdown">
@@ -67,6 +71,13 @@ export default function Navbar() {
                                     Search
                                 </button>
                             </form>
+                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
+                                <li className="nav-item">
+                                    <span className="nav-link active pointer" aria-current="page" onClick={handleSignOut}>
+                                        Abmelden
+                                    </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
