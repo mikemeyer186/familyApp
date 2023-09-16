@@ -2,6 +2,7 @@
 @import 'list.scss';
 @import 'main.scss';
 @import 'navbar.scss';
+@import 'login.scss';
 
 * {
     box-sizing: border-box;
@@ -43,6 +44,16 @@ body {
 .centeredVertical {
     display: flex;
     align-items: center;
+}
+
+.centeredVertical {
+    display: flex;
+    justify-content: center;
+}
+
+.elementRight {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .width130 {
