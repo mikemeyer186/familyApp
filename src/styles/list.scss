@@ -1,6 +1,4 @@
-$maxWidth: 550px;
-$thinBorder: 1px solid #d9d9d9;
-$shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
+@import './variables.scss';
 
 .listPage-wrapper {
     position: relative;
@@ -125,7 +123,7 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
         cursor: pointer;
 
         &:focus {
-            border: $thinBorder;
+            border: $mediumBorder;
             outline: none;
             box-shadow: none;
         }
@@ -137,7 +135,7 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
 
     .textInput {
         &:focus {
-            border: $thinBorder;
+            border: $mediumBorder;
             outline: none;
             box-shadow: none;
         }
@@ -201,7 +199,7 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
         vertical-align: middle;
         padding: 4px 8px 3px 8px;
         background-color: #ffffff;
-        border: 1px solid #c2c2c2;
+        border: $mediumBorder;
     }
 }
 

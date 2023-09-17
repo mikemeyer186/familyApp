@@ -1,4 +1,4 @@
-$navbarHeight: 56px;
+@import './variables.scss';
 
 .navbar-container {
     display: flex;
@@ -10,6 +10,6 @@ $navbarHeight: 56px;
 
 .listPage-container {
     height: calc(100svh - $navbarHeight);
-    background-color: #fafafa;
+    background-color: $bg-color;
     overflow: hidden;
 }
