@@ -13,3 +13,9 @@
     background-color: $bg-color;
     overflow: hidden;
 }
+
+.userProfile-container {
+    height: calc(100svh - $navbarHeight);
+    background-color: $bg-color;
+    overflow: hidden;
+}

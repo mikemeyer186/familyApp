@@ -19,11 +19,13 @@
         img {
             width: 100px;
             object-fit: cover;
+            filter: drop-shadow(10px 20px 20px rgba(119, 119, 119, 0.3));
         }
 
         span {
             font-size: 3rem;
             font-weight: 600;
+            text-shadow: 10px 20px 20px rgba(119, 119, 119, 0.3);
         }
     }
 

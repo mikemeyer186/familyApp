@@ -9,18 +9,22 @@ import Navbar from './components/main/navbar';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
+import UserProfile from './components/main/profile';
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
+    const [openPage, setOpenPage] = useState('ListPage');
+    const [activeUser, setActiveUser] = useState({});
 
     async function signInUser(email, password) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log(user);
+            setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
         } catch (error) {
@@ -42,6 +46,7 @@ export default function App() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsAuthenticated(true);
+                setActiveUser(user);
             } else {
                 setIsAuthenticated(false);
             }
@@ -73,11 +78,18 @@ export default function App() {
             ) : (
                 <>
                     <div className="navbar-container">
-                        <Navbar signOutUser={signOutUser} />
+                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} />
                     </div>
-                    <div className="listPage-container">
-                        <ListPage />
-                    </div>
+                    {openPage === 'ListPage' && (
+                        <div className="listPage-container">
+                            <ListPage />
+                        </div>
+                    )}
+                    {openPage === 'UserProfile' && (
+                        <div className="userProfile-container">
+                            <UserProfile setOpenPage={setOpenPage} activeUser={activeUser} />
+                        </div>
+                    )}
                 </>
             )}
         </>

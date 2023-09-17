@@ -1,7 +1,27 @@
-export default function Navbar({ signOutUser }) {
+import { useEffect, useState } from 'react';
+
+export default function Navbar({ signOutUser, setOpenPage }) {
+    const [greeting, setGreeting] = useState('Hallo, ');
+
     function handleSignOut() {
         signOutUser();
     }
+
+    function checkDaytime() {
+        let daytime = new Date();
+        let hours = daytime.getHours();
+        if (hours >= 6 && hours < 11) {
+            setGreeting('Guten Morgen, ');
+        } else if (hours >= 11 && hours < 17) {
+            setGreeting('Guten Tag, ');
+        } else if (hours >= 17 && hours <= 23) {
+            setGreeting('Guten Abend, ');
+        }
+    }
+
+    useEffect(() => {
+        checkDaytime();
+    }, []);
 
     return (
         <>
@@ -20,38 +40,59 @@ export default function Navbar({ signOutUser }) {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
                     <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-                                Menu
+                                {greeting}
                             </h5>
                             <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
+                                    <img src="/assets/icons/clipboard-data.svg" alt="Dashboard" />
                                     <a className="nav-link active" aria-current="page" href="#">
                                         Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
+                                    <img src="/assets/icons/card-checklist.svg" alt="Listen" />
                                     <a className="nav-link" href="#">
                                         Listen
                                     </a>
                                 </li>
+                                <li className="nav-item">
+                                    <img src="/assets/icons/cash-coin.svg" alt="Journal" />
+                                    <a className="nav-link" href="#">
+                                        Journal
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <img src="/assets/icons/calendar3.svg" alt="Kalender" />
+                                    <a className="nav-link" href="#">
+                                        Kalender
+                                    </a>
+                                </li>
                                 <li className="nav-item dropdown">
+                                    <img src="/assets/icons/person-gear.svg" alt="Profil" />
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
+                                        Benutzerprofil
                                     </a>
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <a className="dropdown-item" href="#">
-                                                Action
+                                            <a
+                                                className="dropdown-item pointer"
+                                                data-bs-dismiss="offcanvas"
+                                                href="#"
+                                                onClick={() => setOpenPage('UserProfile')}
+                                            >
+                                                Profil bearbeiten
                                             </a>
                                         </li>
                                         <li>
                                             <a className="dropdown-item" href="#">
-                                                Another action
+                                                Passwort ändern
                                             </a>
                                         </li>
                                         <li>
@@ -59,25 +100,25 @@ export default function Navbar({ signOutUser }) {
                                         </li>
                                         <li>
                                             <a className="dropdown-item" href="#">
-                                                Something else here
+                                                Problem melden
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                            </ul>
-                            <form className="d-flex mt-3" role="search">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-outline-success" type="submit">
-                                    Search
-                                </button>
-                            </form>
-                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
                                 <li className="nav-item">
-                                    <span className="nav-link active pointer" aria-current="page" onClick={handleSignOut}>
+                                    <img src="/assets/icons/door-open.svg" alt="Logout" />
+                                    <span className="nav-link pointer" aria-current="page" onClick={handleSignOut}>
                                         Abmelden
                                     </span>
                                 </li>
                             </ul>
+
+                            <form className="d-flex mt-3" role="search">
+                                <input className="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" />
+                                <button className="btn btn-outline-success" type="submit">
+                                    Suchen
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

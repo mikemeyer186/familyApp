@@ -1,0 +1,28 @@
+@import 'variables.scss';
+
+.profil-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding: 90px 50px;
+
+    .profil-content {
+        width: $maxWidth;
+        border: $thinBorder;
+        box-shadow: $shadow;
+        padding: 18px;
+        position: relative;
+        border-radius: 8px;
+        background-color: #ffffff;
+    }
+
+    .profile-footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+    }
+}
