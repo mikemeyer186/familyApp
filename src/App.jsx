@@ -7,18 +7,24 @@ import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebas
 import ListPage from './components/list/listPage';
 import Navbar from './components/main/navbar';
 import Login from './components/main/login';
+import Error from './components/global/error';
+import Success from './components/global/success';
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [slideOut, setSlideOut] = useState('');
 
     async function signInUser(email, password) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log(user);
+            setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
         } catch (error) {
-            console.log(error);
+            setError('Deine Login-Daten waren nicht korrekt!');
             setIsAuthenticated(false);
         }
     }
@@ -26,8 +32,9 @@ export default function App() {
     async function signOutUser() {
         try {
             await signOut(auth);
+            setSuccess('Du hast dich erfolgreich ausgeloggt!');
         } catch (error) {
-            console.log(error);
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
         }
     }
 
@@ -45,8 +52,22 @@ export default function App() {
         authCheck();
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setSlideOut('slideOut-alert');
+        }, 3000);
+
+        setTimeout(() => {
+            setError('');
+            setSuccess('');
+            setSlideOut('');
+        }, 3200);
+    }, [error, success]);
+
     return (
         <>
+            {success && <Success success={success} slideOut={slideOut} />}
+            {error && <Error error={error} slideOut={slideOut} />}
             {!isAuthenticated ? (
                 <Login signInUser={signInUser} />
             ) : (

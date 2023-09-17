@@ -70,3 +70,36 @@ body {
         }
     }
 }
+
+.slideIn-alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    animation: slideIn 250ms ease-out;
+    z-index: 9999;
+}
+
+.slideOut-alert {
+    animation: slideOut 250ms ease-in;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateY(0%);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
