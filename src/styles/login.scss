@@ -56,6 +56,13 @@
                 &::placeholder {
                     color: rgba(0, 0, 0, 0.3);
                 }
+                &:disabled {
+                    background-color: #fafafa;
+                }
+            }
+
+            button {
+                width: 99px;
             }
         }
 

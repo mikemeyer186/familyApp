@@ -10,6 +10,8 @@ export default function Login({ signInUser }) {
         e.preventDefault();
         await signInUser(email, password);
         setIsLoggingIn(false);
+        setEmail('');
+        setPassword('');
     }
 
     return (
@@ -38,7 +40,7 @@ export default function Login({ signInUser }) {
                         <label htmlFor="password">Passwort</label>
                         <input
                             id="password"
-                            type="text"
+                            type="password"
                             placeholder="Passwort"
                             className="form-control"
                             value={password}
@@ -49,7 +51,11 @@ export default function Login({ signInUser }) {
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary mt-2" disabled={isLoggingIn}>
-                            Anmelden
+                            {isLoggingIn ? (
+                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            ) : (
+                                <span role="status">Anmelden</span>
+                            )}
                         </button>
                     </div>
                 </form>
