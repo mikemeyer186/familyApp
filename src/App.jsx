@@ -3,7 +3,7 @@ import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { useEffect, useState } from 'react';
 import { auth } from './config/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile } from 'firebase/auth';
 import ListPage from './components/list/listPage';
 import Navbar from './components/main/navbar';
 import Login from './components/main/login';
@@ -27,7 +27,7 @@ export default function App() {
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
-        } catch (error) {
+        } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
             setIsAuthenticated(false);
         }
@@ -37,7 +37,7 @@ export default function App() {
         try {
             await signOut(auth);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
-        } catch (error) {
+        } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
         }
     }
@@ -51,6 +51,28 @@ export default function App() {
                 setIsAuthenticated(false);
             }
         });
+    }
+
+    async function updateUserProfile(displayName, photoURL) {
+        try {
+            await updateProfile(auth.currentUser, {
+                displayName: displayName,
+                photoURL: photoURL,
+            });
+            setSuccess('Dein Profil wurde erfolgreich aktualisiert!');
+        } catch (err) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
+    }
+
+    async function updateUserEmail(email) {
+        try {
+            console.log(email);
+            await updateEmail(auth.currentUser, email);
+            setSuccess('Deine E-Mail Adresse wurde erfolgreich aktualisiert!');
+        } catch (err) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
     useEffect(() => {
@@ -78,7 +100,7 @@ export default function App() {
             ) : (
                 <>
                     <div className="navbar-container">
-                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} />
+                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />
                     </div>
                     {openPage === 'ListPage' && (
                         <div className="listPage-container">
@@ -87,7 +109,13 @@ export default function App() {
                     )}
                     {openPage === 'UserProfile' && (
                         <div className="userProfile-container">
-                            <UserProfile setOpenPage={setOpenPage} activeUser={activeUser} />
+                            <UserProfile
+                                setOpenPage={setOpenPage}
+                                activeUser={activeUser}
+                                updateUserProfile={updateUserProfile}
+                                updateUserEmail={updateUserEmail}
+                                setError={setError}
+                            />
                         </div>
                     )}
                 </>

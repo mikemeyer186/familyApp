@@ -17,6 +17,20 @@
         position: relative;
         border-radius: 8px;
         background-color: #ffffff;
+
+        .profil-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+
+        input {
+            &:disabled {
+                background-color: #fafafa;
+                cursor: not-allowed;
+            }
+        }
     }
 
     .profile-footer {

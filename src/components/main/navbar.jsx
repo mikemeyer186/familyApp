@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function Navbar({ signOutUser, setOpenPage }) {
+export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
     const [greeting, setGreeting] = useState('Hallo, ');
 
     function handleSignOut() {
@@ -45,6 +45,7 @@ export default function Navbar({ signOutUser, setOpenPage }) {
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                 {greeting}
+                                {activeUser.displayName + '!'}
                             </h5>
                             <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
