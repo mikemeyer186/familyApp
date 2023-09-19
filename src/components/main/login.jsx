@@ -3,12 +3,13 @@ import { useState } from 'react';
 export default function Login({ signInUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
+        setIsLoggingIn(true);
         e.preventDefault();
-        signInUser(email, password);
-        setEmail('');
-        setPassword('');
+        await signInUser(email, password);
+        setIsLoggingIn(false);
     }
 
     return (
@@ -29,6 +30,7 @@ export default function Login({ signInUser }) {
                             placeholder="user@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            disabled={isLoggingIn}
                             required
                         />
                     </div>
@@ -41,11 +43,12 @@ export default function Login({ signInUser }) {
                             className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={isLoggingIn}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <button type="submit" className="btn btn-primary mt-2">
+                        <button type="submit" className="btn btn-primary mt-2" disabled={isLoggingIn}>
                             Anmelden
                         </button>
                     </div>
