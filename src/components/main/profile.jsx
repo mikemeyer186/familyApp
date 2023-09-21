@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-export default function UserProfile({ setOpenPage, activeUser, updateUserProfile, setError }) {
+export default function UserProfile({ setOpenPage, activeUser, updateUserProfile }) {
     const [userName, setUserName] = useState(activeUser.displayName || '');
     const [email, setEmail] = useState(activeUser.email);
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');
     const [newPhotoUrl, setNewPhotoUrl] = useState('');
     const [file, setFile] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
     const userID = activeUser.uid;
 
     function handleSubmit(e) {
@@ -17,17 +18,30 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
         setOpenPage('ListPage');
     }
 
-    async function handlePhotoUpload() {
-        const storageRef = ref(storage, userID + '_' + file.name);
-        try {
-            await uploadBytes(storageRef, file);
-            await getDownloadURL(storageRef).then((url) => {
-                setPhotoUrl(url);
-            });
-        } catch (err) {
-            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
-        }
+    async function getPhotoUrl(storageRef) {
+        await getDownloadURL(storageRef).then((url) => {
+            setPhotoUrl(url);
+        });
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            const storageRef = ref(storage, userID + '_' + file.name);
+            if (file) {
+                uploadBytes(storageRef, file).then(() => {
+                    getPhotoUrl(storageRef).then(() => {
+                        setIsUploading(false);
+                    });
+                });
+            }
+        }, 3000);
+    }, [newPhotoUrl, file, userID]);
+
+    useEffect(() => {
+        if (file) {
+            setIsUploading(true);
+        }
+    }, [file]);
 
     return (
         <div className="profil-wrapper">
@@ -36,10 +50,18 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                     <h4 className="profil-title mb-2">Benutzerprofil</h4>
                     <span>Hier kannst du deine Benutzerdaten ändern</span>
                 </div>
-                <div className="profile-body mt-4">
-                    <img className="profil-image" src={photoUrl} alt="Profil image" />
+                <div className="profile-body mt-5">
+                    <div className="profile-image mb-2">
+                        <div className={`image-wrapper ${isUploading && 'uploading-image'}`}>
+                            <img className="profil-image" src={photoUrl} alt="Profil image" />
+                        </div>
+                    </div>
+
                     <form>
                         <div className="mb-3">
+                            <label htmlFor="photoUrl" className="col-form-label">
+                                Profilbild
+                            </label>
                             <input
                                 type="file"
                                 className="form-control"
@@ -50,9 +72,6 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                                     setFile(e.target.files[0]);
                                 }}
                             />
-                            <button type="button" onClick={handlePhotoUpload} disabled={!file}>
-                                Upload
-                            </button>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="userName" className="col-form-label">

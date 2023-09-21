@@ -114,7 +114,6 @@ export default function App() {
                                 activeUser={activeUser}
                                 updateUserProfile={updateUserProfile}
                                 updateUserEmail={updateUserEmail}
-                                setError={setError}
                             />
                         </div>
                     )}
