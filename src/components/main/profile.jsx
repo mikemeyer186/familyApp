@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-export default function UserProfile({ setOpenPage, activeUser, updateUserProfile }) {
+export default function UserProfile({ setOpenPage, activeUser, updateUserProfile, activePage }) {
     const [userName, setUserName] = useState(activeUser.displayName || '');
     const [email, setEmail] = useState(activeUser.email);
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');
@@ -16,7 +16,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
         //updateUserEmail(email);
-        setOpenPage('ListPage');
+        setOpenPage(activePage);
     }
 
     async function getPhotoUrl(storageRef) {
@@ -103,7 +103,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                             />
                         </div>
                         <div className="profile-footer mt-5">
-                            <button type="button" className="btn btn-secondary" onClick={() => setOpenPage('ListPage')}>
+                            <button type="button" className="btn btn-secondary" onClick={() => setOpenPage(activePage)}>
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" onClick={handleSubmit}>

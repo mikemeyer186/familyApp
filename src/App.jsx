@@ -21,12 +21,12 @@ export default function App() {
     const [slideOut, setSlideOut] = useState('');
     const [openPage, setOpenPage] = useState('Dashboard');
     const [activeUser, setActiveUser] = useState({});
+    const [activePage, setActivePage] = useState('');
 
     async function signInUser(email, password) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log(user);
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
@@ -92,7 +92,31 @@ export default function App() {
             setSuccess('');
             setSlideOut('');
         }, 3200);
+
+        return () => {
+            clearTimeout();
+        };
     }, [error, success]);
+
+    useEffect(() => {
+        let title = '';
+        if (openPage === 'Dashboard') {
+            setActivePage('Dashboard');
+            title = 'Dashboard';
+        } else if (openPage === 'ListPage') {
+            setActivePage('ListPage');
+            title = 'Listen';
+        } else if (openPage === 'Journal') {
+            setActivePage('Journal');
+            title = 'Journal';
+        } else if (openPage === 'Calendar') {
+            setActivePage('Calendar');
+            title = 'Kalender';
+        } else if (openPage === 'UserProfile') {
+            title = 'Benutzerprofil';
+        }
+        document.title = `familyApp | ${title}`;
+    }, [openPage]);
 
     return (
         <>
@@ -117,6 +141,7 @@ export default function App() {
                                 activeUser={activeUser}
                                 updateUserProfile={updateUserProfile}
                                 updateUserEmail={updateUserEmail}
+                                activePage={activePage}
                             />
                         )}
                     </div>
