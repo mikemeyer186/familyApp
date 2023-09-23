@@ -12,7 +12,7 @@ export default function ListMenu({ listID, listTitle, renameList, deleteList, cl
 
             <div className="dropdown listMenu">
                 <img
-                    src="/assets/icons/three-dots-vertical.svg"
+                    src="assets/icons/three-dots-vertical.svg"
                     className="dropdown-toggle menuIcon"
                     type="button"
                     data-bs-toggle="dropdown"

@@ -56,7 +56,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                         <div className={`image-wrapper ${isUploading && 'uploading-image'}`}>
                             <img className="profil-image" src={photoUrl} alt="Profil image" />
                             <div className="profil-image-hover" onClick={() => photoInputRef.current.click()}>
-                                <img src="/assets/icons/pencil-fill.svg" alt="Edit" />
+                                <img src="assets/icons/pencil-fill.svg" alt="Edit" />
                             </div>
                         </div>
                     </div>

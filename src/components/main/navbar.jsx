@@ -55,31 +55,31 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
-                                    <img src="/assets/icons/clipboard-data.svg" alt="Dashboard" />
+                                    <img src="assets/icons/clipboard-data.svg" alt="Dashboard" />
                                     <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Dashboard')}>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <img src="/assets/icons/card-checklist.svg" alt="Listen" />
+                                    <img src="assets/icons/card-checklist.svg" alt="Listen" />
                                     <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('ListPage')}>
                                         Listen
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <img src="/assets/icons/cash-coin.svg" alt="Journal" />
+                                    <img src="assets/icons/cash-coin.svg" alt="Journal" />
                                     <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Journal')}>
                                         Journal
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <img src="/assets/icons/calendar3.svg" alt="Kalender" />
+                                    <img src="assets/icons/calendar3.svg" alt="Kalender" />
                                     <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Calendar')}>
                                         Kalender
                                     </a>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <img src="/assets/icons/person-gear.svg" alt="Profil" />
+                                    <img src="assets/icons/person-gear.svg" alt="Profil" />
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Benutzerprofil
                                     </a>
@@ -110,7 +110,7 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                                     </ul>
                                 </li>
                                 <li className="nav-item">
-                                    <img src="/assets/icons/door-open.svg" alt="Logout" />
+                                    <img src="assets/icons/door-open.svg" alt="Logout" />
                                     <span className="nav-link pointer" aria-current="page" onClick={handleSignOut}>
                                         Abmelden
                                     </span>
