@@ -43,10 +43,13 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
 
                     <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
-                            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-                                {greeting}
-                                {activeUser.displayName + '!'}
-                            </h5>
+                            <div className="offcanvas-user">
+                                <img src={activeUser.photoURL} className="offcanvas-image" alt="User image" />
+                                <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+                                    {greeting}
+                                    {activeUser.displayName + '!'}
+                                </h5>
+                            </div>
                             <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">

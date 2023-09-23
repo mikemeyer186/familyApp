@@ -16,6 +16,19 @@
     }
 }
 
+.offcanvas-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .offcanvas-image {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+}
+
 .nav-item {
     display: flex;
     justify-content: flex-start;
