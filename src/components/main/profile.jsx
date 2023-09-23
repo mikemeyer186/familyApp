@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
@@ -9,6 +9,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
     const [newPhotoUrl, setNewPhotoUrl] = useState('');
     const [file, setFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
+    const photoInputRef = useRef(null);
     const userID = activeUser.uid;
 
     function handleSubmit(e) {
@@ -54,18 +55,19 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                     <div className="profile-image mb-2">
                         <div className={`image-wrapper ${isUploading && 'uploading-image'}`}>
                             <img className="profil-image" src={photoUrl} alt="Profil image" />
+                            <div className="profil-image-hover" onClick={() => photoInputRef.current.click()}>
+                                <img src="/assets/icons/pencil-fill.svg" alt="Edit" />
+                            </div>
                         </div>
                     </div>
 
                     <form>
                         <div className="mb-3">
-                            <label htmlFor="photoUrl" className="col-form-label">
-                                Profilbild
-                            </label>
                             <input
                                 type="file"
-                                className="form-control"
+                                className="form-control d-none"
                                 id="photoUrl"
+                                ref={photoInputRef}
                                 value={newPhotoUrl}
                                 onChange={(e) => {
                                     setNewPhotoUrl(e.target.value);
