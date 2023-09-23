@@ -16,7 +16,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
         //updateUserEmail(email);
-        setOpenPage(activePage);
+        setOpenPage(activePage.current);
     }
 
     async function getPhotoUrl(storageRef) {
@@ -103,7 +103,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                             />
                         </div>
                         <div className="profile-footer mt-5">
-                            <button type="button" className="btn btn-secondary" onClick={() => setOpenPage(activePage)}>
+                            <button type="button" className="btn btn-secondary" onClick={() => setOpenPage(activePage.current)}>
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" onClick={handleSubmit}>

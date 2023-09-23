@@ -1,7 +1,7 @@
 import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { auth } from './config/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile } from 'firebase/auth';
 import ListPage from './components/list/listPage';
@@ -21,7 +21,7 @@ export default function App() {
     const [slideOut, setSlideOut] = useState('');
     const [openPage, setOpenPage] = useState('Dashboard');
     const [activeUser, setActiveUser] = useState({});
-    const [activePage, setActivePage] = useState('');
+    const activePage = useRef('');
 
     async function signInUser(email, password) {
         try {
@@ -101,17 +101,17 @@ export default function App() {
     useEffect(() => {
         let title = '';
         if (openPage === 'Dashboard') {
-            setActivePage('Dashboard');
             title = 'Dashboard';
+            activePage.current = 'Dashboard';
         } else if (openPage === 'ListPage') {
-            setActivePage('ListPage');
             title = 'Listen';
+            activePage.current = 'ListPage';
         } else if (openPage === 'Journal') {
-            setActivePage('Journal');
             title = 'Journal';
+            activePage.current = 'Journal';
         } else if (openPage === 'Calendar') {
-            setActivePage('Calendar');
             title = 'Kalender';
+            activePage.current = 'Calendar';
         } else if (openPage === 'UserProfile') {
             title = 'Benutzerprofil';
         }
