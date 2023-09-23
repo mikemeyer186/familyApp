@@ -6,13 +6,7 @@
     padding: 0 1rem;
 }
 
-.listPage-container {
-    height: calc(100svh - $navbarHeight);
-    background-color: $bg-color;
-    overflow: hidden;
-}
-
-.userProfile-container {
+.page-container {
     height: calc(100svh - $navbarHeight);
     background-color: $bg-color;
     overflow: hidden;

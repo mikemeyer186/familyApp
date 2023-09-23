@@ -56,25 +56,25 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
                                     <img src="/assets/icons/clipboard-data.svg" alt="Dashboard" />
-                                    <a className="nav-link active" aria-current="page" href="#">
+                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Dashboard')}>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <img src="/assets/icons/card-checklist.svg" alt="Listen" />
-                                    <a className="nav-link" href="#">
+                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('ListPage')}>
                                         Listen
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <img src="/assets/icons/cash-coin.svg" alt="Journal" />
-                                    <a className="nav-link" href="#">
+                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Journal')}>
                                         Journal
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <img src="/assets/icons/calendar3.svg" alt="Kalender" />
-                                    <a className="nav-link" href="#">
+                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Calendar')}>
                                         Kalender
                                     </a>
                                 </li>
