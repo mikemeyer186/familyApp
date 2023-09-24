@@ -11,11 +11,11 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
         let daytime = new Date();
         let hours = daytime.getHours();
         if (hours >= 6 && hours < 11) {
-            setGreeting('Guten Morgen, ');
+            setGreeting('Guten Morgen');
         } else if (hours >= 11 && hours < 17) {
-            setGreeting('Guten Tag, ');
+            setGreeting('Guten Tag');
         } else if (hours >= 17 && hours <= 23) {
-            setGreeting('Guten Abend, ');
+            setGreeting('Guten Abend');
         }
     }
 
@@ -44,10 +44,14 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                     <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
                             <div className="offcanvas-user">
-                                <img src={activeUser.photoURL} className="offcanvas-image" alt="User image" />
+                                <img
+                                    src={activeUser.photoURL ? activeUser.photoURL : 'assets/img/profile-picture.png'}
+                                    className="offcanvas-image"
+                                    alt="User image"
+                                />
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                     {greeting}
-                                    {activeUser.displayName + '!'}
+                                    {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
                                 </h5>
                             </div>
                             <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
