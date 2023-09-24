@@ -30,18 +30,78 @@
 }
 
 .nav-item {
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
+    width: max-content;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 3px;
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: transparent;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+
+    &:hover {
+        .nav-link {
+            color: rgba(0, 0, 0, 1);
+        }
+        img {
+            opacity: 1;
+        }
+        &::after {
+            transition: all 500ms ease-in-out !important;
+            background-color: rgba(0, 0, 0, 0.3);
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    }
 
     img {
         transform: translateY(-1px);
+        opacity: 0.5;
     }
 
     .dropdown-menu {
         position: absolute;
         left: 0;
         right: 0;
+        width: 265%;
     }
+}
+
+.active {
+    pointer-events: none;
+
+    .nav-link {
+        color: rgba(0, 0, 0, 1);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 3px;
+        display: block;
+        height: 2px;
+        width: 100%;
+        transform: scaleX(1);
+        transform-origin: left;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    img {
+        opacity: 1;
+    }
+}
+
+.nav-divider {
+    opacity: 0.1;
 }

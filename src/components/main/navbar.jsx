@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
+export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage }) {
     const [greeting, setGreeting] = useState('Hallo, ');
 
     function handleSignOut() {
@@ -54,44 +54,57 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li className="nav-item">
+                                <li
+                                    className={`nav-item ${openPage === 'Dashboard' && 'active'}`}
+                                    data-bs-dismiss="offcanvas"
+                                    onClick={() => setOpenPage('Dashboard')}
+                                >
                                     <img src="assets/icons/clipboard-data.svg" alt="Dashboard" />
-                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Dashboard')}>
-                                        Dashboard
-                                    </a>
+                                    <span className="nav-link">Dashboard</span>
                                 </li>
-                                <li className="nav-item">
+                                <li
+                                    className={`nav-item ${openPage === 'ListPage' && 'active'}`}
+                                    data-bs-dismiss="offcanvas"
+                                    onClick={() => setOpenPage('ListPage')}
+                                >
                                     <img src="assets/icons/card-checklist.svg" alt="Listen" />
-                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('ListPage')}>
-                                        Listen
-                                    </a>
+                                    <span className="nav-link">Listen</span>
                                 </li>
-                                <li className="nav-item">
+                                <li
+                                    className={`nav-item ${openPage === 'Journal' && 'active'}`}
+                                    data-bs-dismiss="offcanvas"
+                                    onClick={() => setOpenPage('Journal')}
+                                >
                                     <img src="assets/icons/cash-coin.svg" alt="Journal" />
-                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Journal')}>
-                                        Journal
-                                    </a>
+                                    <span className="nav-link">Journal</span>
                                 </li>
-                                <li className="nav-item">
+                                <li
+                                    className={`nav-item ${openPage === 'Calendar' && 'active'}`}
+                                    data-bs-dismiss="offcanvas"
+                                    onClick={() => setOpenPage('Calendar')}
+                                >
                                     <img src="assets/icons/calendar3.svg" alt="Kalender" />
-                                    <a className="nav-link" href="#" data-bs-dismiss="offcanvas" onClick={() => setOpenPage('Calendar')}>
-                                        Kalender
-                                    </a>
+                                    <span className="nav-link">Kalender</span>
                                 </li>
-                                <li className="nav-item dropdown">
+                                <li>
+                                    <hr className="nav-divider" />
+                                </li>
+                                <li className="nav-item dropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <img src="assets/icons/person-gear.svg" alt="Profil" />
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Benutzerprofil
-                                    </a>
+                                    <span className="nav-link dropdown-toggle">Benutzerprofil</span>
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <a
+                                            <span
                                                 className="dropdown-item pointer"
                                                 data-bs-dismiss="offcanvas"
-                                                href="#"
                                                 onClick={() => setOpenPage('UserProfile')}
                                             >
                                                 Profil bearbeiten
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <a className="dropdown-item" href="#">
+                                                E-Mail Adresse ändern
                                             </a>
                                         </li>
                                         <li>
@@ -99,21 +112,11 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                                                 Passwort ändern
                                             </a>
                                         </li>
-                                        <li>
-                                            <hr className="dropdown-divider" />
-                                        </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                Problem melden
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item" onClick={handleSignOut}>
                                     <img src="assets/icons/door-open.svg" alt="Logout" />
-                                    <span className="nav-link pointer" aria-current="page" onClick={handleSignOut}>
-                                        Abmelden
-                                    </span>
+                                    <span className="nav-link pointer">Abmelden</span>
                                 </li>
                             </ul>
 

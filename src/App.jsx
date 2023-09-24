@@ -19,7 +19,7 @@ export default function App() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
-    const [openPage, setOpenPage] = useState('Dashboard');
+    const [openPage, setOpenPage] = useState('');
     const [activeUser, setActiveUser] = useState({});
     const activePage = useRef('');
 
@@ -30,6 +30,7 @@ export default function App() {
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
+            setOpenPage('Dashboard');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
             setIsAuthenticated(false);
@@ -40,6 +41,7 @@ export default function App() {
         try {
             await signOut(auth);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
+            setOpenPage('');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
         }
@@ -114,6 +116,8 @@ export default function App() {
             activePage.current = 'Calendar';
         } else if (openPage === 'UserProfile') {
             title = 'Benutzerprofil';
+        } else if (openPage === '') {
+            title = 'Login';
         }
         document.title = `familyApp | ${title}`;
     }, [openPage]);
@@ -127,7 +131,7 @@ export default function App() {
             ) : (
                 <>
                     <div className="navbar-container">
-                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />
+                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} openPage={openPage} />
                     </div>
 
                     <div className="page-container">
