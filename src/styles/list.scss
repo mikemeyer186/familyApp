@@ -346,3 +346,62 @@
 .Sonstiges {
     background-color: #9e689e;
 }
+
+@media (max-width: 650px) {
+    .listPage-wrapper {
+        padding: 90px 12px;
+    }
+}
+
+@media (max-width: 575px) {
+    .listContainer {
+        max-width: calc(100vw - 24px);
+    }
+
+    .listCollection {
+        grid-template-columns: none;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .itemDescription {
+        .title {
+            font-size: 1rem;
+        }
+        .line-through {
+            font-size: 1rem;
+        }
+    }
+
+    .itemAmount {
+        .amountAdjust {
+            gap: 6px;
+        }
+    }
+
+    .itemClickable {
+        padding-left: 20px;
+
+        .label {
+            width: initial;
+        }
+    }
+
+    .newInput {
+        .dropdown-toggle {
+            font-size: 0.8rem;
+            width: 105px;
+        }
+        .textInput {
+            font-size: 0.8rem;
+            &::placeholder {
+                font-size: 0.8rem;
+            }
+        }
+        .btn-primary {
+            font-size: 0.8rem;
+            width: 40px;
+        }
+    }
+}

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function NewItemForm({ addItem }) {
     const [newItem, setNewItem] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Kategorie');
+    const [isMobile, setIsMobile] = useState(false);
     const defaultCategories = ['Lebensmittel', 'Haushalt', 'Hygiene', 'Schule', 'Hund', 'Sonstiges'];
 
     function handleSubmit(event) {
@@ -19,6 +20,39 @@ export default function NewItemForm({ addItem }) {
     function handleCategorySelection(category) {
         setSelectedCategory(category);
     }
+
+    useEffect(() => {
+        if (window.innerWidth > 480) {
+            setIsMobile(false);
+        }
+
+        if (window.innerWidth <= 480) {
+            setIsMobile(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 480) {
+                setIsMobile(false);
+            }
+
+            if (window.innerWidth <= 480) {
+                setIsMobile(true);
+            }
+        });
+        return () => {
+            window.removeEventListener('resize', () => {
+                if (window.innerWidth > 480) {
+                    setIsMobile(false);
+                }
+
+                if (window.innerWidth <= 480) {
+                    setIsMobile(true);
+                }
+            });
+        };
+    }, []);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -52,7 +86,7 @@ export default function NewItemForm({ addItem }) {
                 />
 
                 <button className="btn btn-primary" type="submit" id="addListItemButton">
-                    Hinzufügen
+                    {isMobile ? '+' : 'Hinzufügen'}
                 </button>
             </div>
         </form>

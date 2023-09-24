@@ -96,7 +96,7 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                                 <li className="nav-item dropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <img src="assets/icons/person-gear.svg" alt="Profil" />
                                     <span className="nav-link dropdown-toggle">Benutzerprofil</span>
-                                    <ul className="dropdown-menu">
+                                    <ul className="dropdown-menu dropdown-menu-offcanvas">
                                         <li>
                                             <span
                                                 className="dropdown-item pointer"
@@ -125,7 +125,7 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                             </ul>
 
                             <form className="d-flex mt-3" role="search">
-                                <input className="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" />
+                                <input id="searchbar" className="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" />
                                 <button className="btn btn-outline-success" type="submit">
                                     Suchen
                                 </button>
