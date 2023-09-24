@@ -136,7 +136,7 @@ export default function App() {
 
                     <div className="page-container">
                         {openPage === 'Dashboard' && <DashboardPage />}
-                        {openPage === 'ListPage' && <ListPage />}
+                        {openPage === 'ListPage' && <ListPage activeUser={activeUser} />}
                         {openPage === 'Journal' && <JournalPage />}
                         {openPage === 'Calendar' && <CalendarPage />}
                         {openPage === 'UserProfile' && (

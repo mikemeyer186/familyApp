@@ -7,12 +7,12 @@ import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
 import Spinner from '../global/spinner';
 
-export default function ListPage() {
-    const [currentUser] = useState('Mike');
+export default function ListPage({ activeUser }) {
     const [lists, setLists] = useState([]);
     const [sortBy, setSortBy] = useState('Datum');
     const [isLoaded, setIsLoaded] = useState(false);
     const sortCategories = ['Datum', 'Alphabet'];
+    const currentUser = activeUser.displayName;
     let sortedLists;
 
     useEffect(() => {
