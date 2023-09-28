@@ -8,7 +8,7 @@ export default defineConfig({
         react(),
         VitePWA({
             manifest: {
-                name: 'familyApp',
+                name: 'Family App',
                 short_name: 'familyApp',
                 display: 'standalone',
                 lang: 'de',
