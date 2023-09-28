@@ -18,7 +18,7 @@ export default function Login({ signInUser }) {
         <>
             <div className="login-container">
                 <div className="login-header">
-                    <img src="assets/img/logo.png" alt="Logo" />
+                    <img src="assets/img/logo_blue.png" alt="Logo" />
                     <span>familyApp</span>
                 </div>
                 <form className="login-form" onSubmit={handleSubmit}>

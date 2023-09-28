@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useNavigate } from 'react-router';
 
 export default function UserProfile({ setOpenPage, activeUser, updateUserProfile, activePage }) {
     const [userName, setUserName] = useState(activeUser.displayName || '');
@@ -11,12 +12,14 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
     const [isUploading, setIsUploading] = useState(false);
     const photoInputRef = useRef(null);
     const userID = activeUser.uid;
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
         //updateUserEmail(email);
         setOpenPage(activePage.current);
+        navigate(-1);
     }
 
     async function getPhotoUrl(storageRef) {
@@ -103,7 +106,7 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
                             />
                         </div>
                         <div className="profile-footer mt-5">
-                            <button type="button" className="btn btn-secondary" onClick={() => setOpenPage(activePage.current)}>
+                            <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" onClick={handleSubmit}>

@@ -11,8 +11,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 24px;
-        transform: translateY(-100px);
+        gap: 12px;
+        transform: translate(-5px, -150px);
 
         img {
             width: 100px;
@@ -33,7 +33,7 @@
         padding: 2rem;
         border-radius: 5px;
         box-shadow: $shadow;
-        transform: translateY(-100px);
+        transform: translateY(-150px);
 
         .form-group {
             margin-bottom: 1rem;
@@ -83,7 +83,7 @@
         justify-content: center;
         align-items: center;
         gap: 12px;
-        transform: translateY(-100px);
+        transform: translateY(-150px);
 
         .links {
             color: rgba(0, 0, 0, 0.5);

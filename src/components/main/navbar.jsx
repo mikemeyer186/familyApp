@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage }) {
+export default function Navbar({ signOutUser, activeUser }) {
     const [greeting, setGreeting] = useState('Hallo, ');
+    const navigate = useNavigate();
 
     function handleSignOut() {
         signOutUser();
+    }
+
+    function handleDropdownNav(route) {
+        navigate(route);
     }
 
     function checkDaytime() {
@@ -58,37 +64,29 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li
-                                    className={`nav-item ${openPage === 'Dashboard' && 'active'}`}
-                                    data-bs-dismiss="offcanvas"
-                                    onClick={() => setOpenPage('Dashboard')}
-                                >
-                                    <img src="assets/icons/clipboard-data.svg" alt="Dashboard" />
-                                    <span className="nav-link">Dashboard</span>
+                                <li data-bs-dismiss="offcanvas">
+                                    <NavLink to="/dashboard" className="nav-item">
+                                        <img src="assets/icons/clipboard-data.svg" alt="Dashboard" />
+                                        <span className="nav-link">Dashboard</span>
+                                    </NavLink>
                                 </li>
-                                <li
-                                    className={`nav-item ${openPage === 'ListPage' && 'active'}`}
-                                    data-bs-dismiss="offcanvas"
-                                    onClick={() => setOpenPage('ListPage')}
-                                >
-                                    <img src="assets/icons/card-checklist.svg" alt="Listen" />
-                                    <span className="nav-link">Listen</span>
+                                <li data-bs-dismiss="offcanvas">
+                                    <NavLink to="/lists" className="nav-item">
+                                        <img src="assets/icons/card-checklist.svg" alt="Listen" />
+                                        <span className="nav-link">Listen</span>
+                                    </NavLink>
                                 </li>
-                                <li
-                                    className={`nav-item ${openPage === 'Journal' && 'active'}`}
-                                    data-bs-dismiss="offcanvas"
-                                    onClick={() => setOpenPage('Journal')}
-                                >
-                                    <img src="assets/icons/cash-coin.svg" alt="Journal" />
-                                    <span className="nav-link">Journal</span>
+                                <li data-bs-dismiss="offcanvas">
+                                    <NavLink to="/journal" className="nav-item">
+                                        <img src="assets/icons/cash-coin.svg" alt="Journal" />
+                                        <span className="nav-link">Journal</span>
+                                    </NavLink>
                                 </li>
-                                <li
-                                    className={`nav-item ${openPage === 'Calendar' && 'active'}`}
-                                    data-bs-dismiss="offcanvas"
-                                    onClick={() => setOpenPage('Calendar')}
-                                >
-                                    <img src="assets/icons/calendar3.svg" alt="Kalender" />
-                                    <span className="nav-link">Kalender</span>
+                                <li data-bs-dismiss="offcanvas">
+                                    <NavLink to="/calendar" className="nav-item">
+                                        <img src="assets/icons/calendar3.svg" alt="Kalender" />
+                                        <span className="nav-link">Kalender</span>
+                                    </NavLink>
                                 </li>
                                 <li>
                                     <hr className="nav-divider" />
@@ -97,12 +95,8 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                                     <img src="assets/icons/person-gear.svg" alt="Profil" />
                                     <span className="nav-link dropdown-toggle">Benutzerprofil</span>
                                     <ul className="dropdown-menu dropdown-menu-offcanvas">
-                                        <li>
-                                            <span
-                                                className="dropdown-item pointer"
-                                                data-bs-dismiss="offcanvas"
-                                                onClick={() => setOpenPage('UserProfile')}
-                                            >
+                                        <li data-bs-dismiss="offcanvas">
+                                            <span className="dropdown-item pointer" onClick={() => handleDropdownNav('/userprofile')}>
                                                 Profil bearbeiten
                                             </span>
                                         </li>
@@ -118,7 +112,7 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser, openPage 
                                         </li>
                                     </ul>
                                 </li>
-                                <li className="nav-item" onClick={handleSignOut}>
+                                <li className="nav-item" onClick={handleSignOut} data-bs-dismiss="offcanvas">
                                     <img src="assets/icons/door-open.svg" alt="Logout" />
                                     <span className="nav-link pointer">Abmelden</span>
                                 </li>

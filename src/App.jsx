@@ -1,11 +1,11 @@
 import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { auth } from './config/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile } from 'firebase/auth';
-import ListPage from './components/list/listPage';
-import Navbar from './components/main/navbar';
+import { updateEmail, updateProfile, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
@@ -13,6 +13,8 @@ import UserProfile from './components/main/profile';
 import DashboardPage from './components/dashboard/dashboardPage';
 import JournalPage from './components/journal/journalPage';
 import CalendarPage from './components/calendar/calendarPage';
+import Navbar from './components/main/navbar';
+import ListPage from './components/list/listPage';
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -22,6 +24,7 @@ export default function App() {
     const [openPage, setOpenPage] = useState('');
     const [activeUser, setActiveUser] = useState({});
     const activePage = useRef('');
+    const navigate = useNavigate();
 
     async function signInUser(email, password) {
         try {
@@ -31,6 +34,7 @@ export default function App() {
             setSuccess('Du bist erfolgreich eingeloggt!');
             setIsAuthenticated(true);
             setOpenPage('Dashboard');
+            navigate('/dashboard');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
             setIsAuthenticated(false);
@@ -42,20 +46,10 @@ export default function App() {
             await signOut(auth);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
             setOpenPage('');
+            navigate('/');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
         }
-    }
-
-    function authCheck() {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setIsAuthenticated(true);
-                setActiveUser(user);
-            } else {
-                setIsAuthenticated(false);
-            }
-        });
     }
 
     async function updateUserProfile(displayName, photoURL) {
@@ -78,6 +72,17 @@ export default function App() {
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
         }
+    }
+
+    function authCheck() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsAuthenticated(true);
+                setActiveUser(user);
+            } else {
+                setIsAuthenticated(false);
+            }
+        });
     }
 
     useEffect(() => {
@@ -126,20 +131,25 @@ export default function App() {
         <>
             {success && <Success success={success} slideOut={slideOut} />}
             {error && <Error error={error} slideOut={slideOut} />}
-            {!isAuthenticated ? (
-                <Login signInUser={signInUser} />
-            ) : (
-                <>
-                    <div className="navbar-container">
-                        <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} openPage={openPage} />
-                    </div>
 
-                    <div className="page-container">
-                        {openPage === 'Dashboard' && <DashboardPage />}
-                        {openPage === 'ListPage' && <ListPage activeUser={activeUser} />}
-                        {openPage === 'Journal' && <JournalPage />}
-                        {openPage === 'Calendar' && <CalendarPage />}
-                        {openPage === 'UserProfile' && (
+            {isAuthenticated ? (
+                <div className="navbar-container">
+                    <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />
+                </div>
+            ) : (
+                <div className="blank-container"></div>
+            )}
+
+            <div className="page-container">
+                <Routes>
+                    <Route path="/" element={<Login signInUser={signInUser} />} />
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/lists" element={<ListPage activeUser={activeUser} />} />
+                    <Route path="/journal" element={<JournalPage />} />
+                    <Route path="/calendar" element={<CalendarPage />} />
+                    <Route
+                        path="/userprofile"
+                        element={
                             <UserProfile
                                 setOpenPage={setOpenPage}
                                 activeUser={activeUser}
@@ -147,10 +157,10 @@ export default function App() {
                                 updateUserEmail={updateUserEmail}
                                 activePage={activePage}
                             />
-                        )}
-                    </div>
-                </>
-            )}
+                        }
+                    />
+                </Routes>
+            </div>
         </>
     );
 }
