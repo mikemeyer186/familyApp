@@ -87,18 +87,19 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        setTimeout(() => {
+        const alertTime = setTimeout(() => {
             setSlideOut('slideOut-alert');
         }, 3000);
 
-        setTimeout(() => {
+        const slideTime = setTimeout(() => {
             setError('');
             setSuccess('');
             setSlideOut('');
         }, 3200);
 
         return () => {
-            clearTimeout();
+            clearTimeout(alertTime);
+            clearTimeout(slideTime);
         };
     }, [error, success]);
 

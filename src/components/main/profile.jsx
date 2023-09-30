@@ -28,7 +28,7 @@ export default function UserProfile({ activeUser, updateUserProfile }) {
     }
 
     useEffect(() => {
-        setTimeout(() => {
+        const uploadTime = setTimeout(() => {
             const storageRef = ref(storage, userID + '_' + file.name);
             if (file) {
                 uploadBytes(storageRef, file).then(() => {
@@ -38,6 +38,10 @@ export default function UserProfile({ activeUser, updateUserProfile }) {
                 });
             }
         }, 3000);
+
+        return () => {
+            clearTimeout(uploadTime);
+        };
     }, [newPhotoUrl, file, userID]);
 
     useEffect(() => {

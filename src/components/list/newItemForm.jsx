@@ -32,7 +32,7 @@ export default function NewItemForm({ addItem }) {
     }, []);
 
     useEffect(() => {
-        window.addEventListener('resize', () => {
+        const sizeListener = window.addEventListener('resize', () => {
             if (window.innerWidth > 480) {
                 setIsMobile(false);
             }
@@ -41,16 +41,9 @@ export default function NewItemForm({ addItem }) {
                 setIsMobile(true);
             }
         });
-        return () => {
-            window.removeEventListener('resize', () => {
-                if (window.innerWidth > 480) {
-                    setIsMobile(false);
-                }
 
-                if (window.innerWidth <= 480) {
-                    setIsMobile(true);
-                }
-            });
+        return () => {
+            window.removeEventListener('resize', sizeListener);
         };
     }, []);
 
@@ -86,7 +79,7 @@ export default function NewItemForm({ addItem }) {
                 />
 
                 <button className="btn btn-primary" type="submit" id="addListItemButton">
-                    {isMobile ? '+' : 'Hinzufügen'}
+                    {isMobile ? <strong>+</strong> : 'Hinzufügen'}
                 </button>
             </div>
         </form>
