@@ -97,3 +97,9 @@ $offsetY: -50px;
         }
     }
 }
+
+@media (max-width: 440px) {
+    .login-form {
+        width: calc(100vw - 24px) !important;
+    }
+}

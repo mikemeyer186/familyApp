@@ -29,8 +29,8 @@
         gap: 12px;
 
         .offcanvas-image {
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
             border-radius: 100%;
         }
@@ -41,10 +41,11 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
         width: max-content;
         cursor: pointer;
         text-decoration: none;
+        font-size: 1.5rem;
 
         &::after {
             content: '';
@@ -74,6 +75,7 @@
         }
 
         img {
+            width: 25px;
             transform: translateY(-1px);
             opacity: 0.5;
         }
@@ -83,6 +85,7 @@
             left: 0;
             right: 0;
             width: 265%;
+            font-size: 1.3rem;
         }
     }
 

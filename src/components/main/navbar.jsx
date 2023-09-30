@@ -57,10 +57,10 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                                         className="offcanvas-image"
                                         alt="User image"
                                     />
-                                    <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+                                    <h4 className="offcanvas-title" id="offcanvasNavbarLabel">
                                         {greeting}
                                         {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
-                                    </h5>
+                                    </h4>
                                 </div>
                                 <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
@@ -120,7 +120,7 @@ export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
                                     </li>
                                 </ul>
 
-                                <form className="d-flex mt-3" role="search">
+                                <form className="d-flex mt-4" role="search">
                                     <input id="searchbar" className="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" />
                                     <button className="btn btn-outline-success" type="submit">
                                         Suchen
