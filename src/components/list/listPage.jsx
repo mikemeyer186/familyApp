@@ -58,8 +58,9 @@ export default function ListPage({ activeUser }) {
     function handleSorting(category) {
         setSortBy(category);
     }
+
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
-    if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => Number(a.date) - Number(b.date));
+    if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));
 
     return (
         <>

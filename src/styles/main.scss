@@ -1,18 +1,5 @@
-.navbar-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: $navbarHeight;
-    padding: 0 1rem;
-}
-
-.blank-container {
-    height: $navbarHeight;
-    background-color: #f0f0f0;
-}
-
 .page-container {
-    height: calc(100svh - $navbarHeight);
+    height: 100svh;
     background-color: $bg-color;
     overflow: hidden;
 }

@@ -50,7 +50,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                         <div className="itemInfoBadges">
                             <span className={`badge rounded-pill category ${item.category}`}>{item.category}</span>
                             <div
-                                src="assets/icons/info-circle.svg"
+                                src="/assets/icons/info-circle.svg"
                                 alt="info"
                                 tabIndex="0"
                                 className="badge rounded-pill infoIcon"
@@ -73,10 +73,10 @@ export default function Item({ item, updateItem, deleteItem }) {
                 <div className="amountAdjust">
                     <span>{amount}</span>
                     <div className="amountArrows">
-                        <img className="arrow" src="assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
+                        <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
                         <img
                             className={amount === 1 ? 'arrow-disabled' : 'arrow'}
-                            src="assets/icons/caret-down-fill.svg"
+                            src="/assets/icons/caret-down-fill.svg"
                             alt="down"
                             onClick={handleDecreaseAmount}
                         />
@@ -84,7 +84,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                 </div>
             </div>
 
-            <img src="assets/icons/x-lg.svg" className="iconClickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
+            <img src="/assets/icons/x-lg.svg" className="iconClickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
         </li>
     );
 }

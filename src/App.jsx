@@ -13,11 +13,10 @@ import UserProfile from './components/main/profile';
 import DashboardPage from './components/dashboard/dashboardPage';
 import JournalPage from './components/journal/journalPage';
 import CalendarPage from './components/calendar/calendarPage';
-import Navbar from './components/main/navbar';
 import ListPage from './components/list/listPage';
+import AppLayout from './components/main/appLayout';
 
 export default function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
@@ -32,12 +31,10 @@ export default function App() {
             const user = userCredential.user;
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
-            setIsAuthenticated(true);
             setOpenPage('Dashboard');
-            navigate('/dashboard');
+            navigate('app/dashboard');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
-            setIsAuthenticated(false);
         }
     }
 
@@ -77,10 +74,8 @@ export default function App() {
     function authCheck() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                setIsAuthenticated(true);
                 setActiveUser(user);
-            } else {
-                setIsAuthenticated(false);
+                navigate('app/dashboard');
             }
         });
     }
@@ -132,33 +127,29 @@ export default function App() {
             {success && <Success success={success} slideOut={slideOut} />}
             {error && <Error error={error} slideOut={slideOut} />}
 
-            {isAuthenticated ? (
-                <div className="navbar-container">
-                    <Navbar signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />
-                </div>
-            ) : (
-                <div className="blank-container"></div>
-            )}
-
             <div className="page-container">
                 <Routes>
                     <Route path="/" element={<Login signInUser={signInUser} />} />
-                    <Route path="/dashboard" element={<DashboardPage />} />
-                    <Route path="/lists" element={<ListPage activeUser={activeUser} />} />
-                    <Route path="/journal" element={<JournalPage />} />
-                    <Route path="/calendar" element={<CalendarPage />} />
-                    <Route
-                        path="/userprofile"
-                        element={
-                            <UserProfile
-                                setOpenPage={setOpenPage}
-                                activeUser={activeUser}
-                                updateUserProfile={updateUserProfile}
-                                updateUserEmail={updateUserEmail}
-                                activePage={activePage}
-                            />
-                        }
-                    />
+
+                    <Route path="app" element={<AppLayout signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />}>
+                        <Route index element={<DashboardPage />} />
+                        <Route path="dashboard" element={<DashboardPage />} />
+                        <Route path="lists" element={<ListPage activeUser={activeUser} />} />
+                        <Route path="journal" element={<JournalPage />} />
+                        <Route path="calendar" element={<CalendarPage />} />
+                        <Route
+                            path="userprofile"
+                            element={
+                                <UserProfile
+                                    setOpenPage={setOpenPage}
+                                    activeUser={activeUser}
+                                    updateUserProfile={updateUserProfile}
+                                    updateUserEmail={updateUserEmail}
+                                    activePage={activePage}
+                                />
+                            }
+                        />
+                    </Route>
                 </Routes>
             </div>
         </>
