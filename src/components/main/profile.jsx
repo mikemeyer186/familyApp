@@ -3,7 +3,7 @@ import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
 
-export default function UserProfile({ setOpenPage, activeUser, updateUserProfile, activePage }) {
+export default function UserProfile({ activeUser, updateUserProfile }) {
     const [userName, setUserName] = useState(activeUser.displayName || '');
     const [email, setEmail] = useState(activeUser.email);
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');
@@ -18,7 +18,6 @@ export default function UserProfile({ setOpenPage, activeUser, updateUserProfile
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
         //updateUserEmail(email);
-        setOpenPage(activePage.current);
         navigate(-1);
     }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-export default function Navbar({ signOutUser, activeUser }) {
+export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
     const [greeting, setGreeting] = useState('Hallo, ');
     const navigate = useNavigate();
 
@@ -10,6 +10,7 @@ export default function Navbar({ signOutUser, activeUser }) {
     }
 
     function handleDropdownNav(route) {
+        setOpenPage(route);
         navigate(route);
     }
 
@@ -65,25 +66,25 @@ export default function Navbar({ signOutUser, activeUser }) {
                             </div>
                             <div className="offcanvas-body">
                                 <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                    <li data-bs-dismiss="offcanvas">
+                                    <li data-bs-dismiss="offcanvas" onClick={() => setOpenPage('dashboard')}>
                                         <NavLink to="dashboard" className="nav-item">
                                             <img src="/assets/icons/clipboard-data.svg" alt="Dashboard" />
                                             <span className="nav-link">Dashboard</span>
                                         </NavLink>
                                     </li>
-                                    <li data-bs-dismiss="offcanvas">
+                                    <li data-bs-dismiss="offcanvas" onClick={() => setOpenPage('lists')}>
                                         <NavLink to="lists" className="nav-item">
                                             <img src="/assets/icons/card-checklist.svg" alt="Listen" />
                                             <span className="nav-link">Listen</span>
                                         </NavLink>
                                     </li>
-                                    <li data-bs-dismiss="offcanvas">
+                                    <li data-bs-dismiss="offcanvas" onClick={() => setOpenPage('journal')}>
                                         <NavLink to="journal" className="nav-item">
                                             <img src="/assets/icons/cash-coin.svg" alt="Journal" />
                                             <span className="nav-link">Journal</span>
                                         </NavLink>
                                     </li>
-                                    <li data-bs-dismiss="offcanvas">
+                                    <li data-bs-dismiss="offcanvas" onClick={() => setOpenPage('calendar')}>
                                         <NavLink to="calendar" className="nav-item">
                                             <img src="/assets/icons/calendar3.svg" alt="Kalender" />
                                             <span className="nav-link">Kalender</span>

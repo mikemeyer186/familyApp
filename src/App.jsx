@@ -2,7 +2,7 @@ import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from './config/firebase';
 import { updateEmail, updateProfile, signOut } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
@@ -20,9 +20,13 @@ export default function App() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
-    const [openPage, setOpenPage] = useState('');
     const [activeUser, setActiveUser] = useState({});
-    const activePage = useRef('');
+    const [openPage, setOpenPage] = useState(() => {
+        return localStorage.getItem('activePage') || '';
+    });
+    const [activePage, setActivePage] = useState(() => {
+        return localStorage.getItem('activePage') || '';
+    });
     const navigate = useNavigate();
 
     async function signInUser(email, password) {
@@ -31,7 +35,7 @@ export default function App() {
             const user = userCredential.user;
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
-            setOpenPage('Dashboard');
+            setOpenPage('dashboard');
             navigate('app/dashboard');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
@@ -71,18 +75,14 @@ export default function App() {
         }
     }
 
-    function authCheck() {
+    useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setActiveUser(user);
-                navigate('app/dashboard');
+                navigate(`app/${activePage}`);
             }
         });
-    }
-
-    useEffect(() => {
-        authCheck();
-    }, []);
+    }, [navigate, activePage]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -102,25 +102,26 @@ export default function App() {
 
     useEffect(() => {
         let title = '';
-        if (openPage === 'Dashboard') {
+        if (openPage === 'dashboard') {
             title = 'Dashboard';
-            activePage.current = 'Dashboard';
-        } else if (openPage === 'ListPage') {
+            setActivePage('dashboard');
+        } else if (openPage === 'lists') {
             title = 'Listen';
-            activePage.current = 'ListPage';
-        } else if (openPage === 'Journal') {
+            setActivePage('lists');
+        } else if (openPage === 'journal') {
             title = 'Journal';
-            activePage.current = 'Journal';
-        } else if (openPage === 'Calendar') {
+            setActivePage('journal');
+        } else if (openPage === 'calendar') {
             title = 'Kalender';
-            activePage.current = 'Calendar';
-        } else if (openPage === 'UserProfile') {
+            setActivePage('calendar');
+        } else if (openPage === 'userprofile') {
             title = 'Benutzerprofil';
         } else if (openPage === '') {
             title = 'Login';
         }
         document.title = `familyApp | ${title}`;
-    }, [openPage]);
+        localStorage.setItem('activePage', activePage);
+    }, [openPage, activePage]);
 
     return (
         <>
@@ -139,15 +140,7 @@ export default function App() {
                         <Route path="calendar" element={<CalendarPage />} />
                         <Route
                             path="userprofile"
-                            element={
-                                <UserProfile
-                                    setOpenPage={setOpenPage}
-                                    activeUser={activeUser}
-                                    updateUserProfile={updateUserProfile}
-                                    updateUserEmail={updateUserEmail}
-                                    activePage={activePage}
-                                />
-                            }
+                            element={<UserProfile activeUser={activeUser} updateUserProfile={updateUserProfile} updateUserEmail={updateUserEmail} />}
                         />
                     </Route>
                 </Routes>
