@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { auth } from './config/firebase';
 import { updateEmail, updateProfile, signOut } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
@@ -21,12 +22,9 @@ export default function App() {
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
     const [activeUser, setActiveUser] = useState({});
-    const [openPage, setOpenPage] = useState(() => {
-        return localStorage.getItem('activePage') || '';
-    });
-    const [activePage, setActivePage] = useState(() => {
-        return localStorage.getItem('activePage') || '';
-    });
+    const [lastPage, setLastPage] = useLocalStorage('lastPage');
+    const [openPage, setOpenPage] = useState(lastPage);
+    const [activePage, setActivePage] = useState(lastPage);
     const navigate = useNavigate();
 
     async function signInUser(email, password) {
@@ -75,14 +73,18 @@ export default function App() {
         }
     }
 
-    useEffect(() => {
+    function authCheck() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setActiveUser(user);
                 navigate(`app/${activePage}`);
             }
         });
-    }, [navigate, activePage]);
+    }
+
+    useEffect(() => {
+        authCheck();
+    }, []);
 
     useEffect(() => {
         setTimeout(() => {
@@ -120,8 +122,8 @@ export default function App() {
             title = 'Login';
         }
         document.title = `familyApp | ${title}`;
-        localStorage.setItem('activePage', activePage);
-    }, [openPage, activePage]);
+        setLastPage(activePage);
+    }, [openPage, activePage, setLastPage]);
 
     return (
         <>
