@@ -71,11 +71,11 @@ export default function Item({ item, updateItem, deleteItem }) {
             </label>
             <div className={item.done ? 'd-none' : 'itemAmount'}>
                 <div className="amountAdjust">
-                    <span>{amount}</span>
                     <div className="amountArrows">
                         <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
+                        <div className="amountNumber">{amount}</div>
                         <img
-                            className={amount === 1 ? 'arrow-disabled' : 'arrow'}
+                            className={amount === 1 ? 'arrow-disabled arrow-down' : 'arrow'}
                             src="/assets/icons/caret-down-fill.svg"
                             alt="down"
                             onClick={handleDecreaseAmount}

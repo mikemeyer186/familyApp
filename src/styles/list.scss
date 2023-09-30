@@ -161,14 +161,16 @@
         font-size: 1.3rem;
         font-weight: 500;
         color: #595959;
+        transition: all 250ms ease-in-out;
     }
 
     .line-through {
         text-decoration: line-through;
         padding-left: 4px;
         font-size: 1.3rem;
-        font-weight: 300;
+        font-weight: 500;
         color: #949494;
+        transition: all 250ms ease-in-out;
     }
 }
 
@@ -206,7 +208,7 @@
     overflow: hidden;
     transition: all 125ms ease-in-out;
     max-width: $maxWidth;
-    height: 114px;
+    height: 117px;
     &:hover {
         background-color: rgba(200, 200, 200, 0.1);
     }
@@ -224,6 +226,7 @@
     justify-content: center;
     width: 30px;
     height: 30px;
+    flex-shrink: 0;
     border-radius: 100%;
     border: transparent;
     display: grid;
@@ -258,29 +261,40 @@
     align-items: flex-end;
     justify-content: center;
     padding-right: 20px;
-    width: 130px;
-    gap: 4px;
+    height: 100px;
     z-index: 2 !important;
 
-    .amountTitle {
-        font-size: 0.7rem;
-        font-weight: 400;
-        color: #7f7f7f;
-    }
-
     .amountAdjust {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-    }
-
-    .amountArrows {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100%;
+    }
+
+    .amountArrows {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+
+        .amountNumber {
+            position: absolute;
+            z-index: 1;
+            background-color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #7f7f7f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 100%;
+        }
 
         .arrow {
             width: 3rem;
@@ -355,7 +369,12 @@
 
 @media (max-width: 575px) {
     .listContainer {
-        max-width: calc(100vw - 24px);
+        width: calc(100vw - 24px);
+    }
+
+    .itemDescription {
+        line-break: anywhere;
+        width: 200px;
     }
 
     .listCollection {
@@ -366,6 +385,7 @@
 
 @media (max-width: 480px) {
     .itemDescription {
+        width: 160px;
         .title {
             font-size: 1rem;
         }
@@ -375,6 +395,8 @@
     }
 
     .itemAmount {
+        padding-right: 0;
+
         .amountAdjust {
             gap: 6px;
         }
