@@ -159,7 +159,7 @@
     .title {
         padding-left: 4px;
         font-size: 1.3rem;
-        font-weight: 500;
+        font-weight: 400;
         color: #595959;
         transition: all 250ms ease-in-out;
     }
@@ -168,7 +168,7 @@
         text-decoration: line-through;
         padding-left: 4px;
         font-size: 1.3rem;
-        font-weight: 500;
+        font-weight: 400;
         color: #949494;
         transition: all 250ms ease-in-out;
     }
@@ -373,7 +373,7 @@
     }
 
     .itemDescription {
-        line-break: anywhere;
+        white-space: break-spaces;
         width: 200px;
     }
 

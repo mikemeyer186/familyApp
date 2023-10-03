@@ -23,7 +23,7 @@ export default function App() {
     const [slideOut, setSlideOut] = useState('');
     const [activeUser, setActiveUser] = useState({});
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
-    const [openPage, setOpenPage] = useState(lastPage);
+    const [openPage, setOpenPage] = useState(lastPage || '');
     const [activePage, setActivePage] = useState(lastPage);
     const navigate = useNavigate();
 
@@ -45,6 +45,7 @@ export default function App() {
             await signOut(auth);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
             setOpenPage('');
+            setActivePage('');
             navigate('/');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');

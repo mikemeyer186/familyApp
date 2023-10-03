@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Navbar({ signOutUser, setOpenPage, activeUser }) {
-    const [greeting, setGreeting] = useState('Hallo, ');
+    const [greeting, setGreeting] = useState('Hallo');
     const navigate = useNavigate();
 
     function handleSignOut() {

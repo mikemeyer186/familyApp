@@ -5,6 +5,10 @@
     height: $navbarHeight;
     padding: 0 1rem;
 
+    .offcanvas-body {
+        padding: 24px;
+    }
+
     .navbarBg {
         background-color: #fff;
         box-shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
@@ -45,7 +49,7 @@
         width: max-content;
         cursor: pointer;
         text-decoration: none;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
 
         &::after {
             content: '';
@@ -85,7 +89,7 @@
             left: 0;
             right: 0;
             width: 265%;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
     }
 

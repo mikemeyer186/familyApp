@@ -19,6 +19,7 @@ $offsetY: -50px;
         img {
             width: 100px;
             object-fit: cover;
+            -webkit-filter: drop-shadow(10px 20px 20px rgba(119, 119, 119, 0.3));
             filter: drop-shadow(10px 20px 20px rgba(119, 119, 119, 0.3));
         }
 
@@ -62,7 +63,7 @@ $offsetY: -50px;
             }
 
             button {
-                width: 99px;
+                width: 108px;
             }
         }
 
