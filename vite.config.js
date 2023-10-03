@@ -481,7 +481,7 @@ export default defineConfig({
             },
         }),
     ],
-    base: './',
+    base: '/',
     server: {
         port: 4200,
     },
