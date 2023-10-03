@@ -1,0 +1,94 @@
+.scroll-container {
+    height: 100svh;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.imprint-container {
+    padding: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 32px;
+        text-align: center;
+    }
+
+    @media (max-height: 640px) {
+        justify-content: flex-start;
+    }
+
+    @media (max-height: 640px) and (min-width: 769px) {
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .logo {
+        animation: slideInFromLeft 1s ease-in-out;
+
+        @media (max-width: 768px) {
+            width: 50%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 620px) {
+            width: 60%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 480px) {
+            width: 70%;
+            object-fit: cover;
+        }
+    }
+}
+
+.close-icon {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    transition: all 125ms ease-in-out;
+}
+
+a {
+    color: rgb(69, 66, 255);
+
+    @media (max-width: 360px) {
+        word-break: break-all;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) rotate(-180deg);
+    }
+    100% {
+        transform: translateX(0);
+        rotate: 0;
+    }
+}
+
+.data-protection-container {
+    padding: 48px 160px;
+
+    @media (max-width: 768px) {
+        padding: 48px 80px;
+    }
+    @media (max-width: 620px) {
+        padding: 48px 40px;
+    }
+    @media (max-width: 480px) {
+        padding: 48px 20px;
+    }
+
+    h1 {
+        @media (max-width: 360px) {
+            font-size: 24px;
+        }
+    }
+}

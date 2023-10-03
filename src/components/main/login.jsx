@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Login({ signInUser }) {
     const [email, setEmail] = useState('');
@@ -60,9 +61,13 @@ export default function Login({ signInUser }) {
                     </div>
                 </form>
                 <div className="login-links">
-                    <span className="links pointer">Impressum</span>
+                    <NavLink to="imprint?page=imprint" className="links pointer">
+                        Impressum
+                    </NavLink>
                     <span> | </span>
-                    <span className="links pointer">Datenschutz</span>
+                    <NavLink to="dataprotection?page=dataprotection" className="links pointer">
+                        Datenschutz
+                    </NavLink>
                 </div>
             </div>
         </>

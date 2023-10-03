@@ -1,7 +1,7 @@
 import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { auth } from './config/firebase';
 import { updateEmail, updateProfile, signOut } from 'firebase/auth';
@@ -16,6 +16,8 @@ import JournalPage from './components/journal/journalPage';
 import CalendarPage from './components/calendar/calendarPage';
 import ListPage from './components/list/listPage';
 import AppLayout from './components/main/appLayout';
+import Imprint from './components/main/imprint';
+import DataProtection from './components/main/dataprotection';
 
 export default function App() {
     const [error, setError] = useState('');
@@ -26,6 +28,7 @@ export default function App() {
     const [openPage, setOpenPage] = useState(lastPage || '');
     const [activePage, setActivePage] = useState(lastPage);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams('');
 
     async function signInUser(email, password) {
         try {
@@ -106,6 +109,7 @@ export default function App() {
 
     useEffect(() => {
         let title = '';
+        const params = searchParams.get('page');
         if (openPage === 'dashboard') {
             title = 'Dashboard';
             setActivePage('dashboard');
@@ -120,12 +124,16 @@ export default function App() {
             setActivePage('calendar');
         } else if (openPage === 'userprofile') {
             title = 'Benutzerprofil';
-        } else if (openPage === '') {
+        } else if (openPage === '' && params === null) {
             title = 'Login';
+        } else if (openPage === '' && params === 'imprint') {
+            title = 'Impressum';
+        } else if (openPage === '' && params == 'dataprotection') {
+            title = 'Datenschutz';
         }
         document.title = `familyApp | ${title}`;
         setLastPage(activePage);
-    }, [openPage, activePage, setLastPage]);
+    }, [openPage, activePage, setLastPage, searchParams]);
 
     return (
         <>
@@ -135,6 +143,8 @@ export default function App() {
             <div className="page-container">
                 <Routes>
                     <Route path="/" element={<Login signInUser={signInUser} />} />
+                    <Route path="imprint" element={<Imprint signInUser={signInUser} />} />
+                    <Route path="dataprotection" element={<DataProtection signInUser={signInUser} />} />
 
                     <Route path="app" element={<AppLayout signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />}>
                         <Route index element={<DashboardPage />} />
