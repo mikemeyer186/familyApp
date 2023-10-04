@@ -23,12 +23,13 @@ export default function App() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [activeUser, setActiveUser] = useState({});
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [openPage, setOpenPage] = useState(lastPage || '');
     const [activePage, setActivePage] = useState(lastPage);
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams('');
+    const navigate = useNavigate();
 
     async function signInUser(email, password) {
         try {
@@ -82,6 +83,8 @@ export default function App() {
             if (user) {
                 setActiveUser(user);
                 navigate(`app/${activePage}`);
+            } else {
+                setIsAuthenticated(false);
             }
         });
     }
@@ -142,7 +145,7 @@ export default function App() {
 
             <div className="page-container">
                 <Routes>
-                    <Route path="/" element={<Login signInUser={signInUser} />} />
+                    <Route path="/" element={<Login signInUser={signInUser} isAuthenticated={isAuthenticated} />} />
                     <Route path="imprint" element={<Imprint signInUser={signInUser} />} />
                     <Route path="dataprotection" element={<DataProtection signInUser={signInUser} />} />
 

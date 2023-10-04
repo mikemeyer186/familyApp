@@ -72,7 +72,7 @@ export default function ListPage({ activeUser }) {
                 </div>
 
                 {!isLoaded ? (
-                    <Spinner />
+                    <Spinner>{'Listen laden...'}</Spinner>
                 ) : (
                     <div className="listCollection">
                         {sortedLists.length == 0 ? (
