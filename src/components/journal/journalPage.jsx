@@ -1,7 +1,15 @@
+import DialogNewData from './dialogNewData';
+import JournalToolbar from './journalToolbar';
+
 export default function JournalPage() {
     return (
         <>
-            <h1>Journal</h1>
+            <DialogNewData />
+            <div className="journalPage-wrapper">
+                <div className="journalToolbar">
+                    <JournalToolbar />
+                </div>
+            </div>
         </>
     );
 }

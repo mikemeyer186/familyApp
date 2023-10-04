@@ -2,6 +2,7 @@
 @import 'fonts.scss';
 @import 'variables.scss';
 @import 'list.scss';
+@import 'journal.scss';
 @import 'main.scss';
 @import 'navbar.scss';
 @import 'login.scss';
@@ -64,17 +65,6 @@ body {
     width: 130px;
 }
 
-//Bootstrap overrides
-.dropdown-menu {
-    background-color: #fafafa;
-
-    .dropdown-item {
-        &:hover {
-            background-color: #f0f0f0;
-        }
-    }
-}
-
 .slideIn-alert {
     position: absolute;
     top: 0;
@@ -86,6 +76,17 @@ body {
 
 .slideOut-alert {
     animation: slideOut 250ms ease-in;
+}
+
+//Bootstrap overrides
+.dropdown-menu {
+    background-color: #fafafa;
+
+    .dropdown-item {
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
 }
 
 @keyframes slideIn {

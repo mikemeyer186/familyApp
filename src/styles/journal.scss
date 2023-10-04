@@ -1,0 +1,44 @@
+.journalPage-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    overflow: auto;
+    padding: 90px 50px;
+
+    .journalToolbar {
+        position: absolute;
+        top: 12px;
+        right: 0;
+        padding: 12px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+
+        .newData-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                margin-left: 10px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
+
+#newJournalData {
+    #amount {
+        &::-webkit-inner-spin-button {
+            display: none;
+        }
+        &::-webkit-outer-spin-button {
+            display: none;
+        }
+    }
+}
