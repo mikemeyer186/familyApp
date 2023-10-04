@@ -26,7 +26,6 @@ export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [activeUser, setActiveUser] = useState({});
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
-    const [openPage, setOpenPage] = useState(lastPage || '');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
     const navigate = useNavigate();
@@ -37,8 +36,7 @@ export default function App() {
             const user = userCredential.user;
             setActiveUser(user);
             setSuccess('Du bist erfolgreich eingeloggt!');
-            setOpenPage('dashboard');
-            navigate('app/dashboard');
+            navigate('app/dashboard?page=Dashboard');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
         }
@@ -48,7 +46,6 @@ export default function App() {
         try {
             await signOut(auth);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
-            setOpenPage('');
             setActivePage('');
             navigate('/');
         } catch (err) {
@@ -111,32 +108,21 @@ export default function App() {
     }, [error, success]);
 
     useEffect(() => {
-        let title = '';
-        const params = searchParams.get('page');
-        if (openPage === 'dashboard') {
-            title = 'Dashboard';
-            setActivePage('dashboard');
-        } else if (openPage === 'lists') {
-            title = 'Listen';
-            setActivePage('lists');
-        } else if (openPage === 'journal') {
-            title = 'Journal';
-            setActivePage('journal');
-        } else if (openPage === 'calendar') {
-            title = 'Kalender';
-            setActivePage('calendar');
-        } else if (openPage === 'userprofile') {
-            title = 'Benutzerprofil';
-        } else if (openPage === '' && params === null) {
-            title = 'Login';
-        } else if (openPage === '' && params === 'imprint') {
-            title = 'Impressum';
-        } else if (openPage === '' && params == 'dataprotection') {
-            title = 'Datenschutz';
+        let params = searchParams.get('page');
+        if (params === 'Dashboard') {
+            setActivePage('dashboard?page=Dashboard');
+        } else if (params === 'Listen') {
+            setActivePage('lists?page=Listen');
+        } else if (params === 'Journal') {
+            setActivePage('journal?page=Journal');
+        } else if (params === 'Kalender') {
+            setActivePage('calendar?page=Kalender');
+        } else if (params === null) {
+            params = 'Login';
         }
-        document.title = `familyApp | ${title}`;
+        document.title = `familyApp | ${params}`;
         setLastPage(activePage);
-    }, [openPage, activePage, setLastPage, searchParams]);
+    }, [activePage, searchParams, setLastPage]);
 
     return (
         <>
@@ -149,7 +135,7 @@ export default function App() {
                     <Route path="imprint" element={<Imprint signInUser={signInUser} />} />
                     <Route path="dataprotection" element={<DataProtection signInUser={signInUser} />} />
 
-                    <Route path="app" element={<AppLayout signOutUser={signOutUser} setOpenPage={setOpenPage} activeUser={activeUser} />}>
+                    <Route path="app" element={<AppLayout signOutUser={signOutUser} activeUser={activeUser} />}>
                         <Route index element={<DashboardPage />} />
                         <Route path="dashboard" element={<DashboardPage />} />
                         <Route path="lists" element={<ListPage activeUser={activeUser} />} />

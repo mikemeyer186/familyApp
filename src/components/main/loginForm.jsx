@@ -60,11 +60,11 @@ export default function LoginForm({ signInUser }) {
                 </div>
             </form>
             <div className="login-links">
-                <NavLink to="imprint?page=imprint" className="links pointer">
+                <NavLink to="imprint?page=Impressum" className="links pointer">
                     Impressum
                 </NavLink>
                 <span> | </span>
-                <NavLink to="dataprotection?page=dataprotection" className="links pointer">
+                <NavLink to="dataprotection?page=Datenschutz" className="links pointer">
                     Datenschutz
                 </NavLink>
             </div>
