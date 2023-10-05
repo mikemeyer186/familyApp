@@ -41,4 +41,29 @@
             display: none;
         }
     }
+
+    .form-row {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .spend {
+        background-color: rgb(255, 159, 159);
+    }
+
+    .income {
+        background-color: rgb(157, 222, 157);
+    }
+
+    .dropdown-menu-journal {
+        max-height: 180px;
+        overflow: auto;
+
+        .subcategory {
+            pointer-events: none;
+            border-bottom: $thinBorder;
+            background-color: rgba(100, 100, 100, 0.3);
+            color: rgba(0, 0, 0, 0.5);
+        }
+    }
 }

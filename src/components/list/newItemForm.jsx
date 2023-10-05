@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import listCategories from '../../data/listCategories';
 
 export default function NewItemForm({ addItem }) {
     const [newItem, setNewItem] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Kategorie');
     const [isMobile, setIsMobile] = useState(false);
-    const defaultCategories = ['Lebensmittel', 'Haushalt', 'Hygiene', 'Schule', 'Hund', 'Sonstiges'];
+    const defaultCategories = listCategories;
 
     function handleSubmit(event) {
         event.preventDefault();
