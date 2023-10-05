@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogNewData() {
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState('');
     // const [flow, setFlow] = useState('');
     // const [category, setCategory] = useState('');
     // const [year, setYear] = useState(2023);
@@ -11,7 +11,13 @@ export default function DialogNewData() {
 
     function handleAddNewData(e) {
         e.preventDefault();
-        console.log('amount: ', amount);
+        console.log(typeof amount, amount);
+        setAmount('');
+    }
+
+    function handleAbort() {
+        setAmount('');
+        setInfo('');
     }
 
     return (
@@ -26,7 +32,7 @@ export default function DialogNewData() {
                         <form onSubmit={handleAddNewData}>
                             <div className="mb-3">
                                 <label htmlFor="amount" className="col-form-label">
-                                    Betrag
+                                    Betrag*
                                 </label>
                                 <CurrencyInput
                                     id="amount"
@@ -35,7 +41,9 @@ export default function DialogNewData() {
                                     decimalScale={2}
                                     intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
                                     allowNegativeValue={false}
+                                    value={amount}
                                     onValueChange={(value) => setAmount(value)}
+                                    required
                                 />
                             </div>
 
@@ -43,15 +51,22 @@ export default function DialogNewData() {
                                 <label htmlFor="info" className="col-form-label">
                                     Kommentar
                                 </label>
-                                <input type="text" className="form-control" id="info" value={info} onChange={(e) => setInfo(e.target.value)} />
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="info"
+                                    placeholder="Zusätzliche Info zum Beleg"
+                                    value={info}
+                                    onChange={(e) => setInfo(e.target.value)}
+                                />
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
                                     Abbrechen
                                 </button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
-                                    Erstellen
+                                <button type="submit" className="btn btn-primary">
+                                    Buchen
                                 </button>
                             </div>
                         </form>
