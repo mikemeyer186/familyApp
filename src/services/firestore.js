@@ -36,13 +36,17 @@ export async function deleteListInFirestore(id) {
 // Journal functions
 export async function loadJournalFromFirestore() {
     const querySnapshot = await getDocs(collection(db, 'journal'));
-    const journal = querySnapshot.docs.map((doc) => doc.data());
+    const journal = querySnapshot.docs.map((doc) => {
+        const id = doc.id;
+        const data = doc.data();
+        return { id, ...data };
+    });
     return journal;
 }
 
-export async function addPaymentInFirestore(journal, journalId) {
+export async function addPaymentInFirestore(payment, journalId) {
     try {
-        await setDoc(doc(db, 'journal', journalId), { journal });
+        await setDoc(doc(db, 'journal', journalId), { payment, id: journalId });
     } catch (e) {
         console.error('Error updating document: ', e);
     }

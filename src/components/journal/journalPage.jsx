@@ -6,7 +6,7 @@ import Spinner from '../global/spinner';
 
 export default function JournalPage() {
     const [journal, setJournal] = useState([]);
-    const [activeJournal, setActiveJournal] = useState([]);
+    const [activeJournal, setActiveJournal] = useState({});
     const [year, setYear] = useState();
     const [month, setMonth] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
@@ -17,11 +17,10 @@ export default function JournalPage() {
     }
 
     async function addNewPayment(newPayment, journalId) {
-        setActiveJournal((currentJournal) => {
-            const journal = [...currentJournal, newPayment];
-            addPaymentInFirestore(journal, journalId);
-            return journal;
-        });
+        const oldPayment = activeJournal.payment;
+        const updatedPayment = { ...oldPayment, newPayment };
+        await addPaymentInFirestore(updatedPayment, journalId);
+        loadJournal();
     }
 
     useEffect(() => {
@@ -37,7 +36,8 @@ export default function JournalPage() {
     }, []);
 
     useEffect(() => {
-        const filteredJournal = journal.filter((journal) => journal.id === `${year}-${month}`);
+        const filteredJournals = journal.filter((journal) => journal.id === `${year}-${month}`);
+        const filteredJournal = filteredJournals[0];
         setActiveJournal(filteredJournal);
     }, [journal, month, year]);
 
@@ -50,7 +50,17 @@ export default function JournalPage() {
                     <JournalToolbar />
                 </div>
 
-                {!isLoaded ? <Spinner>{'Journal laden...'}</Spinner> : <div className="journal-payments"></div>}
+                {!isLoaded ? (
+                    <Spinner>{'Journal laden...'}</Spinner>
+                ) : (
+                    <div className="journal-payments">
+                        <li>
+                            <span>{activeJournal.payment['date']}</span>
+                            <span>{activeJournal.payment['category']}</span>
+                            <span>{activeJournal.payment['amount']}</span>
+                        </li>
+                    </div>
+                )}
             </div>
         </>
     );

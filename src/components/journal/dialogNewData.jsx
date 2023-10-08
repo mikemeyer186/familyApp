@@ -24,6 +24,7 @@ export default function DialogNewData({ addNewPayment }) {
             {
                 year: selectedYear,
                 month: selectedMonth,
+                date: new Date().toISOString(),
                 flow: selectedFlow,
                 category: selectedCategory,
                 amount: parseFloat(amount.replace(',', '.')),
