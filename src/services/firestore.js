@@ -2,6 +2,7 @@ import { collection, deleteDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
+// List functions
 export async function loadListsFromFirestore() {
     const querySnapshot = await getDocs(collection(db, 'lists'));
     const allLists = querySnapshot.docs.map((doc) => doc.data());
@@ -29,5 +30,20 @@ export async function deleteListInFirestore(id) {
         await deleteDoc(doc(db, 'lists', id));
     } catch (e) {
         console.error('Error deleting document: ', e);
+    }
+}
+
+// Journal functions
+export async function loadJournalFromFirestore() {
+    const querySnapshot = await getDocs(collection(db, 'journal'));
+    const journal = querySnapshot.docs.map((doc) => doc.data());
+    return journal;
+}
+
+export async function addPaymentInFirestore(journal, journalId) {
+    try {
+        await setDoc(doc(db, 'journal', journalId), { journal });
+    } catch (e) {
+        console.error('Error updating document: ', e);
     }
 }

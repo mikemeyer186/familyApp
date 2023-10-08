@@ -7,6 +7,19 @@
     overflow: auto;
     padding: 90px 50px;
 
+    .spinner-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, calc(-50% - $navbarHeight));
+
+        .spinner-border {
+            width: 8rem;
+            height: 8rem;
+            border-width: 0.75em;
+        }
+    }
+
     .journalToolbar {
         position: absolute;
         top: 12px;
@@ -42,17 +55,28 @@
         }
     }
 
+    .form-input-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .input-group {
+        flex-wrap: nowrap;
+    }
+
     .form-row {
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
+        gap: 24px;
     }
 
     .spend {
-        background-color: rgb(255, 159, 159);
+        background-color: #ff9f9f;
     }
 
     .income {
-        background-color: rgb(157, 222, 157);
+        background-color: #9dde9d;
     }
 
     .dropdown-menu-journal {
