@@ -1,49 +1,38 @@
 import { useEffect, useState } from 'react';
-import { addPaymentInFirestore, loadJournalFromFirestore } from '../../services/firestore';
+import { loadJournalFromFirestore } from '../../services/firestore';
 import DialogNewData from './dialogNewData';
 import JournalToolbar from './journalToolbar';
 import Spinner from '../global/spinner';
 
 export default function JournalPage() {
-    const [journal, setJournal] = useState([]);
+    const date = new Date();
+    const [journals, setJournals] = useState([]);
     const [activeJournal, setActiveJournal] = useState({});
-    const [year, setYear] = useState();
-    const [month, setMonth] = useState();
+    const [year, setYear] = useState(date.getFullYear());
+    const [month, setMonth] = useState(date.getMonth() + 1);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    async function loadJournal() {
+    async function loadJournals() {
         const journal = await loadJournalFromFirestore();
-        setJournal(journal);
-    }
-
-    async function addNewPayment(newPayment, journalId) {
-        const oldPayment = activeJournal.payment;
-        const updatedPayment = { ...oldPayment, newPayment };
-        await addPaymentInFirestore(updatedPayment, journalId);
-        loadJournal();
+        setJournals(journal);
     }
 
     useEffect(() => {
-        const date = new Date();
-        setYear(date.getFullYear());
-        setMonth(date.getMonth() + 1);
+        loadJournals();
     }, []);
 
     useEffect(() => {
-        loadJournal().then(() => {
-            setIsLoaded(true);
-        });
-    }, []);
-
-    useEffect(() => {
-        const filteredJournals = journal.filter((journal) => journal.id === `${year}-${month}`);
+        const filteredJournals = journals.filter((journal) => journal.id === `${year}-${month}`);
         const filteredJournal = filteredJournals[0];
         setActiveJournal(filteredJournal);
-    }, [journal, month, year]);
+        setTimeout(() => {
+            setIsLoaded(true);
+        }, 1000);
+    }, [journals, month, year]);
 
     return (
         <>
-            <DialogNewData addNewPayment={addNewPayment} />
+            <DialogNewData loadJournals={loadJournals} journals={journals} />
 
             <div className="journalPage-wrapper">
                 <div className="journalToolbar">
@@ -54,11 +43,14 @@ export default function JournalPage() {
                     <Spinner>{'Journal laden...'}</Spinner>
                 ) : (
                     <div className="journal-payments">
-                        <li>
-                            <span>{activeJournal.payment['date']}</span>
-                            <span>{activeJournal.payment['category']}</span>
-                            <span>{activeJournal.payment['amount']}</span>
-                        </li>
+                        {activeJournal.payment.map((payment) => (
+                            <li key={payment.date} className="journal-payment">
+                                <div className="journal-payment__date">{payment.date}</div>
+                                <div className="journal-payment__name">{payment.category}</div>
+                                <div className="journal-payment__amount">{payment.amount}</div>
+                                <div className="journal-payment__description">{payment.info}</div>
+                            </li>
+                        ))}
                     </div>
                 )}
             </div>

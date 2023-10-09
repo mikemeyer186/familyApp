@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
+import { addPaymentInFirestore } from '../../services/firestore';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogNewData({ addNewPayment }) {
+export default function DialogNewData({ loadJournals, journals }) {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
     const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('Auswählen...');
     const [info, setInfo] = useState('');
+    const [selectedJournalId, setSelectedJournalId] = useState('');
+    const [activePayment, setActivePayment] = useState([]);
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];
@@ -19,7 +22,6 @@ export default function DialogNewData({ addNewPayment }) {
 
     function handleAddNewData(e) {
         e.preventDefault();
-        const journalId = setJournalId();
         addNewPayment(
             {
                 year: selectedYear,
@@ -30,20 +32,19 @@ export default function DialogNewData({ addNewPayment }) {
                 amount: parseFloat(amount.replace(',', '.')),
                 info: info ? info : '',
             },
-            journalId
+            selectedJournalId
         );
         setAmount('');
+        setInfo('');
     }
 
-    function setJournalId() {
-        let month = months.indexOf(selectedMonth) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        const year = selectedYear;
-        const journalId = `${year}-${month}`;
-        console.log(journalId);
-        return journalId;
+    async function addNewPayment(newPayment, journalId) {
+        setActivePayment(async (currentPayment) => {
+            const payment = [...currentPayment, newPayment];
+            await addPaymentInFirestore(payment, journalId);
+            return payment;
+        });
+        await loadJournals();
     }
 
     function handleAbort() {
@@ -61,6 +62,7 @@ export default function DialogNewData({ addNewPayment }) {
 
     function handleFlowSelection(flow) {
         setSelectedFlow(flow);
+        setSelectedCategory('Auswählen...');
     }
 
     function handleCategorieSelection(categorie) {
@@ -73,6 +75,25 @@ export default function DialogNewData({ addNewPayment }) {
         setSelectedYear(year);
         setSelectedMonth(month);
     }, []);
+
+    useEffect(() => {
+        let month = months.indexOf(selectedMonth) + 1;
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        const year = selectedYear;
+        setSelectedJournalId(`${year}-${month}`);
+    }, [selectedYear, selectedMonth]);
+
+    useEffect(() => {
+        const filteredJournals = journals.filter((journal) => journal.id === selectedJournalId);
+        if (filteredJournals.length > 0) {
+            const filteredPayment = filteredJournals[0].payment;
+            setActivePayment(filteredPayment);
+        } else {
+            setActivePayment([]);
+        }
+    }, [selectedYear, selectedMonth, journals, selectedJournalId]);
 
     return (
         <div className="modal fade" id="newJournalData" tabIndex="-1" aria-hidden="true">
