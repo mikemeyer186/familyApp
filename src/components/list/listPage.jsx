@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { db } from '../../config/firebase';
 import { loadListsFromFirestore } from '../../services/firestore';
 import { addListInFirestore } from '../../services/firestore';
 import { deleteListInFirestore } from '../../services/firestore';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import ItemList from './itemList';
 import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
@@ -14,12 +16,6 @@ export default function ListPage({ activeUser }) {
     const sortCategories = ['Datum', 'Alphabet'];
     const currentUser = activeUser.displayName;
     let sortedLists;
-
-    useEffect(() => {
-        getLists().then(() => {
-            setIsLoaded(true);
-        });
-    }, []);
 
     async function getLists() {
         const lists = await loadListsFromFirestore();
@@ -58,6 +54,20 @@ export default function ListPage({ activeUser }) {
     function handleSorting(category) {
         setSortBy(category);
     }
+
+    useEffect(() => {
+        getLists().then(() => {
+            setIsLoaded(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        const q = query(collection(db, 'lists'));
+        onSnapshot(q, (querySnapshot) => {
+            const newLists = querySnapshot.docs.map((doc) => doc.data());
+            setLists(newLists);
+        });
+    }, []);
 
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));
