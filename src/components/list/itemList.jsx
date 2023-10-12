@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateListInFirestore } from '../../services/firestore';
 import Item from './item';
 import NewItemForm from './newItemForm';
@@ -70,6 +70,11 @@ export default function ItemList({ list, currentUser, deleteList }) {
     function handleSorting(category) {
         setSortBy(category);
     }
+
+    useEffect(() => {
+        setListItems(list.list);
+        setListTitle(list.title);
+    }, [list]);
 
     if (sortBy === 'Datum') sortedItems = listItems;
     if (sortBy === 'Kategorie') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));
