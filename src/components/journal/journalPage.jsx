@@ -36,21 +36,25 @@ export default function JournalPage() {
 
             <div className="journalPage-wrapper">
                 <div className="journalToolbar">
-                    <JournalToolbar />
+                    <JournalToolbar year={year} month={month} setYear={setYear} setMonth={setMonth} />
                 </div>
 
                 {!isLoaded ? (
                     <Spinner>{'Journal laden...'}</Spinner>
                 ) : (
                     <div className="journal-payments">
-                        {activeJournal.payment.map((payment) => (
-                            <li key={payment.date} className="journal-payment">
-                                <div className="journal-payment__date">{payment.date}</div>
-                                <div className="journal-payment__name">{payment.category}</div>
-                                <div className="journal-payment__amount">{payment.amount}</div>
-                                <div className="journal-payment__description">{payment.info}</div>
-                            </li>
-                        ))}
+                        {activeJournal ? (
+                            activeJournal.payment.map((payment) => (
+                                <li key={payment.date} className="journal-payment">
+                                    <div className="journal-payment__date">{payment.date}</div>
+                                    <div className="journal-payment__name">{payment.category}</div>
+                                    <div className="journal-payment__amount">{payment.amount}</div>
+                                    <div className="journal-payment__description">{payment.info}</div>
+                                </li>
+                            ))
+                        ) : (
+                            <div className="journal-payment__date">Noch keine Daten vorhanden</div>
+                        )}
                     </div>
                 )}
             </div>
