@@ -7,6 +7,11 @@
     overflow: auto;
     padding: 90px 50px;
 
+    @media (max-width: 768px) {
+        padding: 90px 10px;
+        justify-content: flex-start;
+    }
+
     .spinner-container {
         position: absolute;
         top: 50%;
@@ -43,6 +48,21 @@
             }
         }
     }
+
+    .journal-payments {
+        width: 50%;
+
+        table {
+            .payment-amount,
+            .amount-header {
+                text-align: end;
+            }
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
 }
 
 #newJournalData {
@@ -71,14 +91,6 @@
         gap: 24px;
     }
 
-    .spend {
-        background-color: #ff9f9f;
-    }
-
-    .income {
-        background-color: #9dde9d;
-    }
-
     .dropdown-menu-journal {
         max-height: 180px;
         overflow: auto;
@@ -97,4 +109,12 @@
         }
         transform: translateY(25px);
     }
+}
+
+.spend {
+    color: #ff9f9f !important;
+}
+
+.income {
+    color: #9dde9d !important;
 }

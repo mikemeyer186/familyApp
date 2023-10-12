@@ -44,14 +44,36 @@ export default function JournalPage() {
                 ) : (
                     <div className="journal-payments">
                         {activeJournal ? (
-                            activeJournal.payment.map((payment) => (
-                                <li key={payment.date} className="journal-payment">
-                                    <div className="journal-payment__date">{payment.date}</div>
-                                    <div className="journal-payment__name">{payment.category}</div>
-                                    <div className="journal-payment__amount">{payment.amount}</div>
-                                    <div className="journal-payment__description">{payment.info}</div>
-                                </li>
-                            ))
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Datum</th>
+                                        <th scope="col">Kategorie</th>
+                                        <th className="amount-header" scope="col">
+                                            Betrag
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-group-divider">
+                                    {activeJournal.payment.map((payment) => (
+                                        <tr key={payment.date}>
+                                            <th scope="row">
+                                                {new Date(payment.date).toLocaleDateString('de-DE', {
+                                                    day: '2-digit',
+                                                    month: '2-digit',
+                                                    year: 'numeric',
+                                                })}
+                                            </th>
+                                            <td>{payment.category}</td>
+                                            <td className={`payment-amount ${payment.flow === 'Ausgabe' ? 'spend' : 'income'}`}>
+                                                {payment.flow === 'Ausgabe'
+                                                    ? '- ' + payment.amount.toFixed(2).replace('.', ',')
+                                                    : '+ ' + payment.amount.toFixed(2).replace('.', ',')}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         ) : (
                             <div className="journal-payment__date">Noch keine Daten vorhanden</div>
                         )}

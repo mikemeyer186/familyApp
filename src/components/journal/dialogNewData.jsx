@@ -256,7 +256,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
                                     Abbrechen
                                 </button>
-                                <button type="submit" className="btn btn-primary">
+                                <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
                                     Buchen
                                 </button>
                             </div>
