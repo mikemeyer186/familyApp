@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Popover } from 'bootstrap';
 
 export default function Item({ item, updateItem, deleteItem }) {
-    const [amount, setAmount] = useState(item.amount);
     const date = new Date(item.date).toLocaleDateString('de-DE', {
         day: '2-digit',
         month: '2-digit',
@@ -14,20 +13,18 @@ export default function Item({ item, updateItem, deleteItem }) {
     });
 
     function handleIncreaseAmount() {
-        setAmount(amount + 1);
-        updateItem(item.id, item.done, amount + 1, item.priority);
+        updateItem(item.id, item.done, item.amount + 1, item.priority);
     }
 
     function handleDecreaseAmount() {
-        if (amount >= 2) {
-            setAmount(amount - 1);
-            updateItem(item.id, item.done, amount - 1, item.priority);
+        if (item.amount >= 2) {
+            updateItem(item.id, item.done, item.amount - 1, item.priority);
         }
     }
 
     function handlePriorityChange() {
         item.priority = !item.priority;
-        updateItem(item.id, item.done, amount, item.priority);
+        updateItem(item.id, item.done, item.amount, item.priority);
     }
 
     useEffect(() => {
@@ -43,7 +40,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                     className="checkbox me-1"
                     type="checkbox"
                     defaultChecked={item.done}
-                    onChange={(e) => updateItem(item.id, e.target.checked, amount, item.priority)}
+                    onChange={(e) => updateItem(item.id, e.target.checked, item.amount, item.priority)}
                 />
                 <div className="itemContentWrapper">
                     <div className="itemDescription">
@@ -73,9 +70,9 @@ export default function Item({ item, updateItem, deleteItem }) {
                 <div className="amountAdjust">
                     <div className="amountArrows">
                         <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
-                        <div className="amountNumber">{amount}</div>
+                        <div className="amountNumber">{item.amount}</div>
                         <img
-                            className={amount === 1 ? 'arrow-disabled arrow-down' : 'arrow'}
+                            className={item.amount === 1 ? 'arrow-disabled arrow-down' : 'arrow'}
                             src="/assets/icons/caret-down-fill.svg"
                             alt="down"
                             onClick={handleDecreaseAmount}

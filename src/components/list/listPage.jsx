@@ -59,14 +59,22 @@ export default function ListPage({ activeUser }) {
         getLists().then(() => {
             setIsLoaded(true);
         });
+
+        return () => {
+            setIsLoaded(false);
+        };
     }, []);
 
     useEffect(() => {
         const q = query(collection(db, 'lists'));
-        onSnapshot(q, (querySnapshot) => {
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newLists = querySnapshot.docs.map((doc) => doc.data());
             setLists(newLists);
         });
+
+        return () => {
+            unsubscribe();
+        };
     }, []);
 
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
