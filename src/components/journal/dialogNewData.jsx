@@ -40,7 +40,7 @@ export default function DialogNewData({ loadJournals, journals }) {
 
     async function addNewPayment(newPayment, journalId) {
         setActivePayment(async (currentPayment) => {
-            const payment = [...currentPayment, newPayment];
+            const payment = [newPayment, ...currentPayment];
             await addPaymentInFirestore(payment, journalId);
             return payment;
         });
