@@ -47,9 +47,13 @@ export default function JournalPage() {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Datum</th>
-                                        <th scope="col">Kategorie</th>
-                                        <th className="amount-header" scope="col">
+                                        <th className="table-date-header" scope="col">
+                                            Datum
+                                        </th>
+                                        <th className="table-category" scope="col">
+                                            Kategorie
+                                        </th>
+                                        <th className="table-payment-header" scope="col">
                                             Betrag
                                         </th>
                                     </tr>
@@ -57,15 +61,15 @@ export default function JournalPage() {
                                 <tbody className="table-group-divider">
                                     {activeJournal.payment.map((payment) => (
                                         <tr key={payment.date}>
-                                            <th scope="row">
+                                            <td className="table-date-row">
                                                 {new Date(payment.date).toLocaleDateString('de-DE', {
                                                     day: '2-digit',
                                                     month: '2-digit',
                                                     year: 'numeric',
                                                 })}
-                                            </th>
-                                            <td>{payment.category}</td>
-                                            <td className={`payment-amount ${payment.flow === 'Ausgabe' ? 'spend' : 'income'}`}>
+                                            </td>
+                                            <td className="table-category">{payment.category}</td>
+                                            <td className={`table-payment-row ${payment.flow === 'Ausgabe' ? 'spend' : 'income'}`}>
                                                 {payment.flow === 'Ausgabe'
                                                     ? '- ' + payment.amount.toFixed(2).replace('.', ',')
                                                     : '+ ' + payment.amount.toFixed(2).replace('.', ',')}

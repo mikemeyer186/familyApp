@@ -53,8 +53,24 @@
         width: 50%;
 
         table {
-            .payment-amount,
-            .amount-header {
+            .table-category {
+                padding-left: 30px;
+            }
+
+            .table-payment-header {
+                text-align: end;
+            }
+
+            .table-payment-row {
+                text-align: end;
+            }
+
+            .table-date-header {
+                width: 100px;
+                text-align: center;
+            }
+
+            .table-date-row {
                 text-align: end;
             }
         }
