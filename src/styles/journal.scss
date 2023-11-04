@@ -55,9 +55,14 @@
         justify-content: center;
         box-shadow: $shadow;
         border: $thinBorder;
-        padding: 18px !important;
+        padding: 18px;
         border-radius: 8px;
         background-color: #ffffff;
+
+        @media (max-width: 768px) {
+            padding: 0;
+            width: 100%;
+        }
 
         .journal-search-icon {
             position: absolute;
@@ -71,35 +76,38 @@
             border-radius: 100%;
         }
 
-        table {
-            .table-category {
-                padding-left: 30px;
-
-                @media (max-width: 768px) {
-                    padding-left: 10px;
-                }
-            }
-
-            .table-payment-header {
-                text-align: end;
-            }
-
-            .table-payment-row {
-                text-align: end;
-            }
-
-            .table-date-header {
-                width: 100px;
-                text-align: center;
-            }
-
-            .table-date-row {
-                text-align: end;
+        td {
+            @media (max-width: 768px) {
+                padding: 10px;
             }
         }
 
-        @media (max-width: 768px) {
-            width: 100%;
+        .p-datatable-header {
+            border: none;
+            background-color: hsla(208, 7%, 46%, 0.2);
+
+            @media (max-width: 768px) {
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                border-left: 1px solid rgba(217, 217, 217, 0.5);
+                border-right: 1px solid rgba(217, 217, 217, 0.5);
+            }
+        }
+
+        .p-datatable-wrapper {
+            @media (max-width: 768px) {
+                border-left: 1px solid rgba(217, 217, 217, 0.5);
+                border-right: 1px solid rgba(217, 217, 217, 0.5);
+            }
+        }
+
+        .p-paginator-bottom {
+            border-top: 1px solid rgba(217, 217, 217, 0.5);
+            @media (max-width: 768px) {
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                border: $thinBorder;
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                 date: new Date().toISOString(),
                 flow: selectedFlow,
                 category: selectedCategory,
-                amount: parseFloat(amount.replace(',', '.')),
+                amount: convertAmount(amount),
                 info: info ? info : '',
             },
             selectedJournalId
@@ -45,6 +45,16 @@ export default function DialogNewData({ loadJournals, journals }) {
             return payment;
         });
         await loadJournals();
+    }
+
+    function convertAmount(amount) {
+        let convertedAmount = parseFloat(amount.replace(',', '.'));
+
+        if (selectedFlow === 'Ausgabe') {
+            convertedAmount = convertedAmount * -1;
+        }
+
+        return convertedAmount;
     }
 
     function handleAbort() {
