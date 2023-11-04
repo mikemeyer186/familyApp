@@ -1,4 +1,5 @@
 @import 'bootstrap/scss/bootstrap.scss';
+@import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 @import 'fonts.scss';
 @import 'variables.scss';
 @import 'list.scss';
@@ -99,6 +100,20 @@ body {
             background-color: #f0f0f0;
         }
     }
+}
+
+//PrimeReact overrides
+.p-component {
+    font-family: 'Poppins', sans-serif;
+}
+
+.p-dropdown-items {
+    padding-left: 0;
+}
+
+.p-tooltip {
+    font-size: 0.7rem;
+    font-weight: 300;
 }
 
 @keyframes slideIn {

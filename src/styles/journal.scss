@@ -51,6 +51,25 @@
 
     .journal-payments {
         width: 50%;
+        display: flex;
+        justify-content: center;
+        box-shadow: $shadow;
+        border: $thinBorder;
+        padding: 18px !important;
+        border-radius: 8px;
+        background-color: #ffffff;
+
+        .journal-search-icon {
+            position: absolute;
+            top: 50%;
+            margin-top: -0.5rem;
+            left: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .journal-csv-icon {
+            border-radius: 100%;
+        }
 
         table {
             .table-category {

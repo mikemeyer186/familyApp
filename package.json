@@ -13,6 +13,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.1",
     "firebase": "^10.3.0",
+    "primereact": "^10.0.9",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.6.11",
