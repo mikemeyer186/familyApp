@@ -12,7 +12,7 @@ export default function DialogNewData({ loadJournals, journals }) {
     const [amount, setAmount] = useState('');
     const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('Auswählen...');
-    const [selectedAggregat, setSelectedAggregat] = useState('');
+    const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [activePayment, setActivePayment] = useState([]);
@@ -30,7 +30,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                 date: new Date().toISOString(),
                 flow: selectedFlow,
                 category: selectedCategory,
-                aggregat: selectedAggregat,
+                aggregate: selectedAggregate,
                 amount: convertAmount(amount),
                 info: info ? info : '',
             },
@@ -77,9 +77,9 @@ export default function DialogNewData({ loadJournals, journals }) {
         setSelectedCategory('Auswählen...');
     }
 
-    function handleCategorieSelection(categorie, aggregat) {
+    function handleCategorieSelection(categorie, aggregate) {
         setSelectedCategory(categorie);
-        setSelectedAggregat(aggregat);
+        setSelectedAggregate(aggregate);
     }
 
     useEffect(() => {

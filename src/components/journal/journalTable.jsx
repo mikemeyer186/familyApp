@@ -87,7 +87,7 @@ export default function JournalTable({ activeJournal }) {
                     sortField="date"
                     sortOrder={-1}
                     filters={filters}
-                    globalFilterFields={['date', 'category', 'amount']}
+                    globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info']}
                     header={header}
                     style={{ width: '100%' }}
                     exportFilename={activeJournal.id}
