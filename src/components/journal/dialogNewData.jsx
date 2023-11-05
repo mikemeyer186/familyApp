@@ -6,7 +6,7 @@ import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogNewData({ loadJournals, journals }) {
+export default function DialogNewData({ loadJournals, journals, activeUser }) {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -33,6 +33,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                 aggregate: selectedAggregate,
                 amount: convertAmount(amount),
                 info: info ? info : '',
+                user: activeUser.displayName,
             },
             selectedJournalId
         );

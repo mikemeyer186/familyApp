@@ -139,7 +139,7 @@ export default function App() {
                         <Route index element={<DashboardPage />} />
                         <Route path="dashboard" element={<DashboardPage />} />
                         <Route path="lists" element={<ListPage activeUser={activeUser} />} />
-                        <Route path="journal" element={<JournalPage />} />
+                        <Route path="journal" element={<JournalPage activeUser={activeUser} />} />
                         <Route path="calendar" element={<CalendarPage />} />
                         <Route
                             path="userprofile"

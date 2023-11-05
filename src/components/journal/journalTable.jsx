@@ -10,7 +10,7 @@ export default function JournalTable({ activeJournal }) {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
     const dt = useRef(null);
-    const formattedPayments = formatPaymentData(activeJournal.payment);
+    const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 
     function onGlobalFilterChange(e) {
         const value = e.target.value;
@@ -37,6 +37,7 @@ export default function JournalTable({ activeJournal }) {
                 flow: payment.flow,
                 amount: formatCurrency(payment.amount),
                 year: payment.year,
+                user: payment.user,
             };
             return formattedPayment;
         });
@@ -85,13 +86,14 @@ export default function JournalTable({ activeJournal }) {
                     sortField="date"
                     sortOrder={-1}
                     filters={filters}
-                    globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info']}
+                    globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
                     header={tableHeader}
                     style={{ width: '100%' }}
                     exportFilename={activeJournal.id}
                     emptyMessage="Keine Belege gefunden"
                 >
                     <Column field="date" header="Datum" dataType="date" sortable style={{ width: '5%', textAlign: 'center' }}></Column>
+                    <Column field="user" header="User" dataType="text" style={{ display: 'none' }}></Column>
                     <Column field="aggregate" header="Zuordnung" dataType="text" style={{ display: 'none' }}></Column>
                     <Column field="category" header="Kategorie" dataType="text" sortable style={{ width: '50%' }}></Column>
                     <Column field="info" header="Info" dataType="text" style={{ display: 'none' }}></Column>
