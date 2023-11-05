@@ -12,6 +12,7 @@ export default function DialogNewData({ loadJournals, journals }) {
     const [amount, setAmount] = useState('');
     const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('Auswählen...');
+    const [selectedAggregat, setSelectedAggregat] = useState('');
     const [info, setInfo] = useState('');
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [activePayment, setActivePayment] = useState([]);
@@ -29,6 +30,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                 date: new Date().toISOString(),
                 flow: selectedFlow,
                 category: selectedCategory,
+                aggregat: selectedAggregat,
                 amount: convertAmount(amount),
                 info: info ? info : '',
             },
@@ -75,8 +77,9 @@ export default function DialogNewData({ loadJournals, journals }) {
         setSelectedCategory('Auswählen...');
     }
 
-    function handleCategorieSelection(categorie) {
+    function handleCategorieSelection(categorie, aggregat) {
         setSelectedCategory(categorie);
+        setSelectedAggregat(aggregat);
     }
 
     useEffect(() => {
@@ -211,7 +214,7 @@ export default function DialogNewData({ loadJournals, journals }) {
                                                             <span className="dropdown-item subcategory">{categorie.name}</span>
                                                             {categorie.values.map((value) => {
                                                                 return (
-                                                                    <li key={value} onClick={() => handleCategorieSelection(value)}>
+                                                                    <li key={value} onClick={() => handleCategorieSelection(value, categorie.name)}>
                                                                         <span className="dropdown-item pointer">{value}</span>
                                                                     </li>
                                                                 );
