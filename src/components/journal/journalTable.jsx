@@ -2,17 +2,17 @@ import { useRef, useState } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+import JournalTableHeader from './journalTableHeader';
 
 export default function JournalTable({ activeJournal }) {
-    const dt = useRef(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
+    const dt = useRef(null);
+    const formattedPayments = formatPaymentData(activeJournal.payment);
 
-    const onGlobalFilterChange = (e) => {
+    function onGlobalFilterChange(e) {
         const value = e.target.value;
         let _filters = { ...filters };
 
@@ -20,67 +20,65 @@ export default function JournalTable({ activeJournal }) {
 
         setFilters(_filters);
         setGlobalFilterValue(value);
-    };
+    }
 
-    const exportCSV = (selectionOnly) => {
+    function exportCSV(selectionOnly) {
         dt.current.exportCSV({ selectionOnly });
-    };
+    }
 
-    const formatDate = (value) => {
+    function formatPaymentData(payments) {
+        const formattedPayments = payments.map((payment) => {
+            const formattedPayment = {
+                month: payment.month,
+                info: payment.info,
+                aggregate: payment.aggregate,
+                date: formatDate(payment.date),
+                category: payment.category,
+                flow: payment.flow,
+                amount: formatCurrency(payment.amount),
+                year: payment.year,
+            };
+            return formattedPayment;
+        });
+        return formattedPayments;
+    }
+
+    function formatDate(value) {
         return new Date(value).toLocaleDateString('de-DE', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
         });
-    };
+    }
 
-    const formatCurrency = (value) => {
-        let formattedValue = value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+    function formatCurrency(amount) {
+        const formattedAmount = amount.toString().replace('.', ',');
+        return formattedAmount;
+    }
 
-        if (value < 0) {
-            formattedValue = formattedValue.replace('-', '');
-            return <span className="spend">{formattedValue}</span>;
-        } else if (value > 0) {
-            return <span className="income">{formattedValue}</span>;
+    function amountBodyTemplate(rowData) {
+        const amount = rowData.amount.toString().replace(',', '.');
+        const amountNumber = parseFloat(amount);
+        let amountString = amountNumber.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+
+        if (amountNumber < 0) {
+            amountString = amountString.replace('-', '');
+            return <span className="spend">{amountString}</span>;
+        } else if (amountNumber > 0) {
+            return <span className="income">{amountString}</span>;
         }
-    };
+    }
 
-    const dateBodyTemplate = (rowData) => {
-        return formatDate(rowData.date);
-    };
-
-    const amountBodyTemplate = (rowData) => {
-        return formatCurrency(rowData.amount);
-    };
-
-    const renderHeader = () => {
-        return (
-            <div className="d-flex justify-content-between">
-                <span className="p-input-icon-left">
-                    <img className="journal-search-icon" src="/assets/icons/search.svg" alt="Suche" />
-                    <InputText className="journal-searchbar" value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Suchen..." />
-                </span>
-                <Button
-                    className="journal-csv-icon"
-                    type="button"
-                    onClick={() => exportCSV(false)}
-                    tooltip="Als CSV exportieren"
-                    tooltipOptions={{ position: 'left' }}
-                >
-                    <img src="/assets/icons/file-earmark-arrow-down.svg" alt="Exportieren" />
-                </Button>
-            </div>
-        );
-    };
-
-    const header = renderHeader();
+    function tableHeader() {
+        return <JournalTableHeader globalFilterValue={globalFilterValue} onGlobalFilterChange={onGlobalFilterChange} exportCSV={exportCSV} />;
+    }
 
     return (
         <div className="journal-payments">
             {activeJournal ? (
                 <DataTable
                     ref={dt}
-                    value={activeJournal.payment}
+                    value={formattedPayments}
                     paginator
                     rows={5}
                     rowsPerPageOptions={[5, 10, 20]}
@@ -88,20 +86,15 @@ export default function JournalTable({ activeJournal }) {
                     sortOrder={-1}
                     filters={filters}
                     globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info']}
-                    header={header}
+                    header={tableHeader}
                     style={{ width: '100%' }}
                     exportFilename={activeJournal.id}
                     emptyMessage="Keine Belege gefunden"
                 >
-                    <Column
-                        field="date"
-                        header="Datum"
-                        dataType="date"
-                        body={dateBodyTemplate}
-                        sortable
-                        style={{ width: '5%', textAlign: 'center' }}
-                    ></Column>
+                    <Column field="date" header="Datum" dataType="date" sortable style={{ width: '5%', textAlign: 'center' }}></Column>
+                    <Column field="aggregate" header="Zuordnung" dataType="text" style={{ display: 'none' }}></Column>
                     <Column field="category" header="Kategorie" dataType="text" sortable style={{ width: '50%' }}></Column>
+                    <Column field="info" header="Info" dataType="text" style={{ display: 'none' }}></Column>
                     <Column
                         field="amount"
                         header="Betrag"
