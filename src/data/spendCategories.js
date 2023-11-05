@@ -1,25 +1,30 @@
 const spendCategories = [
     {
         name: 'Einkäufe',
-        values: ['Lebensmittel', 'Drogerie', 'Arzt & Apotheke', 'Kleidung & Schmuck', 'Hund'],
+        values: ['Lebensmittel', 'Drogerie', 'Apotheke', 'Kleidung', 'Hund', 'Sonstiges'],
     },
-    { name: 'Persönlich', values: ['Mike', 'Yvonne', 'Antonia', 'Malina'] },
-    { name: 'Fortbewegung', values: ['Diesel', 'Benzin', 'Wartung & Zubehör', 'Parkgebühren', 'ÖPNV'] },
+    { name: 'Familie', values: ['Mike', 'Yvonne', 'Antonia', 'Malina'] },
+    { name: 'Mobilität', values: ['Diesel', 'Benzin', 'Wartung', 'Parkgebühren', 'ÖPNV'] },
     { name: 'Kommunikation', values: ['Festnetz', 'Handy', 'Post'] },
     {
         name: 'Leben',
         values: [
             'Entertainment',
-            'Wohnung & Garten',
+            'Wohnung',
             'Geschenke',
-            'Essen & Ausflüge',
-            'Sport & Outdoor',
+            'Essen gehen',
+            'Ausflüge',
+            'Sport',
             'Lotto',
             'Anschaffungen',
             'Urlaub',
             'Spenden',
             'Weiterbildung',
         ],
+    },
+    {
+        name: 'Fixkosten',
+        values: ['Wohnen', 'Energie', 'Internet', 'Versicherungen', 'Steuern', 'Banking', 'Vereine', 'Abonnements', 'Sparen', 'Kredit'],
     },
 ];
 export default spendCategories;

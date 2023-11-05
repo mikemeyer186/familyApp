@@ -1,4 +1,2 @@
-const incomeCategories = [
-    { name: 'Einnahmen', values: ['Einkommen Mike', 'Einkommen Yvonne', 'Kindergeld', 'Steuererstattung', 'Verkäufe', 'Sonstiges & Übertrag'] },
-];
+const incomeCategories = [{ name: 'Einnahmen', values: ['Einkommen', 'Kindergeld', 'Steuererstattung', 'Verkäufe', 'Sonstiges'] }];
 export default incomeCategories;

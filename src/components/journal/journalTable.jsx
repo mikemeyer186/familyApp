@@ -58,7 +58,7 @@ export default function JournalTable({ activeJournal }) {
             <div className="d-flex justify-content-between">
                 <span className="p-input-icon-left">
                     <img className="journal-search-icon" src="/assets/icons/search.svg" alt="Suche" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Suchen..." />
+                    <InputText className="journal-searchbar" value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Suchen..." />
                 </span>
                 <Button
                     className="journal-csv-icon"
@@ -82,8 +82,8 @@ export default function JournalTable({ activeJournal }) {
                     ref={dt}
                     value={activeJournal.payment}
                     paginator
-                    rows={10}
-                    rowsPerPageOptions={[10, 20, 50]}
+                    rows={5}
+                    rowsPerPageOptions={[5, 10, 20]}
                     sortField="date"
                     sortOrder={-1}
                     filters={filters}
