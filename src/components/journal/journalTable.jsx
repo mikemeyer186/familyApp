@@ -9,6 +9,7 @@ export default function JournalTable({ activeJournal }) {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
+    const [expandedRows, setExpandedRows] = useState(null);
     const dt = useRef(null);
     const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 
@@ -74,6 +75,43 @@ export default function JournalTable({ activeJournal }) {
         return <JournalTableHeader globalFilterValue={globalFilterValue} onGlobalFilterChange={onGlobalFilterChange} exportCSV={exportCSV} />;
     }
 
+    const rowExpansionTemplate = (data) => {
+        return (
+            <>
+                <table className="table journalDetailTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="fw-normal" style={{ width: '113px' }}>
+                                Von
+                            </th>
+                            <th scope="col" className="fw-normal" style={{ width: '315px' }}>
+                                Beleginfo
+                            </th>
+                            <th scope="col" className="fw-normal" style={{ width: '15%' }}>
+                                Bearbeiten
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{data.user}</td>
+                            <td>{data.info}</td>
+                            <td>x x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        );
+    };
+
+    function onRowClickToggle(e) {
+        if (expandedRows) {
+            setExpandedRows(null);
+        } else {
+            setExpandedRows([e.data]);
+        }
+    }
+
     return (
         <div className="journal-payments">
             {activeJournal ? (
@@ -92,6 +130,10 @@ export default function JournalTable({ activeJournal }) {
                     style={{ width: '100%' }}
                     exportFilename={activeJournal.id}
                     emptyMessage="Keine Belege gefunden"
+                    onRowClick={(e) => onRowClickToggle(e)}
+                    expandedRows={expandedRows}
+                    rowExpansionTemplate={rowExpansionTemplate}
+                    selectionMode="single"
                 >
                     <Column field="date" header="Datum" dataType="date" sortable style={{ width: '5%', textAlign: 'center' }}></Column>
                     <Column field="user" header="User" dataType="text" style={{ display: 'none' }}></Column>

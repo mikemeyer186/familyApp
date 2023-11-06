@@ -115,6 +115,25 @@
                 border: $thinBorder;
             }
         }
+
+        .p-datatable-row-expansion > td {
+            padding-top: 0;
+            padding-left: 10px;
+        }
+
+        .journalDetailTable {
+            padding: 0;
+            margin: 0;
+
+            td,
+            th {
+                font-size: 0.8rem;
+            }
+
+            td {
+                color: rgba(0, 0, 0, 0.5);
+            }
+        }
     }
 }
 
