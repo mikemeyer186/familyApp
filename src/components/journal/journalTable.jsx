@@ -3,6 +3,7 @@ import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import JournalTableHeader from './journalTableHeader';
+import JournalTableExpansion from './journalTableExpansion';
 
 export default function JournalTable({ activeJournal }) {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
@@ -71,45 +72,20 @@ export default function JournalTable({ activeJournal }) {
         }
     }
 
-    function tableHeader() {
-        return <JournalTableHeader globalFilterValue={globalFilterValue} onGlobalFilterChange={onGlobalFilterChange} exportCSV={exportCSV} />;
-    }
-
-    const rowExpansionTemplate = (data) => {
-        return (
-            <>
-                <table className="table journalDetailTable">
-                    <thead>
-                        <tr>
-                            <th scope="col" className="fw-normal" style={{ width: '113px' }}>
-                                Von
-                            </th>
-                            <th scope="col" className="fw-normal" style={{ width: '315px' }}>
-                                Beleginfo
-                            </th>
-                            <th scope="col" className="fw-normal" style={{ width: '15%' }}>
-                                Bearbeiten
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{data.user}</td>
-                            <td>{data.info}</td>
-                            <td>x x</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </>
-        );
-    };
-
     function onRowClickToggle(e) {
         if (expandedRows) {
             setExpandedRows(null);
         } else {
             setExpandedRows([e.data]);
         }
+    }
+
+    function tableHeader() {
+        return <JournalTableHeader globalFilterValue={globalFilterValue} onGlobalFilterChange={onGlobalFilterChange} exportCSV={exportCSV} />;
+    }
+
+    function rowExpansionTemplate(data) {
+        return <JournalTableExpansion data={data} />;
     }
 
     return (
