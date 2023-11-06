@@ -83,6 +83,7 @@ export default function JournalTable({ activeJournal }) {
                     paginator
                     rows={5}
                     rowsPerPageOptions={[5, 10, 20]}
+                    pageLinkSize={3}
                     sortField="date"
                     sortOrder={-1}
                     filters={filters}
