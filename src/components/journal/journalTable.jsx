@@ -85,7 +85,7 @@ export default function JournalTable({ activeJournal }) {
     }
 
     function rowExpansionTemplate(data) {
-        return <JournalTableExpansion data={data} />;
+        return <JournalTableExpansion data={data} activeJournal={activeJournal} />;
     }
 
     return (
@@ -103,13 +103,12 @@ export default function JournalTable({ activeJournal }) {
                     filters={filters}
                     globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
                     header={tableHeader}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', cursor: 'pointer' }}
                     exportFilename={activeJournal.id}
                     emptyMessage="Keine Belege gefunden"
                     onRowClick={(e) => onRowClickToggle(e)}
                     expandedRows={expandedRows}
                     rowExpansionTemplate={rowExpansionTemplate}
-                    selectionMode="single"
                 >
                     <Column field="date" header="Datum" dataType="date" sortable style={{ width: '5%', textAlign: 'center' }}></Column>
                     <Column field="user" header="User" dataType="text" style={{ display: 'none' }}></Column>

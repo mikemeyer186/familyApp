@@ -118,26 +118,44 @@
 
         .p-datatable-row-expansion > td {
             padding-top: 0;
-            padding-left: 10px;
+            padding-left: 20px;
+            cursor: default;
         }
 
-        .journalDetailTable {
+        .journal-detail-table {
             padding: 0;
             margin: 0;
 
             td,
             th {
                 font-size: 0.8rem;
+                background-color: rgba(189, 191, 194, 0.1);
             }
 
             td {
                 color: rgba(0, 0, 0, 0.5);
+                border: none;
+            }
+
+            .journal-table-edit {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+
+                .journal-table-edit-icon {
+                    width: 20px;
+                    height: 20px;
+                    color: black;
+                    opacity: 0.4;
+                }
             }
         }
     }
 }
 
-#newJournalData {
+#newJournalData,
+#editJournalData {
     #amount {
         &::-webkit-inner-spin-button {
             display: none;
