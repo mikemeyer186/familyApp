@@ -40,7 +40,11 @@ export default function JournalPage({ activeUser }) {
                     <JournalToolbar year={year} month={month} setYear={setYear} setMonth={setMonth} />
                 </div>
 
-                {!isLoaded ? <Spinner>{'Journal laden...'}</Spinner> : <JournalTable activeJournal={activeJournal} />}
+                {!isLoaded ? (
+                    <Spinner>{'Journal laden...'}</Spinner>
+                ) : (
+                    <JournalTable activeJournal={activeJournal} loadJournals={loadJournals} activeUser={activeUser} />
+                )}
             </div>
         </>
     );

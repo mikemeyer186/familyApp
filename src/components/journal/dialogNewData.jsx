@@ -34,6 +34,7 @@ export default function DialogNewData({ loadJournals, journals, activeUser }) {
                 amount: convertAmount(amount),
                 info: info ? info : '',
                 user: activeUser.displayName,
+                id: crypto.randomUUID(),
             },
             selectedJournalId
         );

@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { addPaymentInFirestore } from '../../services/firestore';
+import { updatePaymentInFirestore } from '../../services/firestore';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogEditData({ data, activeJournal }) {
-    console.log(data);
+export default function DialogEditData({ data, activeJournal, loadJournals, activeUser }) {
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
-    const [amount, setAmount] = useState(data.amount);
+    const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
     const [selectedFlow, setSelectedFlow] = useState(data.flow);
     const [selectedCategory, setSelectedCategory] = useState(data.category);
     const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
@@ -22,41 +21,53 @@ export default function DialogEditData({ data, activeJournal }) {
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
 
-    function handleAddNewData(e) {
+    function handleEditData(e) {
         e.preventDefault();
-        // addNewPayment(
-        //     {
-        //         year: selectedYear,
-        //         month: selectedMonth,
-        //         date: new Date().toISOString(),
-        //         flow: selectedFlow,
-        //         category: selectedCategory,
-        //         aggregate: selectedAggregate,
-        //         amount: convertAmount(amount),
-        //         info: info ? info : '',
-        //         user: activeUser.displayName,
-        //     },
-        //     selectedJournalId
-        // );
-        // setAmount('');
-        // setInfo('');
+        editPayment(
+            {
+                year: selectedYear,
+                month: selectedMonth,
+                date: new Date().toISOString(),
+                flow: selectedFlow,
+                category: selectedCategory,
+                aggregate: selectedAggregate,
+                amount: convertAmountOnSave(amount),
+                info: info ? info : '',
+                user: activeUser.displayName,
+                id: data.id,
+            },
+            selectedJournalId
+        );
     }
 
-    // async function addNewPayment(newPayment, journalId) {
-    //     setActivePayment(async (currentPayment) => {
-    //         const payment = [newPayment, ...currentPayment];
-    //         await addPaymentInFirestore(payment, journalId);
-    //         return payment;
-    //     });
-    //     await loadJournals();
-    // }
-    // function convertAmount(amount) {
-    //     let convertedAmount = parseFloat(amount.replace(',', '.'));
-    //     if (selectedFlow === 'Ausgabe') {
-    //         convertedAmount = convertedAmount * -1;
-    //     }
-    //     return convertedAmount;
-    // }
+    async function editPayment(newPayment, journalId) {
+        const newPayments = activePayment.map((payment) => {
+            if (payment.id === newPayment.id) {
+                payment = newPayment;
+            }
+            return payment;
+        });
+
+        setActivePayment(newPayments);
+        await updatePaymentInFirestore(newPayments, journalId);
+    }
+
+    async function handleReload() {
+        await loadJournals();
+    }
+
+    function convertAmountOnSave(amount) {
+        let convertedAmount = parseFloat(amount.replace(',', '.'));
+        if (selectedFlow === 'Ausgabe') {
+            convertedAmount = convertedAmount * -1;
+        }
+        return convertedAmount;
+    }
+
+    function convertAmountOnLoad(amount) {
+        let convertedAmount = amount.replace('-', '');
+        return convertedAmount;
+    }
 
     function handleYearSelection(year) {
         setSelectedYear(year);
@@ -103,20 +114,20 @@ export default function DialogEditData({ data, activeJournal }) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Beleg ändern</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleReload}></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleAddNewData}>
+                        <form onSubmit={handleEditData} onBlur={handleReload}>
                             <div className="form-input-group">
                                 <div className="form-row">
                                     <div className="widthFull">
-                                        <label htmlFor="date" className="col-form-label">
+                                        <label htmlFor="editDate" className="col-form-label">
                                             Monat
                                         </label>
                                         <div className="input-group mb-3">
                                             <button
                                                 className="btn dropdown-toggle btn-outline-secondary thinBorder width80"
-                                                id="date"
+                                                id="editDate"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -152,14 +163,14 @@ export default function DialogEditData({ data, activeJournal }) {
                                         </div>
                                     </div>
                                     <div className="widthFull">
-                                        <label htmlFor="flow" className="col-form-label">
+                                        <label htmlFor="editFlow" className="col-form-label">
                                             Art
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
                                                 className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
-                                                id="flow"
+                                                id="editFlow"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -180,13 +191,13 @@ export default function DialogEditData({ data, activeJournal }) {
                                 </div>
                                 <div className="form-row">
                                     <div className="widthFull">
-                                        <label htmlFor="categorie" className="col-form-label">
+                                        <label htmlFor="editCategorie" className="col-form-label">
                                             Kategorie
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
                                                 className="btn dropdown-toggle btn-outline-secondary thinBorder width210"
-                                                id="categorie"
+                                                id="editCategorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -213,11 +224,11 @@ export default function DialogEditData({ data, activeJournal }) {
                                     </div>
                                     <div className="widthFull">
                                         <div className="mb-3">
-                                            <label htmlFor="amount" className="col-form-label">
+                                            <label htmlFor="editAmount" className="col-form-label">
                                                 Betrag
                                             </label>
                                             <CurrencyInput
-                                                id="amount"
+                                                id="editAmount"
                                                 className="form-control width130"
                                                 placeholder="0,00 €"
                                                 decimalScale={2}
@@ -232,13 +243,13 @@ export default function DialogEditData({ data, activeJournal }) {
                                 </div>
                                 <div className="form-row mb-3">
                                     <div className="widthFull">
-                                        <label htmlFor="info" className="col-form-label">
+                                        <label htmlFor="editInfo" className="col-form-label">
                                             Kommentar
                                         </label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="info"
+                                            id="editInfo"
                                             placeholder="Zusätzliche Info zum Beleg"
                                             value={info}
                                             onChange={(e) => setInfo(e.target.value)}

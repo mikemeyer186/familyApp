@@ -51,3 +51,11 @@ export async function addPaymentInFirestore(payment, journalId) {
         console.error('Error updating document: ', e);
     }
 }
+
+export async function updatePaymentInFirestore(payment, journalId) {
+    try {
+        await updateDoc(doc(db, 'journal', journalId), { payment, id: journalId });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
