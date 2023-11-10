@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { updatePaymentInFirestore } from '../../services/firestore';
+import { useEffect, useState } from 'react';
+import { addPaymentInFirestore, updatePaymentInFirestore } from '../../services/firestore';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
@@ -15,28 +15,41 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
     const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
     const [info, setInfo] = useState(data.info);
     const [activePayment, setActivePayment] = useState(activeJournal.payment);
+    const [newJournalId, setNewJournalId] = useState('');
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
 
+    function changedPayment() {
+        return {
+            year: selectedYear,
+            month: selectedMonth,
+            date: new Date().toISOString(),
+            flow: selectedFlow,
+            category: selectedCategory,
+            aggregate: selectedAggregate,
+            amount: convertAmountOnSave(amount),
+            info: info ? info : '',
+            user: activeUser.displayName,
+            id: data.id,
+        };
+    }
+
     function handleEditData(e) {
         e.preventDefault();
-        editPayment(
-            {
-                year: selectedYear,
-                month: selectedMonth,
-                date: new Date().toISOString(),
-                flow: selectedFlow,
-                category: selectedCategory,
-                aggregate: selectedAggregate,
-                amount: convertAmountOnSave(amount),
-                info: info ? info : '',
-                user: activeUser.displayName,
-                id: data.id,
-            },
-            activeJournal.id
-        );
+        checkNewMonthOrYear();
+    }
+
+    function checkNewMonthOrYear() {
+        const editedPayment = changedPayment();
+
+        if (selectedYear !== data.year || selectedMonth !== data.month) {
+            addNewPayment(editedPayment, newJournalId);
+            deletePayment();
+        } else {
+            editPayment(editedPayment, activeJournal.id);
+        }
     }
 
     async function editPayment(newPayment, journalId) {
@@ -50,6 +63,12 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
         setActivePayment(newPayments);
         setExpandedRows(null);
         await updatePaymentInFirestore(newPayments, journalId);
+        await loadJournals();
+    }
+
+    async function addNewPayment(newPayment, journalId) {
+        const payment = [newPayment];
+        await addPaymentInFirestore(payment, journalId);
         await loadJournals();
     }
 
@@ -77,17 +96,29 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
     function handleYearSelection(year) {
         setSelectedYear(year);
     }
+
     function handleMonthSelection(month) {
         setSelectedMonth(month);
     }
+
     function handleFlowSelection(flow) {
         setSelectedFlow(flow);
         setSelectedCategory('Auswählen...');
     }
+
     function handleCategorieSelection(categorie, aggregate) {
         setSelectedCategory(categorie);
         setSelectedAggregate(aggregate);
     }
+
+    useEffect(() => {
+        let month = months.indexOf(selectedMonth) + 1;
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        const year = selectedYear;
+        setNewJournalId(`${year}-${month}`);
+    }, [selectedYear, selectedMonth]);
 
     return (
         <div className="modal fade" id="editJournalData" tabIndex="-1" aria-hidden="true">
