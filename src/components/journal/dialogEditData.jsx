@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updatePaymentInFirestore } from '../../services/firestore';
 import years from '../../data/years';
 import months from '../../data/months';
@@ -6,7 +6,7 @@ import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogEditData({ data, activeJournal, loadJournals, activeUser }) {
+export default function DialogEditData({ data, activeJournal, loadJournals, activeUser, setExpandedRows }) {
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
     const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
@@ -14,7 +14,6 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
     const [selectedCategory, setSelectedCategory] = useState(data.category);
     const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
     const [info, setInfo] = useState(data.info);
-    const [selectedJournalId, setSelectedJournalId] = useState(activeJournal.id);
     const [activePayment, setActivePayment] = useState(activeJournal.payment);
     const defaultYears = years;
     const defaultMonths = months;
@@ -36,7 +35,7 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
                 user: activeUser.displayName,
                 id: data.id,
             },
-            selectedJournalId
+            activeJournal.id
         );
     }
 
@@ -49,10 +48,16 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
         });
 
         setActivePayment(newPayments);
+        setExpandedRows(null);
         await updatePaymentInFirestore(newPayments, journalId);
+        await loadJournals();
     }
 
-    async function handleReload() {
+    async function deletePayment() {
+        const newPayments = activePayment.filter((payment) => payment.id !== data.id);
+        setActivePayment(newPayments);
+        setExpandedRows(null);
+        await updatePaymentInFirestore(newPayments, activeJournal.id);
         await loadJournals();
     }
 
@@ -84,40 +89,16 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
         setSelectedAggregate(aggregate);
     }
 
-    // useEffect(() => {
-    //     const year = new Date().getFullYear();
-    //     const month = new Date().toLocaleString('de-DE', { month: 'long' });
-    //     setSelectedYear(year);
-    //     setSelectedMonth(month);
-    // }, []);
-    // useEffect(() => {
-    //     let month = months.indexOf(selectedMonth) + 1;
-    //     if (month < 10) {
-    //         month = `0${month}`;
-    //     }
-    //     const year = selectedYear;
-    //     setSelectedJournalId(`${year}-${month}`);
-    // }, [selectedYear, selectedMonth]);
-    // useEffect(() => {
-    //     const filteredJournals = journals.filter((journal) => journal.id === selectedJournalId);
-    //     if (filteredJournals.length > 0) {
-    //         const filteredPayment = filteredJournals[0].payment;
-    //         setActivePayment(filteredPayment);
-    //     } else {
-    //         setActivePayment([]);
-    //     }
-    // }, [selectedYear, selectedMonth, journals, selectedJournalId]);
-
     return (
         <div className="modal fade" id="editJournalData" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Beleg ändern</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleReload}></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleEditData} onBlur={handleReload}>
+                        <form onSubmit={handleEditData}>
                             <div className="form-input-group">
                                 <div className="form-row">
                                     <div className="widthFull">
@@ -262,10 +243,15 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
                                 <div className="badge text-bg-light">{activePayment.length}</div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger">
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deletePayment}>
                                     Löschen
                                 </button>
-                                <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    data-bs-dismiss="modal"
+                                    disabled={selectedCategory === 'Auswählen...'}
+                                >
                                     Ändern
                                 </button>
                             </div>

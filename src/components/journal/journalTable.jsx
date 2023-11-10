@@ -86,7 +86,15 @@ export default function JournalTable({ activeJournal, loadJournals, activeUser }
     }
 
     function rowExpansionTemplate(data) {
-        return <JournalTableExpansion data={data} activeJournal={activeJournal} loadJournals={loadJournals} activeUser={activeUser} />;
+        return (
+            <JournalTableExpansion
+                data={data}
+                activeJournal={activeJournal}
+                loadJournals={loadJournals}
+                activeUser={activeUser}
+                setExpandedRows={setExpandedRows}
+            />
+        );
     }
 
     return (
