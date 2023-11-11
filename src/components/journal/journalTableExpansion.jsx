@@ -1,9 +1,9 @@
 import DialogEditData from './dialogEditData';
 
-export default function JournalTableExpansion({ data, activeJournal, loadJournals, setExpandedRows }) {
+export default function JournalTableExpansion({ data, setExpandedRows }) {
     return (
         <>
-            <DialogEditData data={data} activeJournal={activeJournal} loadJournals={loadJournals} setExpandedRows={setExpandedRows} />
+            <DialogEditData data={data} setExpandedRows={setExpandedRows} />
 
             <table className="table journal-detail-table">
                 <thead>

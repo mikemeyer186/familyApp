@@ -6,8 +6,9 @@ import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
+import { useJournal } from '../../contexts/journalContext';
 
-export default function DialogNewData({ loadJournals, journals }) {
+export default function DialogNewData() {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -18,6 +19,7 @@ export default function DialogNewData({ loadJournals, journals }) {
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [activePayment, setActivePayment] = useState([]);
     const { activeUser } = useUser();
+    const { journals, loadJournals } = useJournal();
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];

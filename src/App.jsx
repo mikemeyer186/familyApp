@@ -8,6 +8,7 @@ import { updateEmail, updateProfile, signOut } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useUser } from './contexts/userContext';
+import { JournalProvider } from './contexts/journalContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
@@ -131,20 +132,25 @@ export default function App() {
             {error && <Error error={error} slideOut={slideOut} />}
 
             <div className="page-container">
-                <Routes>
-                    <Route path="/" element={<Login signInUser={signInUser} isAuthenticated={isAuthenticated} />} />
-                    <Route path="imprint" element={<Imprint />} />
-                    <Route path="dataprotection" element={<DataProtection />} />
+                <JournalProvider>
+                    <Routes>
+                        <Route path="/" element={<Login signInUser={signInUser} isAuthenticated={isAuthenticated} />} />
+                        <Route path="imprint" element={<Imprint />} />
+                        <Route path="dataprotection" element={<DataProtection />} />
 
-                    <Route path="app" element={<AppLayout signOutUser={signOutUser} />}>
-                        <Route index element={<DashboardPage />} />
-                        <Route path="dashboard" element={<DashboardPage />} />
-                        <Route path="lists" element={<ListPage />} />
-                        <Route path="journal" element={<JournalPage />} />
-                        <Route path="calendar" element={<CalendarPage />} />
-                        <Route path="userprofile" element={<UserProfile updateUserProfile={updateUserProfile} updateUserEmail={updateUserEmail} />} />
-                    </Route>
-                </Routes>
+                        <Route path="app" element={<AppLayout signOutUser={signOutUser} />}>
+                            <Route index element={<DashboardPage />} />
+                            <Route path="dashboard" element={<DashboardPage />} />
+                            <Route path="lists" element={<ListPage />} />
+                            <Route path="journal" element={<JournalPage />} />
+                            <Route path="calendar" element={<CalendarPage />} />
+                            <Route
+                                path="userprofile"
+                                element={<UserProfile updateUserProfile={updateUserProfile} updateUserEmail={updateUserEmail} />}
+                            />
+                        </Route>
+                    </Routes>
+                </JournalProvider>
             </div>
         </>
     );

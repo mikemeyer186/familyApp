@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { loadJournalFromFirestore } from '../../services/firestore';
+import { useJournal } from '../../contexts/journalContext';
 import DialogNewData from './dialogNewData';
 import JournalToolbar from './journalToolbar';
 import Spinner from '../global/spinner';
@@ -7,16 +7,10 @@ import JournalTable from './journalTable';
 
 export default function JournalPage() {
     const date = new Date();
-    const [journals, setJournals] = useState([]);
-    const [activeJournal, setActiveJournal] = useState({});
+    const { journals, loadJournals, setActiveJournal } = useJournal();
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
     const [isLoaded, setIsLoaded] = useState(false);
-
-    async function loadJournals() {
-        const journal = await loadJournalFromFirestore();
-        setJournals(journal);
-    }
 
     useEffect(() => {
         loadJournals();
@@ -33,14 +27,14 @@ export default function JournalPage() {
 
     return (
         <>
-            <DialogNewData loadJournals={loadJournals} journals={journals} />
+            <DialogNewData />
 
             <div className="journalPage-wrapper">
                 <div className="journalToolbar">
                     <JournalToolbar year={year} month={month} setYear={setYear} setMonth={setMonth} />
                 </div>
 
-                {!isLoaded ? <Spinner>{'Journal laden...'}</Spinner> : <JournalTable activeJournal={activeJournal} loadJournals={loadJournals} />}
+                {!isLoaded ? <Spinner>{'Journal laden...'}</Spinner> : <JournalTable />}
             </div>
         </>
     );

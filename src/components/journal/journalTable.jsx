@@ -2,15 +2,17 @@ import { useRef, useState } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { useJournal } from '../../contexts/journalContext';
 import JournalTableHeader from './journalTableHeader';
 import JournalTableExpansion from './journalTableExpansion';
 
-export default function JournalTable({ activeJournal, loadJournals }) {
+export default function JournalTable() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
     const [expandedRows, setExpandedRows] = useState(null);
+    const { activeJournal } = useJournal();
     const dt = useRef(null);
     const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 
@@ -86,7 +88,7 @@ export default function JournalTable({ activeJournal, loadJournals }) {
     }
 
     function rowExpansionTemplate(data) {
-        return <JournalTableExpansion data={data} activeJournal={activeJournal} loadJournals={loadJournals} setExpandedRows={setExpandedRows} />;
+        return <JournalTableExpansion data={data} setExpandedRows={setExpandedRows} />;
     }
 
     return (
