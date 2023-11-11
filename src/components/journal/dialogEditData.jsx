@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { addPaymentInFirestore, updatePaymentInFirestore } from '../../services/firestore';
+import { useUser } from '../../contexts/userContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogEditData({ data, activeJournal, loadJournals, activeUser, setExpandedRows }) {
+export default function DialogEditData({ data, activeJournal, loadJournals, setExpandedRows }) {
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
     const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
@@ -16,6 +17,7 @@ export default function DialogEditData({ data, activeJournal, loadJournals, acti
     const [info, setInfo] = useState(data.info);
     const [activePayment, setActivePayment] = useState(activeJournal.payment);
     const [newJournalId, setNewJournalId] = useState('');
+    const { activeUser } = useUser();
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];

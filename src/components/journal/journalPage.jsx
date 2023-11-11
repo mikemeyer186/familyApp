@@ -5,7 +5,7 @@ import JournalToolbar from './journalToolbar';
 import Spinner from '../global/spinner';
 import JournalTable from './journalTable';
 
-export default function JournalPage({ activeUser }) {
+export default function JournalPage() {
     const date = new Date();
     const [journals, setJournals] = useState([]);
     const [activeJournal, setActiveJournal] = useState({});
@@ -33,18 +33,14 @@ export default function JournalPage({ activeUser }) {
 
     return (
         <>
-            <DialogNewData loadJournals={loadJournals} journals={journals} activeUser={activeUser} />
+            <DialogNewData loadJournals={loadJournals} journals={journals} />
 
             <div className="journalPage-wrapper">
                 <div className="journalToolbar">
                     <JournalToolbar year={year} month={month} setYear={setYear} setMonth={setMonth} />
                 </div>
 
-                {!isLoaded ? (
-                    <Spinner>{'Journal laden...'}</Spinner>
-                ) : (
-                    <JournalTable activeJournal={activeJournal} loadJournals={loadJournals} activeUser={activeUser} />
-                )}
+                {!isLoaded ? <Spinner>{'Journal laden...'}</Spinner> : <JournalTable activeJournal={activeJournal} loadJournals={loadJournals} />}
             </div>
         </>
     );

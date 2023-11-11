@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router';
 import Navbar from './navbar';
 
-export default function AppLayout({ signOutUser, activeUser }) {
+export default function AppLayout({ signOutUser }) {
     return (
         <>
-            <Navbar signOutUser={signOutUser} activeUser={activeUser} />
+            <Navbar signOutUser={signOutUser} />
             <Outlet />
         </>
     );

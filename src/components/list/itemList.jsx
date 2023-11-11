@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { updateListInFirestore } from '../../services/firestore';
+import { useUser } from '../../contexts/userContext';
 import Item from './item';
 import NewItemForm from './newItemForm';
 import ListMenu from './listMenu';
 import ListHeader from './listHeader';
 
-export default function ItemList({ list, currentUser, deleteList }) {
+export default function ItemList({ list, deleteList }) {
     const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
+    const { activeUser } = useUser();
     const listID = list.id;
     const sortCategories = ['Datum', 'Kategorie', 'Erledigt', 'Priorität'];
     let sortedItems;
@@ -21,7 +23,7 @@ export default function ItemList({ list, currentUser, deleteList }) {
                     id: crypto.randomUUID(),
                     title: title,
                     done: false,
-                    user: currentUser,
+                    user: activeUser.displayName,
                     date: new Date().toISOString(),
                     category: category === 'Kategorie' ? 'Sonstiges' : category,
                     amount: 1,

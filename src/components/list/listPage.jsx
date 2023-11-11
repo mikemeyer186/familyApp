@@ -9,12 +9,11 @@ import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
 import Spinner from '../global/spinner';
 
-export default function ListPage({ activeUser }) {
+export default function ListPage() {
     const [lists, setLists] = useState([]);
     const [sortBy, setSortBy] = useState('Datum');
     const [isLoaded, setIsLoaded] = useState(false);
     const sortCategories = ['Datum', 'Alphabet'];
-    const currentUser = activeUser.displayName;
     let sortedLists;
 
     async function getLists() {
@@ -100,7 +99,7 @@ export default function ListPage({ activeUser }) {
                             </span>
                         ) : (
                             sortedLists.map((list) => {
-                                return <ItemList key={list.id} list={list} currentUser={currentUser} deleteList={deleteList} />;
+                                return <ItemList key={list.id} list={list} deleteList={deleteList} />;
                             })
                         )}
                     </div>

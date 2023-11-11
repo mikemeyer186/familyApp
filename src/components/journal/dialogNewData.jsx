@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { addPaymentInFirestore } from '../../services/firestore';
+import { useUser } from '../../contexts/userContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogNewData({ loadJournals, journals, activeUser }) {
+export default function DialogNewData({ loadJournals, journals }) {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -16,6 +17,7 @@ export default function DialogNewData({ loadJournals, journals, activeUser }) {
     const [info, setInfo] = useState('');
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [activePayment, setActivePayment] = useState([]);
+    const { activeUser } = useUser();
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];

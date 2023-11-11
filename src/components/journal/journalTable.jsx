@@ -5,7 +5,7 @@ import { Column } from 'primereact/column';
 import JournalTableHeader from './journalTableHeader';
 import JournalTableExpansion from './journalTableExpansion';
 
-export default function JournalTable({ activeJournal, loadJournals, activeUser }) {
+export default function JournalTable({ activeJournal, loadJournals }) {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -86,15 +86,7 @@ export default function JournalTable({ activeJournal, loadJournals, activeUser }
     }
 
     function rowExpansionTemplate(data) {
-        return (
-            <JournalTableExpansion
-                data={data}
-                activeJournal={activeJournal}
-                loadJournals={loadJournals}
-                activeUser={activeUser}
-                setExpandedRows={setExpandedRows}
-            />
-        );
+        return <JournalTableExpansion data={data} activeJournal={activeJournal} loadJournals={loadJournals} setExpandedRows={setExpandedRows} />;
     }
 
     return (

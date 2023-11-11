@@ -7,6 +7,7 @@ import { auth } from './config/firebase';
 import { updateEmail, updateProfile, signOut } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { useUser } from './contexts/userContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
@@ -24,10 +25,10 @@ export default function App() {
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(true);
-    const [activeUser, setActiveUser] = useState({});
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
+    const { setActiveUser } = useUser();
     const navigate = useNavigate();
 
     async function signInUser(email, password) {
@@ -132,19 +133,16 @@ export default function App() {
             <div className="page-container">
                 <Routes>
                     <Route path="/" element={<Login signInUser={signInUser} isAuthenticated={isAuthenticated} />} />
-                    <Route path="imprint" element={<Imprint signInUser={signInUser} />} />
-                    <Route path="dataprotection" element={<DataProtection signInUser={signInUser} />} />
+                    <Route path="imprint" element={<Imprint />} />
+                    <Route path="dataprotection" element={<DataProtection />} />
 
-                    <Route path="app" element={<AppLayout signOutUser={signOutUser} activeUser={activeUser} />}>
+                    <Route path="app" element={<AppLayout signOutUser={signOutUser} />}>
                         <Route index element={<DashboardPage />} />
                         <Route path="dashboard" element={<DashboardPage />} />
-                        <Route path="lists" element={<ListPage activeUser={activeUser} />} />
-                        <Route path="journal" element={<JournalPage activeUser={activeUser} />} />
+                        <Route path="lists" element={<ListPage />} />
+                        <Route path="journal" element={<JournalPage />} />
                         <Route path="calendar" element={<CalendarPage />} />
-                        <Route
-                            path="userprofile"
-                            element={<UserProfile activeUser={activeUser} updateUserProfile={updateUserProfile} updateUserEmail={updateUserEmail} />}
-                        />
+                        <Route path="userprofile" element={<UserProfile updateUserProfile={updateUserProfile} updateUserEmail={updateUserEmail} />} />
                     </Route>
                 </Routes>
             </div>
