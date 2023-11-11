@@ -10,6 +10,7 @@ import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogEditData({ data, setExpandedRows }) {
     const { activeJournal, loadJournals, journals } = useJournal();
+    const { activeUser } = useUser();
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
     const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
@@ -20,7 +21,6 @@ export default function DialogEditData({ data, setExpandedRows }) {
     const [activePayment, setActivePayment] = useState(activeJournal.payment);
     const [newActivePayment, setNewActivePayment] = useState([]);
     const [newJournalId, setNewJournalId] = useState('');
-    const { activeUser } = useUser();
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];

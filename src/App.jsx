@@ -22,6 +22,7 @@ import Imprint from './components/main/imprint';
 import DataProtection from './components/main/dataprotection';
 
 export default function App() {
+    const { setActiveUser } = useUser();
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
@@ -29,7 +30,6 @@ export default function App() {
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
-    const { setActiveUser } = useUser();
     const navigate = useNavigate();
 
     async function signInUser(email, password) {

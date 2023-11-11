@@ -21,7 +21,7 @@ export async function addListInFirestore(list, id, title, date) {
     try {
         await setDoc(doc(db, 'lists', id), { list, title, id: id, date });
     } catch (e) {
-        console.error('Error updating document: ', e);
+        console.error('Error adding document: ', e);
     }
 }
 
@@ -48,7 +48,7 @@ export async function addPaymentInFirestore(payment, journalId) {
     try {
         await setDoc(doc(db, 'journal', journalId), { payment, id: journalId });
     } catch (e) {
-        console.error('Error updating document: ', e);
+        console.error('Error adding document: ', e);
     }
 }
 
