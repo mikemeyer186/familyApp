@@ -9,7 +9,7 @@ import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogEditData({ data, setExpandedRows }) {
-    const { activeJournal, loadJournals } = useJournal();
+    const { activeJournal, loadJournals, journals } = useJournal();
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
     const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
@@ -18,6 +18,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
     const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
     const [info, setInfo] = useState(data.info);
     const [activePayment, setActivePayment] = useState(activeJournal.payment);
+    const [newActivePayment, setNewActivePayment] = useState([]);
     const [newJournalId, setNewJournalId] = useState('');
     const { activeUser } = useUser();
     const defaultYears = years;
@@ -49,7 +50,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
         const editedPayment = changedPayment();
 
         if (selectedYear !== data.year || selectedMonth !== data.month) {
-            addNewPayment(editedPayment, newJournalId);
+            addEditedPayment(editedPayment, newJournalId);
             deletePayment();
         } else {
             editPayment(editedPayment, activeJournal.id);
@@ -70,9 +71,9 @@ export default function DialogEditData({ data, setExpandedRows }) {
         await loadJournals();
     }
 
-    async function addNewPayment(newPayment, journalId) {
-        const payment = [newPayment];
-        await addPaymentInFirestore(payment, journalId);
+    async function addEditedPayment(newPayment, journalId) {
+        const newPayments = [newPayment, ...newActivePayment];
+        await addPaymentInFirestore(newPayments, journalId);
         await loadJournals();
     }
 
@@ -123,6 +124,16 @@ export default function DialogEditData({ data, setExpandedRows }) {
         const year = selectedYear;
         setNewJournalId(`${year}-${month}`);
     }, [selectedYear, selectedMonth]);
+
+    useEffect(() => {
+        const filteredJournals = journals.filter((journal) => journal.id === newJournalId);
+        if (filteredJournals.length > 0) {
+            const filteredPayment = filteredJournals[0].payment;
+            setNewActivePayment(filteredPayment);
+        } else {
+            setNewActivePayment([]);
+        }
+    }, [selectedYear, selectedMonth, journals, newJournalId]);
 
     return (
         <div className="modal fade" id="editJournalData" tabIndex="-1" aria-hidden="true">

@@ -18,11 +18,10 @@ export default function JournalTable() {
 
     function onGlobalFilterChange(e) {
         const value = e.target.value;
-        let _filters = { ...filters };
+        let filterValues = { ...filters };
+        filterValues['global'].value = value;
 
-        _filters['global'].value = value;
-
-        setFilters(_filters);
+        setFilters(filterValues);
         setGlobalFilterValue(value);
     }
 

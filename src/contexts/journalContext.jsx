@@ -8,8 +8,8 @@ function JournalProvider({ children }) {
     const [activeJournal, setActiveJournal] = useState({});
 
     async function loadJournals() {
-        const journal = await loadJournalFromFirestore();
-        setJournals(journal);
+        const loadedJournals = await loadJournalFromFirestore();
+        setJournals(loadedJournals);
     }
 
     return (
@@ -23,7 +23,7 @@ function useJournal() {
     const context = useContext(JournalContext);
 
     if (context === undefined) {
-        throw new Error('useUser must be used within a UserProvider');
+        throw new Error('useContext must be used within a ContextProvider');
     }
 
     return context;
