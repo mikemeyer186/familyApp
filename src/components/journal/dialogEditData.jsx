@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { addPaymentInFirestore, updatePaymentInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
+import { useAlert } from '../../contexts/alertContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
@@ -11,6 +12,7 @@ import CurrencyInput from 'react-currency-input-field';
 export default function DialogEditData({ data, setExpandedRows }) {
     const { activeJournal, loadJournals, journals } = useJournal();
     const { activeUser } = useUser();
+    const { setSuccess } = useAlert();
     const [selectedYear, setSelectedYear] = useState(data.year);
     const [selectedMonth, setSelectedMonth] = useState(data.month);
     const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
@@ -69,12 +71,14 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setExpandedRows(null);
         await updatePaymentInFirestore(newPayments, journalId);
         await loadJournals();
+        setSuccess('Der Beleg wurde erfolgreich geändert!');
     }
 
     async function addEditedPayment(newPayment, journalId) {
         const newPayments = [newPayment, ...newActivePayment];
         await addPaymentInFirestore(newPayments, journalId);
         await loadJournals();
+        setSuccess('Der Beleg wurde erfolgreich geändert!');
     }
 
     async function deletePayment() {
@@ -83,6 +87,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setExpandedRows(null);
         await updatePaymentInFirestore(newPayments, activeJournal.id);
         await loadJournals();
+        setSuccess('Der Beleg wurde erfolgreich gelöscht!');
     }
 
     function convertAmountOnSave(amount) {

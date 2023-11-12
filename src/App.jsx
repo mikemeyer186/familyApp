@@ -9,6 +9,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useUser } from './contexts/userContext';
 import { JournalProvider } from './contexts/journalContext';
+import { useAlert } from './contexts/alertContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
@@ -23,9 +24,7 @@ import DataProtection from './components/main/dataprotection';
 
 export default function App() {
     const { setActiveUser } = useUser();
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-    const [slideOut, setSlideOut] = useState('');
+    const { error, success, slideOut, setError, setSuccess } = useAlert();
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [activePage, setActivePage] = useState(lastPage);
@@ -91,23 +90,6 @@ export default function App() {
     useEffect(() => {
         authCheck();
     }, []);
-
-    useEffect(() => {
-        const alertTime = setTimeout(() => {
-            setSlideOut('slideOut-alert');
-        }, 3000);
-
-        const slideTime = setTimeout(() => {
-            setError('');
-            setSuccess('');
-            setSlideOut('');
-        }, 3200);
-
-        return () => {
-            clearTimeout(alertTime);
-            clearTimeout(slideTime);
-        };
-    }, [error, success]);
 
     useEffect(() => {
         let params = searchParams.get('page');

@@ -4,12 +4,14 @@ import { loadListsFromFirestore } from '../../services/firestore';
 import { addListInFirestore } from '../../services/firestore';
 import { deleteListInFirestore } from '../../services/firestore';
 import { collection, onSnapshot, query } from 'firebase/firestore';
+import { useAlert } from '../../contexts/alertContext';
 import ItemList from './itemList';
 import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
 import Spinner from '../global/spinner';
 
 export default function ListPage() {
+    const { setSuccess } = useAlert();
     const [lists, setLists] = useState([]);
     const [sortBy, setSortBy] = useState('Datum');
     const [isLoaded, setIsLoaded] = useState(false);
@@ -38,6 +40,7 @@ export default function ListPage() {
                 },
             ];
             addListInFirestore(list, id, title, date);
+            setSuccess('Die neue Liste wurde erfolgreich abhegelgt!');
             return lists;
         });
     }
@@ -46,6 +49,7 @@ export default function ListPage() {
         setLists((currentLists) => {
             const lists = currentLists.filter((list) => list.id !== listId);
             deleteListInFirestore(listId);
+            setSuccess('Die Liste wurde erfolgreich gelöscht!');
             return lists;
         });
     }

@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 import { addPaymentInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
+import { useJournal } from '../../contexts/journalContext';
+import { useAlert } from '../../contexts/alertContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
-import { useJournal } from '../../contexts/journalContext';
 
 export default function DialogNewData() {
+    const { activeUser } = useUser();
+    const { journals, loadJournals } = useJournal();
+    const { setSuccess } = useAlert();
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -18,8 +22,6 @@ export default function DialogNewData() {
     const [info, setInfo] = useState('');
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [activePayment, setActivePayment] = useState([]);
-    const { activeUser } = useUser();
-    const { journals, loadJournals } = useJournal();
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];
@@ -53,6 +55,7 @@ export default function DialogNewData() {
             return payment;
         });
         await loadJournals();
+        setSuccess('Der neue Beleg wurde erfolgreich gebucht!');
     }
 
     function convertAmount(amount) {
