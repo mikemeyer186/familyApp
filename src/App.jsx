@@ -17,6 +17,7 @@ import ListPage from './components/list/listPage';
 import AppLayout from './components/main/appLayout';
 import Imprint from './components/main/imprint';
 import DataProtection from './components/main/dataprotection';
+import ProtectedRoute from './components/main/protectedRoute';
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
@@ -38,7 +39,14 @@ export default function App() {
                         <Route path="imprint" element={<Imprint />} />
                         <Route path="dataprotection" element={<DataProtection />} />
 
-                        <Route path="app" element={<AppLayout />}>
+                        <Route
+                            path="app"
+                            element={
+                                <ProtectedRoute>
+                                    <AppLayout />
+                                </ProtectedRoute>
+                            }
+                        >
                             <Route index element={<DashboardPage />} />
                             <Route path="dashboard" element={<DashboardPage />} />
                             <Route path="lists" element={<ListPage />} />

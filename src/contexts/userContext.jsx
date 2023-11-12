@@ -12,7 +12,7 @@ const UserContext = createContext();
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState({});
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
@@ -23,8 +23,8 @@ function UserPovider({ children }) {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             setActiveUser(user);
-            setSuccess('Du bist erfolgreich eingeloggt!');
             navigate('app/dashboard?page=Dashboard');
+            setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
             setError('Deine Login-Daten waren nicht korrekt!');
         }
@@ -66,6 +66,7 @@ function UserPovider({ children }) {
     function authCheck() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                setIsAuthenticated(true);
                 setActiveUser(user);
                 navigate(`app/${activePage}`);
             } else {
