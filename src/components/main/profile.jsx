@@ -4,8 +4,8 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../contexts/userContext';
 
-export default function UserProfile({ updateUserProfile }) {
-    const { activeUser } = useUser();
+export default function UserProfile() {
+    const { activeUser, updateUserProfile } = useUser();
     const [userName, setUserName] = useState(activeUser.displayName || '');
     const [email, setEmail] = useState(activeUser.email);
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');

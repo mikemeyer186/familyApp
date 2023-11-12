@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useUser } from '../../contexts/userContext';
 
-export default function LoginForm({ signInUser }) {
+export default function LoginForm() {
+    const { signInUser } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggingIn, setIsLoggingIn] = useState(false);

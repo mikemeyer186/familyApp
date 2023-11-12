@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 
-export default function Navbar({ signOutUser }) {
+export default function Navbar() {
+    const { activeUser, signOutUser } = useUser();
     const [greeting, setGreeting] = useState('Hallo');
     const navigate = useNavigate();
-    const { activeUser } = useUser();
 
     function handleSignOut() {
         signOutUser();
