@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { addPaymentInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
-import { useAlert } from '../../contexts/alertContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
@@ -11,8 +9,7 @@ import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogNewData() {
     const { activeUser } = useUser();
-    const { journals, loadJournals } = useJournal();
-    const { setSuccess } = useAlert();
+    const { journals, activePayment, setActivePayment, addNewPayment } = useJournal();
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -21,7 +18,6 @@ export default function DialogNewData() {
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
     const [selectedJournalId, setSelectedJournalId] = useState('');
-    const [activePayment, setActivePayment] = useState([]);
     const defaultYears = years;
     const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];
@@ -46,16 +42,6 @@ export default function DialogNewData() {
         );
         setAmount('');
         setInfo('');
-    }
-
-    async function addNewPayment(newPayment, journalId) {
-        setActivePayment(async (currentPayment) => {
-            const payment = [newPayment, ...currentPayment];
-            await addPaymentInFirestore(payment, journalId);
-            return payment;
-        });
-        await loadJournals();
-        setSuccess('Der neue Beleg wurde erfolgreich gebucht!');
     }
 
     function convertAmount(amount) {
@@ -115,7 +101,7 @@ export default function DialogNewData() {
         } else {
             setActivePayment([]);
         }
-    }, [selectedYear, selectedMonth, journals, selectedJournalId]);
+    }, [selectedYear, selectedMonth, journals, selectedJournalId, setActivePayment]);
 
     return (
         <div className="modal fade" id="newJournalData" tabIndex="-1" aria-hidden="true">

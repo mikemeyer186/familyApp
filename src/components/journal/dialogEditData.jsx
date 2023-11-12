@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { addPaymentInFirestore, updatePaymentInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useAlert } from '../../contexts/alertContext';
@@ -10,7 +9,8 @@ import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogEditData({ data, setExpandedRows }) {
-    const { activeJournal, loadJournals, journals } = useJournal();
+    const { activeJournal, journals, activePayment, editPayment, addEditedPayment, setActivePayment, setNewActivePayment, deletePayment } =
+        useJournal();
     const { activeUser } = useUser();
     const { setSuccess } = useAlert();
     const [selectedYear, setSelectedYear] = useState(data.year);
@@ -20,8 +20,6 @@ export default function DialogEditData({ data, setExpandedRows }) {
     const [selectedCategory, setSelectedCategory] = useState(data.category);
     const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
     const [info, setInfo] = useState(data.info);
-    const [activePayment, setActivePayment] = useState(activeJournal.payment);
-    const [newActivePayment, setNewActivePayment] = useState([]);
     const [newJournalId, setNewJournalId] = useState('');
     const defaultYears = years;
     const defaultMonths = months;
@@ -53,40 +51,19 @@ export default function DialogEditData({ data, setExpandedRows }) {
 
         if (selectedYear !== data.year || selectedMonth !== data.month) {
             addEditedPayment(editedPayment, newJournalId);
-            deletePayment();
+            deletePayment(data);
+            setSuccess('Der Beleg wurde erfolgreich verschoben!');
         } else {
             editPayment(editedPayment, activeJournal.id);
+            setSuccess('Der Beleg wurde erfolgreich geändert!');
         }
-    }
 
-    async function editPayment(newPayment, journalId) {
-        const newPayments = activePayment.map((payment) => {
-            if (payment.id === newPayment.id) {
-                payment = newPayment;
-            }
-            return payment;
-        });
-
-        setActivePayment(newPayments);
         setExpandedRows(null);
-        await updatePaymentInFirestore(newPayments, journalId);
-        await loadJournals();
-        setSuccess('Der Beleg wurde erfolgreich geändert!');
     }
 
-    async function addEditedPayment(newPayment, journalId) {
-        const newPayments = [newPayment, ...newActivePayment];
-        await addPaymentInFirestore(newPayments, journalId);
-        await loadJournals();
-        setSuccess('Der Beleg wurde erfolgreich geändert!');
-    }
-
-    async function deletePayment() {
-        const newPayments = activePayment.filter((payment) => payment.id !== data.id);
-        setActivePayment(newPayments);
+    function handleDeletePayment() {
+        deletePayment(data);
         setExpandedRows(null);
-        await updatePaymentInFirestore(newPayments, activeJournal.id);
-        await loadJournals();
         setSuccess('Der Beleg wurde erfolgreich gelöscht!');
     }
 
@@ -131,6 +108,16 @@ export default function DialogEditData({ data, setExpandedRows }) {
     }, [selectedYear, selectedMonth]);
 
     useEffect(() => {
+        const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
+        if (filteredJournals.length > 0) {
+            const filteredPayment = filteredJournals[0].payment;
+            setActivePayment(filteredPayment);
+        } else {
+            setActivePayment([]);
+        }
+    }, []);
+
+    useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === newJournalId);
         if (filteredJournals.length > 0) {
             const filteredPayment = filteredJournals[0].payment;
@@ -138,7 +125,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
         } else {
             setNewActivePayment([]);
         }
-    }, [selectedYear, selectedMonth, journals, newJournalId]);
+    }, [selectedYear, selectedMonth, journals, newJournalId, setNewActivePayment]);
 
     return (
         <div className="modal fade" id="editJournalData" tabIndex="-1" aria-hidden="true">
@@ -294,7 +281,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
                                 <div className="badge text-bg-light">{activePayment.length}</div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deletePayment}>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeletePayment}>
                                     Löschen
                                 </button>
                                 <button

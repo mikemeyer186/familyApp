@@ -22,8 +22,8 @@ export default function JournalPage() {
         setActiveJournal(filteredJournal);
         setTimeout(() => {
             setIsLoaded(true);
-        }, 1000);
-    }, [journals, month, year]);
+        }, 500);
+    }, [journals, month, year, setActiveJournal]);
 
     return (
         <>
