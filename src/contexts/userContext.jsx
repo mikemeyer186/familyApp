@@ -1,10 +1,11 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../config/firebase';
 import { updateEmail, updateProfile, signOut } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
+import { useSearchParams } from 'react-router-dom';
 
 const UserContext = createContext();
 
@@ -14,6 +15,7 @@ function UserPovider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [activePage, setActivePage] = useState(lastPage);
+    const [searchParams] = useSearchParams('');
     const navigate = useNavigate();
 
     async function signInUser(email, password) {
@@ -72,14 +74,29 @@ function UserPovider({ children }) {
         });
     }
 
+    useEffect(() => {
+        let params = searchParams.get('page');
+        if (params === 'Dashboard') {
+            setActivePage('dashboard?page=Dashboard');
+        } else if (params === 'Listen') {
+            setActivePage('lists?page=Listen');
+        } else if (params === 'Journal') {
+            setActivePage('journal?page=Journal');
+        } else if (params === 'Kalender') {
+            setActivePage('calendar?page=Kalender');
+        } else if (params === null) {
+            params = 'Login';
+        }
+        document.title = `familyApp | ${params}`;
+        setLastPage(activePage);
+    }, [activePage, searchParams, setActivePage, setLastPage]);
+
     return (
         <UserContext.Provider
             value={{
                 activeUser: activeUser,
                 isAuthenticated: isAuthenticated,
                 setActiveUser,
-                setLastPage,
-                setActivePage,
                 signInUser,
                 signOutUser,
                 updateUserProfile,

@@ -1,7 +1,7 @@
 import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { Routes, Route, useSearchParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useUser } from './contexts/userContext';
 import { JournalProvider } from './contexts/journalContext';
@@ -20,29 +20,11 @@ import DataProtection from './components/main/dataprotection';
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
-    const { authCheck, activePage, setActivePage, setLastPage } = useUser();
-    const [searchParams] = useSearchParams('');
+    const { authCheck } = useUser();
 
     useEffect(() => {
         authCheck();
     }, []);
-
-    useEffect(() => {
-        let params = searchParams.get('page');
-        if (params === 'Dashboard') {
-            setActivePage('dashboard?page=Dashboard');
-        } else if (params === 'Listen') {
-            setActivePage('lists?page=Listen');
-        } else if (params === 'Journal') {
-            setActivePage('journal?page=Journal');
-        } else if (params === 'Kalender') {
-            setActivePage('calendar?page=Kalender');
-        } else if (params === null) {
-            params = 'Login';
-        }
-        document.title = `familyApp | ${params}`;
-        setLastPage(activePage);
-    }, [activePage, searchParams, setLastPage, setActivePage]);
 
     return (
         <>
