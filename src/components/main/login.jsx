@@ -5,7 +5,7 @@ import LoginForm from './loginForm';
 
 export default function Login() {
     const { isAuthenticated } = useUser();
-    let showLoginForm = useRef(false);
+    const showLoginForm = useRef(false);
 
     useEffect(() => {
         if (!isAuthenticated) {
