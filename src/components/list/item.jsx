@@ -39,7 +39,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                 <input
                     className="checkbox me-1"
                     type="checkbox"
-                    defaultChecked={item.done}
+                    checked={item.done}
                     onChange={(e) => updateItem(item.id, e.target.checked, item.amount, item.priority)}
                 />
                 <div className="itemContentWrapper">
