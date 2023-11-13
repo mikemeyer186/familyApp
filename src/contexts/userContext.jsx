@@ -11,9 +11,10 @@ const UserContext = createContext();
 
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
-    const [activeUser, setActiveUser] = useState({});
+    const [activeUser, setActiveUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
+    const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ function UserPovider({ children }) {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             setActiveUser(user);
+            setLoggedIn(true);
             navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
@@ -33,6 +35,8 @@ function UserPovider({ children }) {
     async function signOutUser() {
         try {
             await signOut(auth);
+            setActiveUser(null);
+            setLoggedIn(false);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
             setActivePage('');
             navigate('/');
@@ -97,6 +101,7 @@ function UserPovider({ children }) {
             value={{
                 activeUser: activeUser,
                 isAuthenticated: isAuthenticated,
+                loggedIn: loggedIn,
                 setActiveUser,
                 signInUser,
                 signOutUser,
