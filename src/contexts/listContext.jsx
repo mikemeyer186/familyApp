@@ -51,7 +51,7 @@ function useList() {
     const context = useContext(ListContext);
 
     if (context === undefined) {
-        throw new Error('useAlert must be used within a AlertProvider');
+        throw new Error('useList must be used within a ListProvider');
     }
 
     return context;
