@@ -18,6 +18,7 @@ import AppLayout from './components/main/appLayout';
 import Imprint from './components/main/imprint';
 import DataProtection from './components/main/dataprotection';
 import ProtectedRoute from './components/main/protectedRoute';
+import { ListProvider } from './contexts/listContext';
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
@@ -33,29 +34,31 @@ export default function App() {
             {error && <Error error={error} slideOut={slideOut} />}
 
             <div className="page-container">
-                <JournalProvider>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="imprint" element={<Imprint />} />
-                        <Route path="dataprotection" element={<DataProtection />} />
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="imprint" element={<Imprint />} />
+                    <Route path="dataprotection" element={<DataProtection />} />
 
-                        <Route
-                            path="app"
-                            element={
-                                <ProtectedRoute>
-                                    <AppLayout />
-                                </ProtectedRoute>
-                            }
-                        >
-                            <Route index element={<DashboardPage />} />
-                            <Route path="dashboard" element={<DashboardPage />} />
-                            <Route path="lists" element={<ListPage />} />
-                            <Route path="journal" element={<JournalPage />} />
-                            <Route path="calendar" element={<CalendarPage />} />
-                            <Route path="userprofile" element={<UserProfile />} />
-                        </Route>
-                    </Routes>
-                </JournalProvider>
+                    <Route
+                        path="app"
+                        element={
+                            <ProtectedRoute>
+                                <ListProvider>
+                                    <JournalProvider>
+                                        <AppLayout />
+                                    </JournalProvider>
+                                </ListProvider>
+                            </ProtectedRoute>
+                        }
+                    >
+                        <Route index element={<DashboardPage />} />
+                        <Route path="dashboard" element={<DashboardPage />} />
+                        <Route path="lists" element={<ListPage />} />
+                        <Route path="journal" element={<JournalPage />} />
+                        <Route path="calendar" element={<CalendarPage />} />
+                        <Route path="userprofile" element={<UserProfile />} />
+                    </Route>
+                </Routes>
             </div>
         </>
     );

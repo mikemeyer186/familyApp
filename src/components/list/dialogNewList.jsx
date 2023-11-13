@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useList } from '../../contexts/listContext';
 
-export default function DialogNewList({ addNewList }) {
+export default function DialogNewList() {
+    const { addNewList } = useList();
     const [title, setTitle] = useState('');
 
     function handleAddNewList(e) {
