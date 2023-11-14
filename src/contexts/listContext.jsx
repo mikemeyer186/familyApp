@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { addListInFirestore, deleteListInFirestore, loadListsFromFirestore } from '../services/firestore';
+import { addListInFirestore, deleteListInFirestore, loadListsFromFirestore, updateListInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 
 const ListContext = createContext();
@@ -44,7 +44,23 @@ function ListProvider({ children }) {
         setSuccess('Die Liste wurde erfolgreich gelöscht!');
     }
 
-    return <ListContext.Provider value={{ lists: lists, setLists, getLists, addNewList, deleteList }}>{children}</ListContext.Provider>;
+    function clearList(listID) {
+        const listTitle = lists.find((list) => list.id === listID).title;
+        let listItems = lists.find((list) => list.id === listID).list;
+        listItems = [];
+        updateListInFirestore(listItems, listID, listTitle);
+    }
+
+    function renameList(listID, newListTitle) {
+        let listItems = lists.find((list) => list.id === listID).list;
+        updateListInFirestore(listItems, listID, newListTitle);
+    }
+
+    return (
+        <ListContext.Provider value={{ lists: lists, setLists, getLists, addNewList, deleteList, clearList, renameList }}>
+            {children}
+        </ListContext.Provider>
+    );
 }
 
 function useList() {

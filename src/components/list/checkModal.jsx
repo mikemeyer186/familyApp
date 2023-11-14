@@ -1,4 +1,8 @@
-export default function CheckModal({ clearList, deleteList, modalType, listID }) {
+import { useList } from '../../contexts/listContext';
+
+export default function CheckModal({ modalType, listID }) {
+    const { clearList, deleteList } = useList();
+
     return (
         <div className="modal fade" id={`checkModal${listID}`} tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
@@ -20,7 +24,7 @@ export default function CheckModal({ clearList, deleteList, modalType, listID })
                                 Liste löschen
                             </button>
                         ) : (
-                            <button type="button" className="btn btn-danger" onClick={clearList} data-bs-dismiss="modal">
+                            <button type="button" className="btn btn-danger" onClick={() => clearList(listID)} data-bs-dismiss="modal">
                                 Liste leeren
                             </button>
                         )}

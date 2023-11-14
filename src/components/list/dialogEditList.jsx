@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useList } from '../../contexts/listContext';
 
-export default function DialogEditList({ listID, listTitle, renameList }) {
+export default function DialogEditList({ listID, listTitle, setListTitle }) {
+    const { renameList } = useList();
     const [newTitle, setNewTitle] = useState(listTitle);
 
     function handleRenameList(e) {
         e.preventDefault();
-        renameList(newTitle);
+        setListTitle(newTitle);
+        renameList(listID, newTitle);
     }
 
     return (

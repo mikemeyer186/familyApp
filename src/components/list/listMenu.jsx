@@ -2,13 +2,13 @@ import { useState } from 'react';
 import CheckModal from './checkModal';
 import DialogEditList from './dialogEditList';
 
-export default function ListMenu({ listID, listTitle, renameList, deleteList, clearList }) {
+export default function ListMenu({ listID, listTitle, setListTitle }) {
     const [modalType, setModalType] = useState('');
 
     return (
         <>
-            <DialogEditList listID={listID} listTitle={listTitle} renameList={renameList} />
-            <CheckModal clearList={clearList} deleteList={deleteList} modalType={modalType} listID={listID} />
+            <DialogEditList listID={listID} listTitle={listTitle} setListTitle={setListTitle} />
+            <CheckModal modalType={modalType} listID={listID} />
 
             <div className="dropdown listMenu">
                 <img
