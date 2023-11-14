@@ -56,6 +56,7 @@ function JournalProvider({ children }) {
                 journals: journals,
                 activeJournal: activeJournal,
                 activePayment: activePayment,
+                setJournals,
                 loadJournals,
                 setActiveJournal,
                 setActivePayment,
