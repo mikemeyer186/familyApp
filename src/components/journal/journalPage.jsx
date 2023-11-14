@@ -9,7 +9,7 @@ import JournalTable from './journalTable';
 
 export default function JournalPage() {
     const date = new Date();
-    const { journals, setJournals, loadJournals, setActiveJournal } = useJournal();
+    const { journals, setJournals, loadJournals, setActiveJournal, sumPayments } = useJournal();
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -24,8 +24,9 @@ export default function JournalPage() {
         setActiveJournal(filteredJournal);
         setTimeout(() => {
             setIsLoaded(true);
+            sumPayments();
         }, 500);
-    }, [journals, month, year, setActiveJournal]);
+    }, [journals, month, year, setActiveJournal, sumPayments]);
 
     useEffect(() => {
         const q = query(collection(db, 'journal'));

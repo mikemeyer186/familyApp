@@ -50,6 +50,30 @@ function JournalProvider({ children }) {
         await loadJournals();
     }
 
+    function sumPayments() {
+        const sumOfPayments = [];
+
+        activePayment.forEach((payment) => {
+            const aggregate = payment.aggregate;
+            const category = payment.category;
+            let aggregateSum = sumOfPayments.find((item) => item.aggregate === aggregate);
+
+            if (!aggregateSum) {
+                aggregateSum = {
+                    aggregate: aggregate,
+                    amount: 0,
+                    categories: {},
+                };
+                sumOfPayments.push(aggregateSum);
+            }
+
+            aggregateSum.amount += payment.amount;
+            aggregateSum.categories[category] = (aggregateSum.categories[category] || 0) + payment.amount;
+        });
+        console.log(sumOfPayments);
+        return sumOfPayments;
+    }
+
     return (
         <JournalContext.Provider
             value={{
@@ -65,6 +89,7 @@ function JournalProvider({ children }) {
                 addEditedPayment,
                 setNewActivePayment,
                 deletePayment,
+                sumPayments,
             }}
         >
             {children}
