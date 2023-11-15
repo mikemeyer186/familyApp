@@ -10,6 +10,7 @@ function JournalProvider({ children }) {
     const [activeJournal, setActiveJournal] = useState({});
     const [activePayment, setActivePayment] = useState([]);
     const [newActivePayment, setNewActivePayment] = useState([]);
+    const [sumOfPayments, setSumOfPayments] = useState([]);
 
     async function loadJournals() {
         const loadedJournals = await loadJournalFromFirestore();
@@ -51,27 +52,29 @@ function JournalProvider({ children }) {
     }
 
     function sumPayments() {
-        const sumOfPayments = [];
+        let sum = [];
 
-        activePayment.forEach((payment) => {
+        activePayment.map((payment) => {
             const aggregate = payment.aggregate;
             const category = payment.category;
-            let aggregateSum = sumOfPayments.find((item) => item.aggregate === aggregate);
+            let aggregateSum = sum.find((object) => object.aggregate === aggregate);
 
             if (!aggregateSum) {
                 aggregateSum = {
                     aggregate: aggregate,
-                    amount: 0,
-                    categories: {},
+                    sum: payment.amount,
+                    categories: {
+                        [category]: payment.amount,
+                    },
                 };
-                sumOfPayments.push(aggregateSum);
+                sum.push(aggregateSum);
+            } else {
+                aggregateSum.sum += payment.amount;
+                aggregateSum.categories[category] = (aggregateSum.categories[category] || 0) + payment.amount;
             }
-
-            aggregateSum.amount += payment.amount;
-            aggregateSum.categories[category] = (aggregateSum.categories[category] || 0) + payment.amount;
         });
-        console.log(sumOfPayments);
-        return sumOfPayments;
+
+        setSumOfPayments(sum);
     }
 
     return (
@@ -80,6 +83,7 @@ function JournalProvider({ children }) {
                 journals: journals,
                 activeJournal: activeJournal,
                 activePayment: activePayment,
+                sumOfPayments: sumOfPayments,
                 setJournals,
                 loadJournals,
                 setActiveJournal,
