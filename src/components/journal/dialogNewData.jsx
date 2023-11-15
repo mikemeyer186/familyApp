@@ -258,7 +258,7 @@ export default function DialogNewData() {
                             </div>
                             <div className="countBadge">
                                 <span>Belege:</span>
-                                <div className="badge text-bg-light">{activePayment.length}</div>
+                                <div className="badge text-bg-light">{activePayment ? activePayment.length : 0}</div>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>

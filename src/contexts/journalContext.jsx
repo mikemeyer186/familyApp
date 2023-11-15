@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { addPaymentInFirestore, loadJournalFromFirestore, updatePaymentInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 
@@ -76,6 +76,10 @@ function JournalProvider({ children }) {
 
         setSumOfPayments(sum);
     }
+
+    useEffect(() => {
+        sumPayments();
+    }, [activePayment]);
 
     return (
         <JournalContext.Provider

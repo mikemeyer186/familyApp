@@ -7,12 +7,12 @@ import JournalTableHeader from './journalTableHeader';
 import JournalTableExpansion from './journalTableExpansion';
 
 export default function JournalTable() {
+    const { activeJournal } = useJournal();
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
     const [expandedRows, setExpandedRows] = useState(null);
-    const { activeJournal } = useJournal();
     const dt = useRef(null);
     const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 

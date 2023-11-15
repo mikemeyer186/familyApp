@@ -115,7 +115,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
         } else {
             setActivePayment([]);
         }
-    }, []);
+    }, [activeJournal, journals, setActivePayment]);
 
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === newJournalId);
