@@ -62,8 +62,12 @@
             background-color: $bg-color-grey;
             text-decoration: none;
             color: #212529;
-            font-weight: 400;
+            font-weight: 500;
             border: $thinBorder;
+            height: 61px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
         }
 
         .p-accordion-content {
@@ -73,6 +77,19 @@
         @media (max-width: 768px) {
             padding: 0;
             width: 100%;
+        }
+
+        .accordion-header-sum {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            .sum-text {
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
         }
     }
 
