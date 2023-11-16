@@ -1,27 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
-import years from '../../data/years';
-import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
+import months from '../../data/months';
+import years from '../../data/years';
 
 export default function DialogNewData() {
     const { activeUser } = useUser();
-    const { journals, activePayment, setActivePayment, addNewPayment } = useJournal();
-    const [selectedYear, setSelectedYear] = useState('');
-    const [selectedMonth, setSelectedMonth] = useState('');
+    const { activePayment, selectedJournalId, selectedYear, selectedMonth, setSelectedYear, setSelectedMonth, addNewPayment } = useJournal();
     const [amount, setAmount] = useState('');
     const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('Auswählen...');
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
-    const [selectedJournalId, setSelectedJournalId] = useState('');
-    const defaultYears = years;
-    const defaultMonths = months;
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
+    const defaultMonths = months;
+    const defaultYears = years;
+    const convertedMonth = months[selectedMonth - 1];
 
     function handleAddNewData(e) {
         e.preventDefault();
@@ -63,7 +61,11 @@ export default function DialogNewData() {
         setSelectedYear(year);
     }
 
-    function handleMonthSelection(month) {
+    function handleMonthSelection(monthName) {
+        let month = months.indexOf(monthName) + 1;
+        if (month < 10) {
+            month = `0${month}`;
+        }
         setSelectedMonth(month);
     }
 
@@ -76,32 +78,6 @@ export default function DialogNewData() {
         setSelectedCategory(categorie);
         setSelectedAggregate(aggregate);
     }
-
-    useEffect(() => {
-        const year = new Date().getFullYear();
-        const month = new Date().toLocaleString('de-DE', { month: 'long' });
-        setSelectedYear(year);
-        setSelectedMonth(month);
-    }, []);
-
-    useEffect(() => {
-        let month = months.indexOf(selectedMonth) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        const year = selectedYear;
-        setSelectedJournalId(`${year}-${month}`);
-    }, [selectedYear, selectedMonth]);
-
-    useEffect(() => {
-        const filteredJournals = journals.filter((journal) => journal.id === selectedJournalId);
-        if (filteredJournals.length > 0) {
-            const filteredPayment = filteredJournals[0].payment;
-            setActivePayment(filteredPayment);
-        } else {
-            setActivePayment([]);
-        }
-    }, [selectedYear, selectedMonth, journals, selectedJournalId, setActivePayment]);
 
     return (
         <div className="modal fade" id="newJournalData" tabIndex="-1" aria-hidden="true">
@@ -145,7 +121,7 @@ export default function DialogNewData() {
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
                                             >
-                                                {selectedMonth}
+                                                {convertedMonth}
                                             </button>
                                             <ul className="dropdown-menu dropdown-menu-journal">
                                                 {defaultMonths.map((month) => {

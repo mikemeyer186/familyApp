@@ -5,12 +5,17 @@ import { useAlert } from './alertContext';
 const JournalContext = createContext();
 
 function JournalProvider({ children }) {
+    const date = new Date();
     const { setSuccess } = useAlert();
     const [journals, setJournals] = useState([]);
     const [activeJournal, setActiveJournal] = useState({});
     const [activePayment, setActivePayment] = useState([]);
     const [newActivePayment, setNewActivePayment] = useState([]);
     const [sumOfPayments, setSumOfPayments] = useState([]);
+    const [selectedJournalId, setSelectedJournalId] = useState('');
+    const [selectedYear, setSelectedYear] = useState(date.getFullYear());
+    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     async function loadJournals() {
         const loadedJournals = await loadJournalFromFirestore();
@@ -81,6 +86,17 @@ function JournalProvider({ children }) {
         sumPayments();
     }, [activePayment]);
 
+    useEffect(() => {
+        const filteredJournals = journals.filter((journal) => journal.id === `${selectedYear}-${selectedMonth}`);
+        const filteredJournal = filteredJournals[0];
+        setSelectedJournalId(`${selectedYear}-${selectedMonth}`);
+        setActiveJournal(filteredJournal);
+        setActivePayment(filteredJournal ? filteredJournal.payment : []);
+        setTimeout(() => {
+            setIsLoaded(true);
+        }, 500);
+    }, [journals, selectedYear, selectedMonth]);
+
     return (
         <JournalContext.Provider
             value={{
@@ -88,8 +104,15 @@ function JournalProvider({ children }) {
                 activeJournal: activeJournal,
                 activePayment: activePayment,
                 sumOfPayments: sumOfPayments,
+                selectedJournalId: selectedJournalId,
+                selectedYear: selectedYear,
+                selectedMonth: selectedMonth,
+                isLoaded: isLoaded,
+                setSelectedYear,
+                setSelectedMonth,
                 setJournals,
                 loadJournals,
+                setSelectedJournalId,
                 setActiveJournal,
                 setActivePayment,
                 addNewPayment,

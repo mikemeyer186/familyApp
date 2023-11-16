@@ -23,6 +23,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
     const [newJournalId, setNewJournalId] = useState('');
     const defaultYears = years;
     const defaultMonths = months;
+    const convertedMonth = months[selectedMonth - 1];
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
 
@@ -84,7 +85,13 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setSelectedYear(year);
     }
 
-    function handleMonthSelection(month) {
+    function handleMonthSelection(monthName) {
+        let month = months.indexOf(monthName) + 1;
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        const year = selectedYear;
+        setNewJournalId(`${year}-${month}`);
         setSelectedMonth(month);
     }
 
@@ -99,13 +106,13 @@ export default function DialogEditData({ data, setExpandedRows }) {
     }
 
     useEffect(() => {
-        let month = months.indexOf(selectedMonth) + 1;
+        let month = months.indexOf(convertedMonth) + 1;
         if (month < 10) {
             month = `0${month}`;
         }
         const year = selectedYear;
         setNewJournalId(`${year}-${month}`);
-    }, [selectedYear, selectedMonth]);
+    }, [selectedYear, convertedMonth]);
 
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
@@ -168,7 +175,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
                                             >
-                                                {selectedMonth}
+                                                {convertedMonth}
                                             </button>
                                             <ul className="dropdown-menu dropdown-menu-journal">
                                                 {defaultMonths.map((month) => {

@@ -1,17 +1,19 @@
+import { useJournal } from '../../contexts/journalContext';
 import years from '../../data/years';
 import months from '../../data/months';
 
-export default function JournalToolbar({ year, month, setYear, setMonth }) {
+export default function JournalToolbar() {
+    const { selectedYear, selectedMonth, setSelectedYear, setSelectedMonth } = useJournal();
     const defaultYears = years;
     const defaultMonths = months;
-    const convertedMonth = months[month - 1];
+    const convertedMonth = months[selectedMonth - 1];
 
     function handleChangeMonth(month) {
         month = months.indexOf(month) + 1;
         if (month < 10) {
             month = `0${month}`;
         }
-        setMonth(month);
+        setSelectedMonth(month);
     }
 
     return (
@@ -30,12 +32,12 @@ export default function JournalToolbar({ year, month, setYear, setMonth }) {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                     >
-                        {year}
+                        {selectedYear}
                     </button>
                     <ul className="dropdown-menu dropdown-menu-journal">
                         {defaultYears.map((year) => {
                             return (
-                                <li key={year} onClick={() => setYear(year)}>
+                                <li key={year} onClick={() => setSelectedYear(year)}>
                                     <span className="dropdown-item pointer">{year}</span>
                                 </li>
                             );
