@@ -2,23 +2,25 @@ import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useUser } from './contexts/userContext';
+import { Suspense, lazy, useEffect } from 'react';
 import { JournalProvider } from './contexts/journalContext';
+import { ListProvider } from './contexts/listContext';
 import { useAlert } from './contexts/alertContext';
+import { useUser } from './contexts/userContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
-import UserProfile from './components/main/profile';
-import DashboardPage from './components/dashboard/dashboardPage';
-import JournalPage from './components/journal/journalPage';
-import CalendarPage from './components/calendar/calendarPage';
-import ListPage from './components/list/listPage';
-import AppLayout from './components/main/appLayout';
-import Imprint from './components/main/imprint';
-import DataProtection from './components/main/dataprotection';
-import ProtectedRoute from './components/main/protectedRoute';
-import { ListProvider } from './contexts/listContext';
+import LazySpinner from './components/global/lazySpinner';
+
+const AppLayout = lazy(() => import('./components/main/appLayout'));
+const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));
+const UserProfile = lazy(() => import('./components/main/profile'));
+const DashboardPage = lazy(() => import('./components/dashboard/dashboardPage'));
+const JournalPage = lazy(() => import('./components/journal/journalPage'));
+const CalendarPage = lazy(() => import('./components/calendar/calendarPage'));
+const ListPage = lazy(() => import('./components/list/listPage'));
+const Imprint = lazy(() => import('./components/main/imprint'));
+const DataProtection = lazy(() => import('./components/main/dataprotection'));
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
@@ -34,31 +36,33 @@ export default function App() {
             {error && <Error error={error} slideOut={slideOut} />}
 
             <div className="page-container">
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="imprint" element={<Imprint />} />
-                    <Route path="dataprotection" element={<DataProtection />} />
+                <Suspense fallback={<LazySpinner />}>
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="imprint" element={<Imprint />} />
+                        <Route path="dataprotection" element={<DataProtection />} />
 
-                    <Route
-                        path="app"
-                        element={
-                            <ProtectedRoute>
-                                <ListProvider>
-                                    <JournalProvider>
-                                        <AppLayout />
-                                    </JournalProvider>
-                                </ListProvider>
-                            </ProtectedRoute>
-                        }
-                    >
-                        <Route index element={<DashboardPage />} />
-                        <Route path="dashboard" element={<DashboardPage />} />
-                        <Route path="lists" element={<ListPage />} />
-                        <Route path="journal" element={<JournalPage />} />
-                        <Route path="calendar" element={<CalendarPage />} />
-                        <Route path="userprofile" element={<UserProfile />} />
-                    </Route>
-                </Routes>
+                        <Route
+                            path="app"
+                            element={
+                                <ProtectedRoute>
+                                    <ListProvider>
+                                        <JournalProvider>
+                                            <AppLayout />
+                                        </JournalProvider>
+                                    </ListProvider>
+                                </ProtectedRoute>
+                            }
+                        >
+                            <Route index element={<DashboardPage />} />
+                            <Route path="dashboard" element={<DashboardPage />} />
+                            <Route path="lists" element={<ListPage />} />
+                            <Route path="journal" element={<JournalPage />} />
+                            <Route path="calendar" element={<CalendarPage />} />
+                            <Route path="userprofile" element={<UserProfile />} />
+                        </Route>
+                    </Routes>
+                </Suspense>
             </div>
         </>
     );
