@@ -54,16 +54,17 @@
     .p-accordion {
         width: 50%;
         box-shadow: $shadow;
-        border: $thinBorder;
         padding: 18px;
+        border: $thinBorder;
         border-radius: 8px;
+        background-color: #ffffff;
 
         .p-accordion-header-link {
-            background-color: $bg-color-grey;
+            background-color: #fafafa;
             text-decoration: none;
             color: #212529;
             font-weight: 500;
-            border: $thinBorder;
+
             height: 61px;
             display: flex;
             justify-content: flex-start;
@@ -71,7 +72,8 @@
         }
 
         .p-accordion-content {
-            border: none;
+            border-left: $thinBorder;
+            border-right: $thinBorder;
         }
 
         @media (max-width: 768px) {
