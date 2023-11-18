@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { addListInFirestore, deleteListInFirestore, loadListsFromFirestore, updateListInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 
@@ -8,10 +8,10 @@ function ListProvider({ children }) {
     const { setSuccess } = useAlert();
     const [lists, setLists] = useState([]);
 
-    async function getLists() {
+    const getLists = useCallback(async function getLists() {
         const lists = await loadListsFromFirestore();
         setLists(lists);
-    }
+    }, []);
 
     function addNewList(newListTitle) {
         const title = newListTitle;

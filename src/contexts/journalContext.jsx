@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { addPaymentInFirestore, loadJournalFromFirestore, updatePaymentInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 
@@ -17,10 +17,10 @@ function JournalProvider({ children }) {
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    async function loadJournals() {
+    const loadJournals = useCallback(async function loadJournals() {
         const loadedJournals = await loadJournalFromFirestore();
         setJournals(loadedJournals);
-    }
+    }, []);
 
     async function addNewPayment(newPayment, journalId) {
         const payment = [newPayment, ...activePayment];
@@ -56,35 +56,38 @@ function JournalProvider({ children }) {
         await loadJournals();
     }
 
-    function sumPayments() {
-        let sum = [];
+    const sumPayments = useCallback(
+        function sumPayments() {
+            let sum = [];
 
-        activePayment.map((payment) => {
-            const aggregate = payment.aggregate;
-            const category = payment.category;
-            let aggregateSum = sum.find((object) => object.aggregate === aggregate);
+            activePayment.map((payment) => {
+                const aggregate = payment.aggregate;
+                const category = payment.category;
+                let aggregateSum = sum.find((object) => object.aggregate === aggregate);
 
-            if (!aggregateSum) {
-                aggregateSum = {
-                    aggregate: aggregate,
-                    sum: payment.amount,
-                    categories: {
-                        [category]: payment.amount,
-                    },
-                };
-                sum.push(aggregateSum);
-            } else {
-                aggregateSum.sum += payment.amount;
-                aggregateSum.categories[category] = (aggregateSum.categories[category] || 0) + payment.amount;
-            }
-        });
+                if (!aggregateSum) {
+                    aggregateSum = {
+                        aggregate: aggregate,
+                        sum: payment.amount,
+                        categories: {
+                            [category]: payment.amount,
+                        },
+                    };
+                    sum.push(aggregateSum);
+                } else {
+                    aggregateSum.sum += payment.amount;
+                    aggregateSum.categories[category] = (aggregateSum.categories[category] || 0) + payment.amount;
+                }
+            });
 
-        setSumOfPayments(sum);
-    }
+            setSumOfPayments(sum);
+        },
+        [activePayment]
+    );
 
     useEffect(() => {
         sumPayments();
-    }, [activePayment]);
+    }, [activePayment, sumPayments]);
 
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === `${selectedYear}-${selectedMonth}`);

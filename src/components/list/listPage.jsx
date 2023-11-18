@@ -26,7 +26,7 @@ export default function ListPage() {
         return () => {
             setIsLoaded(false);
         };
-    }, []);
+    }, [getLists]);
 
     useEffect(() => {
         const q = query(collection(db, 'lists'));
@@ -38,7 +38,7 @@ export default function ListPage() {
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [setLists]);
 
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));

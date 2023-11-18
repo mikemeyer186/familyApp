@@ -13,7 +13,7 @@ export default function JournalPage() {
 
     useEffect(() => {
         loadJournals();
-    }, []);
+    }, [loadJournals]);
 
     useEffect(() => {
         const q = query(collection(db, 'journal'));
