@@ -92,6 +92,11 @@ body {
 }
 
 //Bootstrap overrides
+.modal-backdrop,
+.offcanvas-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
 .dropdown-menu {
     background-color: #fafafa;
 
