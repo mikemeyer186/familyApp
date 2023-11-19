@@ -12,24 +12,29 @@ export default function JournalSum() {
     const convertedVarCosts = varCosts.length > 0 ? sumOfVarCosts : 0.0;
     let varCostsArray = [];
 
-    const incomeArray = Object.keys(income[0].categories).map((key) => {
-        return { category: key, amount: income[0].categories[key] };
-    });
-
-    const fixedCostsArray = Object.keys(fixedCosts[0].categories).map((key) => {
-        return { category: key, amount: fixedCosts[0].categories[key] };
-    });
-
-    varCosts.map((aggregate) => {
-        const aggregateSum = Object.keys(aggregate.categories).map((key) => {
-            varCostsArray = [...varCostsArray, { aggregate: aggregate.aggregate, category: key, amount: aggregate.categories[key] }];
+    const incomeArray =
+        income.length > 0 &&
+        Object.keys(income[0].categories).map((key) => {
+            return { category: key, amount: income[0].categories[key] };
         });
-        return aggregateSum;
-    });
 
-    const sortedIncomeArray = incomeArray.sort((a, b) => a.category.localeCompare(b.category));
-    const sortedFixedCostsArray = fixedCostsArray.sort((a, b) => a.category.localeCompare(b.category));
-    const sortedVarCostsArray = varCostsArray.sort((a, b) => a.aggregate.localeCompare(b.aggregate));
+    const fixedCostsArray =
+        fixedCosts.length > 0 &&
+        Object.keys(fixedCosts[0].categories).map((key) => {
+            return { category: key, amount: fixedCosts[0].categories[key] };
+        });
+
+    varCosts.length > 0 &&
+        varCosts.map((aggregate) => {
+            const aggregateSum = Object.keys(aggregate.categories).map((key) => {
+                varCostsArray = [...varCostsArray, { aggregate: aggregate.aggregate, category: key, amount: aggregate.categories[key] }];
+            });
+            return aggregateSum;
+        });
+
+    const sortedIncomeArray = incomeArray.length > 0 && incomeArray.sort((a, b) => a.category.localeCompare(b.category));
+    const sortedFixedCostsArray = fixedCostsArray.length > 0 && fixedCostsArray.sort((a, b) => a.category.localeCompare(b.category));
+    const sortedVarCostsArray = varCostsArray.length > 0 && varCostsArray.sort((a, b) => a.aggregate.localeCompare(b.aggregate));
 
     function incomeTemplate() {
         return (
