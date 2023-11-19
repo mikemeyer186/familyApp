@@ -11,6 +11,26 @@ export default function JournalSum() {
     const convertedFixedCosts = fixedCosts.length > 0 ? fixedCosts[0].sum : 0.0;
     const convertedVarCosts = varCosts.length > 0 ? sumOfVarCosts : 0.0;
 
+    const incomeArray = Object.keys(income[0].categories).map((key) => {
+        return { category: key, amount: income[0].categories[key] };
+    });
+
+    const fixedCostsArray = Object.keys(fixedCosts[0].categories).map((key) => {
+        return { category: key, amount: fixedCosts[0].categories[key] };
+    });
+
+    const varCostsArray = varCosts.map((aggregate) => {
+        let array = [];
+        Object.keys(aggregate.categories).map((key) => {
+            array.push(aggregate.aggregate, { category: key, amount: aggregate.categories[key] });
+        });
+        return array;
+    });
+
+    const sortedIncomeArray = incomeArray.sort((a, b) => a.category.localeCompare(b.category));
+    const sortedFixedCostsArray = fixedCostsArray.sort((a, b) => a.category.localeCompare(b.category));
+    const sortedVarCostsArray = varCostsArray.sort((a, b) => a[0].localeCompare(b[0]));
+
     function incomeTemplate() {
         return (
             <div className="accordion-header-sum">
@@ -57,28 +77,46 @@ export default function JournalSum() {
         <>
             <Accordion multiple>
                 <AccordionTab headerTemplate={incomeTemplate}>
-                    <p className="m-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+                    {income.length > 0 &&
+                        sortedIncomeArray.map((payment) => {
+                            return (
+                                <ul key={payment.category} className="list-group list-group-flush">
+                                    <li className="list-group-item">
+                                        <span>{payment.category}</span>
+                                        <span>{payment.amount}</span>
+                                    </li>
+                                </ul>
+                            );
+                        })}
                 </AccordionTab>
                 <AccordionTab headerTemplate={fixedCostsTemplate}>
-                    <p className="m-0">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
-                        ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                        voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        Consectetur, adipisci velit, sed quia non numquam eius modi.
-                    </p>
+                    {fixedCosts.length > 0 &&
+                        sortedFixedCostsArray.map((payment) => {
+                            return (
+                                <ul key={payment.category} className="list-group list-group-flush">
+                                    <li className="list-group-item">
+                                        <span>{payment.category}</span>
+                                        <span>{payment.amount}</span>
+                                    </li>
+                                </ul>
+                            );
+                        })}
                 </AccordionTab>
                 <AccordionTab headerTemplate={varCostsTemplate}>
-                    <p className="m-0">
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos
-                        dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt
-                        mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-                        cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                    </p>
+                    {varCosts.length > 0 &&
+                        sortedVarCostsArray.map((payment) => {
+                            return (
+                                <>
+                                    <ul key={payment[0]} className="list-group list-group-flush">
+                                        <span>{payment[0]}</span>
+                                        <li className="list-group-item">
+                                            <span>{payment[1].category}</span>
+                                            <span>{payment[1].amount}</span>
+                                        </li>
+                                    </ul>
+                                </>
+                            );
+                        })}
                 </AccordionTab>
             </Accordion>
         </>
