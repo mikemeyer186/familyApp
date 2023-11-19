@@ -10,6 +10,7 @@ export default function JournalSum() {
     const convertedIncome = income.length > 0 ? income[0].sum : 0.0;
     const convertedFixedCosts = fixedCosts.length > 0 ? fixedCosts[0].sum : 0.0;
     const convertedVarCosts = varCosts.length > 0 ? sumOfVarCosts : 0.0;
+    let varCostsArray = [];
 
     const incomeArray = Object.keys(income[0].categories).map((key) => {
         return { category: key, amount: income[0].categories[key] };
@@ -19,17 +20,16 @@ export default function JournalSum() {
         return { category: key, amount: fixedCosts[0].categories[key] };
     });
 
-    const varCostsArray = varCosts.map((aggregate) => {
-        let array = [];
-        Object.keys(aggregate.categories).map((key) => {
-            array.push(aggregate.aggregate, { category: key, amount: aggregate.categories[key] });
+    varCosts.map((aggregate) => {
+        const aggregateSum = Object.keys(aggregate.categories).map((key) => {
+            varCostsArray = [...varCostsArray, { aggregate: aggregate.aggregate, category: key, amount: aggregate.categories[key] }];
         });
-        return array;
+        return aggregateSum;
     });
 
     const sortedIncomeArray = incomeArray.sort((a, b) => a.category.localeCompare(b.category));
     const sortedFixedCostsArray = fixedCostsArray.sort((a, b) => a.category.localeCompare(b.category));
-    const sortedVarCostsArray = varCostsArray.sort((a, b) => a[0].localeCompare(b[0]));
+    const sortedVarCostsArray = varCostsArray.sort((a, b) => a.aggregate.localeCompare(b.aggregate));
 
     function incomeTemplate() {
         return (
@@ -50,10 +50,12 @@ export default function JournalSum() {
             <div className="accordion-header-sum">
                 <span className="accordion-header-text">Fixkosten:</span>
                 <span className={convertedFixedCosts < 0 ? 'spend sum-text' : ''}>
-                    {`${convertedFixedCosts.toLocaleString('de-DE', {
-                        style: 'currency',
-                        currency: 'EUR',
-                    })}`}
+                    {`${convertedFixedCosts
+                        .toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR',
+                        })
+                        .replace('-', ' ')}`}
                 </span>
             </div>
         );
@@ -64,10 +66,12 @@ export default function JournalSum() {
             <div className="accordion-header-sum">
                 <span className="accordion-header-text">Variable Kosten:</span>
                 <span className={convertedVarCosts < 0 ? 'spend sum-text' : ''}>
-                    {`${convertedVarCosts.toLocaleString('de-DE', {
-                        style: 'currency',
-                        currency: 'EUR',
-                    })}`}
+                    {`${convertedVarCosts
+                        .toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR',
+                        })
+                        .replace('-', ' ')}`}
                 </span>
             </div>
         );
@@ -81,9 +85,14 @@ export default function JournalSum() {
                         sortedIncomeArray.map((payment) => {
                             return (
                                 <ul key={payment.category} className="list-group list-group-flush">
-                                    <li className="list-group-item">
+                                    <li className="list-group-item journal-detail-list">
                                         <span>{payment.category}</span>
-                                        <span>{payment.amount}</span>
+                                        <span>
+                                            {payment.amount.toLocaleString('de-DE', {
+                                                style: 'currency',
+                                                currency: 'EUR',
+                                            })}
+                                        </span>
                                     </li>
                                 </ul>
                             );
@@ -94,9 +103,16 @@ export default function JournalSum() {
                         sortedFixedCostsArray.map((payment) => {
                             return (
                                 <ul key={payment.category} className="list-group list-group-flush">
-                                    <li className="list-group-item">
+                                    <li className="list-group-item journal-detail-list">
                                         <span>{payment.category}</span>
-                                        <span>{payment.amount}</span>
+                                        <span>
+                                            {payment.amount
+                                                .toLocaleString('de-DE', {
+                                                    style: 'currency',
+                                                    currency: 'EUR',
+                                                })
+                                                .replace('-', ' ')}
+                                        </span>
                                     </li>
                                 </ul>
                             );
@@ -106,15 +122,19 @@ export default function JournalSum() {
                     {varCosts.length > 0 &&
                         sortedVarCostsArray.map((payment) => {
                             return (
-                                <>
-                                    <ul key={payment[0]} className="list-group list-group-flush">
-                                        <span>{payment[0]}</span>
-                                        <li className="list-group-item">
-                                            <span>{payment[1].category}</span>
-                                            <span>{payment[1].amount}</span>
-                                        </li>
-                                    </ul>
-                                </>
+                                <ul key={payment.category} className="list-group list-group-flush">
+                                    <li className="list-group-item journal-detail-list">
+                                        <span>{payment.category}</span>
+                                        <span>
+                                            {payment.amount
+                                                .toLocaleString('de-DE', {
+                                                    style: 'currency',
+                                                    currency: 'EUR',
+                                                })
+                                                .replace('-', ' ')}
+                                        </span>
+                                    </li>
+                                </ul>
                             );
                         })}
                 </AccordionTab>

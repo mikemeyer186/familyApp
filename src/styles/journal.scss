@@ -93,6 +93,13 @@
                 font-weight: 600;
             }
         }
+
+        .journal-detail-list {
+            border-bottom: $thinBorder;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     .journal-payments {
