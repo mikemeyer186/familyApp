@@ -57,12 +57,12 @@
         padding: 18px;
         border: $thinBorder;
         border-radius: 8px;
-        background-color: #ffffff;
+        background-color: $bg-white;
 
         .p-accordion-header-link {
-            background-color: #fafafa;
+            background-color: $bg-main;
             text-decoration: none;
-            color: #212529;
+            color: $txt-dark;
             font-weight: 500;
 
             height: 61px;
@@ -122,7 +122,7 @@
         border: $thinBorder;
         padding: 18px;
         border-radius: 8px;
-        background-color: #ffffff;
+        background-color: $bg-white;
 
         @media (max-width: 768px) {
             padding: 0;
@@ -155,25 +155,25 @@
 
         .p-datatable-header {
             border: none;
-            background-color: $bg-color-grey;
+            background-color: $bg-grey-midlight;
 
             @media (max-width: 768px) {
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
-                border-left: 1px solid rgba(217, 217, 217, 0.5);
-                border-right: 1px solid rgba(217, 217, 217, 0.5);
+                border-left: $thinBorder;
+                border-right: $thinBorder;
             }
         }
 
         .p-datatable-wrapper {
             @media (max-width: 768px) {
-                border-left: 1px solid rgba(217, 217, 217, 0.5);
-                border-right: 1px solid rgba(217, 217, 217, 0.5);
+                border-left: $thinBorder;
+                border-right: $thinBorder;
             }
         }
 
         .p-paginator-bottom {
-            border-top: 1px solid rgba(217, 217, 217, 0.5);
+            border-top: $thinBorder;
             @media (max-width: 768px) {
                 border-bottom-left-radius: 8px;
                 border-bottom-right-radius: 8px;
@@ -191,14 +191,30 @@
             padding: 0;
             margin: 0;
 
+            .th-left {
+                border-top-left-radius: 4px;
+            }
+
+            .th-right {
+                border-top-right-radius: 4px;
+            }
+
+            .td-left {
+                border-bottom-left-radius: 4px;
+            }
+
+            .td-right {
+                border-bottom-right-radius: 4px;
+            }
+
             td,
             th {
                 font-size: 0.8rem;
-                background-color: rgba(189, 191, 194, 0.1);
+                background-color: $bg-grey-light;
             }
 
             td {
-                color: rgba(0, 0, 0, 0.5);
+                color: $txt-dark;
                 border: none;
             }
 
@@ -211,7 +227,7 @@
                 .journal-table-edit-icon {
                     width: 20px;
                     height: 20px;
-                    color: black;
+                    color: $txt-dark;
                     opacity: 0.4;
                 }
             }
@@ -253,8 +269,8 @@
         .subcategory {
             pointer-events: none;
             border-bottom: $thinBorder;
-            background-color: rgba(100, 100, 100, 0.3);
-            color: rgba(0, 0, 0, 0.5);
+            background-color: $bg-grey;
+            color: $txt-light;
         }
     }
 
@@ -267,9 +283,9 @@
 }
 
 .spend {
-    color: #ff9f9f !important;
+    color: $txt-spend !important;
 }
 
 .income {
-    color: #9dde9d !important;
+    color: $txt-income !important;
 }

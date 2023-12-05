@@ -1,7 +1,22 @@
-$navbarHeight: 56px;
-$maxWidth: 550px;
+/* colors */
+$bg-main: #fafafa;
+$bg-white: #ffffff;
+$bg-grey-light: rgba(109, 118, 126, 0.1);
+$bg-grey-midlight: rgba(109, 118, 126, 0.3);
+$bg-grey-mid: rgba(109, 118, 126, 0.6);
+$bg-grey: rgb(109, 118, 126);
+$txt-dark: #212529;
+$txt-light: #fefefe;
+$txt-spend: #ff9f9f;
+$txt-income: #9dde9d;
+
+/* shadows */
+$shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
+
+/* borders */
 $thinBorder: 1px solid rgba(217, 217, 217, 0.5);
 $mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
-$shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
-$bg-color: #fafafa;
-$bg-color-grey: #e5e5e5;
+
+/* dimensions */
+$navbarHeight: 56px;
+$maxWidth: 550px;
