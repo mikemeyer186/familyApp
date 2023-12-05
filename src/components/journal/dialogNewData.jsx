@@ -21,6 +21,10 @@ export default function DialogNewData() {
     const defaultYears = years;
     const convertedMonth = months[selectedMonth - 1];
 
+    /**
+     * adds a new payment to the journal
+     * @param {event} e - event from form submit
+     */
     function handleAddNewData(e) {
         e.preventDefault();
         addNewPayment(
@@ -42,6 +46,12 @@ export default function DialogNewData() {
         setInfo('');
     }
 
+    /**
+     * converts the amount to a float value and replaces the comma with a dot
+     * if the flow is an expense, the amount will be multiplied by -1
+     * @param {number} amount
+     * @returns
+     */
     function convertAmount(amount) {
         let convertedAmount = parseFloat(amount.replace(',', '.'));
 
@@ -52,15 +62,26 @@ export default function DialogNewData() {
         return convertedAmount;
     }
 
+    /**
+     * sets the amount and info to empty strings on abort
+     */
     function handleAbort() {
         setAmount('');
         setInfo('');
     }
 
+    /**
+     * sets the selected year in journal context
+     * @param {number} year - selected year from dropdown
+     */
     function handleYearSelection(year) {
         setSelectedYear(year);
     }
 
+    /**
+     * converts the month name to a number and sets the selected month in journal context
+     * @param {string} monthName - selected month from dropdown
+     */
     function handleMonthSelection(monthName) {
         let month = months.indexOf(monthName) + 1;
         if (month < 10) {
@@ -69,11 +90,20 @@ export default function DialogNewData() {
         setSelectedMonth(month);
     }
 
+    /**
+     * sets the selected flow in journal context and resets the selected category
+     * @param {string} flow - selected flow from dropdown
+     */
     function handleFlowSelection(flow) {
         setSelectedFlow(flow);
         setSelectedCategory('Auswählen...');
     }
 
+    /**
+     * sets the selected category and aggregate in journal context
+     * @param {string} categorie - selected categorie from dropdown
+     * @param {string} aggregate - selected aggregate from dropdown
+     */
     function handleCategorieSelection(categorie, aggregate) {
         setSelectedCategory(categorie);
         setSelectedAggregate(aggregate);

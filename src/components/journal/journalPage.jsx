@@ -11,10 +11,16 @@ import JournalSum from './journalSum';
 export default function JournalPage() {
     const { isLoaded, setJournals, loadJournals } = useJournal();
 
+    /**
+     * loads the journals from firestore
+     */
     useEffect(() => {
         loadJournals();
     }, [loadJournals]);
 
+    /**
+     * listens to changes in firestore and updates the journals
+     */
     useEffect(() => {
         const q = query(collection(db, 'journal'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
