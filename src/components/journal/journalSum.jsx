@@ -10,6 +10,7 @@ export default function JournalSum() {
     const convertedIncome = income.length > 0 ? income[0].sum : 0.0;
     const convertedFixedCosts = fixedCosts.length > 0 ? fixedCosts[0].sum : 0.0;
     const convertedVarCosts = varCosts.length > 0 ? sumOfVarCosts : 0.0;
+    const diffCosts = convertedIncome + convertedFixedCosts + convertedVarCosts;
     let varCostsArray = [];
 
     const incomeArray =
@@ -55,12 +56,10 @@ export default function JournalSum() {
             <div className="accordion-header-sum">
                 <span className="accordion-header-text">Fixkosten:</span>
                 <span className={convertedFixedCosts < 0 ? 'spend sum-text' : ''}>
-                    {`${convertedFixedCosts
-                        .toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR',
-                        })
-                        .replace('-', ' ')}`}
+                    {`${convertedFixedCosts.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR',
+                    })}`}
                 </span>
             </div>
         );
@@ -71,12 +70,24 @@ export default function JournalSum() {
             <div className="accordion-header-sum">
                 <span className="accordion-header-text">Variable Kosten:</span>
                 <span className={convertedVarCosts < 0 ? 'spend sum-text' : ''}>
-                    {`${convertedVarCosts
-                        .toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR',
-                        })
-                        .replace('-', ' ')}`}
+                    {`${convertedVarCosts.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR',
+                    })}`}
+                </span>
+            </div>
+        );
+    }
+
+    function diffCostsTemplate() {
+        return (
+            <div className="accordion-header-sum">
+                <span className="accordion-header-text">Verfügbar:</span>
+                <span className={diffCosts < 0 ? 'spend sum-text' : 'income sum-text'}>
+                    {`${diffCosts.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR',
+                    })}`}
                 </span>
             </div>
         );
@@ -143,6 +154,7 @@ export default function JournalSum() {
                             );
                         })}
                 </AccordionTab>
+                <AccordionTab headerTemplate={diffCostsTemplate} disabled></AccordionTab>
             </Accordion>
         </>
     );

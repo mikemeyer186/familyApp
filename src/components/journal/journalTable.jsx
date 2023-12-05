@@ -100,8 +100,7 @@ export default function JournalTable() {
                     rows={5}
                     rowsPerPageOptions={[5, 10, 20]}
                     pageLinkSize={3}
-                    sortField="date"
-                    sortOrder={-1}
+                    removableSort
                     filters={filters}
                     globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
                     header={tableHeader}

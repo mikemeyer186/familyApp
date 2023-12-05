@@ -100,6 +100,18 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        .p-disabled {
+            opacity: 1;
+
+            .p-accordion-header-link {
+                border-top: $mediumBorder;
+            }
+
+            .p-accordion-toggle-icon {
+                opacity: 0;
+            }
+        }
     }
 
     .journal-payments {
