@@ -1,0 +1,21 @@
+.calendarPage-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    height: 100svh;
+    overflow: auto;
+    padding: 90px 50px;
+
+    .rbc-toolbar-label {
+        font-size: 0.8rem !important;
+    }
+
+    .rbc-btn-group {
+        button {
+            font-size: 0.8rem !important;
+        }
+    }
+}

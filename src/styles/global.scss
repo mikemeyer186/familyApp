@@ -1,9 +1,12 @@
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+@import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 @import 'fonts.scss';
 @import 'variables.scss';
 @import 'list.scss';
 @import 'journal.scss';
+@import 'calendar.scss';
 @import 'main.scss';
 @import 'navbar.scss';
 @import 'login.scss';
