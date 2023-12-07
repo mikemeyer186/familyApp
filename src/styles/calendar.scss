@@ -5,17 +5,79 @@
     align-items: center;
     justify-content: flex-start;
     gap: 28px;
-    height: 100svh;
+    height: 850px;
     overflow: auto;
     padding: 90px 50px;
 
-    .rbc-toolbar-label {
-        font-size: 0.8rem !important;
+    @media (max-width: 768px) {
+        padding: 90px 10px;
+        justify-content: flex-start;
     }
 
-    .rbc-btn-group {
-        button {
-            font-size: 0.8rem !important;
+    .rbc-calendar {
+        width: 100%;
+        height: 100%;
+        border: $thinBorder;
+        border-radius: 8px;
+        box-shadow: $shadow;
+        padding: 18px;
+        font-size: 0.8rem;
+
+        .rbc-toolbar {
+            display: flex;
+            flex-direction: column;
+
+            .rbc-toolbar-top {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                .rbc-toolbar-label {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: $txt-dark;
+                }
+            }
+
+            .rbc-toolbar-bottom {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 10px;
+
+                .rbc-btn-group {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    button {
+                        font-size: 0.8rem;
+                        padding: 0.5rem 0.75rem;
+                        border: $thinBorder;
+
+                        img {
+                            opacity: 0.5;
+                        }
+                    }
+                }
+            }
+        }
+
+        .rbc-time-header-gutter {
+            width: 44px;
+        }
+
+        .rbc-time-gutter {
+            width: 44px;
+        }
+
+        .rbc-events-container {
+            margin: 0;
         }
     }
 }
