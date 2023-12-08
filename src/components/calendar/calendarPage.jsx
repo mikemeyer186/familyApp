@@ -3,8 +3,18 @@ import { DateTime } from 'luxon';
 import { useMemo } from 'react';
 import CalendarToolbar from './calendarToolbar';
 import CalendarEvent from './calendarEvent';
+import { useEffect } from 'react';
 
 export default function CalendarPage() {
+    const url =
+        'https://openholidaysapi.org/SchoolHolidays?countryIsoCode=DE&languageIsoCode=DE&validFrom=2023-01-01&validTo=2025-12-31&subdivisionCode=DE-NI';
+
+    async function fetchHolidays() {
+        const response = await fetch(url);
+        const holidays = await response.json();
+        console.log(holidays);
+    }
+
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
     const { min, max, messages, formats, components } = useMemo(
         () => ({
@@ -30,9 +40,9 @@ export default function CalendarPage() {
                 dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dateFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
-                    'KW' +
+                    'Woche ' +
                     localizer.format(start, 'WW', culture) +
-                    ' - ' +
+                    ' | ' +
                     localizer.format(start, 'dd.MM.yyyy', culture) +
                     ' - ' +
                     localizer.format(end, 'dd.MM.yyyy', culture),
@@ -82,6 +92,10 @@ export default function CalendarPage() {
             },
         },
     ];
+
+    useEffect(() => {
+        fetchHolidays();
+    }, []);
 
     return (
         <>
