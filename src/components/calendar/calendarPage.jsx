@@ -30,7 +30,12 @@ export default function CalendarPage() {
                 dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dateFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
-                    localizer.format(start, 'dd.MM.yyyy', culture) + ' - ' + localizer.format(end, 'dd.MM.yyyy', culture),
+                    'KW' +
+                    localizer.format(start, 'WW', culture) +
+                    ' - ' +
+                    localizer.format(start, 'dd.MM.yyyy', culture) +
+                    ' - ' +
+                    localizer.format(end, 'dd.MM.yyyy', culture),
                 agendaDateFormat: (date, culture, localizer) => localizer.format(date, 'ccc, dd.MM.yyyy', culture),
                 agendaHeaderFormat: ({ start, end }, culture, localizer) =>
                     localizer.format(start, 'dd.MM.yyyy', culture) + ' - ' + localizer.format(end, 'dd.MM.yyyy', culture),
