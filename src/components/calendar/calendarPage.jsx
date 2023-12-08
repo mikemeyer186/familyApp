@@ -2,19 +2,18 @@ import { Calendar, luxonLocalizer } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
 import CalendarToolbar from './calendarToolbar';
+import CalendarEvent from './calendarEvent';
 
 export default function CalendarPage() {
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
-    const { min, max } = useMemo(
+    const { min, max, messages, formats, components } = useMemo(
         () => ({
             min: new Date(2023, 0, 1, 8, 0, 0),
             max: new Date(2023, 0, 1, 20, 0, 0),
-        }),
-        []
-    );
-    const { messages } = useMemo(
-        () => ({
             messages: {
+                date: 'Datum',
+                time: 'Uhrzeit',
+                event: 'Termin',
                 week: 'Woche',
                 work_week: 'Arbeitswoche',
                 day: 'Tag',
@@ -25,16 +24,10 @@ export default function CalendarPage() {
                 agenda: 'Übersicht',
                 noEventsInRange: 'Keine Termine in diesem Zeitraum.',
 
-                showMore: (total) => `+${total} plus`,
+                showMore: (total) => `+${total} mehr`,
             },
-        }),
-        []
-    );
-
-    const { formats } = useMemo(
-        () => ({
             formats: {
-                dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc, dd.', culture),
+                dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dateFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
                     localizer.format(start, 'dd.MM.yyyy', culture) + ' - ' + localizer.format(end, 'dd.MM.yyyy', culture),
@@ -42,14 +35,9 @@ export default function CalendarPage() {
                 agendaHeaderFormat: ({ start, end }, culture, localizer) =>
                     localizer.format(start, 'dd.MM.yyyy', culture) + ' - ' + localizer.format(end, 'dd.MM.yyyy', culture),
             },
-        }),
-        []
-    );
-
-    const { components } = useMemo(
-        () => ({
             components: {
                 toolbar: CalendarToolbar,
+                event: CalendarEvent,
             },
         }),
         []
@@ -59,12 +47,34 @@ export default function CalendarPage() {
         {
             start: new Date('2023-12-08T10:00:00'),
             end: new Date('2023-12-08T11:00:00'),
-            title: 'Meeting',
+            title: 'Meeting mit Max Mustermann',
+            data: {
+                color: '#86d8d5',
+            },
         },
         {
-            start: new Date('2023-12-07T12:00:00'),
-            end: new Date('2023-12-07T13:00:00'),
-            title: 'Termin',
+            start: new Date('2023-12-08T12:00:00'),
+            end: new Date('2023-12-08T13:00:00'),
+            title: 'Termin mit Max Mustermann',
+            data: {
+                color: '#c686d8',
+            },
+        },
+        {
+            start: new Date('2023-12-09T12:00:00'),
+            end: new Date('2023-12-09T13:00:00'),
+            title: 'Essen mit Max Mustermann',
+            data: {
+                color: '#86d88a',
+            },
+        },
+        {
+            start: new Date('2023-12-10T16:00:00'),
+            end: new Date('2023-12-10T16:30:00'),
+            title: 'Termin mit Max Mustermann',
+            data: {
+                color: '#d8c686',
+            },
         },
     ];
 

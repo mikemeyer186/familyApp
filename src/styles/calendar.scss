@@ -68,16 +68,88 @@
             }
         }
 
-        .rbc-time-header-gutter {
-            width: 44px;
+        .rbc-time-view {
+            border-radius: 4px;
+            border: $thinBorder;
+
+            .rbc-time-content {
+                border-top: $thinBorder;
+            }
+
+            .rbc-timeslot-group {
+                border: none;
+                border-top: $thinBorder;
+            }
+
+            .rbc-header {
+                background-color: $bg-grey-midlight;
+                color: $txt-dark;
+            }
+
+            .rbc-header:last-of-type {
+                border-top-right-radius: 4px;
+            }
+
+            .rbc-time-header-gutter {
+                width: 44px;
+            }
+
+            .rbc-time-gutter {
+                width: 44px;
+                color: $txt-dark;
+            }
+
+            .rbc-events-container {
+                margin: 0;
+
+                .rbc-event {
+                    font-size: 0.6rem;
+                    padding: 0;
+                    border: 0;
+                    background: none;
+
+                    .rbc-event-label {
+                        display: none;
+                    }
+
+                    .rbc-event-content {
+                        width: 100%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        color: $txt-light;
+                    }
+                }
+            }
         }
 
-        .rbc-time-gutter {
-            width: 44px;
+        .rbc-agenda-view {
+            border-radius: 4px;
         }
 
-        .rbc-events-container {
-            margin: 0;
+        .rbc-agenda-table {
+            border: $thinBorder;
+            color: $txt-dark;
+
+            .rbc-header {
+                border-bottom: none;
+                background-color: $bg-grey-midlight;
+                color: $txt-dark;
+                font-weight: 500;
+            }
+
+            .rbc-agenda-date-cell {
+                border: $thinBorder;
+            }
+
+            .rbc-agenda-time-cell {
+                border: $thinBorder;
+            }
+
+            .rbc-agenda-event-cell {
+                border: $thinBorder;
+                padding: 2px;
+            }
         }
     }
 }
