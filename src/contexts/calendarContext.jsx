@@ -56,6 +56,7 @@ function CalendarProvider({ children }) {
 
     const loadEvents = useCallback(
         async function loadEvents() {
+            setEvents([]);
             const rawSchoolHolidays = await fetchSchoolHolidaysFromAPI();
             const rawPublicHolidays = await fetchPublicHolidaysFromAPI();
             await convertRawEvents(rawSchoolHolidays, schoolHolidayColor);
