@@ -9,6 +9,19 @@
     overflow: auto;
     padding: 90px 50px;
 
+    .spinner-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, calc(-50% - $navbarHeight));
+
+        .spinner-border {
+            width: 8rem;
+            height: 8rem;
+            border-width: 0.75em;
+        }
+    }
+
     @media (max-width: 768px) {
         padding: 90px 10px;
         justify-content: flex-start;
@@ -97,6 +110,25 @@
             .rbc-time-gutter {
                 width: 44px;
                 color: $txt-dark;
+            }
+
+            .rbc-allday-cell {
+                height: 42px;
+
+                .rbc-event-allday {
+                    font-size: 0.6rem;
+                    padding: 0;
+                    border: 0;
+                    background: none;
+
+                    .rbc-event-content {
+                        width: 100%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        color: $txt-light;
+                    }
+                }
             }
 
             .rbc-events-container {

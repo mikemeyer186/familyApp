@@ -1,20 +1,13 @@
 import { Calendar, luxonLocalizer } from 'react-big-calendar';
 import { DateTime } from 'luxon';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
+import { useCalendar } from '../../contexts/calendarContext';
 import CalendarToolbar from './calendarToolbar';
 import CalendarEvent from './calendarEvent';
-import { useEffect } from 'react';
+import Spinner from '../global/spinner';
 
 export default function CalendarPage() {
-    const url =
-        'https://openholidaysapi.org/SchoolHolidays?countryIsoCode=DE&languageIsoCode=DE&validFrom=2023-01-01&validTo=2025-12-31&subdivisionCode=DE-NI';
-
-    async function fetchHolidays() {
-        const response = await fetch(url);
-        const holidays = await response.json();
-        console.log(holidays);
-    }
-
+    const { isLoaded, events, loadEvents } = useCalendar();
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
     const { min, max, messages, formats, components } = useMemo(
         () => ({
@@ -32,8 +25,8 @@ export default function CalendarPage() {
                 next: 'vor',
                 today: `heute`,
                 agenda: 'Übersicht',
+                allDay: 'ganztägig',
                 noEventsInRange: 'Keine Termine in diesem Zeitraum.',
-
                 showMore: (total) => `+${total} mehr`,
             },
             formats: {
@@ -58,62 +51,31 @@ export default function CalendarPage() {
         []
     );
 
-    const events = [
-        {
-            start: new Date('2023-12-08T10:00:00'),
-            end: new Date('2023-12-08T11:00:00'),
-            title: 'Meeting mit Max Mustermann',
-            data: {
-                color: '#86d8d5',
-            },
-        },
-        {
-            start: new Date('2023-12-08T12:00:00'),
-            end: new Date('2023-12-08T13:00:00'),
-            title: 'Termin mit Max Mustermann',
-            data: {
-                color: '#c686d8',
-            },
-        },
-        {
-            start: new Date('2023-12-09T12:00:00'),
-            end: new Date('2023-12-09T13:00:00'),
-            title: 'Essen mit Max Mustermann',
-            data: {
-                color: '#86d88a',
-            },
-        },
-        {
-            start: new Date('2023-12-10T16:00:00'),
-            end: new Date('2023-12-10T16:30:00'),
-            title: 'Termin mit Max Mustermann',
-            data: {
-                color: '#d8c686',
-            },
-        },
-    ];
-
     useEffect(() => {
-        fetchHolidays();
-    }, []);
+        loadEvents();
+    }, [loadEvents]);
 
     return (
         <>
             <div className="calendarPage-wrapper">
-                <Calendar
-                    localizer={localizer}
-                    culture={'de-DE'}
-                    messages={messages}
-                    defaultView="week"
-                    views={['agenda', 'week', 'month']}
-                    formats={formats}
-                    components={components}
-                    startAccessor="start"
-                    endAccessor="end"
-                    min={min}
-                    max={max}
-                    events={events}
-                />
+                {!isLoaded ? (
+                    <Spinner>{'Kalender laden...'}</Spinner>
+                ) : (
+                    <Calendar
+                        localizer={localizer}
+                        culture={'de-DE'}
+                        messages={messages}
+                        defaultView="week"
+                        views={['agenda', 'week', 'month']}
+                        formats={formats}
+                        components={components}
+                        startAccessor="start"
+                        endAccessor="end"
+                        min={min}
+                        max={max}
+                        events={events}
+                    />
+                )}
             </div>
         </>
     );
