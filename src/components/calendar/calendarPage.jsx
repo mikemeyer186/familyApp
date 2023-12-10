@@ -30,6 +30,7 @@ export default function CalendarPage() {
                 showMore: (total) => `+${total} mehr`,
             },
             formats: {
+                weekdayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dateFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
