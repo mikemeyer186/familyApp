@@ -66,8 +66,16 @@ body {
     justify-content: flex-end;
 }
 
+.spaceBetween {
+    justify-content: space-between;
+}
+
 .widthFull {
     width: 100%;
+}
+
+.widthHalf {
+    width: 48%;
 }
 
 .width210 {
@@ -93,6 +101,12 @@ body {
 
 .slideOut-alert {
     animation: slideOut 250ms ease-in;
+}
+
+.checkbox-btn {
+    width: 70px;
+    height: 38px;
+    transition: all 125ms ease-in-out;
 }
 
 //Bootstrap overrides

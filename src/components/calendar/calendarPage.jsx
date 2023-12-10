@@ -5,6 +5,8 @@ import { useCalendar } from '../../contexts/calendarContext';
 import CalendarToolbar from './calendarToolbar';
 import CalendarEvent from './calendarEvent';
 import Spinner from '../global/spinner';
+import CalendarPageToolbar from './calendarPageToolbar';
+import DialogNewMeeting from './dialogNewMeeting';
 
 export default function CalendarPage() {
     const { isLoaded, events, loadEvents } = useCalendar();
@@ -58,7 +60,13 @@ export default function CalendarPage() {
 
     return (
         <>
+            <DialogNewMeeting />
+
             <div className="calendarPage-wrapper">
+                <div className="calendarToolbar">
+                    <CalendarPageToolbar />
+                </div>
+
                 {!isLoaded ? (
                     <Spinner>{'Kalender laden...'}</Spinner>
                 ) : (

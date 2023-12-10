@@ -45,6 +45,7 @@ function CalendarProvider({ children }) {
                 allDay: true,
                 data: {
                     color: color,
+                    id: rawEvent.id,
                 },
             };
             setEvents((currentEvents) => {
