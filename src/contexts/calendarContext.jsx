@@ -73,6 +73,7 @@ function CalendarProvider({ children }) {
                 events: events,
                 isLoaded: isLoaded,
                 loadEvents,
+                setEvents,
             }}
         >
             {children}

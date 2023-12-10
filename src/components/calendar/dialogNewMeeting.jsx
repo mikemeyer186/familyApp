@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
+import { useCalendar } from '../../contexts/calendarContext';
 
 export default function DialogNewMeeting() {
     const { activeUser } = useUser();
+    const { setEvents } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -11,6 +13,7 @@ export default function DialogNewMeeting() {
     const [endTime, setEndTime] = useState(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
     const [allDayYes, setAllDayYes] = useState(false);
     const [allDayNo, setAllDayNo] = useState(true);
+    const [color, setColor] = useState('#6584e2');
 
     function handleNewMeeting(e) {
         e.preventDefault();
@@ -21,14 +24,19 @@ export default function DialogNewMeeting() {
             allDay: checkAllDay(),
             data: {
                 info: info,
-                color: '#a3dda3',
+                color: color,
                 id: crypto.randomUUID(),
                 user: activeUser.displayName,
                 creation: new Date().toISOString(),
             },
         };
-
+        //ceck if end date is before start date
+        //cekc if end time is before start time
         console.log(newMeeting);
+        setEvents((currentEvents) => {
+            const events = [...currentEvents, newMeeting];
+            return events;
+        });
     }
 
     function combineDateAndTime(date, time) {
@@ -63,7 +71,7 @@ export default function DialogNewMeeting() {
             setAllDayNo(true);
             setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
             setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-            setEndDate(new Date().toISOString().split('T')[0]);
+            setEndDate(startDate);
         } else {
             setAllDayYes(true);
             setAllDayNo(false);
@@ -75,7 +83,9 @@ export default function DialogNewMeeting() {
     function handleAbort() {
         setTitle('');
         setStartDate(new Date().toISOString().split('T')[0]);
+        setEndDate(new Date().toISOString().split('T')[0]);
         setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+        setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
         setInfo('');
     }
 
@@ -121,7 +131,7 @@ export default function DialogNewMeeting() {
                                                 checked={allDayYes}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-primary checkbox-btn" htmlFor="allDayYes">
+                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayYes">
                                                 Ja
                                             </label>
 
@@ -134,10 +144,22 @@ export default function DialogNewMeeting() {
                                                 checked={allDayNo}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-primary checkbox-btn" htmlFor="allDayNo">
+                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayNo">
                                                 Nein
                                             </label>
                                         </div>
+                                    </div>
+                                    <div className="widthHalf">
+                                        <label htmlFor="color" className="col-form-label">
+                                            Farbe
+                                        </label>
+                                        <input
+                                            type="color"
+                                            className="form-control color-picker"
+                                            id="color"
+                                            value={color}
+                                            onChange={(e) => setColor(e.target.value)}
+                                        />
                                     </div>
                                 </div>
                             </div>
