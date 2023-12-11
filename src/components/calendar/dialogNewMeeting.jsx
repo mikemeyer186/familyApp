@@ -4,7 +4,7 @@ import { useCalendar } from '../../contexts/calendarContext';
 
 export default function DialogNewMeeting() {
     const { activeUser } = useUser();
-    const { setEvents } = useCalendar();
+    const { addNewMeeting } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -19,8 +19,8 @@ export default function DialogNewMeeting() {
         e.preventDefault();
         const newMeeting = {
             title: title,
-            start: combineDateAndTime(startDate, startTime),
-            end: combineDateAndTime(endDate, endTime),
+            start: combineDateAndTime(startDate, startTime).toISOString(),
+            end: combineDateAndTime(endDate, endTime).toISOString(),
             allDay: checkAllDay(),
             data: {
                 info: info,
@@ -30,13 +30,9 @@ export default function DialogNewMeeting() {
                 creation: new Date().toISOString(),
             },
         };
-        //ceck if end date is before start date
-        //cekc if end time is before start time
-        console.log(newMeeting);
-        setEvents((currentEvents) => {
-            const events = [...currentEvents, newMeeting];
-            return events;
-        });
+        //check if end date is before start date
+        //check if end time is before start time
+        addNewMeeting(newMeeting);
     }
 
     function combineDateAndTime(date, time) {

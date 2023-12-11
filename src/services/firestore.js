@@ -1,4 +1,4 @@
-import { collection, deleteDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -57,5 +57,25 @@ export async function updatePaymentInFirestore(payment, journalId) {
         await updateDoc(doc(db, 'journal', journalId), { payment, id: journalId });
     } catch (e) {
         console.error('Error updating document: ', e);
+    }
+}
+
+//calendar functions
+export async function loadEventsFromFirestore() {
+    const docRef = doc(db, 'calendar', 'events');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log('No such document!');
+    }
+}
+
+export async function addEventInFirestore(events) {
+    try {
+        await setDoc(doc(db, 'calendar', 'events'), { events });
+    } catch (e) {
+        console.error('Error adding document: ', e);
     }
 }

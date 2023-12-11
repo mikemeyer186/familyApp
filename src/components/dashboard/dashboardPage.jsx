@@ -11,8 +11,11 @@ export default function DashboardPage() {
     }
     return (
         <>
-            <h1>Dashboard</h1>
-            <p className="motivation-text">{motivationSentences[yearDay]}</p>
+            <div className="dashboardPage-wrapper">
+                <div className="dashboard-tile">
+                    <p className="motivation-text">{motivationSentences[yearDay]}</p>
+                </div>
+            </div>
         </>
     );
 }

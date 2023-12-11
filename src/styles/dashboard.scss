@@ -1,5 +1,34 @@
-.motivation-text {
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: $txt-grey;
+.dashboardPage-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    height: 100%;
+    overflow: auto;
+    padding: 50px 50px;
+
+    @media (max-width: 768px) {
+        padding: 50px 10px;
+        justify-content: flex-start;
+    }
+
+    .dashboard-tile {
+        border: $thinBorder;
+        box-shadow: $shadow;
+        padding: 18px;
+        position: relative;
+        border-radius: 8px;
+        max-width: $maxWidth;
+        background-color: #ffffff;
+    }
+
+    .motivation-text {
+        font-size: 0.8rem;
+        font-weight: 300;
+        color: $txt-grey;
+        font-style: italic;
+        margin: 0;
+    }
 }
