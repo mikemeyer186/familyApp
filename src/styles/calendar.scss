@@ -287,3 +287,12 @@
         }
     }
 }
+
+.error-date {
+    position: absolute;
+    bottom: -19px;
+    left: 1px;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: $error-color;
+}

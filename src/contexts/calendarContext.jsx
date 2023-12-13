@@ -14,6 +14,9 @@ function CalendarProvider({ children }) {
     const schoolHolidayColor = '#a3dda3';
     const publicHolidayColor = '#d89393';
 
+    /**
+     * fetches school holidays from API
+     */
     const fetchSchoolHolidaysFromAPI = useCallback(
         async function fetchSchoolHolidaysFromAPI() {
             const response = await fetch(urlSchoolHolidays);
@@ -27,6 +30,9 @@ function CalendarProvider({ children }) {
         [urlSchoolHolidays]
     );
 
+    /**
+     * fetches public holidays from API
+     */
     const fetchPublicHolidaysFromAPI = useCallback(
         async function fetchPublicHolidaysFromAPI() {
             const response = await fetch(urlPublicHolidays);
@@ -40,7 +46,11 @@ function CalendarProvider({ children }) {
         [urlPublicHolidays]
     );
 
+    /**
+     * converts holidays from API to events for the calendar
+     */
     const convertRawEvents = useCallback(async function convertRawEvents(rawEvents, color) {
+        setEvents([]);
         rawEvents.map((rawEvent) => {
             const event = {
                 start: new Date(rawEvent.startDate),
@@ -59,7 +69,11 @@ function CalendarProvider({ children }) {
         });
     }, []);
 
+    /**
+     * converts events from firestore to events for the calendar
+     */
     const convertEventsFromFirestore = useCallback(async function convertEventsFromFirestore(rawFirestoreEvents) {
+        setFirestoreEvents([]);
         const rawEvents = rawFirestoreEvents.events;
         rawEvents.map((rawEvent) => {
             const event = { ...rawEvent, start: new Date(rawEvent.start), end: new Date(rawEvent.end) };
@@ -71,14 +85,9 @@ function CalendarProvider({ children }) {
         });
     }, []);
 
-    const loadFirestoreEvents = useCallback(
-        async function loadFirestoreEvents() {
-            const rawFirestoreEvents = await loadEventsFromFirestore();
-            await convertEventsFromFirestore(rawFirestoreEvents);
-        },
-        [convertEventsFromFirestore]
-    );
-
+    /**
+     * loads school holidays and public holidays from API and converts them to events for the calendar
+     */
     const loadPublicEvents = useCallback(
         async function loadPublicEvents() {
             const rawSchoolHolidays = await fetchSchoolHolidaysFromAPI();
@@ -89,9 +98,22 @@ function CalendarProvider({ children }) {
         [convertRawEvents, fetchPublicHolidaysFromAPI, fetchSchoolHolidaysFromAPI]
     );
 
+    /**
+     * loads events from firestore and converts them to events for the calendar
+     */
+    const loadFirestoreEvents = useCallback(
+        async function loadFirestoreEvents() {
+            const rawFirestoreEvents = await loadEventsFromFirestore();
+            await convertEventsFromFirestore(rawFirestoreEvents);
+        },
+        [convertEventsFromFirestore]
+    );
+
+    /**
+     * loads all events for the calendar
+     */
     const loadEvents = useCallback(
         async function loadEvents() {
-            setEvents([]);
             await loadPublicEvents();
             await loadFirestoreEvents();
             setIsloaded(true);
@@ -99,6 +121,10 @@ function CalendarProvider({ children }) {
         [loadPublicEvents, loadFirestoreEvents]
     );
 
+    /**
+     * adds new meeting to firestore and loads all events for the calendar
+     * @param {object} newMeeting - new meeting to be added to firestore
+     */
     async function addNewMeeting(newMeeting) {
         const newFirestoreEvents = [...firestoreEvents, newMeeting];
         setFirestoreEvents(newFirestoreEvents);

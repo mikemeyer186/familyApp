@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
 
@@ -14,7 +14,13 @@ export default function DialogNewMeeting() {
     const [allDayYes, setAllDayYes] = useState(false);
     const [allDayNo, setAllDayNo] = useState(true);
     const [color, setColor] = useState('#6584e2');
+    const [errorDate, setErrorDate] = useState(false);
+    const [errorTime, setErrorTime] = useState(false);
 
+    /**
+     * adds new meeting to calendar with data from form
+     * @param {event} e - event from form submit
+     */
     function handleNewMeeting(e) {
         e.preventDefault();
         const newMeeting = {
@@ -30,11 +36,43 @@ export default function DialogNewMeeting() {
                 creation: new Date().toISOString(),
             },
         };
-        //check if end date is before start date
-        //check if end time is before start time
         addNewMeeting(newMeeting);
     }
 
+    /**
+     * checks if end date is before start date
+     */
+    const checkDate = useCallback(
+        function checkDate() {
+            if (endDate < startDate) {
+                setErrorDate(true);
+            } else {
+                setErrorDate(false);
+            }
+        },
+        [endDate, startDate]
+    );
+
+    /**
+     * checks if end time is before start time
+     */
+    const checkTime = useCallback(
+        function checkTime() {
+            if (endTime < startTime) {
+                setErrorTime(true);
+            } else {
+                setErrorTime(false);
+            }
+        },
+        [endTime, startTime]
+    );
+
+    /**
+     * combines date and time to one date for calendar
+     * @param {date} date - date from datepicker
+     * @param {date} time - time from timepicker
+     * @returns
+     */
     function combineDateAndTime(date, time) {
         let combinedDate = new Date(date);
         let timeSplit = time.split(':');
@@ -44,6 +82,10 @@ export default function DialogNewMeeting() {
         return combinedDate;
     }
 
+    /**
+     * checks if all day is checked
+     * @returns true if all day is checked, false if not
+     */
     function checkAllDay() {
         if (allDayYes) {
             return true;
@@ -52,15 +94,28 @@ export default function DialogNewMeeting() {
         }
     }
 
+    /**
+     * sets end date and start date
+     * @param {date} date
+     */
     function handleStartDateChange(date) {
-        if (allDayNo) {
-            setStartDate(new Date(date).toISOString().split('T')[0]);
-            setEndDate(new Date(date).toISOString().split('T')[0]);
-        } else {
-            setStartDate(new Date(date).toISOString().split('T')[0]);
-        }
+        setStartDate(new Date(date).toISOString().split('T')[0]);
+        setEndDate(new Date(date).toISOString().split('T')[0]);
     }
 
+    /**
+     * sets end time and start time
+     * @param {date} time - time from timepicker
+     */
+    function handleStartTimeChange(time) {
+        setStartTime(time);
+        setEndTime(time);
+    }
+
+    /**
+     * handles all day change
+     * sets start time, end time and end date to default values
+     */
     function handleAllDayChange() {
         if (allDayYes) {
             setAllDayYes(false);
@@ -76,6 +131,9 @@ export default function DialogNewMeeting() {
         }
     }
 
+    /**
+     * resets form
+     */
     function handleAbort() {
         setTitle('');
         setStartDate(new Date().toISOString().split('T')[0]);
@@ -84,6 +142,20 @@ export default function DialogNewMeeting() {
         setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
         setInfo('');
     }
+
+    /**
+     * checks if end date is before start date on change
+     */
+    useEffect(() => {
+        checkDate();
+    }, [startDate, endDate, checkDate]);
+
+    /**
+     * checks if end time is before start time on change
+     */
+    useEffect(() => {
+        checkTime();
+    }, [startTime, endTime, checkTime]);
 
     return (
         <div className="modal fade" id="newMeetingModal" tabIndex="-1" aria-hidden="true">
@@ -184,11 +256,13 @@ export default function DialogNewMeeting() {
                                                 type="date"
                                                 className="form-control"
                                                 id="endDate"
+                                                min={startDate}
                                                 value={endDate}
                                                 onChange={(e) => setEndDate(e.target.value)}
                                             />
                                         </div>
                                     )}
+                                    {errorDate && <span className="error-date">Das Enddatum liegt vor dem Startdatum!</span>}
                                 </div>
                             </div>
 
@@ -205,7 +279,7 @@ export default function DialogNewMeeting() {
                                                     className="form-control"
                                                     id="startTime"
                                                     value={startTime}
-                                                    onChange={(e) => setStartTime(e.target.value)}
+                                                    onChange={(e) => handleStartTimeChange(e.target.value)}
                                                 />
                                             </div>
 
@@ -221,6 +295,7 @@ export default function DialogNewMeeting() {
                                                     onChange={(e) => setEndTime(e.target.value)}
                                                 />
                                             </div>
+                                            {errorTime && <span className="error-date">Das Enddatum liegt vor dem Startdatum!</span>}
                                         </div>
                                     </div>
                                 </>
@@ -246,7 +321,7 @@ export default function DialogNewMeeting() {
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
                                     Abbrechen
                                 </button>
-                                <button type="submit" className="btn btn-primary" disabled={title === ''}>
+                                <button type="submit" className="btn btn-primary" disabled={title === '' || errorDate || errorTime}>
                                     Eintragen
                                 </button>
                             </div>
