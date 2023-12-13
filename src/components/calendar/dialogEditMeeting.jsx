@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
 
-export default function DialogNewMeeting() {
+export default function DialogEditMeeting() {
     const { activeUser } = useUser();
-    const { addNewMeeting } = useCalendar();
+    const { selectedEvent, editMeeting, deleteMeeting } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -18,12 +18,12 @@ export default function DialogNewMeeting() {
     const [errorTime, setErrorTime] = useState(false);
 
     /**
-     * adds new meeting to calendar with data from form
+     * edit meeting in calendar with data from form
      * @param {event} e - event from form submit
      */
-    function handleNewMeeting(e) {
+    function handleEditMeeting(e) {
         e.preventDefault();
-        const newMeeting = {
+        const editedMeeting = {
             title: title,
             start: combineDateAndTime(startDate, startTime).toISOString(),
             end: combineDateAndTime(endDate, endTime).toISOString(),
@@ -31,12 +31,19 @@ export default function DialogNewMeeting() {
             data: {
                 info: info,
                 color: color,
-                id: crypto.randomUUID(),
+                id: selectedEvent.data.id,
                 user: activeUser.displayName,
                 creation: new Date().toISOString(),
             },
         };
-        addNewMeeting(newMeeting);
+        editMeeting(editedMeeting);
+    }
+
+    /**
+     * deletes meeting from calendar
+     */
+    function handleDeleteMeeting() {
+        deleteMeeting(selectedEvent.data.id);
     }
 
     /**
@@ -120,8 +127,8 @@ export default function DialogNewMeeting() {
         if (allDayYes) {
             setAllDayYes(false);
             setAllDayNo(true);
-            setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-            setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setStartTime(new Date(selectedEvent.start).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setEndTime(new Date(selectedEvent.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
             setEndDate(startDate);
         } else {
             setAllDayYes(true);
@@ -129,18 +136,6 @@ export default function DialogNewMeeting() {
             setStartTime('01:00');
             setEndTime('01:00');
         }
-    }
-
-    /**
-     * resets form
-     */
-    function handleAbort() {
-        setTitle('');
-        setStartDate(new Date().toISOString().split('T')[0]);
-        setEndDate(new Date().toISOString().split('T')[0]);
-        setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-        setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-        setInfo('');
     }
 
     /**
@@ -157,25 +152,43 @@ export default function DialogNewMeeting() {
         checkTime();
     }, [startTime, endTime, checkTime]);
 
+    /**
+     * sets form values to selected event values if selected event is available
+     * selectedEvent is changing when user clicks on an event in the calendar
+     */
+    useEffect(() => {
+        if (selectedEvent) {
+            setTitle(selectedEvent.title);
+            setStartDate(new Date(selectedEvent.start).toISOString().split('T')[0]);
+            setEndDate(new Date(selectedEvent.end).toISOString().split('T')[0]);
+            setStartTime(new Date(selectedEvent.start).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setEndTime(new Date(selectedEvent.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setAllDayYes(selectedEvent.allDay);
+            setAllDayNo(!selectedEvent.allDay);
+            setInfo(selectedEvent.data.info);
+            setColor(selectedEvent.data.color);
+        }
+    }, [selectedEvent]);
+
     return (
-        <div className="modal fade" id="newMeetingModal" tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="editMeetingModal" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5">Neuen Termin eintragen</h1>
+                        <h1 className="modal-title fs-5">Termin ändern</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleNewMeeting}>
+                        <form onSubmit={handleEditMeeting}>
                             <div className="form-row mb-3">
                                 <div className="widthFull">
-                                    <label htmlFor="title" className="col-form-label">
+                                    <label htmlFor="editTitle" className="col-form-label">
                                         Termin
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="title"
+                                        id="editTitle"
                                         placeholder="Name des Termins"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
@@ -186,7 +199,7 @@ export default function DialogNewMeeting() {
                             <div className="form-row mb-3">
                                 <div className="input-group mb-3 spaceBetween">
                                     <div className="widthHalf">
-                                        <label htmlFor="allDayYes" className="col-form-label">
+                                        <label htmlFor="editAllDayYes" className="col-form-label">
                                             Ganztägig
                                         </label>
                                         <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -194,12 +207,12 @@ export default function DialogNewMeeting() {
                                                 type="checkbox"
                                                 className="btn-check"
                                                 name="btnradio"
-                                                id="allDayYes"
+                                                id="editAllDayYes"
                                                 autoComplete="off"
                                                 checked={allDayYes}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayYes">
+                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayYes">
                                                 Ja
                                             </label>
 
@@ -207,24 +220,24 @@ export default function DialogNewMeeting() {
                                                 type="radio"
                                                 className="btn-check"
                                                 name="btnradio"
-                                                id="allDayNo"
+                                                id="editAllDayNo"
                                                 autoComplete="off"
                                                 checked={allDayNo}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayNo">
+                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayNo">
                                                 Nein
                                             </label>
                                         </div>
                                     </div>
                                     <div className="widthHalf">
-                                        <label htmlFor="color" className="col-form-label">
+                                        <label htmlFor="editColor" className="col-form-label">
                                             Farbe
                                         </label>
                                         <input
                                             type="color"
                                             className="form-control color-picker"
-                                            id="color"
+                                            id="editColor"
                                             value={color}
                                             onChange={(e) => setColor(e.target.value)}
                                         />
@@ -235,13 +248,13 @@ export default function DialogNewMeeting() {
                             <div className="form-row mb-3">
                                 <div className="input-group mb-3 spaceBetween">
                                     <div className={allDayNo ? 'widthFull' : 'widthHalf'}>
-                                        <label htmlFor="startDate" className="col-form-label">
+                                        <label htmlFor="editStartDate" className="col-form-label">
                                             {allDayNo ? 'Datum' : 'Startdatum'}
                                         </label>
                                         <input
                                             type="date"
                                             className="form-control"
-                                            id="startDate"
+                                            id="editStartDate"
                                             value={startDate}
                                             onChange={(e) => handleStartDateChange(e.target.value)}
                                         />
@@ -249,13 +262,13 @@ export default function DialogNewMeeting() {
 
                                     {allDayYes && (
                                         <div className="widthHalf">
-                                            <label htmlFor="endDate" className="col-form-label">
+                                            <label htmlFor="editEndDate" className="col-form-label">
                                                 Enddatum
                                             </label>
                                             <input
                                                 type="date"
                                                 className="form-control"
-                                                id="endDate"
+                                                id="editEndDate"
                                                 min={startDate}
                                                 value={endDate}
                                                 onChange={(e) => setEndDate(e.target.value)}
@@ -271,26 +284,26 @@ export default function DialogNewMeeting() {
                                     <div className="form-row mb-3">
                                         <div className="input-group mb-3 spaceBetween">
                                             <div className="widthHalf">
-                                                <label htmlFor="startTime" className="col-form-label">
+                                                <label htmlFor="editStartTime" className="col-form-label">
                                                     Von
                                                 </label>
                                                 <input
                                                     type="time"
                                                     className="form-control"
-                                                    id="startTime"
+                                                    id="editStartTime"
                                                     value={startTime}
                                                     onChange={(e) => handleStartTimeChange(e.target.value)}
                                                 />
                                             </div>
 
                                             <div className="widthHalf">
-                                                <label htmlFor="endTime" className="col-form-label">
+                                                <label htmlFor="editEndTime" className="col-form-label">
                                                     Bis
                                                 </label>
                                                 <input
                                                     type="time"
                                                     className="form-control"
-                                                    id="endTime"
+                                                    id="editEndTime"
                                                     value={endTime}
                                                     onChange={(e) => setEndTime(e.target.value)}
                                                 />
@@ -303,13 +316,13 @@ export default function DialogNewMeeting() {
 
                             <div className="form-row mb-3">
                                 <div className="widthFull">
-                                    <label htmlFor="info" className="col-form-label">
+                                    <label htmlFor="editInfo" className="col-form-label">
                                         Weitere Informationen
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="info"
+                                        id="editInfo"
                                         placeholder="Zusätzliche Info zum Termin"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}
@@ -318,16 +331,16 @@ export default function DialogNewMeeting() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
-                                    Abbrechen
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeleteMeeting}>
+                                    Löschen
                                 </button>
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
                                     data-bs-dismiss="modal"
-                                    disabled={title === '' || errorDate || errorTime}
+                                    disabled={title === '' || errorDate || errorTime || info === 'OpenHolidays API'}
                                 >
-                                    Eintragen
+                                    Ändern
                                 </button>
                             </div>
                         </form>

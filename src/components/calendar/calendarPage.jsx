@@ -7,9 +7,10 @@ import CalendarEvent from './calendarEvent';
 import Spinner from '../global/spinner';
 import CalendarPageToolbar from './calendarPageToolbar';
 import DialogNewMeeting from './dialogNewMeeting';
+import DialogEditMeeting from './dialogEditMeeting';
 
 export default function CalendarPage() {
-    const { isLoaded, events, loadEvents } = useCalendar();
+    const { isLoaded, events, loadEvents, onSelectEvent } = useCalendar();
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
     const { min, max, messages, formats, components } = useMemo(
         () => ({
@@ -32,9 +33,12 @@ export default function CalendarPage() {
                 showMore: (total) => `+${total} mehr`,
             },
             formats: {
-                weekdayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
-                dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
+                //month view
                 dateFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
+                weekdayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
+
+                //week view
+                dayFormat: (date, culture, localizer) => localizer.format(date, 'ccc', culture),
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
                     'Woche ' +
                     localizer.format(start, 'WW', culture) +
@@ -42,6 +46,8 @@ export default function CalendarPage() {
                     localizer.format(start, 'dd.MM.yyyy', culture) +
                     ' - ' +
                     localizer.format(end, 'dd.MM.yyyy', culture),
+
+                //agenda view
                 agendaDateFormat: (date, culture, localizer) => localizer.format(date, 'ccc, dd.MM.yyyy', culture),
                 agendaHeaderFormat: ({ start, end }, culture, localizer) =>
                     localizer.format(start, 'dd.MM.yyyy', culture) + ' - ' + localizer.format(end, 'dd.MM.yyyy', culture),
@@ -54,6 +60,9 @@ export default function CalendarPage() {
         []
     );
 
+    /**
+     * loads all events for the calendar on first render
+     */
     useEffect(() => {
         loadEvents();
     }, [loadEvents]);
@@ -61,6 +70,7 @@ export default function CalendarPage() {
     return (
         <>
             <DialogNewMeeting />
+            <DialogEditMeeting />
 
             <div className="calendarPage-wrapper">
                 <div className="calendarToolbar">
@@ -83,6 +93,7 @@ export default function CalendarPage() {
                         min={min}
                         max={max}
                         events={events}
+                        onSelectEvent={onSelectEvent}
                     />
                 )}
             </div>

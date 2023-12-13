@@ -10,6 +10,8 @@ export default function CalendarEvent({ event }) {
                 width: '100%',
                 padding: '2px',
             }}
+            data-bs-toggle="modal"
+            data-bs-target="#editMeetingModal"
         >
             <div className="rbc-event-content">{event.title}</div>
         </div>

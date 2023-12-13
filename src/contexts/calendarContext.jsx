@@ -9,6 +9,7 @@ function CalendarProvider({ children }) {
     const [events, setEvents] = useState([]);
     const [firestoreEvents, setFirestoreEvents] = useState([]);
     const [isLoaded, setIsloaded] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
     const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL;
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL;
     const schoolHolidayColor = '#a3dda3';
@@ -50,7 +51,6 @@ function CalendarProvider({ children }) {
      * converts holidays from API to events for the calendar
      */
     const convertRawEvents = useCallback(async function convertRawEvents(rawEvents, color) {
-        setEvents([]);
         rawEvents.map((rawEvent) => {
             const event = {
                 start: new Date(rawEvent.startDate),
@@ -60,6 +60,7 @@ function CalendarProvider({ children }) {
                 data: {
                     color: color,
                     id: rawEvent.id,
+                    info: 'OpenHolidays API',
                 },
             };
             setEvents((currentEvents) => {
@@ -73,7 +74,6 @@ function CalendarProvider({ children }) {
      * converts events from firestore to events for the calendar
      */
     const convertEventsFromFirestore = useCallback(async function convertEventsFromFirestore(rawFirestoreEvents) {
-        setFirestoreEvents([]);
         const rawEvents = rawFirestoreEvents.events;
         rawEvents.map((rawEvent) => {
             const event = { ...rawEvent, start: new Date(rawEvent.start), end: new Date(rawEvent.end) };
@@ -114,6 +114,8 @@ function CalendarProvider({ children }) {
      */
     const loadEvents = useCallback(
         async function loadEvents() {
+            setEvents([]);
+            setFirestoreEvents([]);
             await loadPublicEvents();
             await loadFirestoreEvents();
             setIsloaded(true);
@@ -129,9 +131,55 @@ function CalendarProvider({ children }) {
         const newFirestoreEvents = [...firestoreEvents, newMeeting];
         setFirestoreEvents(newFirestoreEvents);
         await addEventInFirestore(newFirestoreEvents);
-        await loadFirestoreEvents();
+        await loadEvents();
         setSuccess('Der Termin wurde erfolgreich eingetragen!');
     }
+
+    /**
+     * adds edited meeting to firestore and loads all events for the calendar
+     * @param {object} editedMeeting - edited meeting to be added to firestore
+     */
+    async function editMeeting(editedMeeting) {
+        const filteredEvents = events.filter((event) => {
+            return event.data.id !== editedMeeting.data.id;
+        });
+        const filteredFirestoreEvents = firestoreEvents.filter((firestoreEvent) => {
+            return firestoreEvent.data.id !== editedMeeting.data.id;
+        });
+        const newFirestoreEvents = [...filteredFirestoreEvents, editedMeeting];
+        console.log(filteredEvents);
+        setEvents(filteredEvents);
+        setFirestoreEvents(newFirestoreEvents);
+        await addEventInFirestore(newFirestoreEvents);
+        await loadEvents();
+        setSuccess('Der Termin wurde erfolgreich geändert!');
+    }
+
+    /**
+     * deletes meeting from firestore and loads all events for the calendar
+     * @param {string} meetingID - ID of the meeting to be deleted
+     */
+    async function deleteMeeting(meetingID) {
+        const filteredEvents = events.filter((event) => {
+            return event.data.id !== meetingID;
+        });
+        const filteredFirestoreEvents = firestoreEvents.filter((firestoreEvent) => {
+            return firestoreEvent.data.id !== meetingID;
+        });
+        setEvents(filteredEvents);
+        setFirestoreEvents(filteredFirestoreEvents);
+        await addEventInFirestore(filteredFirestoreEvents);
+        await loadEvents();
+        setSuccess('Der Termin wurde erfolgreich gelöscht!');
+    }
+
+    /**
+     * onSelect event is triggered when user clicks on an event in the calendar
+     * sets selectedEvent to the clicked event
+     */
+    const onSelectEvent = useCallback((calEvent) => {
+        setSelectedEvent(calEvent);
+    }, []);
 
     return (
         <CalendarContext.Provider
@@ -139,10 +187,15 @@ function CalendarProvider({ children }) {
                 events: events,
                 firestoreEvents: firestoreEvents,
                 isLoaded: isLoaded,
+                selectedEvent: selectedEvent,
                 loadEvents,
                 setEvents,
                 setFirestoreEvents,
                 addNewMeeting,
+                editMeeting,
+                deleteMeeting,
+                onSelectEvent,
+                setSelectedEvent,
             }}
         >
             {children}
