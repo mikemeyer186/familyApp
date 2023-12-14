@@ -60,7 +60,8 @@ function CalendarProvider({ children }) {
                 data: {
                     color: color,
                     id: rawEvent.id,
-                    info: 'OpenHolidays API',
+                    info: 'von OpenHolidays API',
+                    public: true,
                 },
             };
             setEvents((currentEvents) => {

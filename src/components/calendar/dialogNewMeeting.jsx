@@ -34,6 +34,7 @@ export default function DialogNewMeeting() {
                 id: crypto.randomUUID(),
                 user: activeUser.displayName,
                 creation: new Date().toISOString(),
+                public: false,
             },
         };
         addNewMeeting(newMeeting);

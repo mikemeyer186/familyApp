@@ -14,6 +14,7 @@ export default function DialogEditMeeting() {
     const [allDayYes, setAllDayYes] = useState(false);
     const [allDayNo, setAllDayNo] = useState(true);
     const [color, setColor] = useState('#6584e2');
+    const [publicEvent, setPublicEvent] = useState(false);
     const [errorDate, setErrorDate] = useState(false);
     const [errorTime, setErrorTime] = useState(false);
 
@@ -34,6 +35,7 @@ export default function DialogEditMeeting() {
                 id: selectedEvent.data.id,
                 user: activeUser.displayName,
                 creation: new Date().toISOString(),
+                public: false,
             },
         };
         editMeeting(editedMeeting);
@@ -167,6 +169,7 @@ export default function DialogEditMeeting() {
             setAllDayNo(!selectedEvent.allDay);
             setInfo(selectedEvent.data.info);
             setColor(selectedEvent.data.color);
+            setPublicEvent(selectedEvent.data.public);
         }
     }, [selectedEvent]);
 
@@ -192,6 +195,7 @@ export default function DialogEditMeeting() {
                                         placeholder="Name des Termins"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
+                                        disabled={publicEvent}
                                     />
                                 </div>
                             </div>
@@ -211,6 +215,7 @@ export default function DialogEditMeeting() {
                                                 autoComplete="off"
                                                 checked={allDayYes}
                                                 onChange={handleAllDayChange}
+                                                disabled={publicEvent}
                                             />
                                             <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayYes">
                                                 Ja
@@ -224,6 +229,7 @@ export default function DialogEditMeeting() {
                                                 autoComplete="off"
                                                 checked={allDayNo}
                                                 onChange={handleAllDayChange}
+                                                disabled={publicEvent}
                                             />
                                             <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayNo">
                                                 Nein
@@ -240,6 +246,7 @@ export default function DialogEditMeeting() {
                                             id="editColor"
                                             value={color}
                                             onChange={(e) => setColor(e.target.value)}
+                                            disabled={publicEvent}
                                         />
                                     </div>
                                 </div>
@@ -257,6 +264,7 @@ export default function DialogEditMeeting() {
                                             id="editStartDate"
                                             value={startDate}
                                             onChange={(e) => handleStartDateChange(e.target.value)}
+                                            disabled={publicEvent}
                                         />
                                     </div>
 
@@ -272,6 +280,7 @@ export default function DialogEditMeeting() {
                                                 min={startDate}
                                                 value={endDate}
                                                 onChange={(e) => setEndDate(e.target.value)}
+                                                disabled={publicEvent}
                                             />
                                         </div>
                                     )}
@@ -293,6 +302,7 @@ export default function DialogEditMeeting() {
                                                     id="editStartTime"
                                                     value={startTime}
                                                     onChange={(e) => handleStartTimeChange(e.target.value)}
+                                                    disabled={publicEvent}
                                                 />
                                             </div>
 
@@ -306,6 +316,7 @@ export default function DialogEditMeeting() {
                                                     id="editEndTime"
                                                     value={endTime}
                                                     onChange={(e) => setEndTime(e.target.value)}
+                                                    disabled={publicEvent}
                                                 />
                                             </div>
                                             {errorTime && <span className="error-date">Das Enddatum liegt vor dem Startdatum!</span>}
@@ -326,23 +337,26 @@ export default function DialogEditMeeting() {
                                         placeholder="Zusätzliche Info zum Termin"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}
+                                        disabled={publicEvent}
                                     />
                                 </div>
                             </div>
 
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeleteMeeting}>
-                                    Löschen
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    data-bs-dismiss="modal"
-                                    disabled={title === '' || errorDate || errorTime || info === 'OpenHolidays API'}
-                                >
-                                    Ändern
-                                </button>
-                            </div>
+                            {!publicEvent && (
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeleteMeeting}>
+                                        Löschen
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        data-bs-dismiss="modal"
+                                        disabled={title === '' || errorDate || errorTime}
+                                    >
+                                        Ändern
+                                    </button>
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
