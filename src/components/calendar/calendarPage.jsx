@@ -10,7 +10,7 @@ import DialogNewMeeting from './dialogNewMeeting';
 import DialogEditMeeting from './dialogEditMeeting';
 
 export default function CalendarPage() {
-    const { isLoaded, events, loadEvents, onSelectEvent } = useCalendar();
+    const { isLoaded, events, loadEvents, onSelectEvent, onSelectTimeSlot } = useCalendar();
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
     const { min, max, messages, formats, components } = useMemo(
         () => ({
@@ -94,6 +94,8 @@ export default function CalendarPage() {
                         max={max}
                         events={events}
                         onSelectEvent={onSelectEvent}
+                        onSelectSlot={onSelectTimeSlot}
+                        selectable
                     />
                 )}
             </div>

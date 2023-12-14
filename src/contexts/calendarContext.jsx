@@ -10,6 +10,8 @@ function CalendarProvider({ children }) {
     const [firestoreEvents, setFirestoreEvents] = useState([]);
     const [isLoaded, setIsloaded] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const [timeSlotClicked, setTimeSlotClicked] = useState(false);
     const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL;
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL;
     const schoolHolidayColor = '#a3dda3';
@@ -182,6 +184,14 @@ function CalendarProvider({ children }) {
         setSelectedEvent(calEvent);
     }, []);
 
+    /**
+     * onSelect time slot is triggered when user clicks on a time slot in the calendar
+     */
+    const onSelectTimeSlot = useCallback((slotInfo) => {
+        setSelectedTimeSlot(slotInfo);
+        setTimeSlotClicked(true);
+    }, []);
+
     return (
         <CalendarContext.Provider
             value={{
@@ -189,6 +199,8 @@ function CalendarProvider({ children }) {
                 firestoreEvents: firestoreEvents,
                 isLoaded: isLoaded,
                 selectedEvent: selectedEvent,
+                selectedTimeSlot: selectedTimeSlot,
+                timeSlotClicked: timeSlotClicked,
                 loadEvents,
                 setEvents,
                 setFirestoreEvents,
@@ -197,6 +209,8 @@ function CalendarProvider({ children }) {
                 deleteMeeting,
                 onSelectEvent,
                 setSelectedEvent,
+                onSelectTimeSlot,
+                setTimeSlotClicked,
             }}
         >
             {children}

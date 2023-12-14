@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
+import { Modal } from 'bootstrap';
 
 export default function DialogNewMeeting() {
     const { activeUser } = useUser();
-    const { addNewMeeting } = useCalendar();
+    const { timeSlotClicked, selectedTimeSlot, addNewMeeting, setTimeSlotClicked } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -16,6 +17,7 @@ export default function DialogNewMeeting() {
     const [color, setColor] = useState('#6584e2');
     const [errorDate, setErrorDate] = useState(false);
     const [errorTime, setErrorTime] = useState(false);
+    const dialogRef = useRef(document.getElementById('newMeetingModal'));
 
     /**
      * adds new meeting to calendar with data from form
@@ -142,7 +144,38 @@ export default function DialogNewMeeting() {
         setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
         setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
         setInfo('');
+        setTimeSlotClicked(false);
     }
+
+    /**
+     * sets time and date from selected time slot when user clicks on time slot
+     */
+    const setTimeEventOnClick = useCallback(
+        function setTimeEventOnClick() {
+            setAllDayYes(false);
+            setAllDayNo(true);
+            setStartDate(selectedTimeSlot.start.toISOString().split('T')[0]);
+            setEndDate(selectedTimeSlot.end.toISOString().split('T')[0]);
+            setStartTime(selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setEndTime(selectedTimeSlot.end.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+        },
+        [selectedTimeSlot]
+    );
+
+    /**
+     * sets all day event when user clicks on all day event slot
+     */
+    const setAllDayEventOnClick = useCallback(
+        function setAllDayEventOnClick() {
+            setStartDate(selectedTimeSlot.end.toISOString().split('T')[0]);
+            setEndDate(selectedTimeSlot.end.toISOString().split('T')[0]);
+            setStartTime('01:00');
+            setEndTime('01:00');
+            setAllDayYes(true);
+            setAllDayNo(false);
+        },
+        [selectedTimeSlot]
+    );
 
     /**
      * checks if end date is before start date on change
@@ -158,8 +191,22 @@ export default function DialogNewMeeting() {
         checkTime();
     }, [startTime, endTime, checkTime]);
 
+    /**
+     * opens modal if time slot is clicked
+     */
+    useEffect(() => {
+        if (timeSlotClicked) {
+            const newMeetingModal = new Modal(dialogRef.current);
+            setTimeEventOnClick();
+            if (selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) === '00:00') {
+                setAllDayEventOnClick();
+            }
+            newMeetingModal.show();
+        }
+    }, [selectedTimeSlot, timeSlotClicked, setAllDayEventOnClick, setTimeEventOnClick]);
+
     return (
-        <div className="modal fade" id="newMeetingModal" tabIndex="-1" aria-hidden="true">
+        <div ref={dialogRef} className="modal fade" id="newMeetingModal" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
