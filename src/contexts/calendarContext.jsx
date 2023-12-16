@@ -192,9 +192,13 @@ function CalendarProvider({ children }) {
         setTimeSlotClicked(true);
     }, []);
 
+    /**
+     * navigates to agenda view when user clicks on a time slot in month view or more-button
+     */
     const getDrilldownView = useCallback((targetDate, currentViewName, configuredViewNames) => {
-        if (currentViewName === 'month' && configuredViewNames.includes('agenda')) return 'agenda';
-
+        if (currentViewName === 'month' && configuredViewNames.includes('agenda')) {
+            return 'agenda';
+        }
         return null;
     }, []);
 
