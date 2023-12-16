@@ -5,13 +5,13 @@ import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { JournalProvider } from './contexts/journalContext';
 import { ListProvider } from './contexts/listContext';
+import { CalendarProvider } from './contexts/calendarContext';
 import { useAlert } from './contexts/alertContext';
 import { useUser } from './contexts/userContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
 import LazySpinner from './components/global/lazySpinner';
-import { CalendarProvider } from './contexts/calendarContext';
 
 const AppLayout = lazy(() => import('./components/main/appLayout'));
 const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));
@@ -29,7 +29,7 @@ export default function App() {
 
     useEffect(() => {
         authCheck();
-    }, []);
+    }, []); // eslint-disable-line
 
     return (
         <>

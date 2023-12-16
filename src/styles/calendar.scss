@@ -241,6 +241,18 @@
 
             .rbc-month-row {
                 border-top: $thinBorder;
+                overflow: inherit;
+
+                .rbc-show-more {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    color: $txt-grey;
+                    font-weight: 700;
+                    font-size: 0.6rem;
+                    transform: translateX(-2px);
+                }
             }
 
             .rbc-row-bg {
