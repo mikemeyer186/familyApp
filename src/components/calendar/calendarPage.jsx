@@ -1,6 +1,8 @@
 import { Calendar } from 'react-big-calendar';
 import { useEffect } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
+import { db } from '../../config/firebase';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import CalendarConfig from '../../config/rbc';
 import Spinner from '../global/spinner';
 import CalendarPageToolbar from './calendarPageToolbar';
@@ -16,6 +18,21 @@ export default function CalendarPage() {
      */
     useEffect(() => {
         loadEvents();
+    }, [loadEvents]);
+
+    /**
+     * observable for events from firebase
+     */
+    useEffect(() => {
+        const q = query(collection(db, 'calendar'));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docs.map((doc) => doc.data());
+            loadEvents();
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, [loadEvents]);
 
     return (
