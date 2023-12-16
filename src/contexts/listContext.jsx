@@ -8,11 +8,18 @@ function ListProvider({ children }) {
     const { setSuccess } = useAlert();
     const [lists, setLists] = useState([]);
 
+    /**
+     * loads lists from firestore
+     */
     const getLists = useCallback(async function getLists() {
         const lists = await loadListsFromFirestore();
         setLists(lists);
     }, []);
 
+    /**
+     * adds new list to firestore
+     * @param {string} newListTitle - title of new list
+     */
     function addNewList(newListTitle) {
         const title = newListTitle;
         const id = crypto.randomUUID();
@@ -35,6 +42,10 @@ function ListProvider({ children }) {
         setSuccess('Die neue Liste wurde erfolgreich hinzugefügt!');
     }
 
+    /**
+     * deletes list from firestore
+     * @param {string} listId - id of list to delete
+     */
     function deleteList(listId) {
         setLists((currentLists) => {
             const lists = currentLists.filter((list) => list.id !== listId);
@@ -44,6 +55,10 @@ function ListProvider({ children }) {
         setSuccess('Die Liste wurde erfolgreich gelöscht!');
     }
 
+    /**
+     * clears list in firestore
+     * @param {string} listID - id of list to clear
+     */
     function clearList(listID) {
         const listTitle = lists.find((list) => list.id === listID).title;
         let listItems = lists.find((list) => list.id === listID).list;
@@ -51,6 +66,11 @@ function ListProvider({ children }) {
         updateListInFirestore(listItems, listID, listTitle);
     }
 
+    /**
+     * renames list in firestore
+     * @param {string} listID - id of list to rename
+     * @param {string} newListTitle - new title of list
+     */
     function renameList(listID, newListTitle) {
         let listItems = lists.find((list) => list.id === listID).list;
         updateListInFirestore(listItems, listID, newListTitle);

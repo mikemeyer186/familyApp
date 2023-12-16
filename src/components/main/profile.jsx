@@ -16,19 +16,32 @@ export default function UserProfile() {
     const userID = activeUser.uid;
     const navigate = useNavigate();
 
+    /**
+     * handles user data update
+     * @param {event} e - event from form submit
+     */
     function handleSubmit(e) {
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
-        //updateUserEmail(email);
+        //updateUserEmail(email); --> not implemented yet (maybe in separate profil page?)
         navigate(-1);
     }
 
+    /**
+     * gets download url of photo from storage
+     * and sets photoUrl state
+     * @param {string} storageRef - storage reference of photo
+     */
     async function getPhotoUrl(storageRef) {
         await getDownloadURL(storageRef).then((url) => {
             setPhotoUrl(url);
         });
     }
 
+    /**
+     * uploads photo to storage and gets download url
+     * and triggers setIsUploading state (3 seconds delay)
+     */
     useEffect(() => {
         const uploadTime = setTimeout(() => {
             const storageRef = ref(storage, userID + '_' + file.name);
@@ -46,6 +59,9 @@ export default function UserProfile() {
         };
     }, [newPhotoUrl, file, userID]);
 
+    /**
+     * sets isUploading state to true on file change
+     */
     useEffect(() => {
         if (file) {
             setIsUploading(true);

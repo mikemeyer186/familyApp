@@ -1,21 +1,31 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
-import { Popover } from 'bootstrap';
+import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
 
 export default function Navbar() {
     const { activeUser, signOutUser } = useUser();
     const [greeting, setGreeting] = useState('Hallo');
     const navigate = useNavigate();
 
+    /**
+     * handles sign out of user
+     */
     function handleSignOut() {
         signOutUser();
     }
 
+    /**
+     * handles navigation in menu dropdown
+     * @param {string} route - route to navigate to
+     */
     function handleDropdownNav(route) {
         navigate(route);
     }
 
+    /**
+     * checks daytime and sets greeting in navbar
+     */
     function checkDaytime() {
         let daytime = new Date();
         let hours = daytime.getHours();
@@ -28,6 +38,9 @@ export default function Navbar() {
         }
     }
 
+    /**
+     * checks daytime on page load
+     */
     useEffect(() => {
         checkDaytime();
     }, []);

@@ -17,11 +17,19 @@ function JournalProvider({ children }) {
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    /**
+     * loads journals from firestore
+     */
     const loadJournals = useCallback(async function loadJournals() {
         const loadedJournals = await loadJournalFromFirestore();
         setJournals(loadedJournals);
     }, []);
 
+    /**
+     * adds new payment to firestore
+     * @param {array} newPayment - new payment to add
+     * @param {string} journalId - id of journal to add payment to (format: YYYY-MM)
+     */
     async function addNewPayment(newPayment, journalId) {
         const payment = [newPayment, ...activePayment];
         setActivePayment(payment);
@@ -30,6 +38,11 @@ function JournalProvider({ children }) {
         setSuccess('Der neue Beleg wurde erfolgreich gebucht!');
     }
 
+    /**
+     * updates payment in firestore
+     * @param {array} newPayment - edited payment
+     * @param {string} journalId - id of journal to add payment to (format: YYYY-MM)
+     */
     async function editPayment(newPayment, journalId) {
         const newPayments = activePayment.map((payment) => {
             if (payment.id === newPayment.id) {
@@ -43,12 +56,21 @@ function JournalProvider({ children }) {
         await loadJournals();
     }
 
+    /**
+     * adds edited payment to firestore (other month or year is selected)
+     * @param {array} newPayment - edited payment
+     * @param {string} journalId - id of journal to add payment to (format: YYYY-MM)
+     */
     async function addEditedPayment(newPayment, journalId) {
         const newPayments = [newPayment, ...newActivePayment];
         await addPaymentInFirestore(newPayments, journalId);
         await loadJournals();
     }
 
+    /**
+     * deletes payment from firestore
+     * @param {object} data - payment object from table row expansion
+     */
     async function deletePayment(data) {
         const newPayments = activePayment.filter((payment) => payment.id !== data.id);
         setActivePayment(newPayments);
@@ -56,6 +78,9 @@ function JournalProvider({ children }) {
         await loadJournals();
     }
 
+    /**
+     * sums payments by aggregate and category
+     */
     const sumPayments = useCallback(
         function sumPayments() {
             let sum = [];
@@ -85,10 +110,16 @@ function JournalProvider({ children }) {
         [activePayment]
     );
 
+    /**
+     * sums payments on activePayment change
+     */
     useEffect(() => {
         sumPayments();
     }, [activePayment, sumPayments]);
 
+    /**
+     * sets active journal and active payment on selected month or year change
+     */
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === `${selectedYear}-${selectedMonth}`);
         const filteredJournal = filteredJournals[0];
@@ -97,7 +128,7 @@ function JournalProvider({ children }) {
         setActivePayment(filteredJournal ? filteredJournal.payment : []);
         setTimeout(() => {
             setIsLoaded(true);
-        }, 500);
+        }, 1000);
     }, [journals, selectedYear, selectedMonth]);
 
     return (

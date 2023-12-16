@@ -8,6 +8,10 @@ export default function LoginForm() {
     const [password, setPassword] = useState('');
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+    /**
+     * handles login of user
+     * @param {event} e - event from form submit
+     */
     async function handleSubmit(e) {
         setIsLoggingIn(true);
         e.preventDefault();

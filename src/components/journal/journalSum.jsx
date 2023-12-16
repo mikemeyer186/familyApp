@@ -35,8 +35,12 @@ export default function JournalSum() {
 
     const sortedIncomeArray = incomeArray.length > 0 && incomeArray.sort((a, b) => a.category.localeCompare(b.category));
     const sortedFixedCostsArray = fixedCostsArray.length > 0 && fixedCostsArray.sort((a, b) => a.category.localeCompare(b.category));
-    const sortedVarCostsArray = varCostsArray.length > 0 && varCostsArray.sort((a, b) => a.aggregate.localeCompare(b.aggregate));
+    const sortedVarCostsArray = varCostsArray.length > 0 && varCostsArray.sort((a, b) => a.category.localeCompare(b.category));
 
+    /**
+     * template for income
+     * @returns html template for income
+     */
     function incomeTemplate() {
         return (
             <div className="accordion-header-sum">
@@ -51,6 +55,10 @@ export default function JournalSum() {
         );
     }
 
+    /**
+     * template for fixed costs
+     * @returns html template for fixed costs
+     */
     function fixedCostsTemplate() {
         return (
             <div className="accordion-header-sum">
@@ -65,6 +73,10 @@ export default function JournalSum() {
         );
     }
 
+    /**
+     * template for variable costs
+     * @returns html template for variable costs
+     */
     function varCostsTemplate() {
         return (
             <div className="accordion-header-sum">
@@ -79,6 +91,10 @@ export default function JournalSum() {
         );
     }
 
+    /**
+     * template for difference of costs (income - fixed costs - variable costs)
+     * @returns html template for difference of costs
+     */
     function diffCostsTemplate() {
         return (
             <div className="accordion-header-sum">

@@ -16,6 +16,10 @@ export default function JournalTable() {
     const dt = useRef(null);
     const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 
+    /**
+     * handle global filter change
+     * @param {event} e - event from filter change
+     */
     function onGlobalFilterChange(e) {
         const value = e.target.value;
         let filterValues = { ...filters };
@@ -25,10 +29,19 @@ export default function JournalTable() {
         setGlobalFilterValue(value);
     }
 
+    /**
+     * handle journal export as csv file
+     * @param {boolean} selectionOnly - false (all data should be exported)
+     */
     function exportCSV(selectionOnly) {
         dt.current.exportCSV({ selectionOnly });
     }
 
+    /**
+     * format payment data for table
+     * @param {array} payments - array of payments
+     * @returns
+     */
     function formatPaymentData(payments) {
         const formattedPayments = payments.map((payment) => {
             const formattedPayment = {
@@ -48,6 +61,11 @@ export default function JournalTable() {
         return formattedPayments;
     }
 
+    /**
+     * formats the date to locale string
+     * @param {string} value - date value as ISO string
+     * @returns
+     */
     function formatDate(value) {
         return new Date(value).toLocaleDateString('de-DE', {
             day: '2-digit',
@@ -56,11 +74,21 @@ export default function JournalTable() {
         });
     }
 
+    /**
+     * formats the amount to locale string and replaces dot with comma
+     * @param {number} amount - amount value
+     * @returns
+     */
     function formatCurrency(amount) {
         const formattedAmount = amount.toString().replace('.', ',');
         return formattedAmount;
     }
 
+    /**
+     * template for amount column in table
+     * @param {object} rowData - data of selected row in table
+     * @returns
+     */
     function amountBodyTemplate(rowData) {
         const amount = rowData.amount.toString().replace(',', '.');
         const amountNumber = parseFloat(amount);
@@ -74,6 +102,11 @@ export default function JournalTable() {
         }
     }
 
+    /**
+     * sets the expanded rows to null if there are expanded rows (closes expanded row)
+     * otherwise it sets the expanded rows to the selected row data (opens expanded row)
+     * @param {event} e - event from row click
+     */
     function onRowClickToggle(e) {
         if (expandedRows) {
             setExpandedRows(null);
@@ -82,10 +115,19 @@ export default function JournalTable() {
         }
     }
 
+    /**
+     * template for table header
+     * @returns html template for table header
+     */
     function tableHeader() {
         return <JournalTableHeader globalFilterValue={globalFilterValue} onGlobalFilterChange={onGlobalFilterChange} exportCSV={exportCSV} />;
     }
 
+    /**
+     * template for expanded row
+     * @param {object} data - data of selected row in table
+     * @returns
+     */
     function rowExpansionTemplate(data) {
         return <JournalTableExpansion data={data} setExpandedRows={setExpandedRows} />;
     }

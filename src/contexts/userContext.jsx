@@ -19,6 +19,11 @@ function UserPovider({ children }) {
     const [searchParams] = useSearchParams('');
     const navigate = useNavigate();
 
+    /**
+     * signs in user with email and password
+     * @param {string} email - email of user
+     * @param {string} password - password of user
+     */
     async function signInUser(email, password) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -32,6 +37,9 @@ function UserPovider({ children }) {
         }
     }
 
+    /**
+     * signs out user
+     */
     async function signOutUser() {
         try {
             await signOut(auth);
@@ -45,6 +53,11 @@ function UserPovider({ children }) {
         }
     }
 
+    /**
+     * updates user profile in firebase auth
+     * @param {string} displayName - display name of user
+     * @param {string} photoURL - photo url of user in firebase storage
+     */
     async function updateUserProfile(displayName, photoURL) {
         try {
             await updateProfile(auth.currentUser, {
@@ -57,6 +70,10 @@ function UserPovider({ children }) {
         }
     }
 
+    /**
+     * updates user email in firebase auth (not implemented yet)
+     * @param {string} email - email of user
+     */
     async function updateUserEmail(email) {
         try {
             console.log(email);
@@ -67,6 +84,9 @@ function UserPovider({ children }) {
         }
     }
 
+    /**
+     * checks if user is authenticated
+     */
     function authCheck() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -79,6 +99,9 @@ function UserPovider({ children }) {
         });
     }
 
+    /**
+     * sets active page and document title
+     */
     useEffect(() => {
         let params = searchParams.get('page');
         if (params === 'Dashboard') {

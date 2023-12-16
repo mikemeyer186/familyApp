@@ -8,6 +8,11 @@ export default function JournalToolbar() {
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
 
+    /**
+     * handles change of the month
+     * sets slected month to number of month with leading zero
+     * @param {string} month - month from dropdown
+     */
     function handleChangeMonth(month) {
         month = months.indexOf(month) + 1;
         if (month < 10) {

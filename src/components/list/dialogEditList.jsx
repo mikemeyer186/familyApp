@@ -5,6 +5,10 @@ export default function DialogEditList({ listID, listTitle, setListTitle }) {
     const { renameList } = useList();
     const [newTitle, setNewTitle] = useState(listTitle);
 
+    /**
+     * handles renaming of list
+     * @param {event} e - event from form submit
+     */
     function handleRenameList(e) {
         e.preventDefault();
         setListTitle(newTitle);

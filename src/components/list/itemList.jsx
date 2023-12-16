@@ -15,6 +15,11 @@ export default function ItemList({ list }) {
     const sortCategories = ['Datum', 'Kategorie', 'Erledigt', 'Priorität'];
     let sortedItems;
 
+    /**
+     * adds new item to list
+     * @param {string} title - title of new item
+     * @param {string} category - category of new item
+     */
     function addItem(title, category) {
         setListItems((currentListItems) => {
             const list = [
@@ -35,6 +40,13 @@ export default function ItemList({ list }) {
         });
     }
 
+    /**
+     * updates item in list (done, amount, priority)
+     * @param {string} itemId - id of item to update
+     * @param {boolean} done - done state of item
+     * @param {number} amount - amount of item
+     * @param {boolean} priority - priority state of item
+     */
     function updateItem(itemId, done, amount, priority) {
         setListItems((currentListItems) => {
             const list = currentListItems.map((item) => {
@@ -48,6 +60,10 @@ export default function ItemList({ list }) {
         });
     }
 
+    /**
+     * deletes item from list
+     * @param {string} itemId - id of item to delete
+     */
     function deleteItem(itemId) {
         setListItems((currentListItems) => {
             const list = currentListItems.filter((item) => item.id !== itemId);
@@ -56,10 +72,17 @@ export default function ItemList({ list }) {
         });
     }
 
+    /**
+     * handles sorting of list items
+     * @param {string} category - category to sort by (date, category, done, priority)
+     */
     function handleSorting(category) {
         setSortBy(category);
     }
 
+    /**
+     * sets list items and title from list context when list changes
+     */
     useEffect(() => {
         setListItems(list.list);
         setListTitle(list.title);

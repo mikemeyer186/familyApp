@@ -14,10 +14,18 @@ export default function ListPage() {
     const sortCategories = ['Datum', 'Alphabet'];
     let sortedLists;
 
+    /**
+     * handle sorting of lists
+     * @param {string} category - category to sort by (date or alphabet)
+     */
     function handleSorting(category) {
         setSortBy(category);
     }
 
+    /**
+     * get lists from database
+     * set isLoaded to true when lists are loaded
+     */
     useEffect(() => {
         getLists().then(() => {
             setIsLoaded(true);
@@ -28,6 +36,9 @@ export default function ListPage() {
         };
     }, [getLists]);
 
+    /**
+     * observable for lists from firebase
+     */
     useEffect(() => {
         const q = query(collection(db, 'lists'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

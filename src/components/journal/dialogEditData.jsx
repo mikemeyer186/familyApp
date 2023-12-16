@@ -27,6 +27,10 @@ export default function DialogEditData({ data, setExpandedRows }) {
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
 
+    /**
+     * returns editedPayment as an object
+     * @returns {object} - editedPayment
+     */
     function changedPayment() {
         return {
             year: selectedYear,
@@ -42,11 +46,20 @@ export default function DialogEditData({ data, setExpandedRows }) {
         };
     }
 
+    /**
+     * handles the submitting of the edited payment
+     * @param {event} e - default event
+     */
     function handleEditData(e) {
         e.preventDefault();
         checkNewMonthOrYear();
     }
 
+    /**
+     * checks if the payment is moved to a new month or year
+     * if yes, the payment is added to the new month and deleted from the old month
+     * if no, the payment is edited in the current month
+     */
     function checkNewMonthOrYear() {
         const editedPayment = changedPayment();
 
@@ -62,12 +75,22 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setExpandedRows(null);
     }
 
+    /**
+     * handles the deleting of the payment
+     */
     function handleDeletePayment() {
         deletePayment(data);
         setExpandedRows(null);
         setSuccess('Der Beleg wurde erfolgreich gelöscht!');
     }
 
+    /**
+     * converts the amount to a floating number on save
+     * replaces the comma with a dot
+     * spends are converted to negative numbers
+     * @param {number} amount - amount of the payment
+     * @returns
+     */
     function convertAmountOnSave(amount) {
         let convertedAmount = parseFloat(amount.replace(',', '.'));
         if (selectedFlow === 'Ausgabe') {
@@ -76,15 +99,28 @@ export default function DialogEditData({ data, setExpandedRows }) {
         return convertedAmount;
     }
 
+    /**
+     * converts the amount to a string without a minus on load
+     * @param {number} amount - amount of the payment
+     * @returns
+     */
     function convertAmountOnLoad(amount) {
         let convertedAmount = amount.replace('-', '');
         return convertedAmount;
     }
 
+    /**
+     * handles the selection of the year
+     * @param {string} year - selected year in the form
+     */
     function handleYearSelection(year) {
         setSelectedYear(year);
     }
 
+    /**
+     * handles the selection of the month and sets the new journal id
+     * @param {string} monthName - selected month in the form
+     */
     function handleMonthSelection(monthName) {
         let month = months.indexOf(monthName) + 1;
         if (month < 10) {
@@ -95,16 +131,28 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setSelectedMonth(month);
     }
 
+    /**
+     * handles the selection of the flow
+     * @param {string} flow - cash flow of the payment in the form
+     */
     function handleFlowSelection(flow) {
         setSelectedFlow(flow);
         setSelectedCategory('Auswählen...');
     }
 
+    /**
+     * handles the selection of the categorie
+     * @param {string} categorie - selected categorie in the form
+     * @param {string} aggregate - selected aggregate in the form
+     */
     function handleCategorieSelection(categorie, aggregate) {
         setSelectedCategory(categorie);
         setSelectedAggregate(aggregate);
     }
 
+    /**
+     * sets the new journal id on month or year change
+     */
     useEffect(() => {
         let month = months.indexOf(convertedMonth) + 1;
         if (month < 10) {
@@ -114,6 +162,9 @@ export default function DialogEditData({ data, setExpandedRows }) {
         setNewJournalId(`${year}-${month}`);
     }, [selectedYear, convertedMonth]);
 
+    /**
+     * sets the active payment on initial laoding of the modal
+     */
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
         if (filteredJournals.length > 0) {
@@ -124,6 +175,9 @@ export default function DialogEditData({ data, setExpandedRows }) {
         }
     }, [activeJournal, journals, setActivePayment]);
 
+    /**
+     * sets the new active payment on changing the month or year (to transfer the payment to the new month)
+     */
     useEffect(() => {
         const filteredJournals = journals.filter((journal) => journal.id === newJournalId);
         if (filteredJournals.length > 0) {

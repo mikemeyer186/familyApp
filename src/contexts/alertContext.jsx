@@ -7,6 +7,9 @@ function AlertProvider({ children }) {
     const [success, setSuccess] = useState('');
     const [slideOut, setSlideOut] = useState('');
 
+    /**
+     * sets timeout for slide out animation
+     */
     useEffect(() => {
         const alertTime = setTimeout(() => {
             setSlideOut('slideOut-alert');

@@ -19,7 +19,7 @@ export default function JournalPage() {
     }, [loadJournals]);
 
     /**
-     * listens to changes in firestore and updates the journals
+     * observable for journals from firebase
      */
     useEffect(() => {
         const q = query(collection(db, 'journal'));

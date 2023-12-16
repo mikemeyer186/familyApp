@@ -12,21 +12,33 @@ export default function Item({ item, updateItem, deleteItem }) {
         minute: '2-digit',
     });
 
+    /**
+     * handles increase of amount of item
+     */
     function handleIncreaseAmount() {
         updateItem(item.id, item.done, item.amount + 1, item.priority);
     }
 
+    /**
+     * handles decrease of amount of item
+     */
     function handleDecreaseAmount() {
         if (item.amount >= 2) {
             updateItem(item.id, item.done, item.amount - 1, item.priority);
         }
     }
 
+    /**
+     * handles change of priority of item
+     */
     function handlePriorityChange() {
         item.priority = !item.priority;
         updateItem(item.id, item.done, item.amount, item.priority);
     }
 
+    /**
+     * initializes popover for info icon
+     */
     useEffect(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         [...popoverTriggerList].map((popoverTriggerEl) => new Popover(popoverTriggerEl));

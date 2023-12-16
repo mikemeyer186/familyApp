@@ -7,6 +7,11 @@ export default function NewItemForm({ addItem }) {
     const [isMobile, setIsMobile] = useState(false);
     const defaultCategories = listCategories;
 
+    /**
+     * handles adding of new item
+     * @param {event} event - event from form submit
+     * @returns
+     */
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -18,10 +23,17 @@ export default function NewItemForm({ addItem }) {
         }
     }
 
+    /**
+     * handles selection of category
+     * @param {string} category - category to select
+     */
     function handleCategorySelection(category) {
         setSelectedCategory(category);
     }
 
+    /**
+     * checks if window size is mobile on page load
+     */
     useEffect(() => {
         if (window.innerWidth > 480) {
             setIsMobile(false);
@@ -32,6 +44,9 @@ export default function NewItemForm({ addItem }) {
         }
     }, []);
 
+    /**
+     * checks if window size is mobile on window resize
+     */
     useEffect(() => {
         const sizeListener = window.addEventListener('resize', () => {
             if (window.innerWidth > 480) {

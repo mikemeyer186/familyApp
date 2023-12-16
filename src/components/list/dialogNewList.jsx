@@ -5,6 +5,10 @@ export default function DialogNewList() {
     const { addNewList } = useList();
     const [title, setTitle] = useState('');
 
+    /**
+     * handles adding of new list
+     * @param {event} e - event from form submit
+     */
     function handleAddNewList(e) {
         e.preventDefault();
         addNewList(title);

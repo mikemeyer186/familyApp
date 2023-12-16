@@ -139,13 +139,17 @@ export default function DialogNewMeeting() {
      * resets form
      */
     function handleReset() {
-        setTitle('');
-        setStartDate(new Date().toISOString().split('T')[0]);
-        setEndDate(new Date().toISOString().split('T')[0]);
-        setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-        setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-        setInfo('');
-        setTimeSlotClicked(false);
+        setTimeout(() => {
+            setTitle('');
+            setStartDate(new Date().toISOString().split('T')[0]);
+            setEndDate(new Date().toISOString().split('T')[0]);
+            setStartTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setEndTime(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+            setInfo('');
+            setAllDayYes(false);
+            setAllDayNo(true);
+            setTimeSlotClicked(false);
+        }, 300);
     }
 
     /**
