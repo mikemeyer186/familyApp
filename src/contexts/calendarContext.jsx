@@ -192,6 +192,12 @@ function CalendarProvider({ children }) {
         setTimeSlotClicked(true);
     }, []);
 
+    const getDrilldownView = useCallback((targetDate, currentViewName, configuredViewNames) => {
+        if (currentViewName === 'month' && configuredViewNames.includes('agenda')) return 'agenda';
+
+        return null;
+    }, []);
+
     return (
         <CalendarContext.Provider
             value={{
@@ -211,6 +217,7 @@ function CalendarProvider({ children }) {
                 setSelectedEvent,
                 onSelectTimeSlot,
                 setTimeSlotClicked,
+                getDrilldownView,
             }}
         >
             {children}

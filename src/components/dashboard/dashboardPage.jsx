@@ -13,7 +13,7 @@ export default function DashboardPage() {
         <>
             <div className="dashboardPage-wrapper">
                 <div className="dashboard-tile">
-                    <p className="motivation-text">{motivationSentences[yearDay]}</p>
+                    <p className="motivation-text">&quot;{motivationSentences[yearDay]}&quot;</p>
                 </div>
             </div>
         </>
