@@ -218,15 +218,21 @@
                 border: none;
             }
 
+            .td-info {
+                width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
             .journal-table-edit {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100%;
 
                 .journal-table-edit-icon {
-                    width: 20px;
-                    height: 20px;
+                    width: 25px;
+                    height: 25px;
                     color: $txt-dark;
                     opacity: 0.4;
                 }

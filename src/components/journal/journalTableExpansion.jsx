@@ -22,7 +22,9 @@ export default function JournalTableExpansion({ data, setExpandedRows }) {
                 <tbody>
                     <tr>
                         <td className="td-left">{data.user}</td>
-                        <td>{data.info}</td>
+                        <td>
+                            <div className="td-info">{data.info}</div>
+                        </td>
                         <td className="journal-table-edit td-right">
                             <img
                                 src="/assets/icons/pencil-fill-black.svg"
