@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
 
 export default function DialogEditMeeting() {
-    const { activeUser } = useUser();
     const { selectedEvent, editMeeting, deleteMeeting } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
@@ -33,8 +31,8 @@ export default function DialogEditMeeting() {
                 info: info,
                 color: color,
                 id: selectedEvent.data.id,
-                user: activeUser.displayName,
-                creation: new Date().toISOString(),
+                user: selectedEvent.data.user,
+                creation: selectedEvent.data.creation,
                 public: false,
             },
         };

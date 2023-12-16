@@ -40,6 +40,7 @@ export default function DialogNewMeeting() {
             },
         };
         addNewMeeting(newMeeting);
+        handleReset();
     }
 
     /**
@@ -137,7 +138,7 @@ export default function DialogNewMeeting() {
     /**
      * resets form
      */
-    function handleAbort() {
+    function handleReset() {
         setTitle('');
         setStartDate(new Date().toISOString().split('T')[0]);
         setEndDate(new Date().toISOString().split('T')[0]);
@@ -366,7 +367,7 @@ export default function DialogNewMeeting() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleReset}>
                                     Abbrechen
                                 </button>
                                 <button

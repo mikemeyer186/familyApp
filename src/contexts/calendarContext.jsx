@@ -63,6 +63,8 @@ function CalendarProvider({ children }) {
                     color: color,
                     id: rawEvent.id,
                     info: 'von OpenHolidays API',
+                    user: 'system',
+                    creation: new Date().toISOString(),
                     public: true,
                 },
             };
@@ -150,7 +152,6 @@ function CalendarProvider({ children }) {
             return firestoreEvent.data.id !== editedMeeting.data.id;
         });
         const newFirestoreEvents = [...filteredFirestoreEvents, editedMeeting];
-        console.log(filteredEvents);
         setEvents(filteredEvents);
         setFirestoreEvents(newFirestoreEvents);
         await addEventInFirestore(newFirestoreEvents);
