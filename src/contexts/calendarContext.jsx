@@ -240,4 +240,4 @@ function useCalendar() {
     return context;
 }
 
-export { CalendarProvider, useCalendar };
+export { CalendarProvider, useCalendar }; // eslint-disable-line

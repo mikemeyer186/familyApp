@@ -42,4 +42,4 @@ function useAlert() {
     return context;
 }
 
-export { AlertProvider, useAlert };
+export { AlertProvider, useAlert }; //eslint-disable-line
