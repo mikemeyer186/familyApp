@@ -10,15 +10,15 @@ import DialogNewMeeting from './dialogNewMeeting';
 import DialogEditMeeting from './dialogEditMeeting';
 
 export default function CalendarPage() {
-    const { isLoaded, events, loadEvents, onSelectEvent, onSelectTimeSlot, getDrilldownView } = useCalendar();
+    const { isLoaded, events, loadEvents, onSelectEvent, onSelectTimeSlot, getDrilldownView, loadPublicEvents } = useCalendar();
     const { localizer, messages, formats, components, min, max } = CalendarConfig();
 
     /**
-     * loads all events for the calendar on first render
+     * loads public events for the calendar on first render
      */
     useEffect(() => {
-        loadEvents();
-    }, [loadEvents]);
+        loadPublicEvents();
+    }, [loadPublicEvents]);
 
     /**
      * observable for events from firebase

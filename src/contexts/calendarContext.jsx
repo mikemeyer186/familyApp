@@ -7,6 +7,8 @@ const CalendarContext = createContext();
 function CalendarProvider({ children }) {
     const { setSuccess } = useAlert();
     const [events, setEvents] = useState([]);
+    const [schoolHolidays, setSchoolHolidays] = useState([]);
+    const [publicHolidays, setPublicHolidays] = useState([]);
     const [firestoreEvents, setFirestoreEvents] = useState([]);
     const [isLoaded, setIsloaded] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -50,7 +52,7 @@ function CalendarProvider({ children }) {
     );
 
     /**
-     * converts holidays from API to events for the calendar
+     * converts school holidays and public holidays from state to events for the calendar
      */
     const convertRawEvents = useCallback(async function convertRawEvents(rawEvents, color) {
         rawEvents.map((rawEvent) => {
@@ -91,16 +93,17 @@ function CalendarProvider({ children }) {
     }, []);
 
     /**
-     * loads school holidays and public holidays from API and converts them to events for the calendar
+     * initial laoding on first render
+     * loads school holidays and public holidays from API and sets them as state
      */
     const loadPublicEvents = useCallback(
         async function loadPublicEvents() {
             const rawSchoolHolidays = await fetchSchoolHolidaysFromAPI();
             const rawPublicHolidays = await fetchPublicHolidaysFromAPI();
-            await convertRawEvents(rawSchoolHolidays, schoolHolidayColor);
-            await convertRawEvents(rawPublicHolidays, publicHolidayColor);
+            setSchoolHolidays(rawSchoolHolidays);
+            setPublicHolidays(rawPublicHolidays);
         },
-        [convertRawEvents, fetchPublicHolidaysFromAPI, fetchSchoolHolidaysFromAPI]
+        [fetchPublicHolidaysFromAPI, fetchSchoolHolidaysFromAPI]
     );
 
     /**
@@ -121,11 +124,12 @@ function CalendarProvider({ children }) {
         async function loadEvents() {
             setEvents([]);
             setFirestoreEvents([]);
-            await loadPublicEvents();
+            await convertRawEvents(schoolHolidays, schoolHolidayColor);
+            await convertRawEvents(publicHolidays, publicHolidayColor);
             await loadFirestoreEvents();
             setIsloaded(true);
         },
-        [loadPublicEvents, loadFirestoreEvents]
+        [loadFirestoreEvents, convertRawEvents, schoolHolidays, publicHolidays]
     );
 
     /**
@@ -136,7 +140,6 @@ function CalendarProvider({ children }) {
         const newFirestoreEvents = [...firestoreEvents, newMeeting];
         setFirestoreEvents(newFirestoreEvents);
         await addEventInFirestore(newFirestoreEvents);
-        await loadEvents();
         setSuccess('Der Termin wurde erfolgreich eingetragen!');
     }
 
@@ -155,7 +158,6 @@ function CalendarProvider({ children }) {
         setEvents(filteredEvents);
         setFirestoreEvents(newFirestoreEvents);
         await addEventInFirestore(newFirestoreEvents);
-        await loadEvents();
         setSuccess('Der Termin wurde erfolgreich geändert!');
     }
 
@@ -173,7 +175,6 @@ function CalendarProvider({ children }) {
         setEvents(filteredEvents);
         setFirestoreEvents(filteredFirestoreEvents);
         await addEventInFirestore(filteredFirestoreEvents);
-        await loadEvents();
         setSuccess('Der Termin wurde erfolgreich gelöscht!');
     }
 
@@ -213,6 +214,7 @@ function CalendarProvider({ children }) {
                 selectedTimeSlot: selectedTimeSlot,
                 timeSlotClicked: timeSlotClicked,
                 loadEvents,
+                loadPublicEvents,
                 setEvents,
                 setFirestoreEvents,
                 addNewMeeting,
