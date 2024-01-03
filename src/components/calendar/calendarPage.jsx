@@ -8,6 +8,7 @@ import Spinner from '../global/spinner';
 import CalendarPageToolbar from './calendarPageToolbar';
 import DialogNewMeeting from './dialogNewMeeting';
 import DialogEditMeeting from './dialogEditMeeting';
+import DialogDeleteMeeting from './dialogDeleteMeeting';
 
 export default function CalendarPage() {
     const { isLoaded, events, loadEvents, onSelectEvent, onSelectTimeSlot, getDrilldownView, loadPublicEvents } = useCalendar();
@@ -39,6 +40,7 @@ export default function CalendarPage() {
         <>
             <DialogNewMeeting />
             <DialogEditMeeting />
+            <DialogDeleteMeeting />
 
             <div className="calendarPage-wrapper">
                 <div className="calendarToolbar">
@@ -65,7 +67,7 @@ export default function CalendarPage() {
                         dayLayoutAlgorithm={'no-overlap'}
                         showAllEvents={false}
                         getDrilldownView={getDrilldownView}
-                        longPressThreshold={10}
+                        longPressThreshold={100}
                         onSelectEvent={onSelectEvent}
                         onSelectSlot={onSelectTimeSlot}
                         selectable

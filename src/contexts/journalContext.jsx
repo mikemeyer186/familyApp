@@ -14,7 +14,7 @@ function JournalProvider({ children }) {
     const [sumOfPayments, setSumOfPayments] = useState([]);
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
+    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
     const [isLoaded, setIsLoaded] = useState(false);
 
     /**

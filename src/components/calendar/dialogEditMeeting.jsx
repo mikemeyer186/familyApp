@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 
 export default function DialogEditMeeting() {
-    const { selectedEvent, editMeeting, deleteMeeting } = useCalendar();
+    const { selectedEvent, editMeeting } = useCalendar();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -37,13 +37,6 @@ export default function DialogEditMeeting() {
             },
         };
         editMeeting(editedMeeting);
-    }
-
-    /**
-     * deletes meeting from calendar
-     */
-    function handleDeleteMeeting() {
-        deleteMeeting(selectedEvent.data.id);
     }
 
     /**
@@ -342,7 +335,13 @@ export default function DialogEditMeeting() {
 
                             {!publicEvent && (
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeleteMeeting}>
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger"
+                                        data-bs-dismiss="modal"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteMeetingModal"
+                                    >
                                         Löschen
                                     </button>
                                     <button

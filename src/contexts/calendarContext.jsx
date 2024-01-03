@@ -14,6 +14,7 @@ function CalendarProvider({ children }) {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [timeSlotClicked, setTimeSlotClicked] = useState(false);
+    const [meetingID, setMeetingID] = useState('');
     const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL;
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL;
     const schoolHolidayColor = '#a3dda3';
@@ -184,6 +185,7 @@ function CalendarProvider({ children }) {
      */
     const onSelectEvent = useCallback((calEvent) => {
         setSelectedEvent(calEvent);
+        setMeetingID(calEvent.data.id);
     }, []);
 
     /**
@@ -213,6 +215,7 @@ function CalendarProvider({ children }) {
                 selectedEvent: selectedEvent,
                 selectedTimeSlot: selectedTimeSlot,
                 timeSlotClicked: timeSlotClicked,
+                meetingID: meetingID,
                 loadEvents,
                 loadPublicEvents,
                 setEvents,
@@ -225,6 +228,7 @@ function CalendarProvider({ children }) {
                 onSelectTimeSlot,
                 setTimeSlotClicked,
                 getDrilldownView,
+                setMeetingID,
             }}
         >
             {children}
