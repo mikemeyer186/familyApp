@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
+import { useDialog } from '../../contexts/dialogContext';
 
 export default function DialogEditMeeting() {
     const { selectedEvent, editMeeting } = useCalendar();
+    const { dialogs, openDialog, closeDialog } = useDialog();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -37,6 +39,15 @@ export default function DialogEditMeeting() {
             },
         };
         editMeeting(editedMeeting);
+        closeDialog('calendarEditRef');
+    }
+
+    /**
+     * opens delete dialog
+     */
+    function handleDialogDelete() {
+        closeDialog('calendarEditRef');
+        openDialog('calendarDeleteRef');
     }
 
     /**
@@ -165,7 +176,7 @@ export default function DialogEditMeeting() {
     }, [selectedEvent]);
 
     return (
-        <div className="modal fade" id="editMeetingModal" tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="calendarEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.calendarEditRef}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -335,20 +346,14 @@ export default function DialogEditMeeting() {
 
                             {!publicEvent && (
                                 <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-danger"
-                                        data-bs-dismiss="modal"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteMeetingModal"
-                                    >
+                                    <button type="button" className="btn btn-danger" onClick={handleDialogDelete} data-bs-dismiss="modal">
                                         Löschen
                                     </button>
                                     <button
                                         type="submit"
                                         className="btn btn-primary"
-                                        data-bs-dismiss="modal"
                                         disabled={title === '' || errorDate || errorTime}
+                                        data-bs-dismiss="modal"
                                     >
                                         Ändern
                                     </button>

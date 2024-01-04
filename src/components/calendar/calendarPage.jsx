@@ -6,9 +6,6 @@ import { collection, onSnapshot, query } from 'firebase/firestore';
 import CalendarConfig from '../../config/rbc';
 import Spinner from '../global/spinner';
 import CalendarPageToolbar from './calendarPageToolbar';
-import DialogNewMeeting from './dialogNewMeeting';
-import DialogEditMeeting from './dialogEditMeeting';
-import DialogDeleteMeeting from './dialogDeleteMeeting';
 
 export default function CalendarPage() {
     const { isLoaded, events, loadEvents, onSelectEvent, onSelectTimeSlot, getDrilldownView, loadPublicEvents } = useCalendar();
@@ -38,10 +35,6 @@ export default function CalendarPage() {
 
     return (
         <>
-            <DialogNewMeeting />
-            <DialogEditMeeting />
-            <DialogDeleteMeeting />
-
             <div className="calendarPage-wrapper">
                 <div className="calendarToolbar">
                     <CalendarPageToolbar />

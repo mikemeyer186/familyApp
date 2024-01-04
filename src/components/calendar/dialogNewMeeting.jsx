@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
 import { Modal } from 'bootstrap';
+import { useDialog } from '../../contexts/dialogContext';
 
 export default function DialogNewMeeting() {
     const { activeUser } = useUser();
     const { timeSlotClicked, selectedTimeSlot, addNewMeeting, setTimeSlotClicked } = useCalendar();
+    const { dialogs, closeDialog } = useDialog();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -17,7 +19,6 @@ export default function DialogNewMeeting() {
     const [color, setColor] = useState('#6584e2');
     const [errorDate, setErrorDate] = useState(false);
     const [errorTime, setErrorTime] = useState(false);
-    const dialogRef = useRef(document.getElementById('newMeetingModal'));
 
     /**
      * adds new meeting to calendar with data from form
@@ -40,6 +41,7 @@ export default function DialogNewMeeting() {
             },
         };
         addNewMeeting(newMeeting);
+        closeDialog('calendarNewRef');
         handleReset();
     }
 
@@ -201,17 +203,17 @@ export default function DialogNewMeeting() {
      */
     useEffect(() => {
         if (timeSlotClicked) {
-            const newMeetingModal = new Modal(dialogRef.current);
+            const newMeetingModal = new Modal(dialogs.calendarNewRef.current);
             setTimeEventOnClick();
             if (selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) === '00:00') {
                 setAllDayEventOnClick();
             }
             newMeetingModal.show();
         }
-    }, [selectedTimeSlot, timeSlotClicked, setAllDayEventOnClick, setTimeEventOnClick]);
+    }, [dialogs.calendarNewRef, selectedTimeSlot, timeSlotClicked, setAllDayEventOnClick, setTimeEventOnClick]);
 
     return (
-        <div ref={dialogRef} className="modal fade" id="newMeetingModal" tabIndex="-1" aria-hidden="true">
+        <div ref={dialogs.calendarNewRef} className="modal fade" id="calendarNewRef" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">

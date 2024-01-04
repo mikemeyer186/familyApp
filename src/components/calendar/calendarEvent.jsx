@@ -1,5 +1,9 @@
+import { useDialog } from '../../contexts/dialogContext';
+
 export default function CalendarEvent({ event }) {
+    const { openDialog } = useDialog();
     const color = event.data.color;
+
     return (
         <div
             className="rbc-event"
@@ -10,8 +14,7 @@ export default function CalendarEvent({ event }) {
                 width: '100%',
                 padding: '2px',
             }}
-            data-bs-toggle="modal"
-            data-bs-target="#editMeetingModal"
+            onClick={() => openDialog('calendarEditRef')}
         >
             <div className="rbc-event-content">{event.title}</div>
         </div>

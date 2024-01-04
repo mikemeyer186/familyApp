@@ -12,6 +12,7 @@ import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
 import LazySpinner from './components/global/lazySpinner';
+import { DialogProvider } from './contexts/dialogContext';
 
 const AppLayout = lazy(() => import('./components/main/appLayout'));
 const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));
@@ -47,13 +48,15 @@ export default function App() {
                             path="app"
                             element={
                                 <ProtectedRoute>
-                                    <ListProvider>
-                                        <JournalProvider>
-                                            <CalendarProvider>
-                                                <AppLayout />
-                                            </CalendarProvider>
-                                        </JournalProvider>
-                                    </ListProvider>
+                                    <DialogProvider>
+                                        <ListProvider>
+                                            <JournalProvider>
+                                                <CalendarProvider>
+                                                    <AppLayout />
+                                                </CalendarProvider>
+                                            </JournalProvider>
+                                        </ListProvider>
+                                    </DialogProvider>
                                 </ProtectedRoute>
                             }
                         >

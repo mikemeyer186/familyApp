@@ -1,17 +1,20 @@
 import { useCalendar } from '../../contexts/calendarContext';
+import { useDialog } from '../../contexts/dialogContext';
 
 export default function DialogDeleteMeeting() {
     const { meetingID, deleteMeeting } = useCalendar();
+    const { dialogs, closeDialog } = useDialog();
 
     /**
      * deletes meeting from calendar
      */
     function handleDeleteMeeting() {
         deleteMeeting(meetingID);
+        closeDialog('calendarDeleteRef');
     }
 
     return (
-        <div className="modal fade" id="deleteMeetingModal" tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="calendarDeleteRef" tabIndex="-1" aria-hidden="true" ref={dialogs.calendarDeleteRef}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
