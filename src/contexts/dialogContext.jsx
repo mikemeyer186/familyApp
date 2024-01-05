@@ -7,12 +7,14 @@ function DialogProvider({ children }) {
     const calendarDeleteRef = useRef();
     const calendarEditRef = useRef();
     const calendarNewRef = useRef();
+    const journalNewRef = useRef();
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
         () => ({
             calendarDeleteRef,
             calendarEditRef,
             calendarNewRef,
+            journalNewRef,
         }),
         []
     );

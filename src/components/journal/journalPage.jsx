@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useJournal } from '../../contexts/journalContext';
 import { db } from '../../config/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import DialogNewData from './dialogNewData';
 import JournalToolbar from './journalToolbar';
 import Spinner from '../global/spinner';
 import JournalTable from './journalTable';
@@ -35,8 +34,6 @@ export default function JournalPage() {
 
     return (
         <>
-            <DialogNewData />
-
             <div className="journalPage-wrapper">
                 <div className="journalToolbar">
                     <JournalToolbar />

@@ -1,9 +1,11 @@
 import { useJournal } from '../../contexts/journalContext';
+import { useDialog } from '../../contexts/dialogContext';
 import years from '../../data/years';
 import months from '../../data/months';
 
 export default function JournalToolbar() {
     const { selectedYear, selectedMonth, setSelectedYear, setSelectedMonth } = useJournal();
+    const { openDialog } = useDialog();
     const defaultYears = years;
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
@@ -23,7 +25,7 @@ export default function JournalToolbar() {
 
     return (
         <>
-            <button type="button" className="btn btn-secondary newData-button" data-bs-toggle="modal" data-bs-target="#newJournalData">
+            <button type="button" className="btn btn-secondary newData-button" onClick={() => openDialog('journalNewRef')}>
                 <span>Neuer Beleg</span>
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New data" />
             </button>

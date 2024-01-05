@@ -129,6 +129,7 @@ export default function JournalTable() {
      * @returns
      */
     function rowExpansionTemplate(data) {
+        console.log(data);
         return <JournalTableExpansion data={data} setExpandedRows={setExpandedRows} />;
     }
 

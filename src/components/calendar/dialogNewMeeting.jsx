@@ -44,6 +44,9 @@ export default function DialogNewMeeting() {
         handleReset();
     }
 
+    /**
+     * closes new meeting dialog
+     */
     function handleCloseDialog() {
         closeDialog('calendarNewRef');
     }

@@ -16,6 +16,7 @@ function JournalProvider({ children }) {
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
     const [isLoaded, setIsLoaded] = useState(false);
+    const [expansionData, setExpansionData] = useState({});
 
     /**
      * loads journals from firestore

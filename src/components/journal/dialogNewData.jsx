@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
+import { useDialog } from '../../contexts/dialogContext';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
@@ -10,6 +11,7 @@ import years from '../../data/years';
 export default function DialogNewData() {
     const { activeUser } = useUser();
     const { activePayment, selectedJournalId, selectedYear, selectedMonth, setSelectedYear, setSelectedMonth, addNewPayment } = useJournal();
+    const { dialogs, closeDialog } = useDialog();
     const [amount, setAmount] = useState('');
     const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('Auswählen...');
@@ -44,6 +46,11 @@ export default function DialogNewData() {
         );
         setAmount('');
         setInfo('');
+        handleCloseDialog();
+    }
+
+    function handleCloseDialog() {
+        closeDialog('journalNewRef');
     }
 
     /**
@@ -68,6 +75,7 @@ export default function DialogNewData() {
     function handleAbort() {
         setAmount('');
         setInfo('');
+        handleCloseDialog();
     }
 
     /**
@@ -110,12 +118,12 @@ export default function DialogNewData() {
     }
 
     return (
-        <div className="modal fade" id="newJournalData" tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="journalNewRef" tabIndex="-1" aria-hidden="true" ref={dialogs.journalNewRef}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Neuen Beleg eingeben</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleAddNewData}>
@@ -267,7 +275,7 @@ export default function DialogNewData() {
                                 <div className="badge text-bg-light">{activePayment ? activePayment.length : 0}</div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleAbort}>
+                                <button type="button" className="btn btn-secondary" onClick={handleAbort}>
                                     Abbrechen
                                 </button>
                                 <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
