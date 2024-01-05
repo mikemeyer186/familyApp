@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useCalendar } from '../../contexts/calendarContext';
-import { Modal } from 'bootstrap';
 import { useDialog } from '../../contexts/dialogContext';
 
 export default function DialogNewMeeting() {
     const { activeUser } = useUser();
     const { timeSlotClicked, selectedTimeSlot, addNewMeeting, setTimeSlotClicked } = useCalendar();
-    const { dialogs, closeDialog } = useDialog();
+    const { dialogs, openDialog, closeDialog } = useDialog();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -41,8 +40,12 @@ export default function DialogNewMeeting() {
             },
         };
         addNewMeeting(newMeeting);
-        closeDialog('calendarNewRef');
+        handleCloseDialog();
         handleReset();
+    }
+
+    function handleCloseDialog() {
+        closeDialog('calendarNewRef');
     }
 
     /**
@@ -152,6 +155,7 @@ export default function DialogNewMeeting() {
             setAllDayNo(true);
             setTimeSlotClicked(false);
         }, 300);
+        handleCloseDialog();
     }
 
     /**
@@ -203,14 +207,13 @@ export default function DialogNewMeeting() {
      */
     useEffect(() => {
         if (timeSlotClicked) {
-            const newMeetingModal = new Modal(dialogs.calendarNewRef.current);
             setTimeEventOnClick();
             if (selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) === '00:00') {
                 setAllDayEventOnClick();
             }
-            newMeetingModal.show();
+            openDialog('calendarNewRef');
         }
-    }, [dialogs.calendarNewRef, selectedTimeSlot, timeSlotClicked, setAllDayEventOnClick, setTimeEventOnClick]);
+    }, [selectedTimeSlot, timeSlotClicked, setAllDayEventOnClick, setTimeEventOnClick, openDialog]);
 
     return (
         <div ref={dialogs.calendarNewRef} className="modal fade" id="calendarNewRef" tabIndex="-1" aria-hidden="true">
@@ -218,7 +221,7 @@ export default function DialogNewMeeting() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Neuen Termin eintragen</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleNewMeeting}>
@@ -373,15 +376,10 @@ export default function DialogNewMeeting() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleReset}>
+                                <button type="button" className="btn btn-secondary" onClick={handleReset}>
                                     Abbrechen
                                 </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    data-bs-dismiss="modal"
-                                    disabled={title === '' || errorDate || errorTime}
-                                >
+                                <button type="submit" className="btn btn-primary" disabled={title === '' || errorDate || errorTime}>
                                     Eintragen
                                 </button>
                             </div>

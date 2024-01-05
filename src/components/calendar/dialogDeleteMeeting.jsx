@@ -10,6 +10,13 @@ export default function DialogDeleteMeeting() {
      */
     function handleDeleteMeeting() {
         deleteMeeting(meetingID);
+        handleCloseDialog();
+    }
+
+    /**
+     * closes dialog
+     */
+    function handleCloseDialog() {
         closeDialog('calendarDeleteRef');
     }
 
@@ -19,14 +26,14 @@ export default function DialogDeleteMeeting() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Termin löschen</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">Möchtest du den Termin wirklich löschen?</div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                             Abbrechen
                         </button>
-                        <button type="button" className="btn btn-danger" onClick={handleDeleteMeeting} data-bs-dismiss="modal">
+                        <button type="button" className="btn btn-danger" onClick={handleDeleteMeeting}>
                             Termin löschen
                         </button>
                     </div>

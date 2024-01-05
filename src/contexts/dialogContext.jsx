@@ -1,33 +1,50 @@
 import { Modal } from 'bootstrap';
-import { createContext, useContext, useRef } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 
 const DialogContext = createContext();
 
 function DialogProvider({ children }) {
-    const dialogs = {
-        calendarDeleteRef: useRef(),
-        calendarEditRef: useRef(),
-        calendarNewRef: useRef(),
-    };
+    const calendarDeleteRef = useRef();
+    const calendarEditRef = useRef();
+    const calendarNewRef = useRef();
+    const modals = useMemo(() => ({}), []);
+    const dialogs = useMemo(
+        () => ({
+            calendarDeleteRef,
+            calendarEditRef,
+            calendarNewRef,
+        }),
+        []
+    );
 
     /**
-     * opens dialog
+     * opens modal
      * @param {string} dialogRef - reference to dialog
      */
     const openDialog = (dialogRef) => {
-        const dialog = new Modal(dialogs[dialogRef].current);
+        const dialog = modals[dialogRef];
         dialog.show();
     };
 
     /**
-     * closes dialog
+     * closes modal
      * @param {string} dialogRef - reference to dialog
      */
     const closeDialog = (dialogRef) => {
-        const dialog = new Modal(dialogs[dialogRef].current);
+        const dialog = modals[dialogRef];
         dialog.hide();
-        dialog.dispose();
     };
+
+    /**
+     * creates modals for dialogs
+     * one instance of each dialog is needed for showing and hiding
+     */
+    useEffect(() => {
+        Object.keys(dialogs).forEach((dialog) => {
+            modals[dialog] = new Modal(dialogs[dialog].current);
+        });
+        console.log(modals);
+    }, [dialogs, modals]);
 
     return <DialogContext.Provider value={{ dialogs: dialogs, openDialog, closeDialog }}>{children}</DialogContext.Provider>;
 }

@@ -39,15 +39,22 @@ export default function DialogEditMeeting() {
             },
         };
         editMeeting(editedMeeting);
-        closeDialog('calendarEditRef');
+        handleCloseDialog();
     }
 
     /**
      * opens delete dialog
      */
     function handleDialogDelete() {
-        closeDialog('calendarEditRef');
+        handleCloseDialog();
         openDialog('calendarDeleteRef');
+    }
+
+    /**
+     * closes edit dialog
+     */
+    function handleCloseDialog() {
+        closeDialog('calendarEditRef');
     }
 
     /**
@@ -181,7 +188,7 @@ export default function DialogEditMeeting() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Termin ändern</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleEditMeeting}>
@@ -346,14 +353,14 @@ export default function DialogEditMeeting() {
 
                             {!publicEvent && (
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-danger" onClick={handleDialogDelete} data-bs-dismiss="modal">
+                                    <button type="button" className="btn btn-danger" onClick={handleDialogDelete}>
                                         Löschen
                                     </button>
                                     <button
                                         type="submit"
                                         className="btn btn-primary"
                                         disabled={title === '' || errorDate || errorTime}
-                                        data-bs-dismiss="modal"
+                                        onClick={handleCloseDialog}
                                     >
                                         Ändern
                                     </button>
