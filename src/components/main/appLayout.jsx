@@ -4,6 +4,7 @@ import DialogDeleteMeeting from '../calendar/dialogDeleteMeeting';
 import DialogNewMeeting from '../calendar/dialogNewMeeting';
 import DialogEditMeeting from '../calendar/dialogEditMeeting';
 import DialogNewData from '../journal/dialogNewData';
+import DialogEditData from '../journal/dialogEditData';
 
 export default function AppLayout() {
     return (
@@ -12,6 +13,7 @@ export default function AppLayout() {
             <DialogEditMeeting />
             <DialogDeleteMeeting />
             <DialogNewData />
+            <DialogEditData />
             <Navbar />
             <Outlet />
         </>

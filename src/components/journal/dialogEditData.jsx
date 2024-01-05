@@ -2,24 +2,36 @@ import { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useAlert } from '../../contexts/alertContext';
+import { useDialog } from '../../contexts/dialogContext';
 import years from '../../data/years';
 import months from '../../data/months';
 import spendCategories from '../../data/spendCategories';
 import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
-export default function DialogEditData({ data, setExpandedRows }) {
-    const { activeJournal, journals, activePayment, editPayment, addEditedPayment, setActivePayment, setNewActivePayment, deletePayment } =
-        useJournal();
+export default function DialogEditData() {
+    const {
+        activeJournal,
+        journals,
+        activePayment,
+        editPayment,
+        addEditedPayment,
+        setActivePayment,
+        setNewActivePayment,
+        deletePayment,
+        expansionData,
+        setExpandedRows,
+    } = useJournal();
     const { activeUser } = useUser();
     const { setSuccess } = useAlert();
-    const [selectedYear, setSelectedYear] = useState(data.year);
-    const [selectedMonth, setSelectedMonth] = useState(data.month);
-    const [amount, setAmount] = useState(convertAmountOnLoad(data.amount));
-    const [selectedFlow, setSelectedFlow] = useState(data.flow);
-    const [selectedCategory, setSelectedCategory] = useState(data.category);
-    const [selectedAggregate, setSelectedAggregate] = useState(data.aggregate);
-    const [info, setInfo] = useState(data.info);
+    const { dialogs, closeDialog } = useDialog();
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState('');
+    const [amount, setAmount] = useState('');
+    const [selectedFlow, setSelectedFlow] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedAggregate, setSelectedAggregate] = useState('');
+    const [info, setInfo] = useState('');
     const [newJournalId, setNewJournalId] = useState('');
     const defaultYears = years;
     const defaultMonths = months;
@@ -42,8 +54,15 @@ export default function DialogEditData({ data, setExpandedRows }) {
             amount: convertAmountOnSave(amount),
             info: info ? info : '',
             user: activeUser.displayName,
-            id: data.id,
+            id: expansionData.id,
         };
+    }
+
+    /**
+     * closes the edit dialog
+     */
+    function handleCloseDialog() {
+        closeDialog('journalEditRef');
     }
 
     /**
@@ -53,6 +72,7 @@ export default function DialogEditData({ data, setExpandedRows }) {
     function handleEditData(e) {
         e.preventDefault();
         checkNewMonthOrYear();
+        handleCloseDialog();
     }
 
     /**
@@ -63,9 +83,9 @@ export default function DialogEditData({ data, setExpandedRows }) {
     function checkNewMonthOrYear() {
         const editedPayment = changedPayment();
 
-        if (selectedYear !== data.year || selectedMonth !== data.month) {
+        if (selectedYear !== expansionData.year || selectedMonth !== expansionData.month) {
             addEditedPayment(editedPayment, newJournalId);
-            deletePayment(data);
+            deletePayment(expansionData);
             setSuccess('Der Beleg wurde erfolgreich verschoben!');
         } else {
             editPayment(editedPayment, activeJournal.id);
@@ -79,9 +99,10 @@ export default function DialogEditData({ data, setExpandedRows }) {
      * handles the deleting of the payment
      */
     function handleDeletePayment() {
-        deletePayment(data);
+        deletePayment(expansionData);
         setExpandedRows(null);
         setSuccess('Der Beleg wurde erfolgreich gelöscht!');
+        handleCloseDialog();
     }
 
     /**
@@ -105,8 +126,10 @@ export default function DialogEditData({ data, setExpandedRows }) {
      * @returns
      */
     function convertAmountOnLoad(amount) {
-        let convertedAmount = amount.replace('-', '');
-        return convertedAmount;
+        if (amount) {
+            let convertedAmount = amount.replace('-', '');
+            return convertedAmount;
+        }
     }
 
     /**
@@ -166,12 +189,14 @@ export default function DialogEditData({ data, setExpandedRows }) {
      * sets the active payment on initial laoding of the modal
      */
     useEffect(() => {
-        const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
-        if (filteredJournals.length > 0) {
-            const filteredPayment = filteredJournals[0].payment;
-            setActivePayment(filteredPayment);
-        } else {
-            setActivePayment([]);
+        if (activeJournal) {
+            const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
+            if (filteredJournals.length > 0) {
+                const filteredPayment = filteredJournals[0].payment;
+                setActivePayment(filteredPayment);
+            } else {
+                setActivePayment([]);
+            }
         }
     }, [activeJournal, journals, setActivePayment]);
 
@@ -188,13 +213,26 @@ export default function DialogEditData({ data, setExpandedRows }) {
         }
     }, [selectedYear, selectedMonth, journals, newJournalId, setNewActivePayment]);
 
+    /**
+     * sets modal data when expansion row in table is clicked
+     */
+    useEffect(() => {
+        setSelectedYear(expansionData.year);
+        setSelectedMonth(expansionData.month);
+        setAmount(convertAmountOnLoad(expansionData.amount));
+        setSelectedFlow(expansionData.flow);
+        setSelectedCategory(expansionData.category);
+        setSelectedAggregate(expansionData.aggregate);
+        setInfo(expansionData.info);
+    }, [expansionData]);
+
     return (
-        <div className="modal fade" id="editJournalData" tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="journalEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.journalEditRef}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Beleg ändern</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleEditData}>
@@ -342,15 +380,10 @@ export default function DialogEditData({ data, setExpandedRows }) {
                                 <div className="badge text-bg-light">{activePayment.length}</div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDeletePayment}>
+                                <button type="button" className="btn btn-danger" onClick={handleDeletePayment}>
                                     Löschen
                                 </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    data-bs-dismiss="modal"
-                                    disabled={selectedCategory === 'Auswählen...'}
-                                >
+                                <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
                                     Ändern
                                 </button>
                             </div>

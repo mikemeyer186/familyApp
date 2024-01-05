@@ -1,10 +1,12 @@
-import DialogEditData from './dialogEditData';
+import { useDialog } from '../../contexts/dialogContext';
+import { useJournal } from '../../contexts/journalContext';
 
-export default function JournalTableExpansion({ data, setExpandedRows }) {
+export default function JournalTableExpansion() {
+    const { expansionData } = useJournal();
+    const { openDialog } = useDialog();
+
     return (
         <>
-            <DialogEditData data={data} setExpandedRows={setExpandedRows} />
-
             <table className="table journal-detail-table">
                 <thead>
                     <tr>
@@ -21,17 +23,16 @@ export default function JournalTableExpansion({ data, setExpandedRows }) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="td-left">{data.user}</td>
+                        <td className="td-left">{expansionData.user}</td>
                         <td>
-                            <div className="td-info">{data.info}</div>
+                            <div className="td-info">{expansionData.info}</div>
                         </td>
                         <td className="journal-table-edit td-right">
                             <img
                                 src="/assets/icons/pencil-fill-black.svg"
                                 alt="Bearbeiten"
                                 className="journal-table-edit-icon iconClickable"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editJournalData"
+                                onClick={() => openDialog('journalEditRef')}
                             />
                         </td>
                     </tr>

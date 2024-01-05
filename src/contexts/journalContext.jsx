@@ -17,6 +17,7 @@ function JournalProvider({ children }) {
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
     const [isLoaded, setIsLoaded] = useState(false);
     const [expansionData, setExpansionData] = useState({});
+    const [expandedRows, setExpandedRows] = useState(null);
 
     /**
      * loads journals from firestore
@@ -143,6 +144,8 @@ function JournalProvider({ children }) {
                 selectedYear: selectedYear,
                 selectedMonth: selectedMonth,
                 isLoaded: isLoaded,
+                expansionData: expansionData,
+                expandedRows: expandedRows,
                 setSelectedYear,
                 setSelectedMonth,
                 setJournals,
@@ -156,6 +159,8 @@ function JournalProvider({ children }) {
                 setNewActivePayment,
                 deletePayment,
                 sumPayments,
+                setExpansionData,
+                setExpandedRows,
             }}
         >
             {children}
