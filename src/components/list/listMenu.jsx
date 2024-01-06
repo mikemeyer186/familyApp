@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { useList } from '../../contexts/listContext';
 import { useDialog } from '../../contexts/dialogContext';
-import CheckModal from './checkModal';
 
 export default function ListMenu({ list }) {
-    const { setSelectedList } = useList();
+    const { setSelectedList, setModalType } = useList();
     const { openDialog } = useDialog();
-    const [modalType, setModalType] = useState('');
 
     /**
      * sets the selected list in listContext
@@ -15,10 +12,24 @@ export default function ListMenu({ list }) {
         setSelectedList(list);
     }
 
+    /**
+     * opens the clear list dialog and sets the modal ttype to "clear"
+     */
+    function handleOpenClearDialog() {
+        setModalType('clear');
+        openDialog('listDeleteRef');
+    }
+
+    /**
+     * opens the delete dialog and sets the modal type to "delete"
+     */
+    function handleOpenDeleteDialog() {
+        setModalType('delete');
+        openDialog('listDeleteRef');
+    }
+
     return (
         <>
-            <CheckModal modalType={modalType} listID={list.id} />
-
             <div className="dropdown listMenu">
                 <img
                     src="/assets/icons/three-dots-vertical.svg"
@@ -30,25 +41,13 @@ export default function ListMenu({ list }) {
                 />
                 <ul className="dropdown-menu">
                     <li>
-                        <button
-                            className="dropdown-item"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target={`#checkModal${list.id}`}
-                            onClick={() => setModalType('clean')}
-                        >
+                        <button className="dropdown-item" type="button" onClick={handleOpenClearDialog}>
                             Liste leeren
                         </button>
                         <button className="dropdown-item" type="button" onClick={() => openDialog('listEditRef')}>
                             Liste umbenennen
                         </button>
-                        <button
-                            className="dropdown-item"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target={`#checkModal${list.id}`}
-                            onClick={() => setModalType('clear')}
-                        >
+                        <button className="dropdown-item" type="button" onClick={handleOpenDeleteDialog}>
                             Liste löschen
                         </button>
                     </li>

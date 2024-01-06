@@ -11,6 +11,7 @@ function DialogProvider({ children }) {
     const journalEditRef = useRef();
     const listNewRef = useRef();
     const listEditRef = useRef();
+    const listDeleteRef = useRef();
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
         () => ({
@@ -21,6 +22,7 @@ function DialogProvider({ children }) {
             journalEditRef,
             listNewRef,
             listEditRef,
+            listDeleteRef,
         }),
         []
     );
@@ -51,7 +53,6 @@ function DialogProvider({ children }) {
         Object.keys(dialogs).forEach((dialog) => {
             modals[dialog] = new Modal(dialogs[dialog].current);
         });
-        console.log(modals);
     }, [dialogs, modals]);
 
     return <DialogContext.Provider value={{ dialogs: dialogs, openDialog, closeDialog }}>{children}</DialogContext.Provider>;
