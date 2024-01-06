@@ -17,6 +17,9 @@ export default function DialogEditList() {
         handleCloseDialog();
     }
 
+    /**
+     * closes the edit dialog
+     */
     function handleCloseDialog() {
         closeDialog('listEditRef');
     }
