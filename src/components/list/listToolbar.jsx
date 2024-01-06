@@ -1,7 +1,11 @@
+import { useDialog } from '../../contexts/dialogContext';
+
 export default function ListToolbar({ sortBy, sortCategories, handleSorting }) {
+    const { openDialog } = useDialog();
+
     return (
         <>
-            <button type="button" className="btn btn-secondary newList-button" data-bs-toggle="modal" data-bs-target="#newListModal">
+            <button type="button" className="btn btn-secondary newList-button" onClick={() => openDialog('listNewRef')}>
                 <span>Neue Liste</span>
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New list" />
             </button>

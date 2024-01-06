@@ -3,7 +3,6 @@ import { db } from '../../config/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useList } from '../../contexts/listContext';
 import ItemList from './itemList';
-import DialogNewList from './dialogNewList';
 import ListToolbar from './listToolbar';
 import Spinner from '../global/spinner';
 
@@ -56,8 +55,6 @@ export default function ListPage() {
 
     return (
         <>
-            <DialogNewList />
-
             <div className="listPage-wrapper">
                 <div className="listToolbar">
                     <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
