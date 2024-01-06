@@ -66,6 +66,7 @@ function ListProvider({ children }) {
         let listItems = lists.find((list) => list.id === listID).list;
         listItems = [];
         updateListInFirestore(listItems, listID, listTitle);
+        setSuccess('Alle Elemente wurden erfolgreich gelöscht!');
     }
 
     /**
@@ -76,6 +77,7 @@ function ListProvider({ children }) {
     function renameList(listID, newListTitle) {
         let listItems = lists.find((list) => list.id === listID).list;
         updateListInFirestore(listItems, listID, newListTitle);
+        setSuccess('Die Liste wurde erfolgreich umbenannt!');
     }
 
     return (

@@ -24,7 +24,7 @@ export default function DialogEditData() {
     } = useJournal();
     const { activeUser } = useUser();
     const { setSuccess } = useAlert();
-    const { dialogs, closeDialog } = useDialog();
+    const { dialogs, closeDialog, openDialog } = useDialog();
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
@@ -99,10 +99,8 @@ export default function DialogEditData() {
      * handles the deleting of the payment
      */
     function handleDeletePayment() {
-        deletePayment(expansionData);
-        setExpandedRows(null);
-        setSuccess('Der Beleg wurde erfolgreich gelöscht!');
         handleCloseDialog();
+        openDialog('journalDeleteRef');
     }
 
     /**
