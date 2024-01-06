@@ -10,6 +10,7 @@ function DialogProvider({ children }) {
     const journalNewRef = useRef();
     const journalEditRef = useRef();
     const listNewRef = useRef();
+    const listEditRef = useRef();
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
         () => ({
@@ -19,6 +20,7 @@ function DialogProvider({ children }) {
             journalNewRef,
             journalEditRef,
             listNewRef,
+            listEditRef,
         }),
         []
     );

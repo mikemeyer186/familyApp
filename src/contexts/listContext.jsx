@@ -7,6 +7,7 @@ const ListContext = createContext();
 function ListProvider({ children }) {
     const { setSuccess } = useAlert();
     const [lists, setLists] = useState([]);
+    const [selectedList, setSelectedList] = useState({});
 
     /**
      * loads lists from firestore
@@ -77,7 +78,9 @@ function ListProvider({ children }) {
     }
 
     return (
-        <ListContext.Provider value={{ lists: lists, setLists, getLists, addNewList, deleteList, clearList, renameList }}>
+        <ListContext.Provider
+            value={{ lists: lists, selectedList: selectedList, setLists, getLists, addNewList, deleteList, clearList, renameList, setSelectedList }}
+        >
             {children}
         </ListContext.Provider>
     );

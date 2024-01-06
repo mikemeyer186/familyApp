@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useList } from '../../contexts/listContext';
+import { useDialog } from '../../contexts/dialogContext';
 
-export default function DialogEditList({ listID, listTitle, setListTitle }) {
-    const { renameList } = useList();
-    const [newTitle, setNewTitle] = useState(listTitle);
+export default function DialogEditList() {
+    const { selectedList, renameList } = useList();
+    const { dialogs, closeDialog } = useDialog();
+    const [newTitle, setNewTitle] = useState('');
 
     /**
      * handles renaming of list
@@ -11,17 +13,30 @@ export default function DialogEditList({ listID, listTitle, setListTitle }) {
      */
     function handleRenameList(e) {
         e.preventDefault();
-        setListTitle(newTitle);
-        renameList(listID, newTitle);
+        renameList(selectedList.id, newTitle);
+        handleCloseDialog();
     }
 
+    function handleCloseDialog() {
+        closeDialog('listEditRef');
+    }
+
+    /**
+     * sets the title of selected list if user clicks on the dropdown menu
+     */
+    useEffect(() => {
+        if (selectedList.title) {
+            setNewTitle(selectedList.title);
+        }
+    }, [selectedList]);
+
     return (
-        <div className="modal fade" id={`editListModal${listID}`} tabIndex="-1" aria-hidden="true">
+        <div className="modal fade" id="listEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.listEditRef}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">Liste umbenennen</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleRenameList}>
@@ -38,10 +53,10 @@ export default function DialogEditList({ listID, listTitle, setListTitle }) {
                                 />
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                                     Abbrechen
                                 </button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
+                                <button type="submit" className="btn btn-primary">
                                     Umbenennen
                                 </button>
                             </div>

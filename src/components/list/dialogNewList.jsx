@@ -18,6 +18,9 @@ export default function DialogNewList() {
         handleCloseDialog();
     }
 
+    /**
+     * closes new list dialog
+     */
     function handleCloseDialog() {
         closeDialog('listNewRef');
     }

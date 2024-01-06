@@ -97,7 +97,7 @@ export default function ItemList({ list }) {
         <div className="container py-4 px-3 mx-auto listContainer">
             <h3 className="px-1 mb-3">{listTitle}</h3>
 
-            <ListMenu listID={listID} listTitle={listTitle} setListTitle={setListTitle} />
+            <ListMenu list={list} />
             <NewItemForm addItem={addItem} />
 
             <ListHeader sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
