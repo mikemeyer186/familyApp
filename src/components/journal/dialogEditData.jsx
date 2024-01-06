@@ -223,7 +223,9 @@ export default function DialogEditData() {
         setSelectedFlow(expansionData.flow);
         setSelectedCategory(expansionData.category);
         setSelectedAggregate(expansionData.aggregate);
-        setInfo(expansionData.info);
+        if (expansionData.info) {
+            setInfo(expansionData.info);
+        }
     }, [expansionData]);
 
     return (
