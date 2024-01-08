@@ -34,9 +34,7 @@ function JournalProvider({ children }) {
      */
     async function addNewPayment(newPayment, journalId) {
         const payment = [newPayment, ...activePayment];
-        setActivePayment(payment);
         await addPaymentInFirestore(payment, journalId);
-        await loadJournals();
         setSuccess('Der neue Beleg wurde erfolgreich gebucht!');
     }
 
@@ -53,9 +51,7 @@ function JournalProvider({ children }) {
             return payment;
         });
 
-        setActivePayment(newPayments);
         await updatePaymentInFirestore(newPayments, journalId);
-        await loadJournals();
     }
 
     /**
@@ -66,7 +62,6 @@ function JournalProvider({ children }) {
     async function addEditedPayment(newPayment, journalId) {
         const newPayments = [newPayment, ...newActivePayment];
         await addPaymentInFirestore(newPayments, journalId);
-        await loadJournals();
     }
 
     /**
@@ -75,9 +70,7 @@ function JournalProvider({ children }) {
      */
     async function deletePayment(data) {
         const newPayments = activePayment.filter((payment) => payment.id !== data.id);
-        setActivePayment(newPayments);
         await updatePaymentInFirestore(newPayments, activeJournal.id);
-        await loadJournals();
     }
 
     /**
