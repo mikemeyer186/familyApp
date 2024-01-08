@@ -28,18 +28,6 @@ function ListProvider({ children }) {
         const date = new Date().toISOString();
         const list = [];
 
-        setLists((currentLists) => {
-            const lists = [
-                ...currentLists,
-                {
-                    id: id,
-                    title: title,
-                    list: list,
-                    date: date,
-                },
-            ];
-            return lists;
-        });
         addListInFirestore(list, id, title, date);
         setSuccess('Die neue Liste wurde erfolgreich hinzugefügt!');
     }
@@ -49,10 +37,6 @@ function ListProvider({ children }) {
      * @param {string} listId - id of list to delete
      */
     function deleteList(listId) {
-        setLists((currentLists) => {
-            const lists = currentLists.filter((list) => list.id !== listId);
-            return lists;
-        });
         deleteListInFirestore(listId);
         setSuccess('Die Liste wurde erfolgreich gelöscht!');
     }
