@@ -10,7 +10,7 @@ function CalendarProvider({ children }) {
     const [schoolHolidays, setSchoolHolidays] = useState([]);
     const [publicHolidays, setPublicHolidays] = useState([]);
     const [firestoreEvents, setFirestoreEvents] = useState([]);
-    const [isLoaded, setIsloaded] = useState(false);
+    const [isCalendarLoaded, setIsCalendarloaded] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [timeSlotClicked, setTimeSlotClicked] = useState(false);
@@ -128,7 +128,7 @@ function CalendarProvider({ children }) {
             await convertRawEvents(schoolHolidays, schoolHolidayColor);
             await convertRawEvents(publicHolidays, publicHolidayColor);
             await loadFirestoreEvents();
-            setIsloaded(true);
+            setIsCalendarloaded(true);
         },
         [loadFirestoreEvents, convertRawEvents, schoolHolidays, publicHolidays]
     );
@@ -211,7 +211,7 @@ function CalendarProvider({ children }) {
             value={{
                 events: events,
                 firestoreEvents: firestoreEvents,
-                isLoaded: isLoaded,
+                isCalendarLoaded: isCalendarLoaded,
                 selectedEvent: selectedEvent,
                 selectedTimeSlot: selectedTimeSlot,
                 timeSlotClicked: timeSlotClicked,

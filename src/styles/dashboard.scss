@@ -9,6 +9,19 @@
     overflow: auto;
     padding: 50px 50px;
 
+    .spinner-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, calc(-50% - $navbarHeight));
+
+        .spinner-border {
+            width: 8rem;
+            height: 8rem;
+            border-width: 0.75em;
+        }
+    }
+
     @media (max-width: 768px) {
         padding: 50px 10px;
         justify-content: flex-start;
@@ -22,6 +35,13 @@
         border-radius: 8px;
         max-width: $maxWidth;
         background-color: #ffffff;
+
+        .tile-title {
+            font-size: 1rem;
+            font-weight: 300;
+            color: $txt-dark;
+            margin: 0;
+        }
     }
 
     .motivation-text {
