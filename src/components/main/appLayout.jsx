@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import { db } from '../../config/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
+import { useList } from '../../contexts/listContext';
 import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
     const { loadEvents, loadPublicEvents } = useCalendar();
+    const { getLists, setLists } = useList();
 
     /**
      * loads public events for the calendar on first render
@@ -15,6 +17,13 @@ export default function AppLayout() {
     useEffect(() => {
         loadPublicEvents();
     }, [loadPublicEvents]);
+
+    /**
+     * get lists from database
+     */
+    useEffect(() => {
+        getLists();
+    }, [getLists]);
 
     /**
      * observable for events from firebase
@@ -30,6 +39,21 @@ export default function AppLayout() {
             unsubscribe();
         };
     }, [loadEvents]);
+
+    /**
+     * observable for lists from firebase
+     */
+    useEffect(() => {
+        const q = query(collection(db, 'lists'));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newLists = querySnapshot.docs.map((doc) => doc.data());
+            setLists(newLists);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [setLists]);
 
     return (
         <>

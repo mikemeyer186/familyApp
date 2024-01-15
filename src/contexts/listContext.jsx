@@ -9,6 +9,7 @@ function ListProvider({ children }) {
     const [lists, setLists] = useState([]);
     const [selectedList, setSelectedList] = useState({});
     const [modalType, setModalType] = useState('');
+    const [isListLoaded, setIsListLoaded] = useState(false);
 
     /**
      * loads lists from firestore
@@ -16,6 +17,7 @@ function ListProvider({ children }) {
     const getLists = useCallback(async function getLists() {
         const lists = await loadListsFromFirestore();
         setLists(lists);
+        setIsListLoaded(true);
     }, []);
 
     /**
@@ -64,12 +66,28 @@ function ListProvider({ children }) {
         setSuccess('Die Liste wurde erfolgreich umbenannt!');
     }
 
+    /**
+     * filters the items with priority from all lists
+     * @returns - important items
+     */
+    function filterImportantItems() {
+        let importantItems = [];
+
+        lists.forEach((listObject) => {
+            const importantInList = listObject.list.filter((item) => item.priority === true);
+            importantItems = importantItems.concat(importantInList);
+        });
+
+        return importantItems;
+    }
+
     return (
         <ListContext.Provider
             value={{
                 lists: lists,
                 selectedList: selectedList,
                 modalType: modalType,
+                isListLoaded: isListLoaded,
                 setLists,
                 getLists,
                 addNewList,
@@ -78,6 +96,8 @@ function ListProvider({ children }) {
                 renameList,
                 setSelectedList,
                 setModalType,
+                setIsListLoaded,
+                filterImportantItems,
             }}
         >
             {children}

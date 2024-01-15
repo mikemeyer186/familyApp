@@ -36,8 +36,9 @@ export default function EventsTile({ nextEvents }) {
                                 )}
                             </div>
                         </div>
-                        <div className="event-right"></div>
-                        <span>{event.title}</span>
+                        <div className="event-right">
+                            <span>{event.title}</span>
+                        </div>
                     </div>
                 );
             })}

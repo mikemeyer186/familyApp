@@ -71,6 +71,60 @@
                     text-align: center;
                 }
             }
+
+            .event-right {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-grow: 1;
+            }
+        }
+
+        .tile-item {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 300;
+            color: $txt-dark;
+            padding: 8px 0;
+            border-bottom: $thinBorder;
+
+            &:last-of-type {
+                border-bottom: transparent;
+            }
+
+            .item-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                width: 90px;
+
+                .category {
+                    width: fit-content;
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.7rem;
+                    font-weight: 300;
+                    color: #ffffff;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 5px 8px 4px 8px;
+                }
+            }
+
+            .item-right {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-grow: 1;
+
+                .item-user {
+                    color: $txt-grey;
+                    font-size: 0.8rem;
+                }
+            }
         }
     }
 
