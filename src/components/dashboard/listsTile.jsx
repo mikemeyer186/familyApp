@@ -9,7 +9,7 @@ export default function ListsTile({ importantItems }) {
                             <span className={`badge rounded-pill category ${item.category}`}>{item.category}</span>
                         </div>
                         <div className="item-right">
-                            <span>{item.title}</span>
+                            <span className="item-title">{item.title}</span>
                             <span className="item-user">{item.user}</span>
                         </div>
                     </div>
