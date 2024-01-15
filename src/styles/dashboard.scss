@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 28px;
+    gap: 16px;
     height: 100%;
     overflow: auto;
     padding: 50px 50px;
@@ -36,11 +36,41 @@
         max-width: $maxWidth;
         background-color: #ffffff;
 
+        @media (max-width: 575px) {
+            width: calc(100vw - 24px);
+        }
+
         .tile-title {
+            color: $txt-dark;
+        }
+
+        .tile-event {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
             font-size: 1rem;
             font-weight: 300;
             color: $txt-dark;
-            margin: 0;
+            padding: 8px 0;
+            border-bottom: $thinBorder;
+
+            &:last-of-type {
+                border-bottom: transparent;
+            }
+
+            .event-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                width: 90px;
+                color: $txt-grey;
+
+                .event-left-time {
+                    font-size: 0.8rem;
+                    text-align: center;
+                }
+            }
         }
     }
 

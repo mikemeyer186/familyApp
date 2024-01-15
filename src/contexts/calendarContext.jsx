@@ -206,6 +206,34 @@ function CalendarProvider({ children }) {
         return null;
     }, []);
 
+    /**
+     * identifies the events which are today and for the next seven days
+     * @param {Array} events
+     * @returns
+     */
+    function filterEventsForNextWeek() {
+        const currentDate = new Date();
+        const nextSevenDays = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        nextSevenDays.setDate(currentDate.getDate() + 8);
+
+        const filteredEvents = events.filter((event) => {
+            const eventStartDate = new Date(event.start);
+            const eventEndDate = new Date(event.end);
+            return (
+                (eventStartDate >= currentDate && eventStartDate <= nextSevenDays) || (eventEndDate >= currentDate && eventEndDate <= nextSevenDays)
+            );
+        });
+
+        filteredEvents.sort((a, b) => {
+            const startDateA = new Date(a.start);
+            const startDateB = new Date(b.start);
+            return startDateA - startDateB;
+        });
+
+        return filteredEvents;
+    }
+
     return (
         <CalendarContext.Provider
             value={{
@@ -229,6 +257,7 @@ function CalendarProvider({ children }) {
                 setTimeSlotClicked,
                 getDrilldownView,
                 setMeetingID,
+                filterEventsForNextWeek,
             }}
         >
             {children}

@@ -1,61 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
-import motivationSentences from '../../data/motivationSayings';
 import Spinner from '../global/spinner';
+import MotivationTile from './motivationTile';
+import EventsTile from './EventsTile';
 
 export default function DashboardPage() {
-    const { isCalendarLoaded, events } = useCalendar();
+    const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
     const [nextEvents, setNextEvents] = useState();
-    const [yearDay] = useState(dayOfYear());
+    const [eventsLoaded, setEventsLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
     /**
-     * calculates the number of current day of the year
-     * @returns number of the current day of the year
+     * loads the filtered and sorted events for the next seven days
      */
-    function dayOfYear() {
-        const date = new Date();
-        const day = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-        return day;
-    }
+    const filterNextEvents = useCallback(
+        function filterNextEvents() {
+            if (isCalendarLoaded) {
+                const nextEvents = filterEventsForNextWeek();
+                console.log(nextEvents);
+                setNextEvents(nextEvents);
+                setEventsLoaded(true);
+            }
+        },
+        [filterEventsForNextWeek, isCalendarLoaded]
+    );
 
     /**
-     * identifies the events which are today and for the next seven days
-     * @param {Array} events
-     * @returns
+     * loads the data on initial loading of the dashboard
      */
-    function filterEventsForNext7Days(events) {
-        const currentDate = new Date();
-        const nextSevenDays = new Date();
-        currentDate.setHours(0, 0, 0, 0);
-        nextSevenDays.setDate(currentDate.getDate() + 7);
-
-        const filteredEvents = events.filter((event) => {
-            const eventStartDate = new Date(event.start);
-            const eventEndDate = new Date(event.end);
-
-            return (
-                (eventStartDate >= currentDate && eventStartDate <= nextSevenDays) || (eventEndDate >= currentDate && eventEndDate <= nextSevenDays)
-            );
-        });
-
-        return filteredEvents;
-    }
-
-    // in einzelne Funktionen ändern (Kalender, Journal, Listen) - is...Loaded
-    // isLoaded im Dashboard erst auf true, wenn alle anderen Komponenten geladen sind
-    // Observable in AppLayout
-    // Einzelne Komponenten der Tiltes im Dashboard
-    // wenn ganztätiges Event, dann andere Formatierung
-    // DashboardContext? oder in vorhandene Kontexte?
     useEffect(() => {
-        if (isCalendarLoaded) {
-            const nextEvents = filterEventsForNext7Days(events);
-            console.log(nextEvents);
-            setNextEvents(nextEvents);
+        filterNextEvents();
+        if (eventsLoaded) {
             setIsLoaded(true);
         }
-    }, [events, isCalendarLoaded]);
+    }, [filterNextEvents, eventsLoaded]);
 
     return (
         <div className="dashboardPage-wrapper">
@@ -63,22 +41,8 @@ export default function DashboardPage() {
                 <Spinner>{'Dashboard laden...'}</Spinner>
             ) : (
                 <>
-                    <div className="dashboard-tile">
-                        <p className="motivation-text">&quot;{motivationSentences[yearDay]}&quot;</p>
-                    </div>
-
-                    <div className="dashboard-tile">
-                        <p className="tile-title">Termine</p>
-                        {nextEvents.map((event) => {
-                            return (
-                                <div key={event.data.id}>
-                                    <p>{event.title}</p>
-                                    <p>{event.start.toLocaleString()}</p>
-                                    <p>{event.end.toLocaleString()}</p>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <MotivationTile />
+                    <EventsTile nextEvents={nextEvents} />
                 </>
             )}
         </div>
