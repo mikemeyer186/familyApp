@@ -74,7 +74,7 @@ function ListProvider({ children }) {
         let importantItems = [];
 
         lists.forEach((listObject) => {
-            const importantInList = listObject.list.filter((item) => item.priority === true);
+            const importantInList = listObject.list.filter((item) => item.priority && !item.done);
             importantItems = importantItems.concat(importantInList);
         });
 
