@@ -132,6 +132,13 @@
         }
     }
 
+    .tile-journal {
+        .tile-title {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
     .motivation-text {
         font-size: 1rem;
         font-weight: 300;

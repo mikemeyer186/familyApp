@@ -4,12 +4,14 @@ import { db } from '../../config/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
+import { useJournal } from '../../contexts/journalContext';
 import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { getLists, setLists } = useList();
+    const { setJournals, loadJournals } = useJournal();
 
     /**
      * loads public events for the calendar on first render
@@ -54,6 +56,28 @@ export default function AppLayout() {
             unsubscribe();
         };
     }, [setLists]);
+
+    /**
+     * loads the journals from firestore
+     */
+    useEffect(() => {
+        loadJournals();
+    }, [loadJournals]);
+
+    /**
+     * observable for journals from firebase
+     */
+    useEffect(() => {
+        const q = query(collection(db, 'journal'));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newJournal = querySnapshot.docs.map((doc) => doc.data());
+            setJournals(newJournal);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [setJournals]);
 
     return (
         <>

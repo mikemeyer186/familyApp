@@ -15,7 +15,7 @@ function JournalProvider({ children }) {
     const [selectedJournalId, setSelectedJournalId] = useState('');
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isJournalLoaded, setIsJournalLoaded] = useState(false);
     const [expansionData, setExpansionData] = useState({});
     const [expandedRows, setExpandedRows] = useState(null);
 
@@ -25,6 +25,7 @@ function JournalProvider({ children }) {
     const loadJournals = useCallback(async function loadJournals() {
         const loadedJournals = await loadJournalFromFirestore();
         setJournals(loadedJournals);
+        setIsJournalLoaded(true);
     }, []);
 
     /**
@@ -106,6 +107,43 @@ function JournalProvider({ children }) {
     );
 
     /**
+     * creates an object with daily balances
+     * @returns object with 2 arrays (dates and balances)
+     */
+    function filterJournalOverview() {
+        const dailyBalances = {
+            dates: [],
+            balances: [],
+        };
+        const dailyPayments = activePayment;
+        const groupedByDate = dailyPayments.reduce((acc, payment) => {
+            const date = payment.date.slice(8, 10);
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(payment);
+            return acc;
+        }, {});
+
+        let balance = dailyPayments.reduce((sum, payment) => (payment.aggregate === 'Einnahmen' ? sum + payment.amount : sum), 0);
+
+        Object.keys(groupedByDate)
+            .sort()
+            .map((date) => {
+                groupedByDate[date].forEach((payment) => {
+                    if (payment.aggregate !== 'Einnahmen') {
+                        balance += payment.amount;
+                    }
+                });
+
+                dailyBalances.dates.push(date);
+                dailyBalances.balances.push(Number(balance.toFixed(2)));
+            });
+
+        return dailyBalances;
+    }
+
+    /**
      * sums payments on activePayment change
      */
     useEffect(() => {
@@ -121,9 +159,6 @@ function JournalProvider({ children }) {
         setSelectedJournalId(`${selectedYear}-${selectedMonth}`);
         setActiveJournal(filteredJournal);
         setActivePayment(filteredJournal ? filteredJournal.payment : []);
-        setTimeout(() => {
-            setIsLoaded(true);
-        }, 1000);
     }, [journals, selectedYear, selectedMonth]);
 
     return (
@@ -136,7 +171,7 @@ function JournalProvider({ children }) {
                 selectedJournalId: selectedJournalId,
                 selectedYear: selectedYear,
                 selectedMonth: selectedMonth,
-                isLoaded: isLoaded,
+                isJournalLoaded: isJournalLoaded,
                 expansionData: expansionData,
                 expandedRows: expandedRows,
                 setSelectedYear,
@@ -154,6 +189,7 @@ function JournalProvider({ children }) {
                 sumPayments,
                 setExpansionData,
                 setExpandedRows,
+                filterJournalOverview,
             }}
         >
             {children}

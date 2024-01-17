@@ -1,18 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
+import { useJournal } from '../../contexts/journalContext';
 import Spinner from '../global/spinner';
 import MotivationTile from './motivationTile';
 import EventsTile from './EventsTile';
 import ListsTile from './listsTile';
+import JournalTile from './journalTile';
 
 export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
     const { isListLoaded, filterImportantItems } = useList();
+    const { isJournalLoaded, filterJournalOverview } = useJournal();
     const [nextEvents, setNextEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
+    const [journalOverview, setJournalOverview] = useState({});
     const [eventsLoaded, setEventsLoaded] = useState(false);
     const [itemsLoaded, setItemsLoaded] = useState(false);
+    const [journalLoaded, setJournalLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
     /**
@@ -46,15 +51,31 @@ export default function DashboardPage() {
     );
 
     /**
+     * loads the journal for actual month
+     */
+    const filterJournal = useCallback(
+        function filterJournal() {
+            if (isJournalLoaded) {
+                const dailyBalances = filterJournalOverview();
+                console.log('sum', dailyBalances);
+                setJournalOverview(dailyBalances);
+                setJournalLoaded(true);
+            }
+        },
+        [filterJournalOverview, isJournalLoaded]
+    );
+
+    /**
      * loads the data on initial loading of the dashboard
      */
     useEffect(() => {
         filterNextEvents();
         filterListItems();
-        if (eventsLoaded && itemsLoaded) {
+        filterJournal();
+        if (eventsLoaded && itemsLoaded && journalLoaded) {
             setIsLoaded(true);
         }
-    }, [filterNextEvents, filterListItems, eventsLoaded, itemsLoaded]);
+    }, [filterNextEvents, filterListItems, filterJournal, eventsLoaded, itemsLoaded, journalLoaded]);
 
     return (
         <div className="dashboardPage-wrapper">
@@ -64,6 +85,7 @@ export default function DashboardPage() {
                 <>
                     <MotivationTile />
                     <EventsTile nextEvents={nextEvents} />
+                    <JournalTile journalOverview={journalOverview} />
                     <ListsTile importantItems={importantItems} />
                 </>
             )}
