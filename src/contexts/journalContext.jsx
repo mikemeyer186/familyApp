@@ -110,12 +110,22 @@ function JournalProvider({ children }) {
      * creates an object with daily balances
      * @returns object with 2 arrays (dates and balances)
      */
-    function filterJournalOverview() {
-        const dailyBalances = {
-            dates: [],
-            balances: [],
-        };
-        const dailyPayments = activePayment;
+    const filterDailyBalances = useCallback(
+        function filterDailyBalances() {
+            const dailyPayments = activePayment;
+            const groupedPayments = groupDailyPayments(dailyPayments);
+            const dailyBalances = createBalanceArray(groupedPayments);
+            return dailyBalances;
+        },
+        [activePayment]
+    );
+
+    /**
+     * groups the payments by date
+     * @param {Object} dailyPayments - active payments from selected month
+     * @returns - grouped payments
+     */
+    function groupDailyPayments(dailyPayments) {
         const groupedByDate = dailyPayments.reduce((acc, payment) => {
             const date = payment.date.slice(8, 10);
             if (!acc[date]) {
@@ -124,18 +134,27 @@ function JournalProvider({ children }) {
             acc[date].push(payment);
             return acc;
         }, {});
+        return groupedByDate;
+    }
 
-        let balance = dailyPayments.reduce((sum, payment) => (payment.aggregate === 'Einnahmen' ? sum + payment.amount : sum), 0);
+    /**
+     * creates an object with dates and daily balances
+     * @param {Object} groupedPayments - payments grouped by date
+     * @returns - daily balances
+     */
+    function createBalanceArray(groupedPayments) {
+        let balance = 0;
+        const dailyBalances = {
+            dates: [],
+            balances: [],
+        };
 
-        Object.keys(groupedByDate)
+        Object.keys(groupedPayments)
             .sort()
-            .map((date) => {
-                groupedByDate[date].forEach((payment) => {
-                    if (payment.aggregate !== 'Einnahmen') {
-                        balance += payment.amount;
-                    }
+            .forEach((date) => {
+                groupedPayments[date].forEach((payment) => {
+                    balance += payment.amount;
                 });
-
                 dailyBalances.dates.push(date);
                 dailyBalances.balances.push(Number(balance.toFixed(2)));
             });
@@ -189,7 +208,7 @@ function JournalProvider({ children }) {
                 sumPayments,
                 setExpansionData,
                 setExpandedRows,
-                filterJournalOverview,
+                filterDailyBalances,
             }}
         >
             {children}

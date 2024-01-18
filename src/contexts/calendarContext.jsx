@@ -209,7 +209,7 @@ function CalendarProvider({ children }) {
     /**
      * identifies the events which are today and for the next seven days
      * @param {Array} events
-     * @returns
+     * @returns - filterd events for the next seven days
      */
     function filterEventsForNextWeek() {
         const currentDate = new Date();

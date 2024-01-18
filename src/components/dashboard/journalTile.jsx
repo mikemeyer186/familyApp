@@ -1,18 +1,21 @@
 import { Chart } from 'primereact/chart';
 import { useEffect, useState } from 'react';
 
-export default function JournalTile({ journalOverview }) {
+export default function JournalTile({ journalBalances }) {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
-    const actualBalance = journalOverview.balances[journalOverview.balances.length - 1];
+    const actualBalance = journalBalances.balances[journalBalances.balances.length - 1];
 
+    /**
+     * sets data and options for the chart
+     */
     useEffect(() => {
         const data = {
-            labels: journalOverview.dates,
+            labels: journalBalances.dates,
             datasets: [
                 {
                     label: 'Monat',
-                    data: journalOverview.balances,
+                    data: journalBalances.balances,
                     fill: {
                         target: 'origin',
                         above: '#9dde9d',
@@ -57,7 +60,7 @@ export default function JournalTile({ journalOverview }) {
 
         setChartData(data);
         setChartOptions(options);
-    }, [journalOverview.dates, journalOverview.balances]);
+    }, [journalBalances.dates, journalBalances.balances]);
 
     return (
         <div className="dashboard-tile tile-journal">
@@ -72,7 +75,7 @@ export default function JournalTile({ journalOverview }) {
                 </span>
             </h4>
 
-            {journalOverview ? (
+            {journalBalances ? (
                 <Chart type="line" data={chartData} options={chartOptions} />
             ) : (
                 <span className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</span>

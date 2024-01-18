@@ -11,10 +11,10 @@ import JournalTile from './journalTile';
 export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
     const { isListLoaded, filterImportantItems } = useList();
-    const { isJournalLoaded, filterJournalOverview } = useJournal();
+    const { isJournalLoaded, filterDailyBalances } = useJournal();
     const [nextEvents, setNextEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
-    const [journalOverview, setJournalOverview] = useState({});
+    const [journalBalances, setJournalBalances] = useState({});
     const [eventsLoaded, setEventsLoaded] = useState(false);
     const [itemsLoaded, setItemsLoaded] = useState(false);
     const [journalLoaded, setJournalLoaded] = useState(false);
@@ -27,7 +27,6 @@ export default function DashboardPage() {
         function filterNextEvents() {
             if (isCalendarLoaded) {
                 const nextEvents = filterEventsForNextWeek();
-                console.log(nextEvents);
                 setNextEvents(nextEvents);
                 setEventsLoaded(true);
             }
@@ -42,7 +41,6 @@ export default function DashboardPage() {
         function filterListItems() {
             if (isListLoaded) {
                 const importantItems = filterImportantItems();
-                console.log(importantItems);
                 setImportantItems(importantItems);
                 setItemsLoaded(true);
             }
@@ -56,13 +54,12 @@ export default function DashboardPage() {
     const filterJournal = useCallback(
         function filterJournal() {
             if (isJournalLoaded) {
-                const dailyBalances = filterJournalOverview();
-                console.log('sum', dailyBalances);
-                setJournalOverview(dailyBalances);
+                const dailyBalances = filterDailyBalances();
+                setJournalBalances(dailyBalances);
                 setJournalLoaded(true);
             }
         },
-        [filterJournalOverview, isJournalLoaded]
+        [filterDailyBalances, isJournalLoaded]
     );
 
     /**
@@ -85,7 +82,7 @@ export default function DashboardPage() {
                 <>
                     <MotivationTile />
                     <EventsTile nextEvents={nextEvents} />
-                    <JournalTile journalOverview={journalOverview} />
+                    <JournalTile journalBalances={journalBalances} />
                     <ListsTile importantItems={importantItems} />
                 </>
             )}
