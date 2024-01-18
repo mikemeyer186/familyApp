@@ -8,6 +8,7 @@ export default function JournalTile({ journalBalances }) {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
     const actualBalance = journalBalances.balances[journalBalances.balances.length - 1];
+    const actualMonth = months[Number(selectedMonth) - 1];
 
     /**
      * sets data and options for the chart
@@ -17,12 +18,12 @@ export default function JournalTile({ journalBalances }) {
             labels: journalBalances.dates,
             datasets: [
                 {
-                    label: 'Monat',
+                    label: actualMonth,
                     data: journalBalances.balances,
                     fill: {
                         target: 'origin',
-                        above: '#9dde9d',
-                        below: '#ff9f9f',
+                        above: 'rgba(157, 222, 157, 0.6)',
+                        below: 'rgba(255, 159, 159, 0.6)',
                     },
                     borderColor: 'transparent',
                     tension: 0.2,
@@ -31,6 +32,11 @@ export default function JournalTile({ journalBalances }) {
             ],
         };
         const options = {
+            animation: {
+                duration: 1000,
+                easing: 'easeOutCubic',
+                loop: false,
+            },
             maintainAspectRatio: false,
             aspectRatio: 1.5,
             plugins: {
@@ -63,7 +69,7 @@ export default function JournalTile({ journalBalances }) {
 
         setChartData(data);
         setChartOptions(options);
-    }, [journalBalances.dates, journalBalances.balances]);
+    }, [journalBalances.dates, journalBalances.balances, actualMonth]);
 
     return (
         <div className="dashboard-tile tile-journal">
@@ -78,7 +84,7 @@ export default function JournalTile({ journalBalances }) {
                 </span>
             </h4>
             <span className="tile-title-month">
-                {months[Number(selectedMonth) - 1]} {selectedYear}
+                {actualMonth} {selectedYear}
             </span>
 
             {journalBalances.dates.length > 0 ? (
