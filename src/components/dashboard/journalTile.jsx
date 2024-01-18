@@ -1,7 +1,10 @@
 import { Chart } from 'primereact/chart';
 import { useEffect, useState } from 'react';
+import { useJournal } from '../../contexts/journalContext';
+import months from '../../data/months';
 
 export default function JournalTile({ journalBalances }) {
+    const { selectedMonth, selectedYear } = useJournal();
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
     const actualBalance = journalBalances.balances[journalBalances.balances.length - 1];
@@ -22,8 +25,8 @@ export default function JournalTile({ journalBalances }) {
                         below: '#ff9f9f',
                     },
                     borderColor: 'transparent',
-                    tension: 0.1,
-                    backgroundColor: 'transparent',
+                    tension: 0.2,
+                    backgroundColor: 'rgb(13, 110, 253, 0.2)',
                 },
             ],
         };
@@ -66,16 +69,19 @@ export default function JournalTile({ journalBalances }) {
         <div className="dashboard-tile tile-journal">
             <h4 className="tile-title">
                 <span>Finanzübersicht</span>
-                <span>
-                    {' '}
-                    {actualBalance.toLocaleString('de-DE', {
-                        style: 'currency',
-                        currency: 'EUR',
-                    })}
+                <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
+                    {actualBalance &&
+                        actualBalance.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR',
+                        })}
                 </span>
             </h4>
+            <span className="tile-title-month">
+                {months[Number(selectedMonth) - 1]} {selectedYear}
+            </span>
 
-            {journalBalances ? (
+            {journalBalances.dates.length > 0 ? (
                 <Chart type="line" data={chartData} options={chartOptions} />
             ) : (
                 <span className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</span>

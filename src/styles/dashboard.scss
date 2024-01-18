@@ -136,6 +136,19 @@
         .tile-title {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 0;
+            align-items: center;
+
+            .tile-title-balance {
+                font-weight: 400;
+                font-size: 1.1rem;
+            }
+        }
+
+        .tile-title-month {
+            color: $txt-grey;
+            font-weight: 300;
+            font-size: 0.8rem;
         }
     }
 
