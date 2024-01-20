@@ -1,6 +1,6 @@
-export default function EventsTile({ nextEvents }) {
+export default function EventsTile({ nextEvents, navigateToPage }) {
     return (
-        <div className="dashboard-tile">
+        <div className="dashboard-tile" onClick={() => navigateToPage('/app/calendar?page=Kalender')}>
             <h4 className="tile-title">Nächste Termine</h4>
             {nextEvents.length > 0 ? (
                 nextEvents.map((event) => {

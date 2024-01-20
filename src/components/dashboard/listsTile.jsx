@@ -1,6 +1,6 @@
-export default function ListsTile({ importantItems }) {
+export default function ListsTile({ importantItems, navigateToPage }) {
     return (
-        <div className="dashboard-tile">
+        <div className="dashboard-tile" onClick={() => navigateToPage('/app/lists?page=Listen')}>
             <h4 className="tile-title">Wichtige Einkäufe</h4>
             {importantItems.length > 0 ? (
                 importantItems.map((item) => {

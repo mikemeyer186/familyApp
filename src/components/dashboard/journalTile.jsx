@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useJournal } from '../../contexts/journalContext';
 import months from '../../data/months';
 
-export default function JournalTile({ journalBalances }) {
+export default function JournalTile({ journalBalances, navigateToPage }) {
     const { selectedMonth, selectedYear } = useJournal();
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
@@ -72,7 +72,7 @@ export default function JournalTile({ journalBalances }) {
     }, [journalBalances.dates, journalBalances.balances, actualMonth]);
 
     return (
-        <div className="dashboard-tile tile-journal">
+        <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>
             <h4 className="tile-title">
                 <span>Finanzübersicht</span>
                 <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
+import { useNavigate } from 'react-router';
 import Spinner from '../global/spinner';
 import MotivationTile from './motivationTile';
 import EventsTile from './EventsTile';
@@ -19,6 +20,15 @@ export default function DashboardPage() {
     const [itemsLoaded, setItemsLoaded] = useState(false);
     const [journalLoaded, setJournalLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const navigate = useNavigate();
+
+    /**
+     * handles navigation in menu dropdown
+     * @param {string} route - route to navigate to
+     */
+    function navigateToPage(route) {
+        navigate(route);
+    }
 
     /**
      * loads the filtered and sorted events for the next seven days
@@ -81,9 +91,9 @@ export default function DashboardPage() {
             ) : (
                 <>
                     <MotivationTile />
-                    <EventsTile nextEvents={nextEvents} />
-                    <JournalTile journalBalances={journalBalances} />
-                    <ListsTile importantItems={importantItems} />
+                    <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} />
+                    <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} />
+                    <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} />
                 </>
             )}
         </div>
