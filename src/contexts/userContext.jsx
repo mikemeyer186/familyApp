@@ -6,6 +6,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
+import { useSessionStorage } from '../hooks/useSessionStorage';
 
 const UserContext = createContext();
 
@@ -15,6 +16,7 @@ function UserPovider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
+    const [isAppLoaded, setIsAppLoaded] = useSessionStorage('isAppLoaded');
     const [activePage, setActivePage] = useState(lastPage);
     const [searchParams] = useSearchParams('');
     const navigate = useNavigate();
@@ -30,6 +32,7 @@ function UserPovider({ children }) {
             const user = userCredential.user;
             setActiveUser(user);
             setLoggedIn(true);
+            setIsAppLoaded(true);
             navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
@@ -86,13 +89,19 @@ function UserPovider({ children }) {
 
     /**
      * checks if user is authenticated
+     * and navigates to last active page or dashboard if session was inactive
      */
     function authCheck() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsAuthenticated(true);
                 setActiveUser(user);
-                navigate(`app/${activePage}`);
+
+                if (isAppLoaded) {
+                    navigate(`app/${activePage}`);
+                } else {
+                    navigate('app/dashboard?page=Dashboard');
+                }
             } else {
                 setIsAuthenticated(false);
             }
@@ -101,6 +110,7 @@ function UserPovider({ children }) {
 
     /**
      * sets active page and document title
+     * and sets "isAppLoaded" to true (session active)
      */
     useEffect(() => {
         let params = searchParams.get('page');
@@ -117,7 +127,8 @@ function UserPovider({ children }) {
         }
         document.title = `familyApp | ${params}`;
         setLastPage(activePage);
-    }, [activePage, searchParams, setActivePage, setLastPage]);
+        setIsAppLoaded(true);
+    }, [activePage, searchParams, setActivePage, setLastPage, setIsAppLoaded]);
 
     return (
         <UserContext.Provider
