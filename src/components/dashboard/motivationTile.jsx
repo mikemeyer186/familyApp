@@ -15,7 +15,7 @@ export default function MotivationTile() {
     }
 
     return (
-        <div className="dashboard-tile">
+        <div className="dashboard-tile tile-motivation">
             <p className="motivation-text">&quot;{motivationSentences[yearDay]}&quot;</p>
         </div>
     );
