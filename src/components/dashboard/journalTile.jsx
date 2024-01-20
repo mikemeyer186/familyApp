@@ -90,7 +90,7 @@ export default function JournalTile({ journalBalances }) {
             {journalBalances.dates.length > 0 ? (
                 <Chart type="line" data={chartData} options={chartOptions} />
             ) : (
-                <span className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</span>
+                <div className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</div>
             )}
         </div>
     );
