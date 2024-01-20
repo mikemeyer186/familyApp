@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         react(),
         VitePWA({
+            registerType: 'autoUpdate',
             manifest: {
                 name: 'Family App',
                 short_name: 'familyApp',
@@ -460,22 +461,6 @@ export default defineConfig({
                     {
                         src: 'assets/pwa/ios/1024.png',
                         sizes: '1024x1024',
-                    },
-                ],
-            },
-            workbox: {
-                runtimeCaching: [
-                    {
-                        urlPattern: ({ url }) => {
-                            return url.pathname.startsWith('/google');
-                        },
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'firebase-cache',
-                            cacheableResponse: {
-                                statuses: [0, 200],
-                            },
-                        },
                     },
                 ],
             },
