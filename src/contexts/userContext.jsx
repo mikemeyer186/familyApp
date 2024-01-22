@@ -13,6 +13,7 @@ const UserContext = createContext();
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
+    const [familyID, setFamilyID] = useState('abb779e7-1cd0-40a1-8b68-ba089f956aa7'); //depends on active user
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
@@ -136,7 +137,9 @@ function UserPovider({ children }) {
                 activeUser: activeUser,
                 isAuthenticated: isAuthenticated,
                 loggedIn: loggedIn,
+                familyID: familyID,
                 setActiveUser,
+                setFamilyID,
                 signInUser,
                 signOutUser,
                 updateUserProfile,

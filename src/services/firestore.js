@@ -1,33 +1,40 @@
-import { collection, deleteDoc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 // List functions
-export async function loadListsFromFirestore() {
-    const querySnapshot = await getDocs(collection(db, 'lists'));
-    const allLists = querySnapshot.docs.map((doc) => doc.data());
-    return allLists;
+export async function loadListsFromFirestore(familyID) {
+    const familyCollection = collection(db, familyID);
+    const prefix = 'list';
+    const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
+    try {
+        const querySnapshot = await getDocs(q);
+        const allLists = querySnapshot.docs.map((doc) => doc.data());
+        return allLists;
+    } catch (e) {
+        console.error('Error loading documents: ', e);
+    }
 }
 
-export async function updateListInFirestore(list, id, title) {
+export async function updateListInFirestore(familyID, list, id, title) {
     try {
-        await updateDoc(doc(db, 'lists', id), { list, title, id: id });
+        await updateDoc(doc(db, familyID, id), { list, title, id: id });
     } catch (e) {
         console.error('Error updating document: ', e);
     }
 }
 
-export async function addListInFirestore(list, id, title, date) {
+export async function addListInFirestore(familyID, list, id, title, date) {
     try {
-        await setDoc(doc(db, 'lists', id), { list, title, id: id, date });
+        await setDoc(doc(db, familyID, id), { list, title, id: id, date });
     } catch (e) {
         console.error('Error adding document: ', e);
     }
 }
 
-export async function deleteListInFirestore(id) {
+export async function deleteListInFirestore(familyID, id) {
     try {
-        await deleteDoc(doc(db, 'lists', id));
+        await deleteDoc(doc(db, familyID, id));
     } catch (e) {
         console.error('Error deleting document: ', e);
     }

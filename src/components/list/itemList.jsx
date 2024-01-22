@@ -7,7 +7,7 @@ import ListMenu from './listMenu';
 import ListHeader from './listHeader';
 
 export default function ItemList({ list }) {
-    const { activeUser } = useUser();
+    const { activeUser, familyID } = useUser();
     const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
@@ -35,7 +35,7 @@ export default function ItemList({ list }) {
                     priority: false,
                 },
             ];
-            updateListInFirestore(list, listID, listTitle);
+            updateListInFirestore(familyID, list, listID, listTitle);
             return list;
         });
     }
@@ -55,7 +55,7 @@ export default function ItemList({ list }) {
                 }
                 return item;
             });
-            updateListInFirestore(list, listID, listTitle);
+            updateListInFirestore(familyID, list, listID, listTitle);
             return list;
         });
     }
@@ -67,7 +67,7 @@ export default function ItemList({ list }) {
     function deleteItem(itemId) {
         setListItems((currentListItems) => {
             const list = currentListItems.filter((item) => item.id !== itemId);
-            updateListInFirestore(list, listID, listTitle);
+            updateListInFirestore(familyID, list, listID, listTitle);
             return list;
         });
     }

@@ -1,10 +1,12 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { addListInFirestore, deleteListInFirestore, loadListsFromFirestore, updateListInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
+import { useUser } from './userContext';
 
 const ListContext = createContext();
 
 function ListProvider({ children }) {
+    const { familyID } = useUser();
     const { setSuccess } = useAlert();
     const [lists, setLists] = useState([]);
     const [selectedList, setSelectedList] = useState({});
@@ -14,11 +16,14 @@ function ListProvider({ children }) {
     /**
      * loads lists from firestore
      */
-    const getLists = useCallback(async function getLists() {
-        const lists = await loadListsFromFirestore();
-        setLists(lists);
-        setIsListLoaded(true);
-    }, []);
+    const getLists = useCallback(
+        async function getLists() {
+            const lists = await loadListsFromFirestore(familyID);
+            setLists(lists);
+            setIsListLoaded(true);
+        },
+        [familyID]
+    );
 
     /**
      * adds new list to firestore
@@ -26,11 +31,11 @@ function ListProvider({ children }) {
      */
     function addNewList(newListTitle) {
         const title = newListTitle;
-        const id = crypto.randomUUID();
+        const id = 'list_' + crypto.randomUUID();
         const date = new Date().toISOString();
         const list = [];
 
-        addListInFirestore(list, id, title, date);
+        addListInFirestore(familyID, list, id, title, date);
         setSuccess('Die neue Liste wurde erfolgreich hinzugefügt!');
     }
 
@@ -39,7 +44,7 @@ function ListProvider({ children }) {
      * @param {string} listId - id of list to delete
      */
     function deleteList(listId) {
-        deleteListInFirestore(listId);
+        deleteListInFirestore(familyID, listId);
         setSuccess('Die Liste wurde erfolgreich gelöscht!');
     }
 
@@ -51,7 +56,7 @@ function ListProvider({ children }) {
         const listTitle = lists.find((list) => list.id === listID).title;
         let listItems = lists.find((list) => list.id === listID).list;
         listItems = [];
-        updateListInFirestore(listItems, listID, listTitle);
+        updateListInFirestore(familyID, listItems, listID, listTitle);
         setSuccess('Alle Elemente wurden erfolgreich gelöscht!');
     }
 
@@ -62,7 +67,7 @@ function ListProvider({ children }) {
      */
     function renameList(listID, newListTitle) {
         let listItems = lists.find((list) => list.id === listID).list;
-        updateListInFirestore(listItems, listID, newListTitle);
+        updateListInFirestore(familyID, listItems, listID, newListTitle);
         setSuccess('Die Liste wurde erfolgreich umbenannt!');
     }
 

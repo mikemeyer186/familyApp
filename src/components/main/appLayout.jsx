@@ -5,10 +5,12 @@ import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
+import { useUser } from '../../contexts/userContext';
 import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
+    const { familyID } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { getLists, setLists } = useList();
     const { setJournals, loadJournals } = useJournal();
@@ -46,7 +48,7 @@ export default function AppLayout() {
      * observable for lists from firebase
      */
     useEffect(() => {
-        const q = query(collection(db, 'lists'));
+        const q = query(collection(db, familyID));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newLists = querySnapshot.docs.map((doc) => doc.data());
             setLists(newLists);
@@ -55,7 +57,7 @@ export default function AppLayout() {
         return () => {
             unsubscribe();
         };
-    }, [setLists]);
+    }, [setLists, familyID]);
 
     /**
      * loads the journals from firestore
