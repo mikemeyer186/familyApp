@@ -1,11 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { addPaymentInFirestore, loadJournalFromFirestore, updatePaymentInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
+import { useUser } from './userContext';
 
 const JournalContext = createContext();
 
 function JournalProvider({ children }) {
     const date = new Date();
+    const { familyID } = useUser();
     const { setSuccess } = useAlert();
     const [journals, setJournals] = useState([]);
     const [activeJournal, setActiveJournal] = useState({});
@@ -22,11 +24,14 @@ function JournalProvider({ children }) {
     /**
      * loads journals from firestore
      */
-    const loadJournals = useCallback(async function loadJournals() {
-        const loadedJournals = await loadJournalFromFirestore();
-        setJournals(loadedJournals);
-        setIsJournalLoaded(true);
-    }, []);
+    const loadJournals = useCallback(
+        async function loadJournals() {
+            const loadedJournals = await loadJournalFromFirestore(familyID);
+            setJournals(loadedJournals);
+            setIsJournalLoaded(true);
+        },
+        [familyID]
+    );
 
     /**
      * adds new payment to firestore
@@ -35,7 +40,7 @@ function JournalProvider({ children }) {
      */
     async function addNewPayment(newPayment, journalId) {
         const payment = [newPayment, ...activePayment];
-        await addPaymentInFirestore(payment, journalId);
+        await addPaymentInFirestore(familyID, payment, journalId);
         setSuccess('Der neue Beleg wurde erfolgreich gebucht!');
     }
 
@@ -52,7 +57,7 @@ function JournalProvider({ children }) {
             return payment;
         });
 
-        await updatePaymentInFirestore(newPayments, journalId);
+        await updatePaymentInFirestore(familyID, newPayments, journalId);
     }
 
     /**
@@ -62,7 +67,7 @@ function JournalProvider({ children }) {
      */
     async function addEditedPayment(newPayment, journalId) {
         const newPayments = [newPayment, ...newActivePayment];
-        await addPaymentInFirestore(newPayments, journalId);
+        await addPaymentInFirestore(familyID, newPayments, journalId);
     }
 
     /**
@@ -71,7 +76,7 @@ function JournalProvider({ children }) {
      */
     async function deletePayment(data) {
         const newPayments = activePayment.filter((payment) => payment.id !== data.id);
-        await updatePaymentInFirestore(newPayments, activeJournal.id);
+        await updatePaymentInFirestore(familyID, newPayments, activeJournal.id);
     }
 
     /**

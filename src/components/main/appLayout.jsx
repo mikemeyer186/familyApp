@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { useEffect } from 'react';
 import { db } from '../../config/firebase';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
@@ -30,6 +30,13 @@ export default function AppLayout() {
     }, [getLists]);
 
     /**
+     * loads the journals from firestore
+     */
+    useEffect(() => {
+        loadJournals();
+    }, [loadJournals]);
+
+    /**
      * observable for events from firebase
      */
     useEffect(() => {
@@ -48,7 +55,9 @@ export default function AppLayout() {
      * observable for lists from firebase
      */
     useEffect(() => {
-        const q = query(collection(db, familyID));
+        const familyCollection = collection(db, familyID);
+        const prefix = 'list';
+        const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newLists = querySnapshot.docs.map((doc) => doc.data());
             setLists(newLists);
@@ -60,17 +69,12 @@ export default function AppLayout() {
     }, [setLists, familyID]);
 
     /**
-     * loads the journals from firestore
-     */
-    useEffect(() => {
-        loadJournals();
-    }, [loadJournals]);
-
-    /**
      * observable for journals from firebase
      */
     useEffect(() => {
-        const q = query(collection(db, 'journal'));
+        const familyCollection = collection(db, familyID);
+        const prefix = '20';
+        const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newJournal = querySnapshot.docs.map((doc) => doc.data());
             setJournals(newJournal);
@@ -79,7 +83,7 @@ export default function AppLayout() {
         return () => {
             unsubscribe();
         };
-    }, [setJournals]);
+    }, [setJournals, familyID]);
 
     return (
         <>

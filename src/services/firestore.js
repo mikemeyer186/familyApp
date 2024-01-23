@@ -7,13 +7,9 @@ export async function loadListsFromFirestore(familyID) {
     const familyCollection = collection(db, familyID);
     const prefix = 'list';
     const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
-    try {
-        const querySnapshot = await getDocs(q);
-        const allLists = querySnapshot.docs.map((doc) => doc.data());
-        return allLists;
-    } catch (e) {
-        console.error('Error loading documents: ', e);
-    }
+    const querySnapshot = await getDocs(q);
+    const allLists = querySnapshot.docs.map((doc) => doc.data());
+    return allLists;
 }
 
 export async function updateListInFirestore(familyID, list, id, title) {
@@ -41,8 +37,11 @@ export async function deleteListInFirestore(familyID, id) {
 }
 
 // Journal functions
-export async function loadJournalFromFirestore() {
-    const querySnapshot = await getDocs(collection(db, 'journal'));
+export async function loadJournalFromFirestore(familyID) {
+    const familyCollection = collection(db, familyID);
+    const prefix = '20';
+    const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
+    const querySnapshot = await getDocs(q);
     const journal = querySnapshot.docs.map((doc) => {
         const id = doc.id;
         const data = doc.data();
@@ -51,17 +50,17 @@ export async function loadJournalFromFirestore() {
     return journal;
 }
 
-export async function addPaymentInFirestore(payment, journalId) {
+export async function addPaymentInFirestore(familyID, payment, journalId) {
     try {
-        await setDoc(doc(db, 'journal', journalId), { payment, id: journalId });
+        await setDoc(doc(db, familyID, journalId), { payment, id: journalId });
     } catch (e) {
         console.error('Error adding document: ', e);
     }
 }
 
-export async function updatePaymentInFirestore(payment, journalId) {
+export async function updatePaymentInFirestore(familyID, payment, journalId) {
     try {
-        await updateDoc(doc(db, 'journal', journalId), { payment, id: journalId });
+        await updateDoc(doc(db, familyID, journalId), { payment, id: journalId });
     } catch (e) {
         console.error('Error updating document: ', e);
     }
@@ -86,3 +85,9 @@ export async function addEventInFirestore(events) {
         console.error('Error adding document: ', e);
     }
 }
+
+// export async function copyJournals(journal) {
+//     const familyID = 'abb779e7-1cd0-40a1-8b68-ba089f956aa7';
+
+//     await setDoc(doc(db, familyID, journal.id), { payment: journal.payment, id: journal.id });
+// }
