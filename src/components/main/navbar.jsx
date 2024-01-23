@@ -3,20 +3,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
 
-import { loadJournalFromFirestore } from '../../services/firestore';
-
 export default function Navbar() {
     const { activeUser, signOutUser } = useUser();
     const [greeting, setGreeting] = useState('Hallo');
     const navigate = useNavigate();
-
-    async function helperFunction() {
-        console.log('helper');
-        const journals = await loadJournalFromFirestore();
-        console.log(journals);
-
-        journals.forEach(async (journal) => {});
-    }
 
     /**
      * handles sign out of user
@@ -154,7 +144,6 @@ export default function Navbar() {
                                         Suchen
                                     </button>
                                 </form>
-                                <button onClick={helperFunction}>Helper</button>
                             </div>
                         </div>
                     </div>

@@ -40,7 +40,9 @@ export default function AppLayout() {
      * observable for events from firebase
      */
     useEffect(() => {
-        const q = query(collection(db, 'calendar'));
+        const familyCollection = collection(db, familyID);
+        const prefix = 'event';
+        const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.docs.map((doc) => doc.data());
             loadEvents();
@@ -49,7 +51,7 @@ export default function AppLayout() {
         return () => {
             unsubscribe();
         };
-    }, [loadEvents]);
+    }, [loadEvents, familyID]);
 
     /**
      * observable for lists from firebase

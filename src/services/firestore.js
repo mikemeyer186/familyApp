@@ -67,8 +67,8 @@ export async function updatePaymentInFirestore(familyID, payment, journalId) {
 }
 
 //calendar functions
-export async function loadEventsFromFirestore() {
-    const docRef = doc(db, 'calendar', 'events');
+export async function loadEventsFromFirestore(familyID) {
+    const docRef = doc(db, familyID, 'events');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -78,16 +78,10 @@ export async function loadEventsFromFirestore() {
     }
 }
 
-export async function addEventInFirestore(events) {
+export async function addEventInFirestore(familyID, events) {
     try {
-        await setDoc(doc(db, 'calendar', 'events'), { events });
+        await setDoc(doc(db, familyID, 'events'), { events });
     } catch (e) {
         console.error('Error adding document: ', e);
     }
 }
-
-// export async function copyJournals(journal) {
-//     const familyID = 'abb779e7-1cd0-40a1-8b68-ba089f956aa7';
-
-//     await setDoc(doc(db, familyID, journal.id), { payment: journal.payment, id: journal.id });
-// }

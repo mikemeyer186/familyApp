@@ -1,10 +1,12 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { useAlert } from './alertContext';
 import { addEventInFirestore, loadEventsFromFirestore } from '../services/firestore';
+import { useUser } from './userContext';
 
 const CalendarContext = createContext();
 
 function CalendarProvider({ children }) {
+    const { familyID } = useUser();
     const { setSuccess } = useAlert();
     const [events, setEvents] = useState([]);
     const [schoolHolidays, setSchoolHolidays] = useState([]);
@@ -112,10 +114,10 @@ function CalendarProvider({ children }) {
      */
     const loadFirestoreEvents = useCallback(
         async function loadFirestoreEvents() {
-            const rawFirestoreEvents = await loadEventsFromFirestore();
+            const rawFirestoreEvents = await loadEventsFromFirestore(familyID);
             await convertEventsFromFirestore(rawFirestoreEvents);
         },
-        [convertEventsFromFirestore]
+        [convertEventsFromFirestore, familyID]
     );
 
     /**
@@ -140,7 +142,7 @@ function CalendarProvider({ children }) {
     async function addNewMeeting(newMeeting) {
         const newFirestoreEvents = [...firestoreEvents, newMeeting];
         setFirestoreEvents(newFirestoreEvents);
-        await addEventInFirestore(newFirestoreEvents);
+        await addEventInFirestore(familyID, newFirestoreEvents);
         setSuccess('Der Termin wurde erfolgreich eingetragen!');
     }
 
@@ -158,7 +160,7 @@ function CalendarProvider({ children }) {
         const newFirestoreEvents = [...filteredFirestoreEvents, editedMeeting];
         setEvents(filteredEvents);
         setFirestoreEvents(newFirestoreEvents);
-        await addEventInFirestore(newFirestoreEvents);
+        await addEventInFirestore(familyID, newFirestoreEvents);
         setSuccess('Der Termin wurde erfolgreich geändert!');
     }
 
@@ -175,7 +177,7 @@ function CalendarProvider({ children }) {
         });
         setEvents(filteredEvents);
         setFirestoreEvents(filteredFirestoreEvents);
-        await addEventInFirestore(filteredFirestoreEvents);
+        await addEventInFirestore(familyID, filteredFirestoreEvents);
         setSuccess('Der Termin wurde erfolgreich gelöscht!');
     }
 
