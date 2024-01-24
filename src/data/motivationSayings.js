@@ -22,7 +22,7 @@ const motivationSentences = [
     'Du bist einzigartig und besonders – lass deine Einzigartigkeit leuchten.',
     'Kleine Schritte führen zu großen Abenteuern – lass uns gemeinsam auf Entdeckungsreise gehen.',
     'Mit einem Lächeln und einer positiven Einstellung meisterst du jede Herausforderung.',
-    'Jede Frage, die du stellst, bringt dich klüger machen – frag ruhig und lerne jeden Tag etwas Neues.',
+    'Jede Frage, die du stellst, wird dich klüger machen – frag ruhig und lerne jeden Tag etwas Neues.',
     'Du kannst alles erreichen, wenn du an dich glaubst – deine Möglichkeiten sind endlos.',
     'Freundschaft und Teamarbeit machen alles besser – lass uns zusammenhalten.',
     'Deine Fantasie ist der Schlüssel zu einer Welt voller Abenteuer – lass sie frei fliegen.',

@@ -7,15 +7,31 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [isUserLoggingIn, setIsUserGuestLoggingIn] = useState(false);
+    const [isGuestLoggingIn, setIsGuestLoggingIn] = useState(false);
+    const guestEmail = import.meta.env.VITE_GUEST_EMAIL;
+    const guestPassword = import.meta.env.VITE_GUEST_PASSWORD;
 
     /**
      * handles login of user
      * @param {event} e - event from form submit
      */
     async function handleSubmit(e) {
-        setIsLoggingIn(true);
         e.preventDefault();
+        setIsUserGuestLoggingIn(true);
+        setIsLoggingIn(true);
         await signInUser(email, password);
+        setIsUserGuestLoggingIn(false);
+        setIsLoggingIn(false);
+        setEmail('');
+        setPassword('');
+    }
+
+    async function handleGuestLogIn() {
+        setIsGuestLoggingIn(true);
+        setIsLoggingIn(true);
+        await signInUser(guestEmail, guestPassword);
+        setIsGuestLoggingIn(false);
         setIsLoggingIn(false);
         setEmail('');
         setPassword('');
@@ -55,12 +71,19 @@ export default function LoginForm() {
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group d-flex justify-content-center gap-2">
                     <button type="submit" className="btn btn-primary mt-2" disabled={isLoggingIn}>
-                        {isLoggingIn ? (
+                        {isUserLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
                         ) : (
                             <span role="status">Anmelden</span>
+                        )}
+                    </button>
+                    <button type="button" className="btn btn-primary mt-2" disabled={isLoggingIn} onClick={handleGuestLogIn}>
+                        {isGuestLoggingIn ? (
+                            <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
+                        ) : (
+                            <span role="status">Testen</span>
                         )}
                     </button>
                 </div>

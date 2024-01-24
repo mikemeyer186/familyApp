@@ -103,7 +103,7 @@ export default function ItemList({ list }) {
             <ListHeader sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
 
             <ul className="list-group">
-                {sortedItems.length === 0 && <span className="px-1">Es sind keine Einträge vorhanden.</span>}
+                {sortedItems.length === 0 && <span className="px-1 text-center mt-3">Es sind noch keine Einträge vorhanden.</span>}
                 {sortedItems.map((item) => {
                     return <Item item={item} listID={listID} key={item.id} updateItem={updateItem} deleteItem={deleteItem} />;
                 })}
