@@ -88,7 +88,7 @@ export default function ItemList({ list }) {
         setListTitle(list.title);
     }, [list]);
 
-    if (sortBy === 'Datum') sortedItems = listItems;
+    if (sortBy === 'Datum') sortedItems = listItems.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
     if (sortBy === 'Kategorie') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));
     if (sortBy === 'Erledigt') sortedItems = listItems.slice().sort((a, b) => Number(a.done) - Number(b.done));
     if (sortBy === 'Priorität') sortedItems = listItems.slice().sort((a, b) => Number(b.priority) - Number(a.priority));
