@@ -6,7 +6,7 @@ import Spinner from '../global/spinner';
 
 export default function ListPage() {
     const { lists, isListLoaded } = useList();
-    const [sortBy, setSortBy] = useState('Datum');
+    const [sortBy, setSortBy] = useState('Alphabet');
     const sortCategories = ['Datum', 'Alphabet'];
     let sortedLists;
 

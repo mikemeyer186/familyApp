@@ -2,6 +2,18 @@ import { collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt,
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
+// User functions
+export async function loadUserDataFromFirestore(uid) {
+    const docRef = doc(db, 'user', uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log('No such document!');
+    }
+}
+
 // List functions
 export async function loadListsFromFirestore(familyID) {
     const familyCollection = collection(db, familyID);

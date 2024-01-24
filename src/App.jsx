@@ -8,11 +8,11 @@ import { ListProvider } from './contexts/listContext';
 import { CalendarProvider } from './contexts/calendarContext';
 import { useAlert } from './contexts/alertContext';
 import { useUser } from './contexts/userContext';
+import { DialogProvider } from './contexts/dialogContext';
 import Login from './components/main/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
 import LazySpinner from './components/global/lazySpinner';
-import { DialogProvider } from './contexts/dialogContext';
 
 const AppLayout = lazy(() => import('./components/main/appLayout'));
 const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));

@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
 import { useSessionStorage } from '../hooks/useSessionStorage';
+import { loadUserDataFromFirestore } from '../services/firestore';
 
 const UserContext = createContext();
 
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
-    const [familyID, setFamilyID] = useState('abb779e7-1cd0-40a1-8b68-ba089f956aa7'); //depends on active user
+    const [familyID, setFamilyID] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
@@ -48,6 +49,7 @@ function UserPovider({ children }) {
         try {
             await signOut(auth);
             setActiveUser(null);
+            setFamilyID('');
             setLoggedIn(false);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
             setActivePage('');
@@ -92,11 +94,12 @@ function UserPovider({ children }) {
      * checks if user is authenticated
      * and navigates to last active page or dashboard if session was inactive
      */
-    function authCheck() {
-        onAuthStateChanged(auth, (user) => {
+    async function authCheck() {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                setIsAuthenticated(true);
+                await loadUserData(user.uid);
                 setActiveUser(user);
+                setIsAuthenticated(true);
 
                 if (isAppLoaded) {
                     navigate(`app/${activePage}`);
@@ -107,6 +110,16 @@ function UserPovider({ children }) {
                 setIsAuthenticated(false);
             }
         });
+    }
+
+    /**
+     * loads user data from firestore
+     * and sets the related family id for database connection
+     * @param {string} uid - user id
+     */
+    async function loadUserData(uid) {
+        const userData = await loadUserDataFromFirestore(uid);
+        setFamilyID(userData.familyID);
     }
 
     /**
