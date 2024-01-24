@@ -223,6 +223,8 @@ export default function DialogEditData() {
         setSelectedAggregate(expansionData.aggregate);
         if (expansionData.info) {
             setInfo(expansionData.info);
+        } else {
+            setInfo('');
         }
     }, [expansionData]);
 
