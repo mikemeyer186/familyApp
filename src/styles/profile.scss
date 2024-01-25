@@ -1,4 +1,4 @@
-.profil-wrapper {
+.profile-wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -7,7 +7,7 @@
     overflow: auto;
     padding: 90px 50px;
 
-    .profil-content {
+    .profile-content {
         width: $maxWidth;
         border: $thinBorder;
         box-shadow: $shadow;
@@ -39,7 +39,7 @@
             box-shadow: $shadow;
         }
 
-        .profil-image {
+        .profile-image-circle {
             width: 140px;
             height: 140px;
             object-fit: cover;
@@ -50,7 +50,7 @@
             right: 0;
         }
 
-        .profil-image-hover {
+        .profile-image-circle-hover {
             background-color: transparent;
             width: 140px;
             height: 140px;
@@ -88,7 +88,6 @@
         input {
             &:disabled {
                 background-color: #fafafa;
-                cursor: not-allowed;
             }
         }
     }
@@ -117,7 +116,7 @@
 }
 
 @media (max-width: 480px) {
-    .profil-wrapper {
+    .profile-wrapper {
         padding: 20px;
     }
 }

@@ -3,15 +3,16 @@ import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../contexts/userContext';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export default function UserProfile() {
     const { activeUser, updateUserProfile } = useUser();
     const [userName, setUserName] = useState(activeUser.displayName || '');
-    const [email, setEmail] = useState(activeUser.email);
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');
     const [newPhotoUrl, setNewPhotoUrl] = useState('');
     const [file, setFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
+    const [lastPage] = useLocalStorage('lastPage');
     const photoInputRef = useRef(null);
     const userID = activeUser.uid;
     const navigate = useNavigate();
@@ -23,8 +24,7 @@ export default function UserProfile() {
     function handleSubmit(e) {
         e.preventDefault();
         updateUserProfile(userName, photoUrl);
-        //updateUserEmail(email); --> not implemented yet (maybe in separate profil page?)
-        navigate(-1);
+        navigate(`/app/${lastPage}`);
     }
 
     /**
@@ -69,8 +69,8 @@ export default function UserProfile() {
     }, [file]);
 
     return (
-        <div className="profil-wrapper">
-            <div className="profil-content">
+        <div className="profile-wrapper">
+            <div className="profile-content">
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Benutzerprofil</h4>
                     <span>Hier kannst du deine Benutzerdaten ändern</span>
@@ -78,8 +78,12 @@ export default function UserProfile() {
                 <div className="profile-body mt-5">
                     <div className="profile-image mb-2">
                         <div className={`image-wrapper ${isUploading && 'uploading-image'}`}>
-                            <img className="profil-image" src={photoUrl === '' ? '/assets/img/profile-picture.png' : photoUrl} alt="Profil image" />
-                            <div className="profil-image-hover" onClick={() => photoInputRef.current.click()}>
+                            <img
+                                className="profile-image-circle"
+                                src={photoUrl === '' ? '/assets/img/profile-picture.png' : photoUrl}
+                                alt="Profil image"
+                            />
+                            <div className="profile-image-circle-hover" onClick={() => photoInputRef.current.click()}>
                                 <img src="/assets/icons/pencil-fill.svg" alt="Edit" />
                             </div>
                         </div>
@@ -112,22 +116,8 @@ export default function UserProfile() {
                                 required
                             />
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="userName" className="col-form-label">
-                                E-Mail
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                disabled
-                                required
-                            />
-                        </div>
                         <div className="profile-footer mt-5">
-                            <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>
+                            <button type="button" className="btn btn-secondary" onClick={() => navigate(`/app/${lastPage}`)}>
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" onClick={handleSubmit}>

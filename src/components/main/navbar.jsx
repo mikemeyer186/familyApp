@@ -120,30 +120,41 @@ export default function Navbar() {
                                                     Profil bearbeiten
                                                 </span>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">
+                                            <li data-bs-dismiss="offcanvas">
+                                                <span
+                                                    className="dropdown-item pointer"
+                                                    onClick={() => handleDropdownNav('emailchange?page=E-Mail Adresse ändern')}
+                                                >
                                                     E-Mail Adresse ändern
-                                                </a>
+                                                </span>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">
+                                            <li data-bs-dismiss="offcanvas">
+                                                <span
+                                                    className="dropdown-item pointer"
+                                                    onClick={() => handleDropdownNav('passwordchange?page=Password ändern')}
+                                                >
                                                     Passwort ändern
-                                                </a>
+                                                </span>
                                             </li>
                                         </ul>
+                                    </li>
+                                    <li data-bs-dismiss="offcanvas">
+                                        <NavLink to="settings?page=Einstellungen" className="nav-item">
+                                            <img src="/assets/icons/gear.svg" alt="Einstellungen" />
+                                            <span className="nav-link">Einstellungen</span>
+                                        </NavLink>
+                                    </li>
+                                    <li data-bs-dismiss="offcanvas">
+                                        <NavLink to="problem?page=Problem" className="nav-item">
+                                            <img src="/assets/icons/chat-right-dots.svg" alt="Problem" />
+                                            <span className="nav-link">Problem melden</span>
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item" onClick={handleSignOut} data-bs-dismiss="offcanvas">
                                         <img src="/assets/icons/door-open.svg" alt="Logout" />
                                         <span className="nav-link pointer">Abmelden</span>
                                     </li>
                                 </ul>
-
-                                <form className="d-flex mt-4" role="search">
-                                    <input id="searchbar" className="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" />
-                                    <button className="btn btn-outline-success" type="submit">
-                                        Suchen
-                                    </button>
-                                </form>
                             </div>
                         </div>
                     </div>
