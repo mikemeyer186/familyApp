@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import listCategories from '../../data/listCategories';
+import { useUser } from '../../contexts/userContext';
 
 export default function NewItemForm({ addItem }) {
+    const { appSettings } = useUser();
     const [newItem, setNewItem] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Kategorie');
     const [isMobile, setIsMobile] = useState(false);
-    const defaultCategories = listCategories;
+    const defaultCategories = appSettings.list;
 
     /**
      * handles adding of new item
@@ -76,10 +77,10 @@ export default function NewItemForm({ addItem }) {
                 </button>
 
                 <ul className="dropdown-menu">
-                    {defaultCategories.map((category) => {
+                    {defaultCategories.map((category, index) => {
                         return (
-                            <li key={category} onClick={() => handleCategorySelection(category)}>
-                                <span className="dropdown-item pointer">{category}</span>
+                            <li key={index} onClick={() => handleCategorySelection(category.category)}>
+                                <span className="dropdown-item pointer">{category.category}</span>
                             </li>
                         );
                     })}
