@@ -129,6 +129,17 @@
             height: 24px;
         }
     }
+
+    .add-list-category {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+
+        .add-icon {
+            flex-shrink: 0;
+            opacity: 0.3;
+        }
+    }
 }
 
 @keyframes loading {
