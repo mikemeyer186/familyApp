@@ -7,7 +7,7 @@ import { saveSettingsInFirestore } from '../../services/firestore';
 export default function Settings() {
     const { familyID, appSettings } = useUser();
     const [newAppSettings, setNewAppSettings] = useState([]);
-    const [listCategories, setListCategories] = useState(appSettings.list.map((category) => ({ ...category })));
+    const [listCategories, setListCategories] = useState(appSettings.list);
     const [lastPage] = useLocalStorage('lastPage');
     const navigate = useNavigate();
 
