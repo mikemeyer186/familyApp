@@ -16,14 +16,14 @@ export default function AppLayout() {
     const { setJournals, loadJournals } = useJournal();
 
     /**
-     * loads public events for the calendar on first render
+     * loads public events for the calendar from API
      */
     useEffect(() => {
         loadPublicEvents();
     }, [loadPublicEvents]);
 
     /**
-     * get lists from database
+     * loads the lists from firestore
      */
     useEffect(() => {
         getLists();

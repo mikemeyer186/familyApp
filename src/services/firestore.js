@@ -14,6 +14,26 @@ export async function loadUserDataFromFirestore(uid) {
     }
 }
 
+// Settings functions
+export async function loadSettingsFromFirestore(familyID) {
+    const docRef = doc(db, familyID, 'settings');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log('No such document!');
+    }
+}
+
+export async function saveSettingsInFirestore(familyID, settings) {
+    try {
+        await setDoc(doc(db, familyID, 'settings'), settings);
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
 // List functions
 export async function loadListsFromFirestore(familyID) {
     const familyCollection = collection(db, familyID);

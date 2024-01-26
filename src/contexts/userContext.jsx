@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
 import { useSessionStorage } from '../hooks/useSessionStorage';
-import { loadUserDataFromFirestore } from '../services/firestore';
+import { loadUserDataFromFirestore, loadSettingsFromFirestore } from '../services/firestore';
 
 const UserContext = createContext();
 
@@ -15,6 +15,7 @@ function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
     const [familyID, setFamilyID] = useState('');
+    const [appSettings, setAppSettings] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
@@ -119,7 +120,9 @@ function UserPovider({ children }) {
      */
     async function loadUserData(uid) {
         const userData = await loadUserDataFromFirestore(uid);
+        const settings = await loadSettingsFromFirestore(userData.familyID);
         setFamilyID(userData.familyID);
+        setAppSettings(settings);
     }
 
     /**
@@ -151,6 +154,7 @@ function UserPovider({ children }) {
                 isAuthenticated: isAuthenticated,
                 loggedIn: loggedIn,
                 familyID: familyID,
+                appSettings: appSettings,
                 setActiveUser,
                 setFamilyID,
                 signInUser,
