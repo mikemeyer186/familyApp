@@ -111,6 +111,7 @@ export default function Settings() {
                             })}
                             {listCategories.length < 10 && (
                                 <div className="add-list-category mt-3">
+                                    <div className="new-category-text">Neue Kategorie hinzufügen</div>
                                     <img
                                         src="/assets/icons/plus-circle.svg"
                                         alt="Hinzufügen"
