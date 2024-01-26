@@ -104,6 +104,11 @@
     }
 
     //settings styles
+    .settings-divider {
+        width: 100%;
+        border-bottom: $thinBorder;
+        margin: 64px 0;
+    }
 
     .settings-list {
         display: flex;

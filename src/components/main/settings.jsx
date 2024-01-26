@@ -121,6 +121,13 @@ export default function Settings() {
                                 </div>
                             )}
                         </div>
+
+                        <div className="settings-divider"></div>
+
+                        {/* <div className="mb-3">
+                            <h6 className="mb-3">Kategorien für Journal</h6>
+                        </div> */}
+
                         <div className="profile-footer mt-5">
                             <button type="button" className="btn btn-secondary" onClick={handleAbortSettings}>
                                 Abbrechen

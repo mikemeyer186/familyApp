@@ -50,9 +50,10 @@ export default function Navbar() {
             <div className="navbar-container">
                 <nav className="navbar fixed-top navbarBg">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#">
-                            familyApp
-                        </a>
+                        <div className="navbar-logo">
+                            <img className="navbar-logo-img" src="/assets/img/logo_blue.png" alt="Logo" />
+                            <span className="navbar-brand">familyApp</span>
+                        </div>
                         <button
                             className="navbar-toggler navbarMenuIcon"
                             type="button"
