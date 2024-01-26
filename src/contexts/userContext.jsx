@@ -162,6 +162,7 @@ function UserPovider({ children }) {
                 updateUserProfile,
                 updateUserEmail,
                 authCheck,
+                setAppSettings,
             }}
         >
             {children}

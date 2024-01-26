@@ -10,7 +10,7 @@ import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
-    const { familyID } = useUser();
+    const { familyID, setAppSettings } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { getLists, setLists } = useList();
     const { setJournals, loadJournals } = useJournal();
@@ -35,6 +35,23 @@ export default function AppLayout() {
     useEffect(() => {
         loadJournals();
     }, [loadJournals]);
+
+    /**
+     * observable for settings from firebase
+     */
+    useEffect(() => {
+        const familyCollection = collection(db, familyID);
+        const prefix = 'settings';
+        const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newSettings = querySnapshot.docs.map((doc) => doc.data());
+            setAppSettings(newSettings[0]);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [familyID, setAppSettings]);
 
     /**
      * observable for events from firebase
