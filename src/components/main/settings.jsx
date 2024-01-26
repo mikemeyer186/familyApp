@@ -52,7 +52,7 @@ export default function Settings() {
      */
     function handleAddListCategory() {
         let updatedCategories = listCategories.map((category) => ({ ...category }));
-        const newCategory = { category: '', color: '#3f55ab' };
+        const newCategory = { category: '', color: getRandomColor() };
         updatedCategories.push(newCategory);
         setListCategories(updatedCategories);
         setNewAppSettings({ ...appSettings, list: updatedCategories });
@@ -64,6 +64,15 @@ export default function Settings() {
     function handleAbortSettings() {
         setListCategories(appSettings.list);
         navigate(`/app/${lastPage}`);
+    }
+
+    /**
+     * gets a random color code
+     * @returns - hexadecimal color code as string
+     */
+    function getRandomColor() {
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        return `#${randomColor.padStart(6, '0')}`;
     }
 
     return (
