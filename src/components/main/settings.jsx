@@ -124,7 +124,7 @@ export default function Settings() {
                             <button type="button" className="btn btn-secondary" onClick={handleAbortSettings}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" disabled={newAppSettings.length === 0}>
                                 Speichern
                             </button>
                         </div>

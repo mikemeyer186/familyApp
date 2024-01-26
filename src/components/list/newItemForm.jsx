@@ -6,7 +6,7 @@ export default function NewItemForm({ addItem }) {
     const [newItem, setNewItem] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Kategorie');
     const [isMobile, setIsMobile] = useState(false);
-    const defaultCategories = appSettings.list;
+    const defaultCategories = appSettings.list.sort((a, b) => a.category.localeCompare(b.category));
 
     /**
      * handles adding of new item
