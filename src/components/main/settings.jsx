@@ -8,6 +8,7 @@ export default function Settings() {
     const { familyID, appSettings } = useUser();
     const [newAppSettings, setNewAppSettings] = useState([]);
     const [listCategories, setListCategories] = useState(appSettings.list);
+    const [journalCategories, setJournalCategories] = useState(appSettings.journal);
     const [lastPage] = useLocalStorage('lastPage');
     const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export default function Settings() {
     }
 
     /**
-     * handles the change of category name or color
+     * handles the change of list category name or color
      * @param {string} value - value from input field
      * @param {number} index - index of input
      * @param {string} field - category key (category or color)
@@ -36,7 +37,7 @@ export default function Settings() {
     }
 
     /**
-     * deltes the category from list categories
+     * deletes the category from list categories
      * @param {number} index - index of category
      */
     function handleDeleteListCategory(index) {
@@ -56,6 +57,19 @@ export default function Settings() {
         updatedCategories.push(newCategory);
         setListCategories(updatedCategories);
         setNewAppSettings({ ...appSettings, list: updatedCategories });
+    }
+
+    /**
+     * handles the change of journal category name or color
+     * @param {string} value - value from input field
+     * @param {number} nameIndex - index of input (name)
+     * @param {number} valueIndex - index of input (value)
+     */
+    function handleJournalCategoryChange(value, nameIndex, valueIndex) {
+        let updatedCategories = journalCategories.map((category) => ({ ...category }));
+        updatedCategories[nameIndex].values[valueIndex] = value ?? '';
+        setJournalCategories(updatedCategories);
+        setNewAppSettings({ ...appSettings, journal: updatedCategories });
     }
 
     /**
@@ -133,9 +147,30 @@ export default function Settings() {
 
                         <div className="settings-divider"></div>
 
-                        {/* <div className="mb-3">
+                        <div className="mb-3">
                             <h6 className="mb-3">Kategorien für Journal</h6>
-                        </div> */}
+                            {journalCategories.map((category, nameIndex) => {
+                                return (
+                                    <div className="settings-box mb-5" key={nameIndex}>
+                                        <p className="settings-box-title mb-2">{category.name}</p>
+                                        {category.values.map((value, valueIndex) => {
+                                            return (
+                                                <div key={valueIndex} className="settings-list mb-2">
+                                                    <input
+                                                        type="text"
+                                                        id={`value${nameIndex}${valueIndex}`}
+                                                        className="form-control"
+                                                        value={journalCategories[nameIndex].values[valueIndex]}
+                                                        onChange={(e) => handleJournalCategoryChange(e.target.value, nameIndex, valueIndex)}
+                                                        required
+                                                    />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </div>
 
                         <div className="profile-footer mt-5">
                             <button type="button" className="btn btn-secondary" onClick={handleAbortSettings}>

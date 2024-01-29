@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useDialog } from '../../contexts/dialogContext';
-import spendCategories from '../../data/spendCategories';
-import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 import months from '../../data/months';
 import years from '../../data/years';
 
 export default function DialogNewData() {
-    const { activeUser } = useUser();
+    const { activeUser, appSettings } = useUser();
     const { activePayment, selectedJournalId, selectedYear, selectedMonth, setSelectedYear, setSelectedMonth, addNewPayment } = useJournal();
     const { dialogs, closeDialog } = useDialog();
     const [amount, setAmount] = useState('');
@@ -18,10 +16,24 @@ export default function DialogNewData() {
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
     const defaultFlows = ['Einnahme', 'Ausgabe'];
-    const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
+    const defaultCategories = filterCategories();
     const defaultMonths = months;
     const defaultYears = years;
     const convertedMonth = months[selectedMonth - 1];
+
+    /**
+     * filters the journal categories from appsettings
+     * @returns - filtered categories by slected flow (income or output)
+     */
+    function filterCategories() {
+        if (selectedFlow === 'Einnahme') {
+            const categories = appSettings.journal.slice().filter((category) => category.name === 'Einnahmen');
+            return categories;
+        } else if (selectedFlow === 'Ausgabe') {
+            const categories = appSettings.journal.slice().filter((category) => category.name !== 'Einnahmen');
+            return categories;
+        }
+    }
 
     /**
      * adds a new payment to the journal

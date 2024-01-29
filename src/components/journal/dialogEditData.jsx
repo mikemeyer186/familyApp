@@ -5,8 +5,6 @@ import { useAlert } from '../../contexts/alertContext';
 import { useDialog } from '../../contexts/dialogContext';
 import years from '../../data/years';
 import months from '../../data/months';
-import spendCategories from '../../data/spendCategories';
-import incomeCategories from '../../data/incomeCategories';
 import CurrencyInput from 'react-currency-input-field';
 
 export default function DialogEditData() {
@@ -22,13 +20,13 @@ export default function DialogEditData() {
         expansionData,
         setExpandedRows,
     } = useJournal();
-    const { activeUser } = useUser();
+    const { activeUser, appSettings } = useUser();
     const { setSuccess } = useAlert();
     const { dialogs, closeDialog, openDialog } = useDialog();
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [amount, setAmount] = useState('');
-    const [selectedFlow, setSelectedFlow] = useState('');
+    const [selectedFlow, setSelectedFlow] = useState('Ausgabe');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
@@ -37,7 +35,21 @@ export default function DialogEditData() {
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
     const defaultFlows = ['Einnahme', 'Ausgabe'];
-    const defaultCategories = selectedFlow === 'Einnahme' ? incomeCategories : spendCategories;
+    const defaultCategories = filterCategories();
+
+    /**
+     * filters the journal categories from appsettings
+     * @returns - filtered categories by slected flow (income or output)
+     */
+    function filterCategories() {
+        if (selectedFlow === 'Einnahme') {
+            const categories = appSettings.journal.filter((category) => category.name === 'Einnahmen');
+            return categories;
+        } else if (selectedFlow === 'Ausgabe') {
+            const categories = appSettings.journal.filter((category) => category.name !== 'Einnahmen');
+            return categories;
+        }
+    }
 
     /**
      * returns editedPayment as an object
@@ -218,7 +230,7 @@ export default function DialogEditData() {
         setSelectedYear(expansionData.year);
         setSelectedMonth(expansionData.month);
         setAmount(convertAmountOnLoad(expansionData.amount));
-        setSelectedFlow(expansionData.flow);
+        setSelectedFlow(expansionData.flow ? expansionData.flow : 'Ausgabe');
         setSelectedCategory(expansionData.category);
         setSelectedAggregate(expansionData.aggregate);
         if (expansionData.info) {

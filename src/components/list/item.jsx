@@ -54,6 +54,7 @@ export default function Item({ item, updateItem, deleteItem }) {
             <div className={`itemPriority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
             <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
                 <input
+                    id={item.id}
                     className="checkbox me-1"
                     type="checkbox"
                     checked={item.done}

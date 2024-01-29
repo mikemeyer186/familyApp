@@ -107,7 +107,19 @@
     .settings-divider {
         width: 100%;
         border-bottom: $thinBorder;
-        margin: 64px 0;
+        margin: 48px 0;
+    }
+
+    .settings-box {
+        width: 100%;
+
+        .settings-box-title {
+            background-color: $bg-grey;
+            color: $txt-light;
+            border-radius: 12px;
+            padding: 2px 16px;
+            width: 100%;
+        }
     }
 
     .settings-list {
