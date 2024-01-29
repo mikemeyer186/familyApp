@@ -7,8 +7,8 @@ import { saveSettingsInFirestore } from '../../services/firestore';
 export default function Settings() {
     const { familyID, appSettings } = useUser();
     const [newAppSettings, setNewAppSettings] = useState([]);
-    const [listCategories, setListCategories] = useState(appSettings.list);
-    const [journalCategories, setJournalCategories] = useState(appSettings.journal);
+    const [listCategories, setListCategories] = useState(JSON.parse(JSON.stringify(appSettings.list)));
+    const [journalCategories, setJournalCategories] = useState(JSON.parse(JSON.stringify(appSettings.journal)));
     const [lastPage] = useLocalStorage('lastPage');
     const navigate = useNavigate();
 
@@ -24,6 +24,19 @@ export default function Settings() {
     }
 
     /**
+     * updates the newAppSettings object with all updates
+     * @param {string} key - key of object (e.g. list or journal)
+     * @param {string} updatedValues - new value of category object
+     */
+    function updateNewAppSettings(key, updatedValues) {
+        if (newAppSettings.length === 0) {
+            setNewAppSettings({ ...appSettings, [key]: updatedValues });
+        } else {
+            setNewAppSettings((prevSettings) => ({ ...prevSettings, [key]: updatedValues }));
+        }
+    }
+
+    /**
      * handles the change of list category name or color
      * @param {string} value - value from input field
      * @param {number} index - index of input
@@ -33,7 +46,7 @@ export default function Settings() {
         let updatedCategories = listCategories.map((category) => ({ ...category }));
         updatedCategories[index][field] = value ?? '';
         setListCategories(updatedCategories);
-        setNewAppSettings({ ...appSettings, list: updatedCategories });
+        updateNewAppSettings('list', updatedCategories);
     }
 
     /**
@@ -44,7 +57,7 @@ export default function Settings() {
         let updatedCategories = listCategories.map((category) => ({ ...category }));
         updatedCategories.splice(index, 1);
         setListCategories(updatedCategories);
-        setNewAppSettings({ ...appSettings, list: updatedCategories });
+        updateNewAppSettings('list', updatedCategories);
     }
 
     /**
@@ -56,11 +69,11 @@ export default function Settings() {
         const newCategory = { category: '', color: getRandomColor() };
         updatedCategories.push(newCategory);
         setListCategories(updatedCategories);
-        setNewAppSettings({ ...appSettings, list: updatedCategories });
+        updateNewAppSettings('list', updatedCategories);
     }
 
     /**
-     * handles the change of journal category name or color
+     * handles the change of journal category name
      * @param {string} value - value from input field
      * @param {number} nameIndex - index of input (name)
      * @param {number} valueIndex - index of input (value)
@@ -69,14 +82,39 @@ export default function Settings() {
         let updatedCategories = journalCategories.map((category) => ({ ...category }));
         updatedCategories[nameIndex].values[valueIndex] = value ?? '';
         setJournalCategories(updatedCategories);
-        setNewAppSettings({ ...appSettings, journal: updatedCategories });
+        updateNewAppSettings('journal', updatedCategories);
+    }
+
+    /**
+     * handles the deleting of journal categories
+     * @param {number} nameIndex - index of input (name)
+     * @param {number} valueIndex - index of input (value)
+     */
+    function handleDeleteJournalCategory(nameIndex, valueIndex) {
+        let updatedCategories = journalCategories.map((category) => ({ ...category }));
+        updatedCategories[nameIndex].values.splice(valueIndex, 1);
+        setJournalCategories(updatedCategories);
+        updateNewAppSettings('journal', updatedCategories);
+    }
+
+    /**
+     * handles the adding of journal categories
+     * @param {number} nameIndex - index of input (name)
+     */
+    function handleAddJournalCategory(nameIndex) {
+        let updatedCategories = journalCategories.map((category) => ({ ...category }));
+        const newCategory = '';
+        updatedCategories[nameIndex].values.push(newCategory);
+        setJournalCategories(updatedCategories);
+        updateNewAppSettings('journal', updatedCategories);
     }
 
     /**
      * handles the abort of settings and resets the state to old value
      */
     function handleAbortSettings() {
-        setListCategories(appSettings.list);
+        setListCategories(JSON.parse(JSON.stringify(appSettings.list)));
+        setJournalCategories(JSON.parse(JSON.stringify(appSettings.journal)));
         navigate(`/app/${lastPage}`);
     }
 
@@ -151,7 +189,7 @@ export default function Settings() {
                             <h6 className="mb-3">Kategorien für Journal</h6>
                             {journalCategories.map((category, nameIndex) => {
                                 return (
-                                    <div className="settings-box mb-5" key={nameIndex}>
+                                    <div className="settings-box mb-4" key={nameIndex}>
                                         <p className="settings-box-title mb-2">{category.name}</p>
                                         {category.values.map((value, valueIndex) => {
                                             return (
@@ -164,13 +202,36 @@ export default function Settings() {
                                                         onChange={(e) => handleJournalCategoryChange(e.target.value, nameIndex, valueIndex)}
                                                         required
                                                     />
+                                                    {valueIndex > 0 ? (
+                                                        <img
+                                                            src="/assets/icons/dash-circle.svg"
+                                                            alt="Löschen"
+                                                            className="iconClickable delete-icon"
+                                                            onClick={() => handleDeleteJournalCategory(nameIndex, valueIndex)}
+                                                        />
+                                                    ) : (
+                                                        <div className="delete-icon-invisible"></div>
+                                                    )}
                                                 </div>
                                             );
                                         })}
+                                        {journalCategories[nameIndex].values.length < 12 && (
+                                            <div className="add-list-category mt-3">
+                                                <div className="new-category-text">Neue Kategorie hinzufügen</div>
+                                                <img
+                                                    src="/assets/icons/plus-circle.svg"
+                                                    alt="Hinzufügen"
+                                                    className="iconClickable add-icon"
+                                                    onClick={() => handleAddJournalCategory(nameIndex)}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
                         </div>
+
+                        <div className="settings-divider"></div>
 
                         <div className="profile-footer mt-5">
                             <button type="button" className="btn btn-secondary" onClick={handleAbortSettings}>
