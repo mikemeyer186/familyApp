@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useState } from 'react';
 
 export default function PasswordChange() {
     const [lastPage] = useLocalStorage('lastPage');
+    const [isChanged, setIsChanged] = useState(false);
     const navigate = useNavigate();
 
     /**
@@ -28,7 +30,7 @@ export default function PasswordChange() {
                             <button type="button" className="btn btn-secondary" onClick={() => navigate(`/app/${lastPage}`)}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            <button type="submit" className="btn btn-primary" onClick={handleSubmit} disabled={!isChanged}>
                                 Speichern
                             </button>
                         </div>

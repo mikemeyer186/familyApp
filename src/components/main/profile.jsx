@@ -13,6 +13,7 @@ export default function UserProfile() {
     const [file, setFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [lastPage] = useLocalStorage('lastPage');
+    const [isChanged, setIsChanged] = useState(false);
     const photoInputRef = useRef(null);
     const userID = activeUser.uid;
     const navigate = useNavigate();
@@ -27,12 +28,18 @@ export default function UserProfile() {
         navigate(`/app/${lastPage}`);
     }
 
+    function handleChangeUserName(value) {
+        setIsChanged(true);
+        setUserName(value);
+    }
+
     /**
      * gets download url of photo from storage
      * and sets photoUrl state
      * @param {string} storageRef - storage reference of photo
      */
     async function getPhotoUrl(storageRef) {
+        setIsChanged(true);
         await getDownloadURL(storageRef).then((url) => {
             setPhotoUrl(url);
         });
@@ -112,7 +119,7 @@ export default function UserProfile() {
                                 className="form-control"
                                 id="userName"
                                 value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
+                                onChange={(e) => handleChangeUserName(e.target.value)}
                                 required
                             />
                         </div>
@@ -120,7 +127,7 @@ export default function UserProfile() {
                             <button type="button" className="btn btn-secondary" onClick={() => navigate(`/app/${lastPage}`)}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            <button type="submit" className="btn btn-primary" onClick={handleSubmit} disabled={!isChanged}>
                                 Speichern
                             </button>
                         </div>
