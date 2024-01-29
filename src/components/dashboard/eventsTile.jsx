@@ -33,7 +33,19 @@ export default function EventsTile({ nextEvents, navigateToPage }) {
                                             </span>
                                         </>
                                     ) : (
-                                        <span>ganztägig</span>
+                                        <>
+                                            {event.start === event.end ? (
+                                                <span>ganztägig</span>
+                                            ) : (
+                                                <span>
+                                                    <span>bis </span>
+                                                    {event.end.toLocaleString('de-DE', {
+                                                        day: '2-digit',
+                                                        month: '2-digit',
+                                                    })}
+                                                </span>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>
