@@ -3,12 +3,15 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
+import defaultCountries from '../../data/defaultCountries';
 
 export default function Settings() {
     const { familyID, appSettings } = useUser();
     const [newAppSettings, setNewAppSettings] = useState([]);
     const [listCategories, setListCategories] = useState(JSON.parse(JSON.stringify(appSettings.list)));
     const [journalCategories, setJournalCategories] = useState(JSON.parse(JSON.stringify(appSettings.journal)));
+    const [calendarSettings, setCalendarSettings] = useState(JSON.parse(JSON.stringify(appSettings.calendar)));
+    const [selectedCountry, setSelectedCountry] = useState(() => findCountryName());
     const [lastPage] = useLocalStorage('lastPage');
     const navigate = useNavigate();
 
@@ -110,21 +113,44 @@ export default function Settings() {
     }
 
     /**
-     * handles the abort of settings and resets the state to old value
-     */
-    function handleAbortSettings() {
-        setListCategories(JSON.parse(JSON.stringify(appSettings.list)));
-        setJournalCategories(JSON.parse(JSON.stringify(appSettings.journal)));
-        navigate(`/app/${lastPage}`);
-    }
-
-    /**
      * gets a random color code
      * @returns - hexadecimal color code as string
      */
     function getRandomColor() {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         return `#${randomColor.padStart(6, '0')}`;
+    }
+
+    /**
+     * handles the change of country for calendar API
+     * @param {string} name - kong name of country
+     * @param {string} short - ISO code of country
+     */
+    function handleCountryChange(name, short) {
+        let updatedCalendarSettings = calendarSettings;
+        updatedCalendarSettings.country = short;
+        setCalendarSettings(updatedCalendarSettings);
+        setSelectedCountry(name);
+        updateNewAppSettings('calendar', updatedCalendarSettings);
+    }
+
+    /**
+     * returns the full name of the selected country from ISO-Code
+     * @returns - long name of country
+     */
+    function findCountryName() {
+        let countryObject = defaultCountries.find((country) => country.short === calendarSettings.country);
+        return countryObject.name;
+    }
+
+    /**
+     * handles the abort of settings and resets the state to old value
+     */
+    function handleAbortSettings() {
+        setListCategories(JSON.parse(JSON.stringify(appSettings.list)));
+        setJournalCategories(JSON.parse(JSON.stringify(appSettings.journal)));
+        setCalendarSettings(JSON.parse(JSON.stringify(appSettings.calendar)));
+        navigate(`/app/${lastPage}`);
     }
 
     return (
@@ -137,7 +163,34 @@ export default function Settings() {
                 <div className="profile-body mt-5">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <h6 className="mb-3">Kategorien für Listen</h6>
+                            <h6 className="mb-3">Kalendereinstellungen</h6>
+                            <label className="mb-1 settings-label" htmlFor="countrySelection">
+                                Bundesland für Ferien & Feiertage
+                            </label>
+                            <button
+                                className="btn dropdown-toggle btn-outline-secondary thinBorder widthFull"
+                                id="countrySelection"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                {selectedCountry}
+                            </button>
+
+                            <ul className="dropdown-menu">
+                                {defaultCountries.map((country, index) => {
+                                    return (
+                                        <li key={index} onClick={() => handleCountryChange(country.name, country.short)}>
+                                            <span className="dropdown-item pointer">{country.name}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                        <div className="settings-divider"></div>
+
+                        <div className="mb-3">
+                            <h6 className="mb-3">Kategorien für Listeneinträge</h6>
                             {listCategories.map((category, index) => {
                                 return (
                                     <div key={index} className="settings-list mb-2">
@@ -186,7 +239,7 @@ export default function Settings() {
                         <div className="settings-divider"></div>
 
                         <div className="mb-3">
-                            <h6 className="mb-3">Kategorien für Journal</h6>
+                            <h6 className="mb-3">Kategorien für das Journal</h6>
                             {journalCategories.map((category, nameIndex) => {
                                 return (
                                     <div className="settings-box mb-4" key={nameIndex}>
