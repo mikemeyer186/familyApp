@@ -110,9 +110,17 @@
         margin: 48px 0;
     }
 
+    .settings-color-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
     .settings-label {
         color: $txt-grey;
         font-size: 0.9rem;
+        text-wrap: nowrap;
     }
 
     .settings-box {
@@ -131,25 +139,25 @@
         display: flex;
         align-items: center;
         gap: 12px;
+    }
 
-        .settings-list-color {
-            flex-shrink: 0;
-            height: 38px;
-            width: 38px;
-            padding: 0.375rem;
-            cursor: pointer;
-        }
+    .settings-list-color {
+        flex-shrink: 0;
+        height: 38px;
+        width: 38px;
+        padding: 0.375rem;
+        cursor: pointer;
+    }
 
-        .delete-icon {
-            flex-shrink: 0;
-            opacity: 0.3;
-        }
+    .delete-icon {
+        flex-shrink: 0;
+        opacity: 0.3;
+    }
 
-        .delete-icon-invisible {
-            flex-shrink: 0;
-            width: 24px;
-            height: 24px;
-        }
+    .delete-icon-invisible {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
     }
 
     .add-list-category {

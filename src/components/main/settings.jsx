@@ -144,6 +144,18 @@ export default function Settings() {
     }
 
     /**
+     * chnages the color of holidays
+     * @param {string} color - color code
+     * @param {*} colorKey - color field in settings (school or public)
+     */
+    function handleHolidayColorChange(color, colorKey) {
+        let updatedCalendarSettings = calendarSettings;
+        updatedCalendarSettings[colorKey] = color;
+        setCalendarSettings(updatedCalendarSettings);
+        updateNewAppSettings('calendar', updatedCalendarSettings);
+    }
+
+    /**
      * handles the abort of settings and resets the state to old value
      */
     function handleAbortSettings() {
@@ -164,7 +176,8 @@ export default function Settings() {
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <h6 className="mb-3">Kalendereinstellungen</h6>
-                            <label className="mb-1 settings-label" htmlFor="countrySelection">
+
+                            <label className="mb-2 settings-label" htmlFor="countrySelection">
                                 Bundesland für Ferien & Feiertage
                             </label>
                             <button
@@ -176,7 +189,6 @@ export default function Settings() {
                             >
                                 {selectedCountry}
                             </button>
-
                             <ul className="dropdown-menu">
                                 {defaultCountries.map((country, index) => {
                                     return (
@@ -186,7 +198,34 @@ export default function Settings() {
                                     );
                                 })}
                             </ul>
+
+                            <div className="settings-color-box mt-4">
+                                <span className="mb-1 settings-label" htmlFor="schoolHolidayColor">
+                                    Schulferien
+                                </span>
+                                <input
+                                    type="color"
+                                    id="schoolHolidayColor"
+                                    className="form-control settings-list-color me-4"
+                                    value={calendarSettings.schoolHolidayColor}
+                                    onChange={(e) => handleHolidayColorChange(e.target.value, 'schoolHolidayColor')}
+                                    required
+                                ></input>
+
+                                <span className="mb-1 settings-label" htmlFor="publicHolidayColor">
+                                    Feiertage
+                                </span>
+                                <input
+                                    type="color"
+                                    id="publicHolidayColor"
+                                    className="form-control settings-list-color"
+                                    value={calendarSettings.publicHolidayColor}
+                                    onChange={(e) => handleHolidayColorChange(e.target.value, 'publicHolidayColor')}
+                                    required
+                                ></input>
+                            </div>
                         </div>
+
                         <div className="settings-divider"></div>
 
                         <div className="mb-3">

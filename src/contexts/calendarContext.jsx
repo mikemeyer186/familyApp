@@ -20,8 +20,8 @@ function CalendarProvider({ children }) {
     const countryCode = appSettings.calendar.country;
     const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL + countryCode;
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL + countryCode;
-    const schoolHolidayColor = '#a3dda3';
-    const publicHolidayColor = '#d89393';
+    const schoolHolidayColor = appSettings.calendar.schoolHolidayColor;
+    const publicHolidayColor = appSettings.calendar.publicHolidayColor;
 
     /**
      * fetches school holidays from API
@@ -133,7 +133,7 @@ function CalendarProvider({ children }) {
             await loadFirestoreEvents();
             setIsCalendarloaded(true);
         },
-        [loadFirestoreEvents, convertRawEvents, schoolHolidays, publicHolidays]
+        [loadFirestoreEvents, convertRawEvents, schoolHolidays, publicHolidays, schoolHolidayColor, publicHolidayColor]
     );
 
     /**
