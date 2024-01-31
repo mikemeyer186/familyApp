@@ -3,7 +3,6 @@ import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useAlert } from '../../contexts/alertContext';
 import { useDialog } from '../../contexts/dialogContext';
-import years from '../../data/years';
 import months from '../../data/months';
 import CurrencyInput from 'react-currency-input-field';
 
@@ -20,7 +19,7 @@ export default function DialogEditData() {
         expansionData,
         setExpandedRows,
     } = useJournal();
-    const { activeUser, appSettings } = useUser();
+    const { activeUser, appSettings, activeYears } = useUser();
     const { setSuccess } = useAlert();
     const { dialogs, closeDialog, openDialog } = useDialog();
     const [selectedYear, setSelectedYear] = useState('');
@@ -31,7 +30,7 @@ export default function DialogEditData() {
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
     const [newJournalId, setNewJournalId] = useState('');
-    const defaultYears = years;
+    const defaultYears = activeYears;
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
     const defaultFlows = ['Einnahme', 'Ausgabe'];

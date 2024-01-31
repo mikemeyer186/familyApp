@@ -3,7 +3,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
-import defaultCountries from '../../data/defaultCountries';
+import countries from '../../data/countries';
 
 export default function Settings() {
     const { familyID, appSettings } = useUser();
@@ -139,7 +139,7 @@ export default function Settings() {
      */
     const findCountryName = useCallback(
         function findCountryName() {
-            let countryObject = defaultCountries.find((country) => country.short === calendarSettings.country);
+            let countryObject = countries.find((country) => country.short === calendarSettings.country);
             setSelectedCountry(countryObject.name);
         },
         [calendarSettings]
@@ -210,7 +210,7 @@ export default function Settings() {
                                 {selectedCountry}
                             </button>
                             <ul className="dropdown-menu">
-                                {defaultCountries.map((country, index) => {
+                                {countries.map((country, index) => {
                                     return (
                                         <li key={index} onClick={() => handleCountryChange(country.name, country.short)}>
                                             <span className="dropdown-item pointer">{country.name}</span>

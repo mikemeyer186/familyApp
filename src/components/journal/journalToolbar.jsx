@@ -1,12 +1,13 @@
 import { useJournal } from '../../contexts/journalContext';
 import { useDialog } from '../../contexts/dialogContext';
-import years from '../../data/years';
+import { useUser } from '../../contexts/userContext';
 import months from '../../data/months';
 
 export default function JournalToolbar() {
     const { selectedYear, selectedMonth, setSelectedYear, setSelectedMonth } = useJournal();
+    const { activeYears } = useUser();
     const { openDialog } = useDialog();
-    const defaultYears = years;
+    const defaultYears = activeYears;
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
 

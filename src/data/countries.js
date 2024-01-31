@@ -1,4 +1,4 @@
-const defaultCountries = [
+const countries = [
     {
         name: 'Schleswig-Holstein',
         short: 'SH',
@@ -64,4 +64,4 @@ const defaultCountries = [
         short: 'TH',
     },
 ];
-export default defaultCountries;
+export default countries;

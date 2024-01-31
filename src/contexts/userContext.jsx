@@ -16,6 +16,7 @@ function UserPovider({ children }) {
     const [activeUser, setActiveUser] = useState(null);
     const [familyID, setFamilyID] = useState('');
     const [appSettings, setAppSettings] = useState({});
+    const [activeYears, setActiveYears] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [lastPage, setLastPage] = useLocalStorage('lastPage');
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
@@ -116,6 +117,7 @@ function UserPovider({ children }) {
     /**
      * loads user data from firestore
      * and sets the related family id for database connection
+     * and generates a list of active years
      * @param {string} uid - user id
      */
     async function loadUserData(uid) {
@@ -123,6 +125,22 @@ function UserPovider({ children }) {
         const settings = await loadSettingsFromFirestore(userData.familyID);
         setFamilyID(userData.familyID);
         setAppSettings(settings);
+        generateYearList();
+    }
+
+    /**
+     * genrates a list of active years from -2 to +2 of current year
+     * is used for journal data and calendar api
+     */
+    function generateYearList() {
+        const yearList = [];
+        const currentYear = new Date().getFullYear();
+        const startYear = currentYear - 2;
+
+        for (let i = 0; i < 5; i++) {
+            yearList.push((startYear + i).toString());
+        }
+        setActiveYears(yearList);
     }
 
     /**
@@ -155,6 +173,7 @@ function UserPovider({ children }) {
                 loggedIn: loggedIn,
                 familyID: familyID,
                 appSettings: appSettings,
+                activeYears: activeYears,
                 setActiveUser,
                 setFamilyID,
                 signInUser,

@@ -4,10 +4,9 @@ import { useJournal } from '../../contexts/journalContext';
 import { useDialog } from '../../contexts/dialogContext';
 import CurrencyInput from 'react-currency-input-field';
 import months from '../../data/months';
-import years from '../../data/years';
 
 export default function DialogNewData() {
-    const { activeUser, appSettings } = useUser();
+    const { activeUser, appSettings, activeYears } = useUser();
     const { activePayment, selectedJournalId, selectedYear, selectedMonth, setSelectedYear, setSelectedMonth, addNewPayment } = useJournal();
     const { dialogs, closeDialog } = useDialog();
     const [amount, setAmount] = useState('');
@@ -18,7 +17,7 @@ export default function DialogNewData() {
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = filterCategories();
     const defaultMonths = months;
-    const defaultYears = years;
+    const defaultYears = activeYears;
     const convertedMonth = months[selectedMonth - 1];
 
     /**
