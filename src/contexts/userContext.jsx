@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
 import { useSessionStorage } from '../hooks/useSessionStorage';
-import { loadUserDataFromFirestore, loadSettingsFromFirestore } from '../services/firestore';
+import { loadUserDataFromFirestore, loadSettingsFromFirestore, loadMotivationFromFirestore } from '../services/firestore';
 
 const UserContext = createContext();
 
@@ -22,7 +22,10 @@ function UserPovider({ children }) {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
     const [isAppLoaded, setIsAppLoaded] = useSessionStorage('isAppLoaded');
     const [activePage, setActivePage] = useState(lastPage);
+    const [motivationSentence, setMotivationSentence] = useState('');
+    const [isMotivationLoaded, setIsMotivationLoaded] = useState(false);
     const [searchParams] = useSearchParams('');
+    const [yearDay] = useState(dayOfYear());
     const navigate = useNavigate();
 
     /**
@@ -129,6 +132,15 @@ function UserPovider({ children }) {
     }
 
     /**
+     * loads the motivation sentence from firestore
+     */
+    async function loadMotivation() {
+        const motivation = await loadMotivationFromFirestore();
+        setMotivationSentence(motivation.sentences[yearDay]);
+        setIsMotivationLoaded(true);
+    }
+
+    /**
      * genrates a list of active years from -2 to +2 of current year
      * is used for journal data and calendar api
      */
@@ -141,6 +153,16 @@ function UserPovider({ children }) {
             yearList.push((startYear + i).toString());
         }
         setActiveYears(yearList);
+    }
+
+    /**
+     * calculates the number of current day of the year
+     * @returns number of the current day of the year
+     */
+    function dayOfYear() {
+        const date = new Date();
+        const day = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+        return day;
     }
 
     /**
@@ -174,6 +196,8 @@ function UserPovider({ children }) {
                 familyID: familyID,
                 appSettings: appSettings,
                 activeYears: activeYears,
+                motivationSentence: motivationSentence,
+                isMotivationLoaded: isMotivationLoaded,
                 setActiveUser,
                 setFamilyID,
                 signInUser,
@@ -182,6 +206,7 @@ function UserPovider({ children }) {
                 updateUserEmail,
                 authCheck,
                 setAppSettings,
+                loadMotivation,
             }}
         >
             {children}

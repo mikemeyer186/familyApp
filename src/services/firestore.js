@@ -34,6 +34,17 @@ export async function saveSettingsInFirestore(familyID, settings) {
     }
 }
 
+export async function loadMotivationFromFirestore() {
+    const docRef = doc(db, 'motivation', 'set001');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log('No such document!');
+    }
+}
+
 // List functions
 export async function loadListsFromFirestore(familyID) {
     const familyCollection = collection(db, familyID);

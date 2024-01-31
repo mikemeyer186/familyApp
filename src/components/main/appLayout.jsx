@@ -10,7 +10,7 @@ import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
-    const { familyID, setAppSettings } = useUser();
+    const { familyID, setAppSettings, loadMotivation } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { getLists, setLists } = useList();
     const { setJournals, loadJournals } = useJournal();
@@ -35,6 +35,13 @@ export default function AppLayout() {
     useEffect(() => {
         loadJournals();
     }, [loadJournals]);
+
+    /**
+     * loads the motivation from firestore
+     */
+    useEffect(() => {
+        loadMotivation();
+    }, [loadMotivation]);
 
     /**
      * observable for settings from firebase

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
+import { useUser } from '../../contexts/userContext';
 import { useNavigate } from 'react-router';
 import Spinner from '../global/spinner';
 import MotivationTile from './motivationTile';
@@ -13,12 +14,14 @@ export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
     const { isListLoaded, filterImportantItems } = useList();
     const { isJournalLoaded, filterDailyBalances } = useJournal();
+    const { isMotivationLoaded } = useUser();
     const [nextEvents, setNextEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
     const [journalBalances, setJournalBalances] = useState({});
     const [eventsLoaded, setEventsLoaded] = useState(false);
     const [itemsLoaded, setItemsLoaded] = useState(false);
     const [journalLoaded, setJournalLoaded] = useState(false);
+    const [motivationLoaded, setMotivationLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const navigate = useNavigate();
 
@@ -73,16 +76,29 @@ export default function DashboardPage() {
     );
 
     /**
+     * loads the motivation sentence from firestore
+     */
+    const loadMotivationSentence = useCallback(
+        async function loadMotivationSentence() {
+            if (isMotivationLoaded) {
+                setMotivationLoaded(true);
+            }
+        },
+        [isMotivationLoaded]
+    );
+
+    /**
      * loads the data on initial loading of the dashboard
      */
     useEffect(() => {
         filterNextEvents();
         filterListItems();
         filterJournal();
-        if (eventsLoaded && itemsLoaded && journalLoaded) {
+        loadMotivationSentence();
+        if (eventsLoaded && itemsLoaded && journalLoaded && motivationLoaded) {
             setIsLoaded(true);
         }
-    }, [filterNextEvents, filterListItems, filterJournal, eventsLoaded, itemsLoaded, journalLoaded]);
+    }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence, eventsLoaded, itemsLoaded, journalLoaded, motivationLoaded]);
 
     return (
         <div className="dashboardPage-wrapper">
