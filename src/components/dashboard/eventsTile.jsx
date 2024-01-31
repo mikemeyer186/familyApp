@@ -1,4 +1,6 @@
 export default function EventsTile({ nextEvents, navigateToPage }) {
+    console.log(nextEvents);
+
     return (
         <div className="dashboard-tile" onClick={() => navigateToPage('/app/calendar?page=Kalender')}>
             <h4 className="tile-title">Nächste Termine</h4>
@@ -34,7 +36,7 @@ export default function EventsTile({ nextEvents, navigateToPage }) {
                                         </>
                                     ) : (
                                         <>
-                                            {event.start === event.end ? (
+                                            {new Date(event.start).getDate() === new Date(event.end).getDate() ? (
                                                 <span>ganztägig</span>
                                             ) : (
                                                 <span>
