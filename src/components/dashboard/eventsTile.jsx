@@ -1,6 +1,4 @@
 export default function EventsTile({ nextEvents, navigateToPage }) {
-    console.log(nextEvents);
-
     return (
         <div className="dashboard-tile" onClick={() => navigateToPage('/app/calendar?page=Kalender')}>
             <h4 className="tile-title">Nächste Termine</h4>

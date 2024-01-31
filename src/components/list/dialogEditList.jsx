@@ -22,6 +22,7 @@ export default function DialogEditList() {
      */
     function handleCloseDialog() {
         closeDialog('listEditRef');
+        setNewTitle(selectedList.title);
     }
 
     /**
