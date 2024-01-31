@@ -6,7 +6,7 @@ import { useUser } from './userContext';
 const CalendarContext = createContext();
 
 function CalendarProvider({ children }) {
-    const { familyID, appSettings } = useUser();
+    const { familyID, appSettings, activeYears } = useUser();
     const { setSuccess } = useAlert();
     const [events, setEvents] = useState([]);
     const [schoolHolidays, setSchoolHolidays] = useState([]);
@@ -17,9 +17,12 @@ function CalendarProvider({ children }) {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [timeSlotClicked, setTimeSlotClicked] = useState(false);
     const [meetingID, setMeetingID] = useState('');
+    const firstDate = activeYears[1];
+    const lastDate = activeYears[activeYears.length - 2];
+    const calendarRange = `${firstDate}-01-01&validTo=${lastDate}-12-31&subdivisionCode=DE-`;
     const countryCode = appSettings.calendar.country;
-    const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL + countryCode;
-    const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL + countryCode;
+    const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL + calendarRange + countryCode;
+    const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL + calendarRange + countryCode;
     const schoolHolidayColor = appSettings.calendar.schoolHolidayColor;
     const publicHolidayColor = appSettings.calendar.publicHolidayColor;
 
