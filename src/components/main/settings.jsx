@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
 import defaultCountries from '../../data/defaultCountries';
@@ -11,7 +11,7 @@ export default function Settings() {
     const [listCategories, setListCategories] = useState(JSON.parse(JSON.stringify(appSettings.list)));
     const [journalCategories, setJournalCategories] = useState(JSON.parse(JSON.stringify(appSettings.journal)));
     const [calendarSettings, setCalendarSettings] = useState(JSON.parse(JSON.stringify(appSettings.calendar)));
-    const [selectedCountry, setSelectedCountry] = useState(() => findCountryName());
+    const [selectedCountry, setSelectedCountry] = useState('');
     const [lastPage] = useLocalStorage('lastPage');
     const navigate = useNavigate();
 
@@ -21,7 +21,6 @@ export default function Settings() {
      */
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(newAppSettings);
         saveSettingsInFirestore(familyID, newAppSettings);
         navigate(`/app/${lastPage}`);
     }
@@ -138,10 +137,13 @@ export default function Settings() {
      * returns the full name of the selected country from ISO-Code
      * @returns - long name of country
      */
-    function findCountryName() {
-        let countryObject = defaultCountries.find((country) => country.short === calendarSettings.country);
-        return countryObject.name;
-    }
+    const findCountryName = useCallback(
+        function findCountryName() {
+            let countryObject = defaultCountries.find((country) => country.short === calendarSettings.country);
+            setSelectedCountry(countryObject.name);
+        },
+        [calendarSettings]
+    );
 
     /**
      * chnages the color of holidays
@@ -164,6 +166,24 @@ export default function Settings() {
         setCalendarSettings(JSON.parse(JSON.stringify(appSettings.calendar)));
         navigate(`/app/${lastPage}`);
     }
+
+    /**
+     * if appSettings changes (observable) then states will be updated
+     */
+    useEffect(() => {
+        if (appSettings) {
+            setListCategories(JSON.parse(JSON.stringify(appSettings.list)));
+            setJournalCategories(JSON.parse(JSON.stringify(appSettings.journal)));
+            setCalendarSettings(JSON.parse(JSON.stringify(appSettings.calendar)));
+        }
+    }, [appSettings]);
+
+    /**
+     * if calendarSettings changes (from appSettings) then the selectedCountry in drop down field will be updated
+     */
+    useEffect(() => {
+        findCountryName();
+    }, [calendarSettings, findCountryName]);
 
     return (
         <div className="profile-wrapper">
