@@ -114,6 +114,20 @@ body {
     height: 38px;
 }
 
+.input-error {
+    transition: all 150ms ease-in-out;
+
+    &:focus {
+        border: 1px solid #ee4c5c;
+        box-shadow: 0 0 0 0.2rem #e96875;
+    }
+
+    &::placeholder {
+        font-weight: 300;
+        color: $txt-light-grey;
+    }
+}
+
 //Bootstrap overrides
 .modal-backdrop,
 .offcanvas-backdrop {
