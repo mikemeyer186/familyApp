@@ -3,10 +3,12 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
+import { useAlert } from '../../contexts/alertContext';
 import countries from '../../data/countries';
 
 export default function Settings() {
     const { familyID, appSettings } = useUser();
+    const { setSuccess } = useAlert();
     const [newAppSettings, setNewAppSettings] = useState([]);
     const [listCategories, setListCategories] = useState(JSON.parse(JSON.stringify(appSettings.list)));
     const [journalCategories, setJournalCategories] = useState(JSON.parse(JSON.stringify(appSettings.journal)));
@@ -23,6 +25,7 @@ export default function Settings() {
         e.preventDefault();
         saveSettingsInFirestore(familyID, newAppSettings);
         navigate(`/app/${lastPage}`);
+        setSuccess('Deine Einstellungnen wurden aktualisiert!');
     }
 
     /**
