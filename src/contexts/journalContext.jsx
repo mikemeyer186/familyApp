@@ -132,7 +132,7 @@ function JournalProvider({ children }) {
      */
     function groupDailyPayments(dailyPayments) {
         const groupedByDate = dailyPayments.reduce((acc, payment) => {
-            const date = payment.date.slice(8, 10);
+            const date = payment.date.slice(5, 10);
             if (!acc[date]) {
                 acc[date] = [];
             }
@@ -160,7 +160,8 @@ function JournalProvider({ children }) {
                 groupedPayments[date].forEach((payment) => {
                     balance += payment.amount;
                 });
-                dailyBalances.dates.push(date);
+                let convertedDate = date.split('-')[1];
+                dailyBalances.dates.push(convertedDate);
                 dailyBalances.balances.push(Number(balance.toFixed(2)));
             });
 
