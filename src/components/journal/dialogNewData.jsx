@@ -267,13 +267,13 @@ export default function DialogNewData() {
 
                                 <div className="form-row mb-3">
                                     <div className="widthFull">
-                                        <label htmlFor="info" className="col-form-label">
+                                        <label htmlFor="dataInfo" className="col-form-label">
                                             Kommentar
                                         </label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="info"
+                                            id="dataInfo"
                                             placeholder="Zusätzliche Info zum Beleg"
                                             value={info}
                                             onChange={(e) => setInfo(e.target.value)}

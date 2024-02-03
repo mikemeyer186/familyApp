@@ -336,13 +336,13 @@ export default function DialogEditMeeting() {
 
                             <div className="form-row mb-3">
                                 <div className="widthFull">
-                                    <label htmlFor="editInfo" className="col-form-label">
+                                    <label htmlFor="meetingEditInfo" className="col-form-label">
                                         Weitere Informationen
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="editInfo"
+                                        id="meetingEditInfo"
                                         placeholder="Zusätzliche Info zum Termin"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}

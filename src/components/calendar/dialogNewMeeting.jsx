@@ -364,13 +364,13 @@ export default function DialogNewMeeting() {
 
                             <div className="form-row mb-3">
                                 <div className="widthFull">
-                                    <label htmlFor="info" className="col-form-label">
+                                    <label htmlFor="meetingInfo" className="col-form-label">
                                         Weitere Informationen
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="info"
+                                        id="meetingInfo"
                                         placeholder="Zusätzliche Info zum Termin"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}

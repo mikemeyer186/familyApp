@@ -43,6 +43,7 @@ export default function DialogNewList() {
                                     type="text"
                                     className="form-control"
                                     id="list-name"
+                                    placeholder="Titel der Liste"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     required

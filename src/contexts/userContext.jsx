@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../config/firebase';
-import { updateEmail, updateProfile, signOut } from 'firebase/auth';
+import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
@@ -14,6 +14,7 @@ const UserContext = createContext();
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
+    const [newEmail, setNewEmail] = useState('');
     const [familyID, setFamilyID] = useState('');
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
@@ -82,16 +83,22 @@ function UserPovider({ children }) {
     }
 
     /**
-     * updates user email in firebase auth (not implemented yet)
-     * @param {string} email - email of user
+     * updates to new user email after verify link is clicked (new email adress)
+     * signs the ouser out after 5 seconds
+     * @param {string} password - password from email change form
      */
-    async function updateUserEmail(email) {
+    async function updateUserEmail(password) {
+        const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
         try {
-            console.log(email);
-            await updateEmail(auth.currentUser, email);
-            setSuccess('Deine E-Mail Adresse wurde erfolgreich aktualisiert!');
+            await reauthenticateWithCredential(auth.currentUser, credential);
+            await verifyBeforeUpdateEmail(auth.currentUser, newEmail);
+            setSuccess('Bestigungslink wurde versendet. Du wirst in 5 Sekunden automatisch abgemeldet!');
+            setTimeout(() => {
+                signOutUser();
+            }, 5000);
         } catch (err) {
-            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+            setError('Passwort nicht korrekt!');
+            throw err;
         }
     }
 
@@ -198,15 +205,17 @@ function UserPovider({ children }) {
                 activeYears: activeYears,
                 motivationSentence: motivationSentence,
                 isMotivationLoaded: isMotivationLoaded,
+                newEmail: newEmail,
                 setActiveUser,
                 setFamilyID,
                 signInUser,
                 signOutUser,
                 updateUserProfile,
-                updateUserEmail,
                 authCheck,
                 setAppSettings,
                 loadMotivation,
+                updateUserEmail,
+                setNewEmail,
             }}
         >
             {children}

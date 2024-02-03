@@ -122,9 +122,8 @@ body {
         box-shadow: 0 0 0 0.2rem #e96875;
     }
 
-    &::placeholder {
-        font-weight: 300;
-        color: $txt-light-grey;
+    &:not(:focus) {
+        background-color: rgba(238, 76, 92, 0.5);
     }
 }
 
@@ -141,6 +140,13 @@ body {
         &:hover {
             background-color: #f0f0f0;
         }
+    }
+}
+
+.form-control {
+    &::placeholder {
+        font-weight: 300;
+        color: $txt-light-grey;
     }
 }
 
