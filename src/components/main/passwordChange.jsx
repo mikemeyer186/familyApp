@@ -83,8 +83,8 @@ export default function PasswordChange() {
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Passwort ändern</h4>
                     <span>
-                        Hier kannst du dein Passwort ändern. Vergib ein sicheres Passwort mit mindestens 8 Zeichen, mindestens einer Zahl und einem
-                        Sonderzeichen.
+                        Hier kannst du dein Account-Passwort ändern. Vergib ein sicheres Passwort mit mindestens 8 Zeichen, mindestens einer Zahl und
+                        einem Sonderzeichen.
                     </span>
                 </div>
                 <div className="profile-body mt-5">
