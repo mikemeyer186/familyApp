@@ -11,7 +11,7 @@ export default function EmailChange() {
     const navigate = useNavigate();
 
     /**
-     * handles user data update
+     * handles user email update
      * @param {event} e - event from form submit
      */
     async function handleSubmit(e) {
@@ -67,7 +67,7 @@ export default function EmailChange() {
                 </div>
                 <div className="profile-body mt-5">
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
+                        <div className="mb-3">
                             <label htmlFor="oldEmail" className="col-form-label">
                                 Aktuelle E-Mail Adresse
                             </label>
@@ -105,7 +105,7 @@ export default function EmailChange() {
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={emailError || password.length === 0 || newEmail.length === 0}>
-                                E-Mail Ändern
+                                E-Mail ändern
                             </button>
                         </div>
                     </form>

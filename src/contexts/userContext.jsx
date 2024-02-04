@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../config/firebase';
-import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail } from 'firebase/auth';
+import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
@@ -85,7 +85,7 @@ function UserPovider({ children }) {
     /**
      * updates to new user email after verify link is clicked (new email adress)
      * signs the ouser out after 5 seconds
-     * @param {string} password - password from email change form
+     * @param {string} password - actual password from email change form
      */
     async function updateUserEmail(password) {
         const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
@@ -93,6 +93,26 @@ function UserPovider({ children }) {
             await reauthenticateWithCredential(auth.currentUser, credential);
             await verifyBeforeUpdateEmail(auth.currentUser, newEmail);
             setSuccess('Bestigungslink wurde versendet. Du wirst in 5 Sekunden automatisch abgemeldet!');
+            setTimeout(() => {
+                signOutUser();
+            }, 5000);
+        } catch (err) {
+            setError('Passwort nicht korrekt!');
+            throw err;
+        }
+    }
+
+    /**
+     * updates to new user password
+     * signs the ouser out after 5 seconds
+     * @param {string} password - actual password from password change form
+     */
+    async function updateUserPassword(oldPassword, newPassword) {
+        const credential = EmailAuthProvider.credential(auth.currentUser.email, oldPassword);
+        try {
+            await reauthenticateWithCredential(auth.currentUser, credential);
+            await updatePassword(auth.currentUser, newPassword);
+            setSuccess('Dein Passwort wurde geändert. Du wirst in 5 Sekunden automatisch abgemeldet!');
             setTimeout(() => {
                 signOutUser();
             }, 5000);
@@ -215,6 +235,7 @@ function UserPovider({ children }) {
                 setAppSettings,
                 loadMotivation,
                 updateUserEmail,
+                updateUserPassword,
                 setNewEmail,
             }}
         >

@@ -127,6 +127,31 @@ body {
     }
 }
 
+.input-checked {
+    transition: all 150ms ease-in-out;
+
+    &:focus {
+        border: 1px solid #2e8e40;
+        box-shadow: 0 0 0 0.2rem #5ab86b;
+    }
+
+    &:not(:focus) {
+        background-color: rgba(74, 211, 99, 0.5);
+    }
+}
+
+.safe {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #5ab86b;
+}
+
+.unsafe {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #e96875;
+}
+
 //Bootstrap overrides
 .modal-backdrop,
 .offcanvas-backdrop {
