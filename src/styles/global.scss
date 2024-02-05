@@ -163,6 +163,12 @@ body {
     color: #e96875;
 }
 
+.not-allowed {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.3;
+}
+
 //Bootstrap overrides
 .modal-backdrop,
 .offcanvas-backdrop {
