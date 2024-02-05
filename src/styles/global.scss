@@ -140,6 +140,13 @@ body {
     }
 }
 
+.password-check-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-right: 8px;
+}
+
 .safe {
     font-size: 0.8rem;
     font-weight: 300;

@@ -96,7 +96,7 @@ export default function UserProfile() {
                         </div>
                     </div>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <input
                                 type="file"
@@ -127,7 +127,7 @@ export default function UserProfile() {
                             <button type="button" className="btn btn-secondary" onClick={() => navigate(`/app/${lastPage}`)}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary" onClick={handleSubmit} disabled={!isChanged}>
+                            <button type="submit" className="btn btn-primary" disabled={!isChanged}>
                                 Speichern
                             </button>
                         </div>

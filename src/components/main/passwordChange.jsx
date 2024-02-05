@@ -103,7 +103,7 @@ export default function PasswordChange() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="newPassword" className="col-form-label">
+                            <label htmlFor="newPassword" className="col-form-label password-check-label">
                                 Neues Passwort{' '}
                                 <span className={validPassword ? 'safe' : 'unsafe'}>
                                     {!validPassword && !newPassword == '' ? 'unsicher' : validPassword && !newPassword == '' && 'sicher'}
