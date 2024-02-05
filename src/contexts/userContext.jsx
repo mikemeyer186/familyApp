@@ -15,6 +15,7 @@ function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
     const [newEmail, setNewEmail] = useState('');
+    const [message, setMessage] = useState('');
     const [familyID, setFamilyID] = useState('');
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
@@ -227,6 +228,7 @@ function UserPovider({ children }) {
                 motivationSentence: motivationSentence,
                 isMotivationLoaded: isMotivationLoaded,
                 newEmail: newEmail,
+                message: message,
                 setActiveUser,
                 setFamilyID,
                 signInUser,
@@ -238,6 +240,7 @@ function UserPovider({ children }) {
                 updateUserEmail,
                 updateUserPassword,
                 setNewEmail,
+                setMessage,
             }}
         >
             {children}
