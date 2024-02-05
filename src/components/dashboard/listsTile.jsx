@@ -1,13 +1,21 @@
+import { useUser } from '../../contexts/userContext';
+
 export default function ListsTile({ importantItems, navigateToPage }) {
+    const { appSettings } = useUser();
+
     return (
         <div className="dashboard-tile" onClick={() => navigateToPage('/app/lists?page=Listen')}>
             <h4 className="tile-title">Wichtige Einkäufe</h4>
             {importantItems.length > 0 ? (
                 importantItems.map((item) => {
+                    const itemCategory = appSettings.list.find((category) => category.category === item.category);
+                    const itemColor = itemCategory ? itemCategory.color : '#6d767e';
                     return (
                         <div className="tile-item" key={item.id}>
                             <div className="item-left">
-                                <span className={`badge rounded-pill category ${item.category}`}>{item.category}</span>
+                                <span className={`badge rounded-pill category ${item.category}`} style={{ backgroundColor: itemColor }}>
+                                    {item.category}
+                                </span>
                             </div>
                             <div className="item-right">
                                 <span className="item-title">{item.title}</span>
