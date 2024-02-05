@@ -140,6 +140,7 @@ function UserPovider({ children }) {
                 }
             } else {
                 setIsAuthenticated(false);
+                navigate('/');
             }
         });
     }
