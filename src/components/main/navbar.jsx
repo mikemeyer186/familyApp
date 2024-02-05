@@ -123,7 +123,7 @@ export default function Navbar() {
                                                     Profil bearbeiten
                                                 </span>
                                             </li>
-                                            <li data-bs-dismiss={isGuest && ''}>
+                                            <li data-bs-dismiss={isGuest ? '' : 'offcanvas'}>
                                                 <span
                                                     className={`dropdown-item pointer ${isGuest && 'not-allowed'}`}
                                                     onClick={() => {
@@ -135,7 +135,7 @@ export default function Navbar() {
                                                     E-Mail Adresse ändern
                                                 </span>
                                             </li>
-                                            <li data-bs-dismiss={isGuest && ''}>
+                                            <li data-bs-dismiss={isGuest ? '' : 'offcanvas'}>
                                                 <span
                                                     className={`dropdown-item pointer ${isGuest && 'not-allowed'}`}
                                                     onClick={() => {
