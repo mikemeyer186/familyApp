@@ -6,8 +6,6 @@ import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
 export default function Navbar() {
     const { activeUser, signOutUser } = useUser();
     const [greeting, setGreeting] = useState('Hallo');
-    const userID = activeUser.uid;
-    const isGuest = userID === import.meta.env.VITE_GUEST_ID;
     const navigate = useNavigate();
 
     /**
@@ -123,26 +121,18 @@ export default function Navbar() {
                                                     Profil bearbeiten
                                                 </span>
                                             </li>
-                                            <li data-bs-dismiss={isGuest ? '' : 'offcanvas'}>
+                                            <li data-bs-dismiss="offcanvas">
                                                 <span
-                                                    className={`dropdown-item pointer ${isGuest && 'not-allowed'}`}
-                                                    onClick={() => {
-                                                        if (!isGuest) {
-                                                            handleDropdownNav('emailchange?page=E-Mail Adresse ändern');
-                                                        }
-                                                    }}
+                                                    className="dropdown-item pointer"
+                                                    onClick={() => handleDropdownNav('emailchange?page=E-Mail Adresse ändern')}
                                                 >
                                                     E-Mail Adresse ändern
                                                 </span>
                                             </li>
-                                            <li data-bs-dismiss={isGuest ? '' : 'offcanvas'}>
+                                            <li data-bs-dismiss="offcanvas">
                                                 <span
-                                                    className={`dropdown-item pointer ${isGuest && 'not-allowed'}`}
-                                                    onClick={() => {
-                                                        if (!isGuest) {
-                                                            handleDropdownNav('passwordchange?page=Password ändern');
-                                                        }
-                                                    }}
+                                                    className="dropdown-item pointer"
+                                                    onClick={() => handleDropdownNav('passwordchange?page=Password ändern')}
                                                 >
                                                     Passwort ändern
                                                 </span>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 
 export default function PasswordChange() {
-    const { updateUserPassword } = useUser();
+    const { isGuest, updateUserPassword } = useUser();
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
@@ -84,7 +84,7 @@ export default function PasswordChange() {
                     <h4 className="profil-title mb-2">Passwort ändern</h4>
                     <span>
                         Hier kannst du dein Account-Passwort ändern. Vergib ein sicheres Passwort mit mindestens 8 Zeichen, mindestens einer Zahl und
-                        einem Sonderzeichen.
+                        einem Sonderzeichen{isGuest && <span className="not-allowed"> (als Gast nicht möglich)</span>}.
                     </span>
                 </div>
                 <div className="profile-body mt-5">
@@ -99,6 +99,7 @@ export default function PasswordChange() {
                                 id="oldPassword"
                                 value={oldPassword}
                                 onChange={(e) => setOldPassword(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>
@@ -115,6 +116,7 @@ export default function PasswordChange() {
                                 id="newPassword"
                                 value={newPassword}
                                 onChange={(e) => handleNewPasswordChange(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>
@@ -130,6 +132,7 @@ export default function PasswordChange() {
                                 id="newPasswordCheck"
                                 value={passwordCheck}
                                 onChange={(e) => setPasswordCheck(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>

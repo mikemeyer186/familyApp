@@ -6,7 +6,7 @@ import { useUser } from '../../contexts/userContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export default function UserProfile() {
-    const { activeUser, updateUserProfile } = useUser();
+    const { activeUser, isGuest, updateUserProfile } = useUser();
     const [userName, setUserName] = useState(activeUser.displayName || '');
     const [photoUrl, setPhotoUrl] = useState(activeUser.photoURL || '');
     const [newPhotoUrl, setNewPhotoUrl] = useState('');
@@ -28,6 +28,10 @@ export default function UserProfile() {
         navigate(`/app/${lastPage}`);
     }
 
+    /**
+     * handles the change of user name
+     * @param {string} value - user name from input field
+     */
     function handleChangeUserName(value) {
         setIsChanged(true);
         setUserName(value);
@@ -80,7 +84,10 @@ export default function UserProfile() {
             <div className="profile-content">
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Benutzerprofil</h4>
-                    <span>Hier kannst du deine Benutzerdaten ändern</span>
+                    <span>
+                        Hier kannst du dein Profilbild und deinen Benutzernamen ändern
+                        {isGuest && <span className="not-allowed"> (als Gast nicht möglich)</span>}.
+                    </span>
                 </div>
                 <div className="profile-body mt-5">
                     <div className="profile-image mb-2">
@@ -104,6 +111,7 @@ export default function UserProfile() {
                                 id="photoUrl"
                                 ref={photoInputRef}
                                 value={newPhotoUrl}
+                                disabled={isGuest}
                                 onChange={(e) => {
                                     setNewPhotoUrl(e.target.value);
                                     setFile(e.target.files[0]);
@@ -120,6 +128,7 @@ export default function UserProfile() {
                                 id="userName"
                                 value={userName}
                                 onChange={(e) => handleChangeUserName(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>

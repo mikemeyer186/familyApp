@@ -14,6 +14,7 @@ const UserContext = createContext();
 function UserPovider({ children }) {
     const { setError, setSuccess } = useAlert();
     const [activeUser, setActiveUser] = useState(null);
+    const [isGuest, setIsGuest] = useState(false);
     const [newEmail, setNewEmail] = useState('');
     const [message, setMessage] = useState('');
     const [familyID, setFamilyID] = useState('');
@@ -133,6 +134,7 @@ function UserPovider({ children }) {
                 await loadUserData(user.uid);
                 setActiveUser(user);
                 setIsAuthenticated(true);
+                checkGuest(user.uid);
 
                 if (isAppLoaded) {
                     navigate(`app/${activePage}`);
@@ -144,6 +146,14 @@ function UserPovider({ children }) {
                 navigate('/');
             }
         });
+    }
+
+    function checkGuest(uid) {
+        if (uid === import.meta.env.VITE_GUEST_ID) {
+            setIsGuest(true);
+        } else {
+            setIsGuest(false);
+        }
     }
 
     /**
@@ -220,6 +230,7 @@ function UserPovider({ children }) {
         <UserContext.Provider
             value={{
                 activeUser: activeUser,
+                isGuest: isGuest,
                 isAuthenticated: isAuthenticated,
                 loggedIn: loggedIn,
                 familyID: familyID,

@@ -79,7 +79,7 @@ export default function Problem() {
                     <h4 className="profil-title mb-2">Problem melden</h4>
                     <span>
                         Hier kannst du Probleme oder Fehler melden. Du erhältst eine Antwort an deine E-Mail Adresse, mit der du angemeldet bist.
-                        Hinterlasse mit auch gerne eine Nachricht, wenn du zufrieden mit der App bist 😉.
+                        Hinterlasse mit auch gerne eine Nachricht, wenn du mit der App zufrieden bist 😉.
                     </span>
                 </div>
                 <div className="profile-body mt-5">

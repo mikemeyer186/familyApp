@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 
 export default function EmailChange() {
-    const { activeUser, newEmail, setNewEmail, updateUserEmail } = useUser();
+    const { activeUser, isGuest, newEmail, setNewEmail, updateUserEmail } = useUser();
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
     const [lastPage] = useLocalStorage('lastPage');
@@ -62,7 +62,7 @@ export default function EmailChange() {
                     <h4 className="profil-title mb-2">E-Mail Adresse ändern</h4>
                     <span>
                         Du erhältst einen Bestätigungslink an deine neue E-Mail Adresse. Sobald du sie bestätigt hast, kannst du dich mit der neuen
-                        E-Mail Adresse anmelden.
+                        E-Mail Adresse anmelden{isGuest && <span className="not-allowed"> (als Gast nicht möglich)</span>}.
                     </span>
                 </div>
                 <div className="profile-body mt-5">
@@ -84,6 +84,7 @@ export default function EmailChange() {
                                 placeholder="user@example.com"
                                 value={newEmail}
                                 onChange={(e) => handleChangeEmail(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>
@@ -97,6 +98,7 @@ export default function EmailChange() {
                                 id="newEmailPassword"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>
