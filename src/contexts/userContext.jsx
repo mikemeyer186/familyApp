@@ -148,6 +148,10 @@ function UserPovider({ children }) {
         });
     }
 
+    /**
+     * checks if id of active user is the guest id (guest id is constant)
+     * @param {string} uid - id from auth user
+     */
     function checkGuest(uid) {
         if (uid === import.meta.env.VITE_GUEST_ID) {
             setIsGuest(true);
