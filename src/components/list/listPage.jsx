@@ -23,17 +23,17 @@ export default function ListPage() {
 
     return (
         <>
-            <div className="listPage-wrapper">
-                <div className="listToolbar">
+            <div className="listpage-wrapper">
+                <div className="list-toolbar">
                     <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
                 </div>
 
                 {!isListLoaded ? (
                     <Spinner>{'Listen laden...'}</Spinner>
                 ) : (
-                    <div className="listCollection">
+                    <div className="listcollection">
                         {sortedLists.length == 0 ? (
-                            <span className="emptyListCollection">
+                            <span className="empty-listcollection">
                                 Es sind gerade keine Listen gespeichert. Du kannst eine neue Liste hinzufügen, indem du auf den Button &quot;Neue
                                 Liste&quot; klickst.
                             </span>

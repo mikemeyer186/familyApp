@@ -94,7 +94,7 @@ export default function ItemList({ list }) {
     if (sortBy === 'Priorität') sortedItems = listItems.slice().sort((a, b) => Number(b.priority) - Number(a.priority));
 
     return (
-        <div className="container py-4 px-3 mx-auto listContainer">
+        <div className="container py-4 px-3 mx-auto list-container">
             <h3 className="px-1 mb-3">{listTitle}</h3>
 
             <ListMenu list={list} />

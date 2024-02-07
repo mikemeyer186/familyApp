@@ -51,7 +51,7 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
-            <div className={`itemPriority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
+            <div className={`item-priority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
             <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
                 <input
                     id={item.id}

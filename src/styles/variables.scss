@@ -1,5 +1,6 @@
 /* background colors */
 $bg-white: #ffffff;
+$bg-dirty: rgba(250, 250, 250, 0.5);
 $bg-grey-light: rgba(109, 118, 126, 0.1);
 $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
@@ -13,6 +14,8 @@ $error-color: #e43d3d;
 $bs-blue: rgb(13, 110, 253);
 $chart-green: rgba(111, 224, 135, 0.7);
 $chart-red: rgba(252, 108, 108, 0.6);
+$priority: rgba(255, 72, 102, 0.7);
+$priority-light: rgba(255, 72, 102, 0.3);
 
 /* text colors */
 $txt-dark: rgb(34, 38, 42);
@@ -24,6 +27,7 @@ $txt-income: rgba(60, 193, 89, 0.7);
 
 /* shadows */
 $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
+$shadow-light: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
 $glass-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.3);
 
 /* borders */

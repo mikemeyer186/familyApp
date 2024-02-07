@@ -5,12 +5,12 @@ export default function ListToolbar({ sortBy, sortCategories, handleSorting }) {
 
     return (
         <>
-            <button type="button" className="btn btn-secondary newList-button" onClick={() => openDialog('listNewRef')}>
+            <button type="button" className="btn btn-secondary new-list-button" onClick={() => openDialog('listNewRef')}>
                 <span>Neue Liste</span>
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New list" />
             </button>
 
-            <button className="btn dropdown-toggle btn-secondary sortList-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button className="btn dropdown-toggle btn-secondary sort-list-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {sortBy}
                 {sortBy === 'Datum' ? (
                     <img src="/assets/icons/sort-numeric-down.svg" alt="Sort by date" />
