@@ -1,28 +1,37 @@
-/* colors */
-$bg-main: #fafafa;
+/* background colors */
 $bg-white: #ffffff;
 $bg-grey-light: rgba(109, 118, 126, 0.1);
 $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
 $bg-grey: rgb(109, 118, 126);
+$bg-glass: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7));
+$bg-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
+$holiday-color: #a3dda3;
+$publicHoliday-color: #d89393;
+$error-color: #e43d3d;
+$bs-blue: rgb(13, 110, 253);
+$chart-green: rgba(111, 224, 135, 0.7);
+$chart-red: rgba(252, 108, 108, 0.6);
+
+/* text colors */
 $txt-dark: rgb(34, 38, 42);
 $txt-grey: rgba(34, 38, 42, 0.7);
 $txt-light-grey: rgba(34, 38, 42, 0.4);
 $txt-light: #fefefe;
 $txt-spend: rgb(255, 159, 159);
-$txt-income: rgb(157, 222, 157);
-$holiday-color: #a3dda3;
-$publicHoliday-color: #d89393;
-$error-color: #e43d3d;
-$bs-blue: rgb(13, 110, 253);
+$txt-income: rgba(60, 193, 89, 0.7);
 
 /* shadows */
 $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
+$glass-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.3);
 
 /* borders */
 $thinBorder: 1px solid rgba(217, 217, 217, 0.5);
 $mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
+$glass-border: 1px solid rgba(255, 255, 255, 0.4);
+$normal-radius: 16px;
 
 /* dimensions */
 $navbarHeight: 56px;
 $maxWidth: 550px;
+$padding-mobile: 32px;

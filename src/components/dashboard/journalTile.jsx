@@ -22,8 +22,8 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
                     data: journalBalances.balances,
                     fill: {
                         target: 'origin',
-                        above: 'rgba(157, 222, 157, 0.6)',
-                        below: 'rgba(255, 159, 159, 0.6)',
+                        above: 'rgba(111, 224, 135, 0.7)',
+                        below: 'rgba(255, 108, 108, 0.6)',
                     },
                     borderColor: 'transparent',
                     tension: 0.2,
@@ -73,7 +73,7 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
 
     return (
         <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>
-            <h4 className="tile-title">
+            <h5 className="tile-title">
                 <span>Finanzübersicht</span>
                 <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
                     {actualBalance &&
@@ -82,7 +82,7 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
                             currency: 'EUR',
                         })}
                 </span>
-            </h4>
+            </h5>
             <span className="tile-title-month">
                 {actualMonth} {selectedYear}
             </span>

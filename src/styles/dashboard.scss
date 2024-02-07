@@ -28,20 +28,22 @@
     }
 
     .dashboard-tile {
-        border: $thinBorder;
-        box-shadow: $shadow;
-        padding: 18px;
         position: relative;
-        border-radius: 8px;
         max-width: $maxWidth;
-        background-color: #ffffff;
+        background-image: $bg-glass;
+        border-radius: $normal-radius;
+        box-shadow: $glass-shadow;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: $glass-border;
+        padding: 18px;
 
         &:hover {
             cursor: pointer;
         }
 
         @media (max-width: 575px) {
-            width: calc(100vw - 24px);
+            width: calc(100vw - $padding-mobile);
         }
 
         .tile-title {
@@ -111,7 +113,7 @@
                     align-items: center;
                     font-size: 0.7rem;
                     font-weight: 300;
-                    color: #ffffff;
+                    color: $txt-light;
                     text-align: center;
                     vertical-align: middle;
                     padding: 5px 8px 4px 8px;

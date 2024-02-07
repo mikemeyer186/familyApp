@@ -5,13 +5,18 @@
     height: $navbarHeight;
     padding: 0 1rem;
 
+    .offcanvas {
+        background-color: transparent;
+        background-image: $bg-glass-light;
+        backdrop-filter: blur(20px);
+    }
+
     .offcanvas-body {
         padding: 24px;
     }
 
     .navbarBg {
-        background-color: #fff;
-        box-shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
+        box-shadow: $shadow;
     }
 
     .navbar-logo {

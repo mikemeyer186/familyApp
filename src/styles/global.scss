@@ -8,7 +8,6 @@
 @import 'list.scss';
 @import 'journal.scss';
 @import 'calendar.scss';
-@import 'main.scss';
 @import 'navbar.scss';
 @import 'login.scss';
 @import 'profile.scss';
@@ -28,6 +27,15 @@ body {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     color: $txt-dark;
+}
+
+.page-container {
+    height: 100svh;
+    background-image: url('/assets/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    overflow: hidden;
 }
 
 .iconClickable {
