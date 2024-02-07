@@ -5,6 +5,7 @@ $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
 $bg-grey: rgb(109, 118, 126);
 $bg-glass: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7));
+$bg-glass-mid: linear-gradient(45deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6));
 $bg-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
 $holiday-color: #a3dda3;
 $publicHoliday-color: #d89393;
@@ -33,5 +34,5 @@ $normal-radius: 16px;
 
 /* dimensions */
 $navbarHeight: 56px;
-$maxWidth: 550px;
+$max-width: 550px;
 $padding-mobile: 32px;

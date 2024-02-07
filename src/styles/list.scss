@@ -85,7 +85,7 @@
     padding: 18px !important;
     position: relative;
     border-radius: 8px;
-    max-width: $maxWidth;
+    max-width: $max-width;
     background-color: #ffffff;
 }
 
@@ -106,7 +106,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: baseline;
-    max-width: $maxWidth;
+    max-width: $max-width;
 
     .sortLabel {
         font-size: 0.9rem;
@@ -130,7 +130,7 @@
 }
 
 .newInput {
-    max-width: $maxWidth;
+    max-width: $max-width;
 
     .textInput {
         &:focus {
@@ -208,7 +208,7 @@
     padding-left: 32px;
     overflow: hidden;
     transition: all 125ms ease-in-out;
-    max-width: $maxWidth;
+    max-width: $max-width;
     height: 117px;
     &:hover {
         background-color: rgba(200, 200, 200, 0.1);

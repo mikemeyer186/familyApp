@@ -7,7 +7,7 @@
     gap: 16px;
     height: 100%;
     overflow: auto;
-    padding: 50px 50px;
+    padding: 16px 10px 70px 10px;
 
     .spinner-container {
         position: absolute;
@@ -22,19 +22,18 @@
         }
     }
 
-    @media (max-width: 768px) {
-        padding: 15px 10px 70px 10px;
-        justify-content: flex-start;
+    @media (min-width: 768px) {
+        padding: 50px 50px;
     }
 
     .dashboard-tile {
         position: relative;
-        max-width: $maxWidth;
+        width: calc(100vw - $padding-mobile);
         background-image: $bg-glass;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
         border: $glass-border;
         padding: 18px;
 
@@ -42,8 +41,8 @@
             cursor: pointer;
         }
 
-        @media (max-width: 575px) {
-            width: calc(100vw - $padding-mobile);
+        @media (min-width: 768px) {
+            width: 67%;
         }
 
         .tile-title {
