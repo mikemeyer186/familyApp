@@ -56,7 +56,7 @@
         position: absolute;
         top: 6px;
         right: 0;
-        padding: 12px;
+        padding: 12px 16px;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
@@ -97,275 +97,285 @@
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         padding: 18px;
+        color: $txt-light-dark;
 
         @media (min-width: 575px) {
             max-width: $max-width;
         }
-    }
 
-    .listMenu {
-        position: absolute;
-        top: 20px;
-        right: 10px;
+        .listMenu {
+            position: absolute;
+            top: 20px;
+            right: 10px;
 
-        .menuIcon {
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-        }
-    }
-
-    .listHeader {
-        position: relative;
-        display: flex;
-        justify-content: flex-end;
-        align-items: baseline;
-        max-width: $max-width;
-
-        .sortLabel {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #7f7f7f;
-            padding-right: 8px;
-        }
-
-        .sortOptions {
-            width: 110px;
-            padding: 3px 5px 1px 8px;
-            font-size: 0.9rem;
-            cursor: pointer;
-
-            &:focus {
-                border: $mediumBorder;
-                outline: none;
-                box-shadow: none;
+            .menuIcon {
+                width: 25px;
+                height: 25px;
+                cursor: pointer;
             }
         }
-    }
 
-    .newInput {
-        max-width: $max-width;
-
-        .textInput {
-            &:focus {
-                border: $mediumBorder;
-                outline: none;
-                box-shadow: none;
-            }
-        }
-    }
-
-    .list-group {
-        background: none;
-
-        .list-group-item {
-            background: none;
-            background-image: $bg-glass;
-        }
-    }
-
-    .itemContentWrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 80%;
-    }
-
-    .itemDescription {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 8px;
-        gap: 8px;
-
-        .title {
-            padding-left: 4px;
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: #595959;
-            transition: all 250ms ease-in-out;
-        }
-
-        .line-through {
-            text-decoration: line-through;
-            padding-left: 4px;
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: #949494;
-            transition: all 250ms ease-in-out;
-        }
-    }
-
-    .itemInfoBadges {
-        padding-left: 4px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-
-        .category {
-            font-size: 0.7rem;
-            font-weight: 300;
-            color: #ffffff;
-            text-align: center;
-            vertical-align: middle;
-            padding: 5px 8px 4px 8px;
-        }
-
-        .infoIcon {
-            font-size: 0.7rem;
-            font-weight: 300;
-            color: #a1a1a1;
-            text-align: center;
-            vertical-align: middle;
-            padding: 4px 8px 3px 8px;
-            background-color: #ffffff;
-            border: $mediumBorder;
-        }
-    }
-
-    .itemClickable {
-        padding-left: 32px;
-        overflow: hidden;
-        transition: all 125ms ease-in-out;
-        max-width: $max-width;
-        height: 117px;
-        &:hover {
-            background-color: rgba(200, 200, 200, 0.1);
-        }
-
-        .label {
-            width: 100%;
-        }
-    }
-
-    .checkbox {
-        appearance: none;
-        outline: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        flex-shrink: 0;
-        border-radius: 100%;
-        border: transparent;
-        display: grid;
-        place-content: center;
-        cursor: pointer;
-        transition: all 250ms ease-in-out;
-
-        &::before {
-            content: '';
-            width: 0.65em;
-            height: 0.65em;
-            transform: scale(0);
-            transition: all 250ms ease-in-out;
-            box-shadow: inset 1em 1em #ffffff;
-            transform-origin: center;
-            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        }
-
-        &:checked {
-            border: 1px solid #2fac50;
-            background-color: #2fac50;
-        }
-
-        &:checked::before {
-            transform: scale(1.4);
-        }
-    }
-
-    .itemAmount {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: center;
-        padding-right: 20px;
-        height: 100px;
-        z-index: 2 !important;
-
-        .amountAdjust {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .amountArrows {
+        .listHeader {
             position: relative;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
+            justify-content: flex-end;
+            align-items: baseline;
+            max-width: $max-width;
 
-            .amountNumber {
-                position: absolute;
-                z-index: 1;
-                background-color: #ffffff;
+            .sortLabel {
                 font-size: 0.9rem;
                 font-weight: 400;
                 color: #7f7f7f;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-                width: 2rem;
-                height: 2rem;
-                border-radius: 100%;
+                padding-right: 8px;
             }
 
-            .arrow {
-                width: 3rem;
-                height: 3rem;
-                opacity: 0.2;
+            .sortOptions {
+                width: 110px;
+                padding: 3px 5px 1px 8px;
+                font-size: 0.9rem;
                 cursor: pointer;
-                transition: all 125ms ease-in-out;
-                &:hover {
-                    transform: scale(1.2);
+
+                &:focus {
+                    border: $mediumBorder;
+                    outline: none;
+                    box-shadow: none;
                 }
             }
+        }
 
-            .arrow-disabled {
-                width: 3rem;
-                height: 3rem;
-                opacity: 0.05;
-                cursor: default;
+        .newInput {
+            max-width: $max-width;
+
+            .textInput {
+                border-top: none;
+                border-bottom: none;
+                margin: 0 !important;
+
+                &::placeholder {
+                    color: $txt-grey;
+                }
+
+                &:focus {
+                    border-left: $blue-border;
+                    border-right: $blue-border;
+                    outline: none;
+                    box-shadow: none;
+                }
             }
         }
-    }
 
-    .item-priority {
-        position: absolute;
-        top: -12px;
-        left: -15px;
-        width: 50px;
-        height: 30px;
-        background-color: $bg-dirty;
-        transform: rotate(-37deg);
-        border-bottom: $thinBorder;
-        box-shadow: $shadow-light;
-        cursor: pointer;
-        transition: all 250ms ease-in-out;
+        .list-group {
+            background: none;
 
-        &:hover {
-            background-color: $priority-light;
-            box-shadow: 0px 0px 6px 0px $priority;
+            .list-group-item {
+                background: none;
+                background-image: $bg-glass;
+            }
         }
-    }
 
-    .red {
-        background-color: $priority;
-        box-shadow: 0px 0px 6px 0px $priority;
-        border-bottom: 1px solid #ff92a4b2;
+        .itemContentWrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+        }
 
-        &:hover {
+        .itemDescription {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 8px;
+            gap: 8px;
+
+            .title {
+                padding-left: 4px;
+                font-size: 1rem;
+                font-weight: 400;
+                color: #595959;
+                transition: all 250ms ease-in-out;
+            }
+
+            .line-through {
+                text-decoration: line-through;
+                padding-left: 4px;
+                font-size: 1.3rem;
+                font-weight: 400;
+                color: #949494;
+                transition: all 250ms ease-in-out;
+            }
+        }
+
+        .itemInfoBadges {
+            padding-left: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+
+            .category {
+                font-size: 0.7rem;
+                font-weight: 300;
+                color: #ffffff;
+                text-align: center;
+                vertical-align: middle;
+                padding: 5px 8px 4px 8px;
+            }
+
+            .infoIcon {
+                font-size: 0.7rem;
+                font-weight: 300;
+                color: #a1a1a1;
+                text-align: center;
+                vertical-align: middle;
+                padding: 4px 8px 3px 8px;
+                background-color: #ffffff;
+                border: $mediumBorder;
+            }
+        }
+
+        .itemClickable {
+            padding-left: 32px;
+            overflow: hidden;
+            transition: all 125ms ease-in-out;
+            max-width: $max-width;
+            height: 117px;
+            &:hover {
+                background-color: rgba(200, 200, 200, 0.1);
+            }
+
+            .label {
+                width: 100%;
+            }
+        }
+
+        .checkbox {
+            appearance: none;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border-radius: 100%;
+            border: transparent;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            transition: all 250ms ease-in-out;
+
+            &::before {
+                content: '';
+                width: 0.65em;
+                height: 0.65em;
+                transform: scale(0);
+                transition: all 250ms ease-in-out;
+                box-shadow: inset 1em 1em #ffffff;
+                transform-origin: center;
+                clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            }
+
+            &:checked {
+                border: 1px solid #2fac50;
+                background-color: #2fac50;
+            }
+
+            &:checked::before {
+                transform: scale(1.4);
+            }
+        }
+
+        .itemAmount {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            padding-right: 20px;
+            height: 100px;
+            z-index: 2 !important;
+
+            .amountAdjust {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+
+            .amountArrows {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100px;
+
+                .amountNumber {
+                    position: absolute;
+                    z-index: 1;
+                    background-color: #ffffff;
+                    font-size: 0.9rem;
+                    font-weight: 400;
+                    color: #7f7f7f;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 100%;
+                }
+
+                .arrow {
+                    width: 3rem;
+                    height: 3rem;
+                    opacity: 0.2;
+                    cursor: pointer;
+                    transition: all 125ms ease-in-out;
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
+
+                .arrow-disabled {
+                    width: 3rem;
+                    height: 3rem;
+                    opacity: 0.05;
+                    cursor: default;
+                }
+            }
+        }
+
+        .item-priority {
+            position: absolute;
+            top: -12px;
+            left: -15px;
+            width: 50px;
+            height: 30px;
+            background-color: $bg-dirty;
+            transform: rotate(-37deg);
+            border-bottom: $thinBorder;
+            box-shadow: $shadow-light;
+            cursor: pointer;
+            transition: all 250ms ease-in-out;
+
+            &:hover {
+                background-color: $priority-light;
+                box-shadow: 0px 0px 6px 0px $priority;
+            }
+        }
+
+        .red {
             background-color: $priority;
+            box-shadow: 0px 0px 6px 0px $priority;
+            border-bottom: 1px solid #ff92a4b2;
+
+            &:hover {
+                background-color: $priority;
+            }
         }
     }
 

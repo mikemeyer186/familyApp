@@ -95,7 +95,7 @@ export default function NewItemForm({ addItem }) {
                     onChange={(event) => setNewItem(event.target.value)}
                 />
 
-                <button className="btn btn-primary" type="submit" id="addListItemButton">
+                <button className="btn btn-primary" type="submit" id="addListItemButton" disabled={newItem === ''}>
                     {isMobile ? <strong>+</strong> : 'Hinzufügen'}
                 </button>
             </div>
