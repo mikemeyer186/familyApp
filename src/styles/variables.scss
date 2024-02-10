@@ -5,9 +5,9 @@ $bg-grey-light: rgba(109, 118, 126, 0.1);
 $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
 $bg-grey: rgb(109, 118, 126);
-$bg-glass: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7));
-$bg-glass-mid: linear-gradient(45deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6));
-$bg-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
+$bg-glass: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+$bg-glass-navbar: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
+$bg-glass-menu: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7));
 $holiday-color: #a3dda3;
 $publicHoliday-color: #d89393;
 $error-color: #e43d3d;
@@ -28,12 +28,11 @@ $txt-income: rgba(60, 193, 89, 0.7);
 /* shadows */
 $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
 $shadow-light: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
-$glass-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.3);
+$glass-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.3);
 
 /* borders */
 $thinBorder: 1px solid rgba(217, 217, 217, 0.5);
 $mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
-$glass-border: 1px solid rgba(255, 255, 255, 0.4);
 $normal-radius: 16px;
 
 /* dimensions */
