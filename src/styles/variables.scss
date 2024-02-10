@@ -1,4 +1,4 @@
-/* background colors */
+/* general colors */
 $bg-white: #ffffff;
 $bg-dirty: rgba(250, 250, 250, 0.5);
 $bg-grey-light: rgba(109, 118, 126, 0.1);
@@ -16,14 +16,19 @@ $chart-green: rgba(111, 224, 135, 0.7);
 $chart-red: rgba(252, 108, 108, 0.6);
 $priority: rgba(255, 72, 102, 0.7);
 $priority-light: rgba(255, 72, 102, 0.3);
+$logo-color-1: rgba(53, 29, 249, 0.8);
+$logo-color-2: rgb(173, 181, 254);
+$logo-color-3: rgba(91, 91, 220, 0.8);
 
 /* text colors */
 $txt-dark: rgb(34, 38, 42);
+$txt-light-dark: rgba(34, 38, 42, 0.8);
 $txt-grey: rgba(34, 38, 42, 0.7);
 $txt-light-grey: rgba(34, 38, 42, 0.4);
 $txt-light: #fefefe;
 $txt-spend: rgb(255, 159, 159);
 $txt-income: rgba(60, 193, 89, 0.7);
+$txt-gradient: linear-gradient(90deg, $logo-color-3 0%, $logo-color-1 20%, $logo-color-2 50%, $logo-color-3 99%);
 
 /* shadows */
 $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);

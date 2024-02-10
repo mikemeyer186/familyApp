@@ -29,6 +29,16 @@
         align-items: center;
         gap: 4px;
 
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 0;
+            background-image: $txt-gradient;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .navbar-logo-img {
             width: 40px;
             height: 38px;

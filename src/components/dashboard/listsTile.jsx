@@ -5,7 +5,7 @@ export default function ListsTile({ importantItems, navigateToPage }) {
 
     return (
         <div className="dashboard-tile" onClick={() => navigateToPage('/app/lists?page=Listen')}>
-            <h5 className="tile-title">Wichtige Einkäufe</h5>
+            <h5 className="tile-title">Listen</h5>
             {importantItems.length > 0 ? (
                 importantItems.map((item) => {
                     const itemCategory = appSettings.list.find((category) => category.category === item.category);

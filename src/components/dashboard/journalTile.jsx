@@ -74,7 +74,7 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
     return (
         <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>
             <h5 className="tile-title">
-                <span>Finanzübersicht</span>
+                <span>Finanzen</span>
                 <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
                     {actualBalance &&
                         actualBalance.toLocaleString('de-DE', {
