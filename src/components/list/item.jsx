@@ -51,7 +51,15 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
-            <div className={`item-priority ${item.priority && 'red'}`} onClick={handlePriorityChange}></div>
+            {!item.done && (
+                <div className="item-priority" onClick={handlePriorityChange}>
+                    {item.priority ? (
+                        <img src="/assets/icons/exclamation-circle-fill-red.svg" alt="Priority" />
+                    ) : (
+                        <img src="/assets/icons/exclamation-circle-fill.svg" alt="Priority" />
+                    )}
+                </div>
+            )}
             <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
                 <input
                     id={item.id}
@@ -70,7 +78,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                                 src="/assets/icons/info-circle.svg"
                                 alt="info"
                                 tabIndex="0"
-                                className="badge rounded-pill infoIcon"
+                                className="badge rounded-pill info-icon"
                                 role="button"
                                 data-bs-container="body"
                                 data-bs-html="true"

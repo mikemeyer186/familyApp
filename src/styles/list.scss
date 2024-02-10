@@ -202,7 +202,7 @@
             .line-through {
                 text-decoration: line-through;
                 padding-left: 4px;
-                font-size: 1.3rem;
+                font-size: 1rem;
                 font-weight: 400;
                 color: #949494;
                 transition: all 250ms ease-in-out;
@@ -226,7 +226,7 @@
                 padding: 5px 8px 4px 8px;
             }
 
-            .infoIcon {
+            .info-icon {
                 font-size: 0.7rem;
                 font-weight: 300;
                 color: #a1a1a1;
@@ -240,7 +240,6 @@
 
         .itemClickable {
             padding-left: 32px;
-            overflow: hidden;
             transition: all 125ms ease-in-out;
             max-width: $max-width;
             height: 117px;
@@ -352,31 +351,24 @@
         }
 
         .item-priority {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: absolute;
-            top: -12px;
-            left: -15px;
-            width: 50px;
-            height: 30px;
-            background-color: $bg-dirty;
-            transform: rotate(-37deg);
-            border-bottom: $thinBorder;
-            box-shadow: $shadow-light;
+            top: 41px;
+            left: 31px;
+            width: 31px;
+            height: 31px;
+            border-radius: 100%;
             cursor: pointer;
-            transition: all 250ms ease-in-out;
 
-            &:hover {
-                background-color: $priority-light;
-                box-shadow: 0px 0px 6px 0px $priority;
-            }
-        }
-
-        .red {
-            background-color: $priority;
-            box-shadow: 0px 0px 6px 0px $priority;
-            border-bottom: 1px solid #ff92a4b2;
-
-            &:hover {
-                background-color: $priority;
+            img {
+                width: 31px;
+                height: 31px;
+                display: block;
+                border-radius: 100%;
+                transform: translate(0px, 1px);
+                transition: all 250ms ease-in-out;
             }
         }
     }
