@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { updateListInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import Item from './item';
 import NewItemForm from './newItemForm';
 import ListMenu from './listMenu';
@@ -8,6 +9,7 @@ import ListHeader from './listHeader';
 
 export default function ItemList({ list }) {
     const { activeUser, familyID } = useUser();
+    const [parent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
@@ -102,10 +104,10 @@ export default function ItemList({ list }) {
 
             <ListHeader sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
 
-            <ul className="list-group">
+            <ul ref={parent} className="list-group">
                 {sortedItems.length === 0 && <span className="px-1 text-center mt-3">Es sind noch keine Einträge vorhanden</span>}
                 {sortedItems.map((item) => {
-                    return <Item item={item} listID={listID} key={item.id} updateItem={updateItem} deleteItem={deleteItem} />;
+                    return <Item key={item.id} item={item} listID={listID} updateItem={updateItem} deleteItem={deleteItem} />;
                 })}
             </ul>
         </div>

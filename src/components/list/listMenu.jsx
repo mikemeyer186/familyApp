@@ -30,10 +30,10 @@ export default function ListMenu({ list }) {
 
     return (
         <>
-            <div className="dropdown listMenu">
+            <div className="dropdown list-menu">
                 <img
                     src="/assets/icons/three-dots-vertical.svg"
-                    className="dropdown-toggle menuIcon"
+                    className="dropdown-toggle menu-icon"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
