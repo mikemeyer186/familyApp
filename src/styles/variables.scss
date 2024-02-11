@@ -8,6 +8,7 @@ $bg-grey: rgb(109, 118, 126);
 $bg-glass: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
 $bg-glass-navbar: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
 $bg-glass-menu: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7));
+$bg-glass-item: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
 $holiday-color: #a3dda3;
 $publicHoliday-color: #d89393;
 $error-color: #e43d3d;
@@ -44,6 +45,7 @@ $mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
 $normal-radius: 16px;
 $inner-radius: 12px;
 $blue-border: 1px solid rgba(88, 97, 232, 0.5);
+$thin-blue-border: 1px solid rgba(88, 98, 232, 0.2);
 
 /* dimensions */
 $navbarHeight: 56px;

@@ -90,7 +90,7 @@
 
     .list-container {
         position: relative;
-        width: calc(100vw - $padding-mobile);
+        width: 100vw;
         background-image: $bg-glass;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
@@ -187,11 +187,13 @@
         }
 
         .list-group {
-            background: none;
+            background: transparent;
 
             .list-group-item {
-                background: none;
-                background-image: $bg-glass;
+                background: $bg-glass-item;
+                border-radius: $normal-radius;
+                margin-bottom: 6px;
+                border: $thin-blue-border;
             }
         }
 
@@ -258,17 +260,24 @@
             }
         }
 
-        .itemClickable {
+        .item-clickable {
             padding-left: 32px;
             transition: all 125ms ease-in-out;
             max-width: $max-width;
-            height: 117px;
+            height: 100px;
+
             &:hover {
-                background-color: rgba(200, 200, 200, 0.1);
+                background-color: rgba(200, 200, 200, 0.3);
             }
 
             .label {
                 width: 100%;
+            }
+
+            @media (max-width: 480px) {
+                .label {
+                    width: initial;
+                }
             }
         }
 
@@ -314,7 +323,7 @@
             flex-direction: column;
             align-items: flex-end;
             justify-content: center;
-            padding-right: 20px;
+            padding-right: 18px;
             height: 100px;
             z-index: 2 !important;
 
@@ -375,7 +384,7 @@
             align-items: center;
             justify-content: center;
             position: absolute;
-            top: 41px;
+            top: 32px;
             left: 31px;
             width: 31px;
             height: 31px;
@@ -416,14 +425,6 @@
 
             .amountAdjust {
                 gap: 6px;
-            }
-        }
-
-        .itemClickable {
-            padding-left: 20px;
-
-            .label {
-                width: initial;
             }
         }
     }

@@ -50,13 +50,13 @@ export default function Item({ item, updateItem, deleteItem }) {
     }, []);
 
     return (
-        <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
+        <li className="list-group-item d-flex justify-content-between align-items-center item-clickable" key={item.id}>
             {!item.done && (
                 <div className="item-priority" onClick={handlePriorityChange}>
                     {item.priority ? <img src="/assets/icons/star-fill.svg" alt="Priority" /> : <img src="/assets/icons/star.svg" alt="Priority" />}
                 </div>
             )}
-            <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
+            <label className="form-check-label d-flex gap-3 pointer centered-vertical label">
                 <input
                     id={item.id}
                     className="checkbox me-1"
