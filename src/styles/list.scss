@@ -145,13 +145,25 @@
             }
         }
 
-        .newInput {
+        .new-input {
             max-width: $max-width;
 
-            .textInput {
+            @media (max-width: 480px) {
+                .dropdown-toggle {
+                    font-size: 0.8rem;
+                    width: 115px;
+                }
+
+                .btn-primary {
+                    font-size: 0.8rem;
+                    width: 40px;
+                }
+            }
+
+            .text-input {
                 border-top: none;
                 border-bottom: none;
-                margin: 0 !important;
+                background-color: $bg-dirty;
 
                 &::placeholder {
                     color: $txt-grey;
@@ -162,6 +174,14 @@
                     border-right: $blue-border;
                     outline: none;
                     box-shadow: none;
+                }
+
+                @media (max-width: 480px) {
+                    font-size: 0.8rem;
+
+                    &::placeholder {
+                        font-size: 0.8rem;
+                    }
                 }
             }
         }
@@ -404,23 +424,6 @@
 
             .label {
                 width: initial;
-            }
-        }
-
-        .newInput {
-            .dropdown-toggle {
-                font-size: 0.8rem;
-                width: 115px;
-            }
-            .textInput {
-                font-size: 0.8rem;
-                &::placeholder {
-                    font-size: 0.8rem;
-                }
-            }
-            .btn-primary {
-                font-size: 0.8rem;
-                width: 40px;
             }
         }
     }

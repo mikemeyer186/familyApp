@@ -66,13 +66,8 @@ export default function NewItemForm({ addItem }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="input-group mb-3 newInput">
-                <button
-                    className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
+            <div className="input-group mb-3 new-input">
+                <button className="btn dropdown-toggle btn-outline-secondary width130" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {selectedCategory}
                 </button>
 
@@ -88,7 +83,7 @@ export default function NewItemForm({ addItem }) {
 
                 <input
                     type="text"
-                    className="form-control textInput"
+                    className="form-control text-input"
                     placeholder="Füge etwas hinzu..."
                     id="newListItemInput"
                     value={newItem || ''}

@@ -194,8 +194,15 @@ body {
     box-shadow: $glass-shadow;
     border-radius: $normal-radius;
     border: transparent;
+    padding-left: 8px;
+    padding-right: 8px;
 
     .dropdown-item {
+        border-radius: $inner-radius;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: $txt-light-dark;
+
         &:hover {
             background-color: $logo-color-4;
         }
@@ -216,76 +223,37 @@ body {
     border-radius: $normal-radius;
 }
 
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: 0;
+}
+
 .btn {
     border-radius: $normal-radius;
+    border: none;
+}
+
+// primary button //
+.btn-primary {
+    background-color: $logo-color-1;
     border: none;
     color: $txt-light;
 
     &:active {
-        background-color: $logo-color-3;
-        color: $txt-light;
+        background-color: $logo-color-5;
+    }
+
+    &:hover {
+        background-color: $logo-color-5;
     }
 
     &:disabled {
         background-color: $logo-color-2;
-        border: none;
-        color: $txt-light;
-    }
-}
-
-.btn.show {
-    background-color: $logo-color-3;
-
-    &:active {
-        background-color: $logo-color-3;
-        color: $txt-light;
-    }
-}
-
-.btn-primary {
-    background-color: $logo-color-3;
-    border: none;
-
-    &:hover {
-        background-color: $logo-color-3;
     }
 }
 
 .btn-primary:not(.show) {
     &:active {
-        background-color: $logo-color-3;
-        color: $txt-light;
-    }
-}
-
-.btn-secondary {
-    background-color: $logo-color-1;
-    border: none;
-
-    &:hover {
-        background-color: $logo-color-3;
-    }
-}
-
-.btn-secondary:not(.show) {
-    &:active {
-        background-color: $logo-color-3;
-        color: $txt-light;
-    }
-}
-
-.btn-outline-secondary {
-    background-color: transparent;
-    color: $txt-grey;
-
-    &:hover {
-        background-color: $logo-color-3;
-    }
-}
-
-.btn-outline-secondary:not(.show) {
-    &:active {
-        background-color: $logo-color-3;
+        background-color: $logo-color-1;
         color: $txt-light;
     }
 }
@@ -296,43 +264,136 @@ body {
     color: $txt-grey;
 
     &:hover {
-        background-color: $logo-color-2;
+        background-color: $logo-color-6;
         border: $blue-border;
-        color: $txt-light;
+        color: $txt-grey;
+        border: 1px solid transparent;
     }
 
     &:focus {
-        background-color: $logo-color-2;
         outline: none;
         box-shadow: none;
-        color: $txt-light;
+        background-color: $logo-color-6;
         border: $blue-border;
+        color: $txt-grey;
+        border: 1px solid transparent;
     }
 
     &:active {
-        background-color: $logo-color-2;
-        color: $txt-light;
+        background-color: $logo-color-6;
+        border: $blue-border;
+        color: $txt-grey;
+        border: 1px solid transparent;
     }
 }
 
 .btn-outline-primary.show {
+    background-color: $logo-color-6;
+    border: 1px solid transparent;
+
     &:active {
+        background-color: $logo-color-6;
         border: $blue-border;
-        background-color: $logo-color-2;
-        color: $txt-light;
+        color: $txt-grey;
+        border: 1px solid transparent;
     }
 }
 
 .btn-outline-primary:not(.show) {
     &:active {
-        background-color: $logo-color-2;
-        color: $txt-light;
+        background-color: $logo-color-6;
         border: $blue-border;
+        color: $txt-grey;
+        border: 1px solid transparent;
     }
 }
 
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-    margin-left: 0;
+// secondary button //
+.btn-secondary {
+    background-color: $logo-color-3;
+    border: none;
+
+    &:hover {
+        background-color: $logo-color-3;
+    }
+
+    &:focus {
+        background-color: $logo-color-3;
+    }
+
+    &:active {
+        background-color: $logo-color-3;
+    }
+}
+
+.btn-secondary:not(.show) {
+    &:active {
+        background-color: $logo-color-3;
+        color: $txt-light;
+    }
+
+    &:focus {
+        background-color: $logo-color-3;
+        color: $txt-light;
+    }
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    color: $txt-grey;
+
+    &:hover {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+    &:focus {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+
+    &:active {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+}
+
+.btn-outline-secondary.show {
+    background-color: $logo-color-1;
+    color: $txt-light;
+
+    &:hover {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+    &:focus {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+
+    &:active {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+}
+
+.btn-outline-secondary:not(.show) {
+    background-color: transparent;
+    color: $txt-grey;
+
+    &:hover {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+
+    &:focus {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
+
+    &:active {
+        background-color: $logo-color-1;
+        color: $txt-light;
+    }
 }
 
 //PrimeReact overrides

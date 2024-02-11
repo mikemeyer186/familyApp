@@ -53,11 +53,7 @@ export default function Item({ item, updateItem, deleteItem }) {
         <li className="list-group-item d-flex justify-content-between align-items-center itemClickable" key={item.id}>
             {!item.done && (
                 <div className="item-priority" onClick={handlePriorityChange}>
-                    {item.priority ? (
-                        <img src="/assets/icons/exclamation-circle-fill-red.svg" alt="Priority" />
-                    ) : (
-                        <img src="/assets/icons/exclamation-circle-fill.svg" alt="Priority" />
-                    )}
+                    {item.priority ? <img src="/assets/icons/star-fill.svg" alt="Priority" /> : <img src="/assets/icons/star.svg" alt="Priority" />}
                 </div>
             )}
             <label className="form-check-label d-flex gap-3 pointer centeredVertical label">
