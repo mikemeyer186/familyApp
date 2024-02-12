@@ -17,22 +17,6 @@ export default function Item({ item, updateItem, deleteItem }) {
         minute: '2-digit',
     });
 
-    // /**
-    //  * handles increase of amount of item
-    //  */
-    // function handleIncreaseAmount() {
-    //     updateItem(item.id, item.done, item.amount + 1, item.priority);
-    // }
-
-    // /**
-    //  * handles decrease of amount of item
-    //  */
-    // function handleDecreaseAmount() {
-    //     if (item.amount >= 2) {
-    //         updateItem(item.id, item.done, item.amount - 1, item.priority);
-    //     }
-    // }
-
     /**
      * handles change of priority of item
      */
@@ -66,7 +50,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                 />
                 <div className="item-content-wrapper">
                     <div className="item-description">
-                        <div className="itemInfoBadges">
+                        <div className="item-info-badges">
                             <span className="badge rounded-pill category" style={{ backgroundColor: itemColor }}>
                                 {item.category}
                             </span>
@@ -90,20 +74,6 @@ export default function Item({ item, updateItem, deleteItem }) {
                     </div>
                 </div>
             </label>
-            {/* <div className={item.done ? 'd-none' : 'itemAmount'}>
-                <div className="amountAdjust">
-                    <div className="amountArrows">
-                        <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
-                        <div className="amountNumber">{item.amount}</div>
-                        <img
-                            className={item.amount === 1 ? 'arrow-disabled arrow-down' : 'arrow'}
-                            src="/assets/icons/caret-down-fill.svg"
-                            alt="down"
-                            onClick={handleDecreaseAmount}
-                        />
-                    </div>
-                </div>
-            </div> */}
 
             <img src="/assets/icons/x-lg.svg" className="iconClickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
         </li>
