@@ -18,6 +18,14 @@ export default function Item({ item, updateItem, deleteItem }) {
     });
 
     /**
+     * handles the check and uncheck of item
+     */
+    function handleStatusChange() {
+        const itemChecked = !item.done;
+        updateItem(item.id, itemChecked, item.amount, item.priority);
+    }
+
+    /**
      * handles change of priority of item
      */
     function handlePriorityChange() {
@@ -35,19 +43,14 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center item-clickable" key={item.id}>
+            <div className="item-touch-area" onClick={handleStatusChange}></div>
             {!item.done && (
-                <div className="item-priority" onClick={handlePriorityChange}>
+                <div className="item-priority iconClickable" onClick={handlePriorityChange}>
                     {item.priority ? <img src="/assets/icons/star-fill.svg" alt="Priority" /> : <img src="/assets/icons/star.svg" alt="Priority" />}
                 </div>
             )}
             <label className="form-check-label d-flex gap-3 pointer centered-vertical label">
-                <input
-                    id={item.id}
-                    className="checkbox me-1"
-                    type="checkbox"
-                    checked={item.done}
-                    onChange={(e) => updateItem(item.id, e.target.checked, item.amount, item.priority)}
-                />
+                <input id={item.id} className="checkbox me-1" type="checkbox" checked={item.done} readOnly />
                 <div className="item-content-wrapper">
                     <div className="item-description">
                         <div className="item-info-badges">

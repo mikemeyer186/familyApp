@@ -207,6 +207,7 @@
         }
 
         .item-clickable {
+            position: relative;
             padding: 0 32px;
             transition: all 125ms ease-in-out;
             max-width: $max-width;
@@ -220,6 +221,14 @@
                 .label {
                     width: initial;
                 }
+            }
+
+            .item-touch-area {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
             }
 
             .item-content-wrapper {
@@ -292,6 +301,7 @@
                     }
 
                     .info-icon {
+                        z-index: 1;
                         font-size: 0.7rem;
                         font-weight: 300;
                         color: #a1a1a1;
@@ -346,6 +356,7 @@
                 align-items: center;
                 justify-content: center;
                 position: absolute;
+                z-index: 1;
                 top: 32px;
                 left: 31px;
                 width: 31px;
