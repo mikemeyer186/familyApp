@@ -17,21 +17,21 @@ export default function Item({ item, updateItem, deleteItem }) {
         minute: '2-digit',
     });
 
-    /**
-     * handles increase of amount of item
-     */
-    function handleIncreaseAmount() {
-        updateItem(item.id, item.done, item.amount + 1, item.priority);
-    }
+    // /**
+    //  * handles increase of amount of item
+    //  */
+    // function handleIncreaseAmount() {
+    //     updateItem(item.id, item.done, item.amount + 1, item.priority);
+    // }
 
-    /**
-     * handles decrease of amount of item
-     */
-    function handleDecreaseAmount() {
-        if (item.amount >= 2) {
-            updateItem(item.id, item.done, item.amount - 1, item.priority);
-        }
-    }
+    // /**
+    //  * handles decrease of amount of item
+    //  */
+    // function handleDecreaseAmount() {
+    //     if (item.amount >= 2) {
+    //         updateItem(item.id, item.done, item.amount - 1, item.priority);
+    //     }
+    // }
 
     /**
      * handles change of priority of item
@@ -64,8 +64,8 @@ export default function Item({ item, updateItem, deleteItem }) {
                     checked={item.done}
                     onChange={(e) => updateItem(item.id, e.target.checked, item.amount, item.priority)}
                 />
-                <div className="itemContentWrapper">
-                    <div className="itemDescription">
+                <div className="item-content-wrapper">
+                    <div className="item-description">
                         <div className="itemInfoBadges">
                             <span className="badge rounded-pill category" style={{ backgroundColor: itemColor }}>
                                 {item.category}
@@ -90,7 +90,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                     </div>
                 </div>
             </label>
-            <div className={item.done ? 'd-none' : 'itemAmount'}>
+            {/* <div className={item.done ? 'd-none' : 'itemAmount'}>
                 <div className="amountAdjust">
                     <div className="amountArrows">
                         <img className="arrow" src="/assets/icons/caret-up-fill.svg" alt="up" onClick={handleIncreaseAmount} />
@@ -103,7 +103,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <img src="/assets/icons/x-lg.svg" className="iconClickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
         </li>

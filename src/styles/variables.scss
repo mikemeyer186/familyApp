@@ -5,10 +5,10 @@ $bg-grey-light: rgba(109, 118, 126, 0.1);
 $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
 $bg-grey: rgb(109, 118, 126);
-$bg-glass: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+$bg-glass: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
 $bg-glass-navbar: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
 $bg-glass-menu: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7));
-$bg-glass-item: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
+$bg-glass-item: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
 $holiday-color: #a3dda3;
 $publicHoliday-color: #d89393;
 $error-color: #e43d3d;
@@ -16,12 +16,12 @@ $bs-blue: rgb(13, 110, 253);
 $chart-green: rgba(111, 224, 135, 0.7);
 $chart-red: rgba(252, 108, 108, 0.6);
 $priority: rgb(255, 72, 102);
-$logo-color-1: rgb(88, 97, 232);
-$logo-color-2: rgb(161, 168, 231);
-$logo-color-3: rgb(90, 73, 250);
-$logo-color-4: rgb(241, 242, 255);
-$logo-color-5: rgb(70, 79, 200);
-$logo-color-6: rgb(209, 212, 245);
+$logo-color-1: rgb(81, 73, 227); //primary
+$logo-color-2: rgb(161, 176, 227); //primary-outline & disabled
+$logo-color-3: rgb(90, 73, 250); //secondary
+$logo-color-4: rgb(219, 224, 246); //hover dropdown
+$logo-color-5: rgb(38, 48, 180); //primary hover
+$logo-color-6: rgb(219, 224, 246); //primary-outline hover
 
 /* text colors */
 $txt-dark: rgb(34, 38, 42);

@@ -35,7 +35,7 @@ body {
 
 .page-container {
     height: 100svh;
-    background-image: linear-gradient(rgba(255, 255, 255, 1) 10%, transparent 100%);
+    // background-image: linear-gradient(rgba(255, 255, 255, 1) 10%, transparent 100%);
     overflow: hidden;
 }
 
@@ -44,9 +44,11 @@ body {
     height: 1.5rem;
     cursor: pointer;
     transition: all 125ms ease-in-out;
+
     &:hover {
         transform: scale(1.2);
     }
+
     &:focus {
         outline: none;
         box-shadow: none;
@@ -210,7 +212,7 @@ body {
 }
 
 .form-control {
-    border: $blue-border;
+    border: $thinBorder;
 
     &::placeholder {
         font-weight: 300;
@@ -300,6 +302,8 @@ body {
 }
 
 .btn-outline-primary:not(.show) {
+    color: $txt-grey;
+
     &:active {
         background-color: $logo-color-6;
         border: $blue-border;

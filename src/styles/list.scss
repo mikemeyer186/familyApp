@@ -90,12 +90,19 @@
 
     .list-container {
         position: relative;
-        width: 100vw;
+        width: calc(100vw - $padding-mobile);
         background-image: $bg-glass;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
         padding: 18px;
         color: $txt-light-dark;
+
+        h3 {
+            width: 320px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         @media (min-width: 575px) {
             max-width: $max-width;
@@ -147,6 +154,8 @@
 
         .new-input {
             max-width: $max-width;
+            border: transparent;
+            background-color: $bg-white;
 
             @media (max-width: 480px) {
                 .dropdown-toggle {
@@ -163,15 +172,15 @@
             .text-input {
                 border-top: none;
                 border-bottom: none;
-                background-color: $bg-dirty;
+                background-color: transparent;
 
                 &::placeholder {
                     color: $txt-grey;
                 }
 
                 &:focus {
-                    border-left: $blue-border;
-                    border-right: $blue-border;
+                    border-left: $thinBorder;
+                    border-right: $thinBorder;
                     outline: none;
                     box-shadow: none;
                 }
@@ -197,7 +206,7 @@
             }
         }
 
-        .itemContentWrapper {
+        .item-content-wrapper {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -205,13 +214,24 @@
             width: 80%;
         }
 
-        .itemDescription {
+        .item-description {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
-            padding: 8px;
+            padding: 12px 8px 8px 8px;
             gap: 8px;
+            width: 180px;
+            white-space: break-spaces;
+
+            @media (max-width: 480px) {
+                .title {
+                    font-size: 1rem;
+                }
+                .line-through {
+                    font-size: 1rem;
+                }
+            }
 
             .title {
                 padding-left: 4px;
@@ -219,6 +239,10 @@
                 font-weight: 400;
                 color: #595959;
                 transition: all 250ms ease-in-out;
+                width: 100%;
+                max-height: 48px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .line-through {
@@ -228,6 +252,10 @@
                 font-weight: 400;
                 color: #949494;
                 transition: all 250ms ease-in-out;
+                width: 100%;
+                max-height: 48px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
@@ -261,7 +289,7 @@
         }
 
         .item-clickable {
-            padding-left: 32px;
+            padding: 0 32px;
             transition: all 125ms ease-in-out;
             max-width: $max-width;
             height: 100px;
@@ -402,24 +430,7 @@
         }
     }
 
-    @media (max-width: 575px) {
-        .itemDescription {
-            white-space: break-spaces;
-            width: 200px;
-        }
-    }
-
     @media (max-width: 480px) {
-        .itemDescription {
-            width: 160px;
-            .title {
-                font-size: 1rem;
-            }
-            .line-through {
-                font-size: 1rem;
-            }
-        }
-
         .itemAmount {
             padding-right: 0;
 
