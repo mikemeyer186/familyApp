@@ -14,7 +14,7 @@ export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
     const { isListLoaded, filterImportantItems } = useList();
     const { isJournalLoaded, filterDailyBalances } = useJournal();
-    const { isMotivationLoaded } = useUser();
+    const { activeUser, greeting, isMotivationLoaded } = useUser();
     const [nextEvents, setNextEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
     const [journalBalances, setJournalBalances] = useState({});
@@ -23,6 +23,7 @@ export default function DashboardPage() {
     const [journalLoaded, setJournalLoaded] = useState(false);
     const [motivationLoaded, setMotivationLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [variant] = useState('small');
     const navigate = useNavigate();
 
     /**
@@ -106,10 +107,22 @@ export default function DashboardPage() {
                 <Spinner>{'Dashboard laden...'}</Spinner>
             ) : (
                 <>
-                    <MotivationTile />
-                    <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} />
-                    <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} />
-                    <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} />
+                    <div className="mb-4">
+                        <h5 className="title">
+                            {greeting}
+                            {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
+                        </h5>
+                        <MotivationTile variant={variant} />
+                    </div>
+                    <div>
+                        <h5 className="title">Organisation</h5>
+                        <div className={variant === 'small' ? 'small-row' : 'large-row'}>
+                            <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} variant={variant} />
+                            <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
+                        </div>
+                    </div>
+
+                    <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
                 </>
             )}
         </div>

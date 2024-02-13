@@ -22,7 +22,7 @@ $logo-color-1: rgb(60, 42, 250); //primary
 $logo-color-3: rgb(92, 75, 252); //secondary
 $logo-color-2: rgb(129, 130, 223); //primary-outline & disabled
 $logo-color-4: rgb(200, 205, 253); //primary-outline hover & hover dropdown
-$logo-color-6: rgb(236, 236, 248); //background
+$logo-color-6: rgb(241, 241, 247); //background
 
 /* text colors */
 $txt-dark: rgb(34, 38, 42);
@@ -33,7 +33,6 @@ $txt-light: #fefefe;
 $txt-spend: rgb(255, 159, 159);
 $txt-income: rgba(60, 193, 89, 0.7);
 $txt-gradient: linear-gradient(90deg, $logo-color-3 0%, $logo-color-1 20%, $logo-color-2 50%, $logo-color-3 99%);
-$txt-button: rgb(82, 92, 233);
 
 /* shadows */
 $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
@@ -46,8 +45,7 @@ $thinBorder: 1px solid rgba(217, 217, 217, 0.5);
 $mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
 $normal-radius: 16px;
 $inner-radius: 12px;
-$blue-border: 1px solid rgba(88, 97, 232, 0.5);
-$thin-blue-border: 1px solid rgba(88, 98, 232, 0.2);
+$blue-border: 1px solid $logo-color-2;
 
 /* dimensions */
 $navbarHeight: 56px;

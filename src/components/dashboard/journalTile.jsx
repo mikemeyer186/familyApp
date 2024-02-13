@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useJournal } from '../../contexts/journalContext';
 import months from '../../data/months';
 
-export default function JournalTile({ journalBalances, navigateToPage }) {
+export default function JournalTile({ journalBalances, navigateToPage, variant }) {
     const { selectedMonth, selectedYear } = useJournal();
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
@@ -72,26 +72,35 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
     }, [journalBalances.dates, journalBalances.balances, actualMonth]);
 
     return (
-        <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>
-            <h5 className="tile-title">
-                <span>Finanzen</span>
-                <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
-                    {actualBalance &&
-                        actualBalance.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR',
-                        })}
-                </span>
-            </h5>
-            <span className="tile-title-month">
-                {actualMonth} {selectedYear}
-            </span>
-
-            {journalBalances.dates.length > 0 ? (
-                <Chart type="line" data={chartData} options={chartOptions} />
+        <>
+            {variant === 'small' ? (
+                <div className="dashboard-tile tile-journal tile-small" onClick={() => navigateToPage('/app/journal?page=Journal')}>
+                    <h6>Journal</h6>
+                    <img src="/assets/img/journal.jpg" alt="Journal" />
+                </div>
             ) : (
-                <div className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</div>
+                <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>
+                    <h5 className="tile-title">
+                        <span>Finanzen</span>
+                        <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
+                            {actualBalance &&
+                                actualBalance.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR',
+                                })}
+                        </span>
+                    </h5>
+                    <span className="tile-title-month">
+                        {actualMonth} {selectedYear}
+                    </span>
+
+                    {journalBalances.dates.length > 0 ? (
+                        <Chart type="line" data={chartData} options={chartOptions} />
+                    ) : (
+                        <div className="tile-empty-text">Es wurden noch keine Belege in diesem Monat gebucht</div>
+                    )}
+                </div>
             )}
-        </div>
+        </>
     );
 }

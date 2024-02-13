@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
 
 export default function Navbar() {
-    const { activeUser, signOutUser } = useUser();
-    const [greeting, setGreeting] = useState('Hallo');
+    const { activeUser, greeting, signOutUser, checkDaytime } = useUser();
     const navigate = useNavigate();
 
     /**
@@ -24,26 +23,11 @@ export default function Navbar() {
     }
 
     /**
-     * checks daytime and sets greeting in navbar
-     */
-    function checkDaytime() {
-        let daytime = new Date();
-        let hours = daytime.getHours();
-        if (hours >= 6 && hours < 11) {
-            setGreeting('Guten Morgen');
-        } else if (hours >= 11 && hours < 17) {
-            setGreeting('Guten Tag');
-        } else if (hours >= 17 && hours <= 23) {
-            setGreeting('Guten Abend');
-        }
-    }
-
-    /**
      * checks daytime on page load
      */
     useEffect(() => {
         checkDaytime();
-    }, []);
+    }, [checkDaytime]);
 
     return (
         <>

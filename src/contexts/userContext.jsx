@@ -27,6 +27,7 @@ function UserPovider({ children }) {
     const [activePage, setActivePage] = useState(lastPage);
     const [motivationSentence, setMotivationSentence] = useState('');
     const [isMotivationLoaded, setIsMotivationLoaded] = useState(false);
+    const [greeting, setGreeting] = useState('Hallo');
     const [searchParams] = useSearchParams('');
     const [yearDay] = useState(dayOfYear());
     const navigate = useNavigate();
@@ -209,6 +210,21 @@ function UserPovider({ children }) {
     }
 
     /**
+     * checks daytime and sets greeting in navbar
+     */
+    function checkDaytime() {
+        let daytime = new Date();
+        let hours = daytime.getHours();
+        if (hours >= 6 && hours < 11) {
+            setGreeting('Guten Morgen');
+        } else if (hours >= 11 && hours < 17) {
+            setGreeting('Guten Tag');
+        } else if (hours >= 17 && hours <= 23) {
+            setGreeting('Guten Abend');
+        }
+    }
+
+    /**
      * sets active page and document title
      * and sets "isAppLoaded" to true (session active)
      */
@@ -244,6 +260,7 @@ function UserPovider({ children }) {
                 isMotivationLoaded: isMotivationLoaded,
                 newEmail: newEmail,
                 message: message,
+                greeting: greeting,
                 setActiveUser,
                 setFamilyID,
                 signInUser,
@@ -256,6 +273,7 @@ function UserPovider({ children }) {
                 updateUserPassword,
                 setNewEmail,
                 setMessage,
+                checkDaytime,
             }}
         >
             {children}

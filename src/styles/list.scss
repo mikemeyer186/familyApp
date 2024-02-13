@@ -240,13 +240,8 @@
                     width: 180px;
                     white-space: break-spaces;
 
-                    @media (max-width: 480px) {
-                        .title {
-                            font-size: 1rem;
-                        }
-                        .line-through {
-                            font-size: 1rem;
-                        }
+                    @media (min-width: 480px) {
+                        width: 80%;
                     }
 
                     .title {
