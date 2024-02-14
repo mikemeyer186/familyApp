@@ -77,6 +77,7 @@ export default function JournalTile({ journalBalances, navigateToPage, variant }
                 <div className="dashboard-tile tile-journal tile-small" onClick={() => navigateToPage('/app/journal?page=Journal')}>
                     <h6>Journal</h6>
                     <img src="/assets/img/journal.jpg" alt="Journal" />
+                    <div className="tile-small-content"></div>
                 </div>
             ) : (
                 <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>

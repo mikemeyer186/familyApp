@@ -5,6 +5,7 @@ export default function EventsTile({ nextEvents, navigateToPage, variant }) {
                 <div className="dashboard-tile tile-small" onClick={() => navigateToPage('/app/calendar?page=Kalender')}>
                     <h6>Kalender</h6>
                     <img src="/assets/img/calendar.jpg" alt="Kalender" />
+                    <div className="tile-small-content"></div>
                 </div>
             ) : (
                 <div className="dashboard-tile" onClick={() => navigateToPage('/app/calendar?page=Kalender')}>

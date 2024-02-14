@@ -240,7 +240,7 @@ body {
 
 // primary button //
 .btn-primary {
-    background-color: $logo-color-3;
+    background-color: $logo-color-1;
     border: none;
     color: $txt-light;
 
@@ -259,7 +259,7 @@ body {
 
 .btn-primary:not(.show) {
     &:active {
-        background-color: $logo-color-3;
+        background-color: $logo-color-1;
         color: $txt-light;
     }
 }

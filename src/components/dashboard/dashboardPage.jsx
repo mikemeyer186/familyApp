@@ -6,9 +6,10 @@ import { useUser } from '../../contexts/userContext';
 import { useNavigate } from 'react-router';
 import Spinner from '../global/spinner';
 import MotivationTile from './motivationTile';
-import EventsTile from './EventsTile';
+import EventsTile from './eventsTile';
 import ListsTile from './listsTile';
 import JournalTile from './journalTile';
+import AssistantTile from './assistantTile';
 
 export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
@@ -120,9 +121,11 @@ export default function DashboardPage() {
                             <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} variant={variant} />
                             <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
                         </div>
+                        <div className={variant === 'small' ? 'small-row' : 'large-row'}>
+                            <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
+                            <AssistantTile navigateToPage={navigateToPage} variant={variant} />
+                        </div>
                     </div>
-
-                    <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
                 </>
             )}
         </div>

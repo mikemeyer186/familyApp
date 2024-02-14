@@ -170,7 +170,7 @@
         cursor: default !important;
 
         .motivation-text {
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 300;
             color: $txt-grey;
             font-style: italic;
@@ -190,6 +190,7 @@
         align-items: center;
         justify-content: flex-start;
         gap: 16px;
+        margin-bottom: 16px;
     }
 
     .small-row {
@@ -197,6 +198,7 @@
         width: calc(100vw - $padding-mobile);
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 16px;
 
         .tile-small {
             position: relative;
@@ -205,14 +207,33 @@
             padding: 0;
             overflow: hidden;
 
+            .tile-small-content {
+                position: absolute;
+                background-image: $bg-glass;
+                z-index: 1;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100px;
+            }
+
+            &:hover {
+                img {
+                    transition: all 500ms ease-in-out;
+                    transform: scale(1.2);
+                }
+            }
+
             h6 {
                 position: absolute;
+                z-index: 1;
                 top: 4px;
                 left: 8px;
                 color: $txt-light;
             }
 
             img {
+                transition: all 500ms ease-in-out;
                 width: 100%;
                 height: 100px;
                 object-fit: cover;
