@@ -214,7 +214,6 @@ function CalendarProvider({ children }) {
 
     /**
      * identifies the events which are today and for the next seven days
-     * @param {Array} events
      * @returns - filterd events for the next seven days
      */
     function filterEventsForNextWeek() {
@@ -223,12 +222,38 @@ function CalendarProvider({ children }) {
         currentDate.setHours(0, 0, 0, 0);
         nextSevenDays.setDate(currentDate.getDate() + 8);
 
-        const filteredEvents = events.filter((event) => {
+        const filteredEvents = events.slice().filter((event) => {
             const eventStartDate = new Date(event.start);
             const eventEndDate = new Date(event.end);
             return (
                 (eventStartDate >= currentDate && eventStartDate <= nextSevenDays) || (eventEndDate >= currentDate && eventEndDate <= nextSevenDays)
             );
+        });
+
+        filteredEvents.sort((a, b) => {
+            const startDateA = new Date(a.start);
+            const startDateB = new Date(b.start);
+            return startDateA - startDateB;
+        });
+
+        return filteredEvents;
+    }
+
+    /**
+     * identifies the events which are today
+     * @returns - filterd events for just today
+     */
+    function filterEventsForToday() {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        const filteredEvents = events.filter((event) => {
+            const eventStartDate = new Date(event.start);
+            eventStartDate.setHours(0, 0, 0, 0);
+            const eventEndDate = new Date(event.end);
+            eventEndDate.setHours(0, 0, 0, 0);
+
+            return eventStartDate.getTime() <= currentDate.getTime() && eventEndDate.getTime() >= currentDate.getTime();
         });
 
         filteredEvents.sort((a, b) => {
@@ -264,6 +289,7 @@ function CalendarProvider({ children }) {
                 getDrilldownView,
                 setMeetingID,
                 filterEventsForNextWeek,
+                filterEventsForToday,
             }}
         >
             {children}

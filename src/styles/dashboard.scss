@@ -215,6 +215,42 @@
                 bottom: 0;
                 width: 100%;
                 height: 100px;
+                padding: 8px;
+                color: $txt-grey;
+                font-size: 0.8rem;
+
+                .small-content-date {
+                    display: inline-block;
+                    border-bottom: $thinBorder;
+                    margin-bottom: 4px;
+                }
+
+                .tile-empty-text {
+                    color: $txt-grey;
+                    font-size: 0.8rem;
+                }
+
+                .small-content-event {
+                    font-size: 0.8rem;
+                    justify-content: flex-start;
+                    border: none;
+                    gap: 6px;
+                    padding: 1px 0px;
+
+                    .event-left {
+                        width: 75px;
+                        flex-shrink: 0;
+                        font-size: 0.7rem;
+                    }
+
+                    .small-content-title {
+                        display: block;
+                        width: 90px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
             }
 
             &:hover {

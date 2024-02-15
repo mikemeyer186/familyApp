@@ -12,11 +12,12 @@ import JournalTile from './journalTile';
 import AssistantTile from './assistantTile';
 
 export default function DashboardPage() {
-    const { isCalendarLoaded, filterEventsForNextWeek } = useCalendar();
+    const { isCalendarLoaded, filterEventsForNextWeek, filterEventsForToday } = useCalendar();
     const { isListLoaded, filterImportantItems } = useList();
     const { isJournalLoaded, filterDailyBalances } = useJournal();
     const { activeUser, greeting, isMotivationLoaded } = useUser();
     const [nextEvents, setNextEvents] = useState([]);
+    const [todayEvents, setTodayEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
     const [journalBalances, setJournalBalances] = useState({});
     const [eventsLoaded, setEventsLoaded] = useState(false);
@@ -42,11 +43,13 @@ export default function DashboardPage() {
         function filterNextEvents() {
             if (isCalendarLoaded) {
                 const nextEvents = filterEventsForNextWeek();
+                const todayEvents = filterEventsForToday();
                 setNextEvents(nextEvents);
+                setTodayEvents(todayEvents);
                 setEventsLoaded(true);
             }
         },
-        [filterEventsForNextWeek, isCalendarLoaded]
+        [filterEventsForNextWeek, filterEventsForToday, isCalendarLoaded]
     );
 
     /**
@@ -118,7 +121,7 @@ export default function DashboardPage() {
                     <div>
                         <h5 className="title">Organisation</h5>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
-                            <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} variant={variant} />
+                            <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} variant={variant} />
                             <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
                         </div>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
