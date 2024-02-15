@@ -8,7 +8,7 @@ export default function ListsTile({ importantItems, navigateToPage, variant }) {
             {variant === 'small' ? (
                 <div className="dashboard-tile tile-small" onClick={() => navigateToPage('/app/lists?page=Listen')}>
                     <h6>Listen</h6>
-                    <img src="/assets/img/listen.jpg" alt="Listen" />
+                    <img src="/assets/img/listen.webp" alt="Listen" />
                     <div className="tile-small-content"></div>
                 </div>
             ) : (

@@ -4,7 +4,7 @@ export default function AssistantTile({ navigateToPage, variant }) {
             {variant === 'small' ? (
                 <div className="dashboard-tile tile-small" onClick={() => navigateToPage('/app/lists?page=Listen')}>
                     <h6>Assistent</h6>
-                    <img src="/assets/img/listen.jpg" alt="Assistent" />
+                    <img src="/assets/img/assistant.webp" alt="Assistent" />
                     <div className="tile-small-content"></div>
                 </div>
             ) : (

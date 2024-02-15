@@ -119,10 +119,10 @@ export default function DashboardPage() {
                         <h5 className="title">Organisation</h5>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
                             <EventsTile nextEvents={nextEvents} navigateToPage={navigateToPage} variant={variant} />
-                            <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
+                            <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
                         </div>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
-                            <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
+                            <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
                             <AssistantTile navigateToPage={navigateToPage} variant={variant} />
                         </div>
                     </div>
