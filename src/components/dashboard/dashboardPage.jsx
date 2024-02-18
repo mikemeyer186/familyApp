@@ -26,7 +26,7 @@ export default function DashboardPage() {
     const [journalLoaded, setJournalLoaded] = useState(false);
     const [motivationLoaded, setMotivationLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [variant] = useState('small');
+    const [variant, setVariant] = useState('small');
     const navigate = useNavigate();
 
     /**
@@ -95,6 +95,14 @@ export default function DashboardPage() {
         [isMotivationLoaded]
     );
 
+    function handleChangeView() {
+        if (variant === 'small') {
+            setVariant('large');
+        } else {
+            setVariant('small');
+        }
+    }
+
     /**
      * loads the data on initial loading of the dashboard
      */
@@ -139,6 +147,9 @@ export default function DashboardPage() {
                     </div>
                 </>
             )}
+            <button className="btn btn-outline-primary" onClick={handleChangeView}>
+                Ansicht wechseln
+            </button>
         </div>
     );
 }
