@@ -13,12 +13,13 @@ import AssistantTile from './assistantTile';
 
 export default function DashboardPage() {
     const { isCalendarLoaded, filterEventsForNextWeek, filterEventsForToday } = useCalendar();
-    const { isListLoaded, filterImportantItems } = useList();
+    const { isListLoaded, filterImportantItems, countItems } = useList();
     const { isJournalLoaded, filterDailyBalances } = useJournal();
     const { activeUser, greeting, isMotivationLoaded } = useUser();
     const [nextEvents, setNextEvents] = useState([]);
     const [todayEvents, setTodayEvents] = useState([]);
     const [importantItems, setImportantItems] = useState([]);
+    const [numberOfItems, setNumberOfItems] = useState({});
     const [journalBalances, setJournalBalances] = useState({});
     const [eventsLoaded, setEventsLoaded] = useState(false);
     const [itemsLoaded, setItemsLoaded] = useState(false);
@@ -59,11 +60,13 @@ export default function DashboardPage() {
         function filterListItems() {
             if (isListLoaded) {
                 const importantItems = filterImportantItems();
+                const countedItems = countItems();
+                setNumberOfItems(countedItems);
                 setImportantItems(importantItems);
                 setItemsLoaded(true);
             }
         },
-        [filterImportantItems, isListLoaded]
+        [filterImportantItems, countItems, isListLoaded]
     );
 
     /**
@@ -122,7 +125,12 @@ export default function DashboardPage() {
                         <h5 className="title">Organisation</h5>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
                             <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} variant={variant} />
-                            <ListsTile importantItems={importantItems} navigateToPage={navigateToPage} variant={variant} />
+                            <ListsTile
+                                importantItems={importantItems}
+                                numberOfItems={numberOfItems}
+                                navigateToPage={navigateToPage}
+                                variant={variant}
+                            />
                         </div>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
                             <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />

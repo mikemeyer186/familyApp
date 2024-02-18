@@ -81,8 +81,7 @@
                 color: $txt-grey;
 
                 .event-left-time {
-                    font-size: 0.8rem;
-                    text-align: start;
+                    text-align: center;
                 }
             }
 
@@ -179,7 +178,7 @@
     }
 
     .tile-empty-text {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 300;
         color: $txt-grey;
     }
@@ -217,12 +216,30 @@
                 height: 100px;
                 padding: 8px;
                 color: $txt-grey;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
 
-                .small-content-date {
+                .item-small-content {
+                    font-size: 0.8rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    .item-small-number {
+                        color: $txt-dark;
+                    }
+
+                    .item-small-star {
+                        transform: translateY(-2px);
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+
+                .small-content-header {
+                    font-size: 0.9rem;
                     display: inline-block;
                     border-bottom: $thinBorder;
                     margin-bottom: 4px;
+                    width: max-content;
                 }
 
                 .tile-more-events-text {
@@ -242,10 +259,14 @@
                     .event-left {
                         width: 70px;
                         flex-shrink: 0;
-                        font-size: 0.7rem;
+
+                        .event-left-time {
+                            text-align: start;
+                        }
                     }
 
-                    .small-content-title {
+                    .small-content-event-title {
+                        font-weight: 400;
                         display: block;
                         width: 98px;
                         overflow: hidden;

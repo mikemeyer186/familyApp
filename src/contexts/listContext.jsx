@@ -86,6 +86,27 @@ function ListProvider({ children }) {
         return importantItems;
     }
 
+    /**
+     * filters the items with priority from all lists
+     * @returns - important items
+     */
+    function countItems() {
+        let doneItems = [];
+        let allItems = [];
+        let importantItems = [];
+
+        lists.forEach((listObject) => {
+            const doneInList = listObject.list.filter((item) => item.done);
+            const allInList = listObject.list.filter((item) => item.id);
+            const importantInList = listObject.list.filter((item) => item.priority && !item.done);
+            doneItems = doneItems.concat(doneInList);
+            allItems = allItems.concat(allInList);
+            importantItems = importantItems.concat(importantInList);
+        });
+
+        return { allItems: allItems.length, doneItems: doneItems.length, importantItems: importantItems.length };
+    }
+
     return (
         <ListContext.Provider
             value={{
@@ -103,6 +124,7 @@ function ListProvider({ children }) {
                 setModalType,
                 setIsListLoaded,
                 filterImportantItems,
+                countItems,
             }}
         >
             {children}

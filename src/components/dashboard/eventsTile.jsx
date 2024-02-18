@@ -12,7 +12,7 @@ export default function EventsTile({ nextEvents, todayEvents, navigateToPage, va
                     <h6>Kalender</h6>
                     <img src="/assets/img/calendar.webp" alt="Kalender" />
                     <div className="tile-small-content">
-                        <span className="small-content-date">{date}</span>
+                        <span className="small-content-header">{date}</span>
                         {todayEvents.length > 0 ? (
                             todayEvents.map((event, index) => {
                                 if (index < 2) {
@@ -47,7 +47,7 @@ export default function EventsTile({ nextEvents, todayEvents, navigateToPage, va
                                                 </div>
                                             </div>
                                             <div>
-                                                <span className="small-content-title">{event.title}</span>
+                                                <span className="small-content-event-title">{event.title}</span>
                                             </div>
                                         </div>
                                     );
