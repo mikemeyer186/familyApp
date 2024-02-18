@@ -14,49 +14,53 @@ export default function EventsTile({ nextEvents, todayEvents, navigateToPage, va
                     <div className="tile-small-content">
                         <span className="small-content-date">{date}</span>
                         {todayEvents.length > 0 ? (
-                            todayEvents.map((event) => {
-                                return (
-                                    <div className="tile-event small-content-event" key={event.data.id}>
-                                        <div className="event-left">
-                                            <div className="event-left-time">
-                                                {!event.allDay ? (
-                                                    <>
-                                                        <span>
-                                                            {event.start.toLocaleTimeString('de-DE', {
-                                                                hour: '2-digit',
-                                                                minute: '2-digit',
-                                                            })}
-                                                        </span>
-                                                        <span> - </span>
-                                                        <span>
-                                                            {event.end.toLocaleTimeString('de-DE', {
-                                                                hour: '2-digit',
-                                                                minute: '2-digit',
-                                                            })}
-                                                        </span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        {new Date(event.start).getDate() === new Date(event.end).getDate() ? (
-                                                            <span>ganztägig</span>
-                                                        ) : (
+                            todayEvents.map((event, index) => {
+                                if (index < 2) {
+                                    return (
+                                        <div className="tile-event small-content-event" key={event.data.id}>
+                                            <div className="event-left">
+                                                <div className="event-left-time">
+                                                    {!event.allDay ? (
+                                                        <>
                                                             <span>
-                                                                <span>bis </span>
-                                                                {event.end.toLocaleString('de-DE', {
-                                                                    day: '2-digit',
-                                                                    month: '2-digit',
-                                                                })}
+                                                                {event.start.toLocaleTimeString('de-DE', {
+                                                                    hour: '2-digit',
+                                                                    minute: '2-digit',
+                                                                }) + ' Uhr'}
                                                             </span>
-                                                        )}
-                                                    </>
-                                                )}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {new Date(event.start).getDate() === new Date(event.end).getDate() ? (
+                                                                <span>ganztägig</span>
+                                                            ) : (
+                                                                <span>
+                                                                    <span>bis </span>
+                                                                    {event.end.toLocaleString('de-DE', {
+                                                                        day: '2-digit',
+                                                                        month: '2-digit',
+                                                                    })}
+                                                                </span>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span className="small-content-title">{event.title}</span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <span className="small-content-title">{event.title}</span>
+                                    );
+                                }
+                                if (index === 2) {
+                                    return (
+                                        <div className="tile-event small-content-event" key={event.data.id}>
+                                            <span className="tile-more-events-text">
+                                                {todayEvents.length === 3 ? '+ 1 weiterer Termin' : `+ ${todayEvents.length - 2} weitere Termine`}
+                                            </span>
                                         </div>
-                                    </div>
-                                );
+                                    );
+                                }
                             })
                         ) : (
                             <p className="tile-empty-text">Heute stehen keine Termine an</p>

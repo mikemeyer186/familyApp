@@ -82,7 +82,7 @@
 
                 .event-left-time {
                     font-size: 0.8rem;
-                    text-align: center;
+                    text-align: start;
                 }
             }
 
@@ -225,27 +225,29 @@
                     margin-bottom: 4px;
                 }
 
-                .tile-empty-text {
+                .tile-more-events-text {
                     color: $txt-grey;
-                    font-size: 0.8rem;
+                    font-size: 0.7rem;
+                    width: 100%;
+                    text-align: center;
                 }
 
                 .small-content-event {
                     font-size: 0.8rem;
                     justify-content: flex-start;
                     border: none;
-                    gap: 6px;
+                    gap: 1px;
                     padding: 1px 0px;
 
                     .event-left {
-                        width: 75px;
+                        width: 70px;
                         flex-shrink: 0;
                         font-size: 0.7rem;
                     }
 
                     .small-content-title {
                         display: block;
-                        width: 90px;
+                        width: 98px;
                         overflow: hidden;
                         white-space: nowrap;
                         text-overflow: ellipsis;
@@ -266,6 +268,7 @@
                 top: 76px;
                 left: 8px;
                 color: $txt-light;
+                font-size: 1.2rem;
                 text-shadow: 0px 0px 8px rgba(119, 119, 119, 0.7);
             }
 
