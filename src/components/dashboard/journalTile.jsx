@@ -4,7 +4,7 @@ import { useJournal } from '../../contexts/journalContext';
 import months from '../../data/months';
 
 export default function JournalTile({ journalBalances, navigateToPage, variant }) {
-    const { selectedMonth, selectedYear } = useJournal();
+    const { selectedMonth, selectedYear, activePayment } = useJournal();
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
     const actualBalance = journalBalances.balances[journalBalances.balances.length - 1];
@@ -27,7 +27,7 @@ export default function JournalTile({ journalBalances, navigateToPage, variant }
                     },
                     borderColor: 'transparent',
                     tension: 0.2,
-                    backgroundColor: 'rgb(13, 110, 253, 0.2)',
+                    backgroundColor: 'transparent',
                 },
             ],
         };
@@ -43,25 +43,25 @@ export default function JournalTile({ journalBalances, navigateToPage, variant }
                 legend: {
                     display: false,
                     labels: {
-                        color: 'rgba(34, 38, 42, 0.6)',
+                        color: 'rgba(34, 38, 42, 0.3)',
                     },
                 },
             },
             scales: {
                 x: {
                     ticks: {
-                        color: 'rgba(34, 38, 42, 0.6)',
+                        color: 'rgba(34, 38, 42, 0.4)',
                     },
                     grid: {
-                        color: 'rgba(217, 217, 217, 0.5)',
+                        color: 'rgba(217, 217, 217, 0.3)',
                     },
                 },
                 y: {
                     ticks: {
-                        color: 'rgba(34, 38, 42, 0.6)',
+                        color: 'rgba(34, 38, 42, 0.4)',
                     },
                     grid: {
-                        color: 'rgba(217, 217, 217, 0.5)',
+                        color: 'rgba(217, 217, 217, 0.3)',
                     },
                 },
             },
@@ -77,7 +77,32 @@ export default function JournalTile({ journalBalances, navigateToPage, variant }
                 <div className="dashboard-tile tile-journal tile-small" onClick={() => navigateToPage('/app/journal?page=Journal')}>
                     <h6>Finanzen</h6>
                     <img src="/assets/img/journal.webp" alt="Journal" />
-                    <div className="tile-small-content"></div>
+                    <div className="tile-small-content">
+                        <span className="small-content-header">
+                            {actualMonth} {selectedYear}
+                        </span>
+                        <div className="journal-small-content">
+                            {journalBalances.dates.length > 0 ? (
+                                <>
+                                    <div>
+                                        <span>Kontostand: </span>
+                                        <span className={`tile-title-balance ${actualBalance >= 0 ? 'income' : 'spend'}`}>
+                                            {actualBalance.toLocaleString('de-DE', {
+                                                style: 'currency',
+                                                currency: 'EUR',
+                                            })}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span>Belege gebucht: </span>
+                                        <span className="journal-small-content-number">{activePayment ? activePayment.length : 0}</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="tile-empty-text">Noch keine Belege in diesem Monat gebucht</div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <div className="dashboard-tile tile-journal" onClick={() => navigateToPage('/app/journal?page=Journal')}>

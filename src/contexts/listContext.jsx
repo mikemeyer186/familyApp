@@ -87,8 +87,8 @@ function ListProvider({ children }) {
     }
 
     /**
-     * filters the items with priority from all lists
-     * @returns - important items
+     * filters all items by status and returns the numbers
+     * @returns - numbers of all items
      */
     function countItems() {
         let doneItems = [];

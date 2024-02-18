@@ -178,7 +178,7 @@
     }
 
     .tile-empty-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 300;
         color: $txt-grey;
     }
@@ -242,6 +242,10 @@
                     width: max-content;
                 }
 
+                .small-content-text {
+                    font-size: 0.8rem;
+                }
+
                 .tile-more-events-text {
                     color: $txt-grey;
                     font-size: 0.7rem;
@@ -276,6 +280,18 @@
                 }
             }
 
+            .journal-small-content {
+                font-size: 0.8rem;
+
+                .tile-title-balance {
+                    font-weight: 600;
+                }
+
+                .journal-small-content-number {
+                    color: $txt-dark;
+                }
+            }
+
             &:hover {
                 img {
                     transition: all 500ms ease-in-out;
@@ -299,10 +315,6 @@
                 height: 100px;
                 object-fit: cover;
                 object-position: center;
-            }
-
-            .chart {
-                height: 130px;
             }
         }
     }

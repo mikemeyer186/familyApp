@@ -134,7 +134,7 @@ export default function DashboardPage() {
                         </div>
                         <div className={variant === 'small' ? 'small-row' : 'large-row'}>
                             <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
-                            <AssistantTile navigateToPage={navigateToPage} variant={variant} />
+                            {variant === 'small' && <AssistantTile navigateToPage={navigateToPage} variant={variant} />}
                         </div>
                     </div>
                 </>

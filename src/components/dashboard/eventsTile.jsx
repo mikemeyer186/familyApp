@@ -124,7 +124,7 @@ export default function EventsTile({ nextEvents, todayEvents, navigateToPage, va
                             );
                         })
                     ) : (
-                        <span className="tile-empty-text">In den nächsten 7 Tagen stehen keine Termine an</span>
+                        <span className="tile-empty-text">Keine Termine in den nächsten 7 Tagen</span>
                     )}
                 </div>
             )}
