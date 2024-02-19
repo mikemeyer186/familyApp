@@ -26,7 +26,6 @@ export default function DashboardPage() {
     const [journalLoaded, setJournalLoaded] = useState(false);
     const [motivationLoaded, setMotivationLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [variant, setVariant] = useState('small');
     const navigate = useNavigate();
 
     /**
@@ -95,14 +94,6 @@ export default function DashboardPage() {
         [isMotivationLoaded]
     );
 
-    function handleChangeView() {
-        if (variant === 'small') {
-            setVariant('large');
-        } else {
-            setVariant('small');
-        }
-    }
-
     /**
      * loads the data on initial loading of the dashboard
      */
@@ -127,29 +118,21 @@ export default function DashboardPage() {
                             {greeting}
                             {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
                         </h5>
-                        <MotivationTile variant={variant} />
+                        <MotivationTile />
                     </div>
                     <div>
-                        <h5 className="title">Organisation</h5>
-                        <div className={variant === 'small' ? 'small-row' : 'large-row'}>
-                            <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} variant={variant} />
-                            <ListsTile
-                                importantItems={importantItems}
-                                numberOfItems={numberOfItems}
-                                navigateToPage={navigateToPage}
-                                variant={variant}
-                            />
+                        <h5 className="title">Dashboard</h5>
+                        <div className="small-row">
+                            <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} />
+                            <ListsTile importantItems={importantItems} numberOfItems={numberOfItems} navigateToPage={navigateToPage} />
                         </div>
-                        <div className={variant === 'small' ? 'small-row' : 'large-row'}>
-                            <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} variant={variant} />
-                            {variant === 'small' && <AssistantTile navigateToPage={navigateToPage} variant={variant} />}
+                        <div className="small-row">
+                            <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} />
+                            <AssistantTile navigateToPage={navigateToPage} />
                         </div>
                     </div>
                 </>
             )}
-            <button className="btn btn-outline-primary" onClick={handleChangeView}>
-                Ansicht wechseln
-            </button>
         </div>
     );
 }
