@@ -9,6 +9,14 @@
     overflow: auto;
     padding: 16px 10px 70px 10px;
 
+    .dashboard-row {
+        display: flex;
+        width: calc(100vw - $padding-mobile);
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
     .title {
         width: 100%;
         margin-bottom: 10px;
@@ -32,114 +40,128 @@
     }
 
     .dashboard-tile {
-        position: relative;
-        width: calc(100vw - $padding-mobile);
         background-image: $bg-glass;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
-        padding: 18px;
-
-        &:hover {
-            cursor: pointer;
-        }
+        position: relative;
+        width: calc(50% - $padding-mobile / 5);
+        height: 200px;
+        padding: 0;
+        overflow: hidden;
 
         @media (min-width: 768px) {
             width: 67%;
+        }
+
+        &:hover {
+            cursor: pointer;
+            img {
+                transition: all 500ms ease-in-out;
+                transform: scale(1.2);
+            }
+        }
+
+        h6 {
+            position: absolute;
+            z-index: 1;
+            top: 76px;
+            left: 8px;
+            color: $txt-light;
+            font-size: 1.2rem;
+            text-shadow: 0px 0px 8px rgba(119, 119, 119, 0.7);
+        }
+
+        img {
+            transition: all 500ms ease-in-out;
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            object-position: center;
         }
 
         .tile-empty-text {
             font-size: 0.8rem;
             color: $txt-grey;
         }
-    }
 
-    .tile-event {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        font-size: 1rem;
-        font-weight: 300;
-        color: $txt-dark;
-        padding: 8px 0;
-        border-bottom: $thinBorder;
-
-        &:last-of-type {
-            border-bottom: transparent;
-        }
-
-        .event-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            width: 90px;
+        .tile-content {
+            position: absolute;
+            background-image: $bg-glass;
+            z-index: 1;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            padding: 8px;
             color: $txt-grey;
+            font-size: 0.9rem;
 
-            .event-left-time {
-                text-align: center;
-            }
-        }
-
-        .event-right {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-grow: 1;
-        }
-    }
-
-    .tile-item {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        font-size: 1rem;
-        font-weight: 300;
-        color: $txt-dark;
-        padding: 8px 0;
-        border-bottom: $thinBorder;
-
-        &:last-of-type {
-            border-bottom: transparent;
-        }
-
-        .item-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            width: 90px;
-
-            .category {
-                width: fit-content;
-                display: flex;
-                align-items: center;
-                font-size: 0.7rem;
-                font-weight: 300;
-                color: $txt-light;
-                text-align: center;
-                vertical-align: middle;
-                padding: 5px 8px 4px 8px;
-            }
-        }
-
-        .item-right {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-grow: 1;
-
-            .item-title {
-                max-width: 180px;
+            .tile-content-header {
+                font-size: 0.9rem;
+                display: inline-block;
+                border-bottom: $thinBorder;
+                margin-bottom: 4px;
+                width: max-content;
             }
 
-            .item-user {
-                color: $txt-grey;
+            .tile-content-body {
                 font-size: 0.8rem;
+
+                .journal-balance {
+                    font-weight: 600;
+                }
+
+                .journal-number {
+                    color: $txt-dark;
+                }
+
+                .list-number {
+                    color: $txt-dark;
+                }
+
+                .list-star {
+                    transform: translateY(-2px);
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+
+            .event-content {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 1px;
+                padding: 1px 0px;
+
+                .event-time {
+                    width: 70px;
+                    flex-shrink: 0;
+                    text-align: start;
+                }
+
+                .event-title {
+                    display: block;
+                    width: 98px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .more-events-text {
+                    color: $txt-grey;
+                    font-size: 0.7rem;
+                    width: 100%;
+                    text-align: center;
+                }
             }
         }
     }
 
     .tile-motivation {
+        position: relative;
+        width: calc(100vw - $padding-mobile);
+        height: auto;
+        padding: 18px;
         cursor: default !important;
 
         .motivation-text {
@@ -148,153 +170,6 @@
             color: $txt-grey;
             font-style: italic;
             margin: 0;
-        }
-    }
-
-    .tile-journal {
-        .tile-title {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0;
-            align-items: center;
-
-            .tile-title-balance {
-                font-weight: 400;
-                font-size: 1.1rem;
-            }
-        }
-
-        .tile-title-month {
-            color: $txt-grey;
-            font-weight: 300;
-            font-size: 0.8rem;
-        }
-    }
-
-    .small-row {
-        display: flex;
-        width: calc(100vw - $padding-mobile);
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 16px;
-
-        .tile-small {
-            position: relative;
-            width: calc(50% - $padding-mobile / 5);
-            height: 200px;
-            padding: 0;
-            overflow: hidden;
-
-            .tile-small-content {
-                position: absolute;
-                background-image: $bg-glass;
-                z-index: 1;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                height: 100px;
-                padding: 8px;
-                color: $txt-grey;
-                font-size: 0.9rem;
-
-                .item-small-content {
-                    font-size: 0.8rem;
-                    display: flex;
-                    flex-direction: column;
-
-                    .item-small-number {
-                        color: $txt-dark;
-                    }
-
-                    .item-small-star {
-                        transform: translateY(-2px);
-                        width: 15px;
-                        height: 15px;
-                    }
-                }
-
-                .small-content-header {
-                    font-size: 0.9rem;
-                    display: inline-block;
-                    border-bottom: $thinBorder;
-                    margin-bottom: 4px;
-                    width: max-content;
-                }
-
-                .small-content-text {
-                    font-size: 0.8rem;
-                }
-
-                .tile-more-events-text {
-                    color: $txt-grey;
-                    font-size: 0.7rem;
-                    width: 100%;
-                    text-align: center;
-                }
-
-                .small-content-event {
-                    font-size: 0.8rem;
-                    justify-content: flex-start;
-                    border: none;
-                    gap: 1px;
-                    padding: 1px 0px;
-
-                    .event-left {
-                        width: 70px;
-                        flex-shrink: 0;
-
-                        .event-left-time {
-                            text-align: start;
-                        }
-                    }
-
-                    .small-content-event-title {
-                        font-weight: 400;
-                        display: block;
-                        width: 98px;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    }
-                }
-            }
-
-            .journal-small-content {
-                font-size: 0.8rem;
-
-                .tile-title-balance {
-                    font-weight: 600;
-                }
-
-                .journal-small-content-number {
-                    color: $txt-dark;
-                }
-            }
-
-            &:hover {
-                img {
-                    transition: all 500ms ease-in-out;
-                    transform: scale(1.2);
-                }
-            }
-
-            h6 {
-                position: absolute;
-                z-index: 1;
-                top: 76px;
-                left: 8px;
-                color: $txt-light;
-                font-size: 1.2rem;
-                text-shadow: 0px 0px 8px rgba(119, 119, 119, 0.7);
-            }
-
-            img {
-                transition: all 500ms ease-in-out;
-                width: 100%;
-                height: 100px;
-                object-fit: cover;
-                object-position: center;
-            }
         }
     }
 }

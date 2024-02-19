@@ -122,11 +122,11 @@ export default function DashboardPage() {
                     </div>
                     <div>
                         <h5 className="title">Dashboard</h5>
-                        <div className="small-row">
+                        <div className="dashboard-row">
                             <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} />
                             <ListsTile importantItems={importantItems} numberOfItems={numberOfItems} navigateToPage={navigateToPage} />
                         </div>
-                        <div className="small-row">
+                        <div className="dashboard-row">
                             <JournalTile journalBalances={journalBalances} navigateToPage={navigateToPage} />
                             <AssistantTile navigateToPage={navigateToPage} />
                         </div>

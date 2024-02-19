@@ -11,7 +11,7 @@ export default function JournalChart() {
     const actualMonth = months[Number(selectedMonth) - 1];
 
     /**
-     * loads the journal for actual month
+     * loads the daily balances for actual month
      */
     const filterJournal = useCallback(
         function filterJournal() {
@@ -23,6 +23,9 @@ export default function JournalChart() {
         [filterDailyBalances, isJournalLoaded]
     );
 
+    /**
+     * filters the journal by actual month
+     */
     useEffect(() => {
         filterJournal();
     }, [filterJournal]);
