@@ -38,7 +38,7 @@ export default function LoginForm() {
     }
 
     return (
-        <>
+        <div className="login-wrapper">
             <div className="login-header">
                 <img src="/assets/img/logo_blue.png" alt="Logo" />
                 <span>familyApp</span>
@@ -72,14 +72,14 @@ export default function LoginForm() {
                     />
                 </div>
                 <div className="form-group d-flex justify-content-center gap-2">
-                    <button type="submit" className="btn btn-primary mt-2" disabled={isLoggingIn}>
+                    <button type="submit" className="btn btn-primary mt-2 width108" disabled={isLoggingIn}>
                         {isUserLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
                         ) : (
                             <span role="status">Anmelden</span>
                         )}
                     </button>
-                    <button type="button" className="btn btn-primary mt-2" disabled={isLoggingIn} onClick={handleGuestLogIn}>
+                    <button type="button" className="btn btn-secondary mt-2 width108" disabled={isLoggingIn} onClick={handleGuestLogIn}>
                         {isGuestLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
                         ) : (
@@ -97,6 +97,6 @@ export default function LoginForm() {
                     Datenschutz
                 </NavLink>
             </div>
-        </>
+        </div>
     );
 }

@@ -17,7 +17,7 @@ $bs-blue: rgb(13, 110, 253);
 $chart-green: rgba(111, 224, 135, 0.7);
 $chart-red: rgba(252, 108, 108, 0.6);
 $priority: rgb(255, 72, 102);
-$logo-color-5: rgb(27, 7, 202); //primary hover
+$logo-color-5: rgb(34, 16, 194); //primary hover
 $logo-color-1: rgb(60, 42, 250); //primary
 $logo-color-3: rgb(92, 75, 252); //secondary
 $logo-color-2: rgb(129, 130, 223); //primary-outline & disabled
@@ -25,6 +25,7 @@ $logo-color-4: rgb(200, 205, 253); //primary-outline hover & hover dropdown
 $logo-color-6: rgb(241, 241, 247); //background
 
 /* text colors */
+$txt-blue: $logo-color-2;
 $txt-dark: rgb(34, 38, 42);
 $txt-light-dark: rgba(34, 38, 42, 0.8);
 $txt-grey: rgba(34, 38, 42, 0.7);
@@ -39,15 +40,27 @@ $shadow: 0px 4px 20px 0px rgba(119, 119, 119, 0.3);
 $shadow-light: 0px 4px 20px 0px rgba(119, 119, 119, 0.2);
 $shadow-item: 0px 2px 8px 0px rgba(119, 119, 119, 0.2);
 $glass-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+$shadow-logo: 10px 20px 20px rgba(119, 119, 119, 0.3);
 
 /* borders */
 $thinBorder: 1px solid rgba(217, 217, 217, 0.5);
-$mediumBorder: 1px solid rgba(217, 217, 217, 0.8);
+$medium-border: 1px solid rgba(217, 217, 217, 0.8);
 $normal-radius: 16px;
 $inner-radius: 12px;
+$input-radius: 8px;
 $blue-border: 1px solid $logo-color-2;
 
 /* dimensions */
 $navbarHeight: 56px;
 $max-width: 550px;
 $padding-mobile: 32px;
+$offsetY-login: -50px;
+
+/* breakpoints */
+$breakpoint-xxs: 400px;
+$breakpoint-xs: 480px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;

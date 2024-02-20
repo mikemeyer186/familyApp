@@ -144,7 +144,7 @@
 
         .new-input {
             max-width: $max-width;
-            border: $mediumBorder;
+            border: $medium-border;
             background-color: $bg-white;
 
             @media (max-width: 480px) {
@@ -192,7 +192,7 @@
                 background: $bg-glass-item;
                 border-radius: $normal-radius;
                 margin-bottom: 6px;
-                border: $mediumBorder;
+                border: $medium-border;
                 box-shadow: $shadow-item;
             }
         }
@@ -296,7 +296,7 @@
                         vertical-align: middle;
                         padding: 4px 8px 3px 8px;
                         background-color: #ffffff;
-                        border: $mediumBorder;
+                        border: $medium-border;
                     }
                 }
             }
