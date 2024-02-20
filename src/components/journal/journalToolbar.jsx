@@ -26,7 +26,7 @@ export default function JournalToolbar() {
 
     return (
         <>
-            <button type="button" className="btn btn-secondary newData-button" onClick={() => openDialog('journalNewRef')}>
+            <button type="button" className="btn btn-primary newData-button" onClick={() => openDialog('journalNewRef')}>
                 <span>Neuer Beleg</span>
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New data" />
             </button>
