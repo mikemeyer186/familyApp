@@ -3,47 +3,40 @@
     overflow-y: auto;
     display: flex;
     justify-content: center;
-    background-color: #f0f0f0;
 }
 
 .imprint-container {
     padding: 48px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 64px;
+    text-align: center;
+    gap: 32px;
 
-    @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 32px;
-        text-align: center;
+    @media (min-width: $breakpoint-md) {
+        flex-direction: row;
+        gap: 64px;
     }
 
-    @media (max-height: 640px) {
+    @media (max-height: $breakpoint-sm) {
         justify-content: flex-start;
-    }
-
-    @media (max-height: 640px) and (min-width: 769px) {
-        justify-content: center;
-        align-items: flex-start;
     }
 
     .logo {
         animation: slideInFromLeft 1s ease-in-out;
+        object-fit: cover;
 
-        @media (max-width: 768px) {
+        @media (max-width: $breakpoint-md) {
             width: 50%;
-            object-fit: cover;
         }
 
-        @media (max-width: 620px) {
+        @media (max-width: $breakpoint-sm) {
             width: 60%;
-            object-fit: cover;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: $breakpoint-xs) {
             width: 70%;
-            object-fit: cover;
         }
     }
 }
@@ -57,9 +50,9 @@
 }
 
 a {
-    color: rgb(69, 66, 255);
+    color: $txt-blue;
 
-    @media (max-width: 360px) {
+    @media (max-width: $breakpoint-xxs) {
         word-break: break-all;
     }
 }
@@ -77,18 +70,22 @@ a {
 .data-protection-container {
     padding: 48px 160px;
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-md) {
         padding: 48px 80px;
     }
-    @media (max-width: 620px) {
+    @media (max-width: $breakpoint-sm) {
         padding: 48px 40px;
     }
-    @media (max-width: 480px) {
+    @media (max-width: $breakpoint-xs) {
         padding: 48px 20px;
     }
 
+    @media (max-width: $breakpoint-xxs) {
+        word-break: break-all;
+    }
+
     h1 {
-        @media (max-width: 360px) {
+        @media (max-width: $breakpoint-xxs) {
             font-size: 24px;
         }
     }
