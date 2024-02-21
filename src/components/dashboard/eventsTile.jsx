@@ -44,9 +44,7 @@ export default function EventsTile({ todayEvents, navigateToPage }) {
                                             )}
                                         </div>
 
-                                        <div>
-                                            <span className="event-title">{event.title}</span>
-                                        </div>
+                                        <span className="event-title">{event.title}</span>
                                     </div>
                                 );
                             }

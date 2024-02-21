@@ -113,15 +113,15 @@ export default function DashboardPage() {
                 <Spinner>{'Dashboard laden...'}</Spinner>
             ) : (
                 <>
-                    <div className="mb-4">
+                    <div className="mb-5">
                         <h5 className="title">
                             {greeting}
                             {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
                         </h5>
                         <MotivationTile />
                     </div>
-                    <div>
-                        <h5 className="title">Dashboard</h5>
+                    <h5 className="title">Dashboard</h5>
+                    <div className="tile-wrapper">
                         <div className="dashboard-row">
                             <EventsTile nextEvents={nextEvents} todayEvents={todayEvents} navigateToPage={navigateToPage} />
                             <ListsTile importantItems={importantItems} numberOfItems={numberOfItems} navigateToPage={navigateToPage} />
