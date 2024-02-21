@@ -234,8 +234,8 @@ function UserPovider({ children }) {
             setActivePage('dashboard?page=Dashboard');
         } else if (params === 'Listen') {
             setActivePage('lists?page=Listen');
-        } else if (params === 'Journal') {
-            setActivePage('journal?page=Journal');
+        } else if (params === 'Finanzen') {
+            setActivePage('journal?page=Finanzen');
         } else if (params === 'Kalender') {
             setActivePage('calendar?page=Kalender');
         } else if (params === null) {

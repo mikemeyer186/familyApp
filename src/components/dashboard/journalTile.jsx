@@ -8,7 +8,7 @@ export default function JournalTile({ journalBalances, navigateToPage }) {
 
     return (
         <>
-            <div className="dashboard-tile" onClick={() => navigateToPage('/app/journal?page=Journal')}>
+            <div className="dashboard-tile" onClick={() => navigateToPage('/app/journal?page=Finanzen')}>
                 <h6>Finanzen</h6>
                 <img src="/assets/img/journal.webp" alt="Journal" />
                 <div className="tile-content">

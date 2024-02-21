@@ -79,9 +79,9 @@ export default function Navbar() {
                                         </NavLink>
                                     </li>
                                     <li data-bs-dismiss="offcanvas">
-                                        <NavLink to="journal?page=Journal" className="nav-item">
+                                        <NavLink to="journal?page=Finanzen" className="nav-item">
                                             <img src="/assets/icons/cash-coin.svg" alt="Journal" />
-                                            <span className="nav-link">Journal</span>
+                                            <span className="nav-link">Finanzen</span>
                                         </NavLink>
                                     </li>
                                     <li data-bs-dismiss="offcanvas">
@@ -108,7 +108,7 @@ export default function Navbar() {
                                             <li data-bs-dismiss="offcanvas">
                                                 <span
                                                     className="dropdown-item pointer"
-                                                    onClick={() => handleDropdownNav('emailchange?page=E-Mail Adresse ändern')}
+                                                    onClick={() => handleDropdownNav('emailchange?page=E-Mail ändern')}
                                                 >
                                                     E-Mail Adresse ändern
                                                 </span>
