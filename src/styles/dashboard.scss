@@ -10,6 +10,10 @@
         padding: 32px 80px 70px 80px;
     }
 
+    @media (min-width: $breakpoint-xxl) {
+        padding: 64px 160px 70px 160px;
+    }
+
     .dashboard-row {
         display: flex;
         width: calc(100vw - $padding-mobile);
@@ -22,6 +26,10 @@
 
         @media (min-width: $breakpoint-lg) {
             width: calc(100vw - $padding-desktop);
+        }
+
+        @media (min-width: $breakpoint-xxl) {
+            width: calc(100vw - $padding-desktop-xxl);
         }
     }
 
@@ -77,6 +85,10 @@
             @media (min-width: $breakpoint-lg) {
                 width: calc(50vw - $padding-desktop / 2 - 8px);
                 height: 300px;
+            }
+
+            @media (min-width: $breakpoint-xxl) {
+                width: calc(50vw - $padding-desktop-xxl / 2 - 8px);
             }
 
             &:hover {
@@ -271,6 +283,10 @@
 
         @media (min-width: $breakpoint-lg) {
             width: calc(100vw - $padding-desktop);
+        }
+
+        @media (min-width: $breakpoint-xxl) {
+            width: calc(100vw - $padding-desktop-xxl);
         }
 
         .motivation-text {
