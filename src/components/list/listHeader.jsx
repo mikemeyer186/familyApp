@@ -2,7 +2,7 @@ export default function ListHeader({ sortBy, sortCategories, handleSorting }) {
     return (
         <>
             <div className="list-header mb-2 mt-4">
-                <span className="sort-label">Sortierung nach: </span>
+                <span className="sort-label">Sortierung: </span>
 
                 <button
                     className="btn dropdown-toggle btn-outline-primary sort-options thinBorder"

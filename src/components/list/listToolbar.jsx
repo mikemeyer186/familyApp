@@ -16,7 +16,7 @@ export default function ListToolbar({ sortBy, sortCategories, handleSorting }) {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             >
-                {sortBy}
+                <span>{sortBy}</span>
                 {sortBy === 'Datum' ? (
                     <img src="/assets/icons/sort-numeric-down.svg" alt="Sort by date" />
                 ) : (

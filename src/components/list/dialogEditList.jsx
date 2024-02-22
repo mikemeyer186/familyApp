@@ -42,8 +42,8 @@ export default function DialogEditList() {
                         <h1 className="modal-title fs-5">Liste umbenennen</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleRenameList}>
+                    <form onSubmit={handleRenameList}>
+                        <div className="modal-body">
                             <div className="mb-3">
                                 <label htmlFor="new-list-name" className="col-form-label">
                                     Wie möchtest du die Liste nennen?
@@ -56,16 +56,16 @@ export default function DialogEditList() {
                                     required
                                 />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
-                                    Abbrechen
-                                </button>
-                                <button type="submit" className="btn btn-primary">
-                                    Umbenennen
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
+                                Abbrechen
+                            </button>
+                            <button type="submit" className="btn btn-primary">
+                                Umbenennen
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

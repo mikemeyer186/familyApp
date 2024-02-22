@@ -5,10 +5,14 @@
     justify-content: center;
     height: 100%;
     overflow: auto;
-    padding: 70px 12px;
+    padding: 70px 16px;
 
-    @media (min-width: 650px) {
-        padding: 70px 50px;
+    @media (min-width: $breakpoint-lg) {
+        padding: 100px 80px 70px 80px;
+    }
+
+    @media (min-width: $breakpoint-xl) {
+        padding: 100px 160px 70px 160px;
     }
 
     .spinner-container {
@@ -26,29 +30,31 @@
 
     .empty-listcollection {
         font-weight: 400;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         text-align: center;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -115%);
+        transform: translate(-50%, 200%);
+        width: 80vw;
+
+        @media (max-width: $breakpoint-xxs) {
+            font-size: 1rem;
+        }
     }
 
     .listcollection {
-        display: grid;
-        grid-template-columns: none;
-        grid-auto-rows: auto;
-        flex-shrink: 1;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
         justify-content: center;
         gap: 16px;
         width: 100%;
+        padding-bottom: 48px;
 
-        @media (min-width: 575px) {
-            grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
-            justify-content: center;
-            row-gap: 32px;
+        @media (min-width: $breakpoint-xl) {
+            display: grid;
+            flex-shrink: 1;
+            grid-template-columns: repeat(auto-fill, 550px);
         }
     }
 
@@ -80,6 +86,12 @@
             justify-content: center;
             align-items: center;
 
+            @media (max-width: $breakpoint-xxs) {
+                span {
+                    display: none;
+                }
+            }
+
             img {
                 margin-left: 10px;
                 width: 20px;
@@ -97,15 +109,19 @@
         padding: 18px;
         color: $txt-light-dark;
 
+        @media (min-width: $breakpoint-sm) {
+            max-width: $max-width;
+        }
+
         h3 {
-            width: 320px;
+            width: 90%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-        }
 
-        @media (min-width: 575px) {
-            max-width: $max-width;
+            @media (max-width: $breakpoint-xxs) {
+                font-size: 1.2rem;
+            }
         }
 
         .list-menu {
@@ -147,14 +163,26 @@
             border: $medium-border;
             background-color: $bg-white;
 
-            @media (max-width: 480px) {
-                .dropdown-toggle {
-                    font-size: 0.8rem;
-                    width: 115px;
+            .category-button {
+                width: 135px;
+
+                @media (max-width: $breakpoint-xs) {
+                    font-size: 0.9rem;
                 }
 
+                @media (max-width: $breakpoint-xxs) {
+                    width: 50px;
+                    font-size: 1rem;
+
+                    span {
+                        display: none;
+                    }
+                }
+            }
+
+            @media (max-width: $breakpoint-xs) {
                 .btn-primary {
-                    font-size: 0.8rem;
+                    font-size: 0.9rem;
                     width: 40px;
                 }
             }
@@ -175,7 +203,7 @@
                     box-shadow: none;
                 }
 
-                @media (max-width: 480px) {
+                @media (max-width: $breakpoint-xs) {
                     font-size: 0.8rem;
 
                     &::placeholder {
@@ -197,6 +225,12 @@
             }
         }
 
+        .list-group > span {
+            @media (max-width: $breakpoint-xs) {
+                font-size: 0.9rem;
+            }
+        }
+
         .item-clickable {
             position: relative;
             padding: 0 32px;
@@ -205,12 +239,15 @@
             height: 100px;
 
             .label {
-                width: 100%;
+                width: 90%;
             }
 
-            @media (max-width: 480px) {
+            @media (max-width: $breakpoint-xxs) {
+                padding: 0 16px;
+
                 .label {
-                    width: initial;
+                    width: 80%;
+                    gap: 0.3rem !important;
                 }
             }
 
@@ -230,6 +267,10 @@
                 justify-content: space-between;
                 width: 80%;
 
+                @media (max-width: $breakpoint-xxs) {
+                    width: 80%;
+                }
+
                 .item-description {
                     display: flex;
                     flex-direction: column;
@@ -237,12 +278,8 @@
                     justify-content: flex-start;
                     padding: 12px 8px 8px 8px;
                     gap: 8px;
-                    width: 180px;
+                    width: 100%;
                     white-space: break-spaces;
-
-                    @media (min-width: 480px) {
-                        width: 80%;
-                    }
 
                     .title {
                         padding-left: 4px;
@@ -297,6 +334,10 @@
                         padding: 4px 8px 3px 8px;
                         background-color: #ffffff;
                         border: $medium-border;
+
+                        @media (max-width: 340px) {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -351,6 +392,10 @@
                 border-radius: 100%;
                 cursor: pointer;
 
+                @media (max-width: $breakpoint-xxs) {
+                    left: 15px;
+                }
+
                 img {
                     width: 31px;
                     height: 31px;
@@ -359,16 +404,6 @@
                     transform: translate(0px, 1px);
                     transition: all 250ms ease-in-out;
                 }
-            }
-        }
-    }
-
-    @media (max-width: 480px) {
-        .itemAmount {
-            padding-right: 0;
-
-            .amountAdjust {
-                gap: 6px;
             }
         }
     }

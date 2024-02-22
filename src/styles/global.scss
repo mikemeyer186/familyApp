@@ -172,6 +172,7 @@ body {
 
 .not-allowed {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 //Bootstrap overrides
@@ -441,6 +442,13 @@ body {
         background-color: $logo-color-1;
         color: $txt-light;
     }
+}
+
+// button danger
+.btn-danger {
+    background-color: $danger;
+    color: $txt-light;
+    border: 1px solid $danger;
 }
 
 //PrimeReact overrides

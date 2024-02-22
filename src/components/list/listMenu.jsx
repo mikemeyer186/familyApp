@@ -41,7 +41,12 @@ export default function ListMenu({ list }) {
                 />
                 <ul className="dropdown-menu">
                     <li>
-                        <button className="dropdown-item" type="button" onClick={handleOpenClearDialog}>
+                        <button
+                            className={`dropdown-item ${list.list.length === 0 ? 'not-allowed' : ''}`}
+                            type="button"
+                            onClick={handleOpenClearDialog}
+                            disabled={list.list.length === 0}
+                        >
                             Liste leeren
                         </button>
                         <button className="dropdown-item" type="button" onClick={() => openDialog('listEditRef')}>

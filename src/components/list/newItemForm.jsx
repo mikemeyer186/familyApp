@@ -67,8 +67,13 @@ export default function NewItemForm({ addItem }) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="input-group mb-3 new-input">
-                <button className="btn dropdown-toggle btn-outline-secondary width130" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {selectedCategory}
+                <button
+                    className="btn dropdown-toggle btn-outline-secondary category-button"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    <span>{selectedCategory}</span>
                 </button>
 
                 <ul className="dropdown-menu">
@@ -84,7 +89,7 @@ export default function NewItemForm({ addItem }) {
                 <input
                     type="text"
                     className="form-control text-input"
-                    placeholder="Füge etwas hinzu..."
+                    placeholder="Hinzufügen..."
                     id="newListItemInput"
                     value={newItem || ''}
                     onChange={(event) => setNewItem(event.target.value)}

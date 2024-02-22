@@ -23,6 +23,7 @@ export default function DialogNewList() {
      */
     function handleCloseDialog() {
         closeDialog('listNewRef');
+        setTitle('');
     }
 
     return (
@@ -33,8 +34,8 @@ export default function DialogNewList() {
                         <h1 className="modal-title fs-5">Neue Liste</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleAddNewList}>
+                    <form onSubmit={handleAddNewList}>
+                        <div className="modal-body">
                             <div className="mb-3">
                                 <label htmlFor="list-name" className="col-form-label">
                                     Wie möchtest du die neue Liste nennen?
@@ -49,16 +50,16 @@ export default function DialogNewList() {
                                     required
                                 />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
-                                    Abbrechen
-                                </button>
-                                <button type="submit" className="btn btn-primary">
-                                    Erstellen
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
+                                Abbrechen
+                            </button>
+                            <button type="submit" className="btn btn-primary">
+                                Erstellen
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
