@@ -26,7 +26,7 @@ export default function JournalToolbar() {
 
     return (
         <>
-            <button type="button" className="btn btn-primary newData-button" onClick={() => openDialog('journalNewRef')}>
+            <button type="button" className="btn btn-primary new-data-button" onClick={() => openDialog('journalNewRef')}>
                 <span>Neuer Beleg</span>
                 <img src="/assets/icons/file-earmark-plus-fill.svg" alt="New data" />
             </button>
@@ -34,7 +34,7 @@ export default function JournalToolbar() {
             <div className="form-input-group">
                 <div className="input-group">
                     <button
-                        className="btn dropdown-toggle btn-outline-secondary thinBorder width80"
+                        className="btn dropdown-toggle btn-outline-primary thinBorder width80"
                         id="date"
                         type="button"
                         data-bs-toggle="dropdown"
@@ -53,7 +53,7 @@ export default function JournalToolbar() {
                     </ul>
 
                     <button
-                        className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
+                        className="btn dropdown-toggle btn-outline-primary thinBorder width130"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"

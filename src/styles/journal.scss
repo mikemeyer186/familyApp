@@ -10,7 +10,7 @@
     padding: 70px 50px;
 
     @media (max-width: 768px) {
-        padding: 70px 10px;
+        padding: 70px 16px;
         justify-content: flex-start;
     }
 
@@ -27,18 +27,36 @@
         }
     }
 
-    .journalToolbar {
+    .journal-toolbar {
         position: absolute;
-        top: 6px;
+        top: 0;
         right: 0;
-        padding: 12px;
+        padding: 16px;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
         justify-content: flex-end;
         gap: 12px;
 
-        .newData-button {
+        .input-group {
+            border: none;
+
+            button {
+                &:last-of-type {
+                    border-left: none;
+                }
+
+                &:first-of-type:hover {
+                    border-right: 1px solid $logo-color-2;
+                }
+
+                &:first-of-type:focus {
+                    border-right: 1px solid $logo-color-2;
+                }
+            }
+        }
+
+        .new-data-button {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,89 +69,100 @@
         }
     }
 
-    .p-chart {
-        width: 100%;
-        height: 150px;
+    .journal-tile {
+        position: relative;
+        width: calc(100vw - $padding-mobile);
+        background-color: $bg-light;
+        border-radius: $normal-radius;
+        box-shadow: $glass-shadow;
+        padding: 18px;
+        color: $txt-light-dark;
+
+        @media (min-width: $breakpoint-sm) {
+            max-width: $max-width;
+        }
+
+        .journal-title {
+            margin-bottom: 16px;
+        }
+    }
+
+    .journal-chart {
+        flex-direction: column;
+
+        .p-chart {
+            width: 100%;
+            height: 250px;
+        }
     }
 
     .p-accordion {
-        width: 50%;
-        box-shadow: $shadow;
-        padding: 18px;
         border: $thinBorder;
-        border-radius: 8px;
-        background-color: $bg-white;
+        border-radius: $inner-radius;
+        background-color: transparent;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
 
-        .p-accordion-header-link {
-            background-color: #fafafa;
-            text-decoration: none;
-            color: $txt-dark;
-            font-weight: 500;
-
-            height: 61px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .p-accordion-content {
-            border-left: $thinBorder;
-            border-right: $thinBorder;
-        }
-
-        @media (max-width: 768px) {
-            padding: 0;
-            width: 100%;
-        }
-
-        .accordion-header-sum {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-
-            .sum-text {
-                font-size: 1.1rem;
-                font-weight: 600;
+        .p-accordion-tab-active {
+            .p-accordion-header-link {
+                background-color: $logo-color-6;
             }
-        }
-
-        .journal-detail-list {
-            border-bottom: $thinBorder;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .p-disabled {
             opacity: 1;
 
-            .p-accordion-header-link {
-                border-top: $medium-border;
-            }
-
             .p-accordion-toggle-icon {
                 opacity: 0;
+            }
+
+            .p-accordion-header-link {
+                background-color: $logo-color-6;
+                border-bottom: none;
+            }
+        }
+
+        .p-accordion-header-link {
+            border: none;
+            border-bottom: $thinBorder;
+            background-color: $bg-light;
+            text-decoration: none;
+            color: $txt-dark;
+            font-weight: 500;
+            height: 61px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .accordion-header-sum {
+                display: flex;
+                gap: 10px;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                .sum-text {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .p-accordion-content {
+            border-left: none;
+            border-right: none;
+
+            .journal-detail-list {
+                border-bottom: $thinBorder;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
         }
     }
 
-    .journal-payments {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        box-shadow: $shadow;
-        border: $thinBorder;
-        padding: 18px;
-        border-radius: 8px;
-        background-color: $bg-white;
-
-        @media (max-width: 768px) {
-            padding: 0;
-            width: 100%;
-        }
-
+    .journal-table {
         .journal-search-icon {
             position: absolute;
             top: 50%;
@@ -143,52 +172,73 @@
         }
 
         .journal-searchbar {
+            outline: none;
             width: 220px;
+            border: $thinBorder;
+            border-radius: $inner-radius;
+
+            &::placeholder {
+                color: $txt-grey;
+            }
         }
 
         .journal-csv-icon {
             width: 42px;
             height: 42px;
             border-radius: 100%;
+            background-color: $logo-color-1;
+            border: 1px solid $logo-color-1;
+
+            &:hover {
+                background-color: $logo-color-5;
+            }
+        }
+
+        tr {
+            &:hover {
+                background-color: $logo-color-6;
+            }
         }
 
         td {
-            @media (max-width: 768px) {
-                padding: 10px;
+            padding: 10px;
+
+            @media (min-width: $breakpoint-md) {
+                padding: 16px;
             }
         }
 
         .p-datatable-header {
             border: none;
-            background-color: $bg-grey-midlight;
-
-            @media (max-width: 768px) {
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
-                border-left: $thinBorder;
-                border-right: $thinBorder;
-            }
+            background-color: $logo-color-6;
+            border-top-left-radius: $inner-radius;
+            border-top-right-radius: $inner-radius;
+            border-left: $thinBorder;
+            border-right: $thinBorder;
         }
 
         .p-datatable-wrapper {
-            @media (max-width: 768px) {
-                border-left: $thinBorder;
-                border-right: $thinBorder;
+            border-left: $thinBorder;
+            border-right: $thinBorder;
+
+            .p-sortable-column {
+                padding: 10px 8px;
+
+                &:hover {
+                    background-color: $logo-color-6;
+                }
             }
         }
 
         .p-paginator-bottom {
-            border-top: $thinBorder;
-            @media (max-width: 768px) {
-                border-bottom-left-radius: 8px;
-                border-bottom-right-radius: 8px;
-                border: $thinBorder;
-            }
+            border-bottom-left-radius: $inner-radius;
+            border-bottom-right-radius: $inner-radius;
+            border: $thinBorder;
+            padding: 12px 0px;
         }
 
         .p-datatable-row-expansion > td {
-            padding-top: 0;
-            padding-left: 20px;
+            padding: 0;
             cursor: default;
         }
 
@@ -196,26 +246,10 @@
             padding: 0;
             margin: 0;
 
-            .th-left {
-                border-top-left-radius: 4px;
-            }
-
-            .th-right {
-                border-top-right-radius: 4px;
-            }
-
-            .td-left {
-                border-bottom-left-radius: 4px;
-            }
-
-            .td-right {
-                border-bottom-right-radius: 4px;
-            }
-
             td,
             th {
                 font-size: 0.8rem;
-                background-color: $bg-grey-light;
+                background-color: $logo-color-6;
             }
 
             td {

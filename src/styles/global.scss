@@ -254,7 +254,7 @@ body {
 // primary button //
 .btn-primary {
     background-color: $logo-color-1;
-    border: transparent;
+    border: 1px solid transparent;
     color: $txt-light;
 
     &:active {
@@ -284,37 +284,33 @@ body {
 
     &:hover {
         background-color: $logo-color-4;
-        border: $blue-border;
         color: $txt-grey;
-        border: 1px solid transparent;
+        border: 1px solid $logo-color-4;
     }
 
     &:focus {
         outline: none;
         box-shadow: none;
         background-color: $logo-color-4;
-        border: $blue-border;
         color: $txt-grey;
-        border: 1px solid transparent;
+        border: 1px solid $logo-color-4;
     }
 
     &:active {
         background-color: $logo-color-4;
-        border: $blue-border;
         color: $txt-grey;
-        border: 1px solid transparent;
+        border: 1px solid $logo-color-4;
     }
 }
 
 .btn-outline-primary.show {
     background-color: $logo-color-4;
-    border: 1px solid transparent;
+    border: 1px solid $logo-color-4;
 
     &:active {
         background-color: $logo-color-4;
-        border: $blue-border;
         color: $txt-grey;
-        border: 1px solid transparent;
+        border: 1px solid $logo-color-4;
     }
 }
 
@@ -323,9 +319,8 @@ body {
 
     &:active {
         background-color: $logo-color-4;
-        border: $blue-border;
         color: $txt-grey;
-        border: 1px solid transparent;
+        border: 1px solid $logo-color-4;
     }
 }
 
@@ -353,7 +348,7 @@ body {
     &:disabled {
         background-color: $logo-color-4;
         color: $txt-light;
-        border: transparent;
+        border: 1px solid transparent;
     }
 }
 

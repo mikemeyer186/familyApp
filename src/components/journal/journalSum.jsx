@@ -110,7 +110,9 @@ export default function JournalSum() {
     }
 
     return (
-        <>
+        <div className="journal-tile">
+            <h3 className="journal-title">Bilanz</h3>
+
             <Accordion multiple>
                 <AccordionTab headerTemplate={incomeTemplate}>
                     {income.length > 0 &&
@@ -172,6 +174,6 @@ export default function JournalSum() {
                 </AccordionTab>
                 <AccordionTab headerTemplate={diffCostsTemplate} disabled></AccordionTab>
             </Accordion>
-        </>
+        </div>
     );
 }

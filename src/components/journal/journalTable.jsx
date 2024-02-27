@@ -134,7 +134,9 @@ export default function JournalTable() {
 
     return (
         <>
-            <div className="journal-payments">
+            <div className="journal-table journal-tile">
+                <h3 className="journal-title">Belege</h3>
+
                 {activeJournal ? (
                     <DataTable
                         ref={dt}

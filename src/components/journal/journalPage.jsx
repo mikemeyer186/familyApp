@@ -11,7 +11,7 @@ export default function JournalPage() {
     return (
         <>
             <div className="journalPage-wrapper">
-                <div className="journalToolbar">
+                <div className="journal-toolbar">
                     <JournalToolbar />
                 </div>
 
