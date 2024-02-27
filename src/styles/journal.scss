@@ -220,6 +220,9 @@
         .p-datatable-wrapper {
             border-left: $thinBorder;
             border-right: $thinBorder;
+            border-bottom: $thinBorder;
+            border-bottom-left-radius: $inner-radius;
+            border-bottom-right-radius: $inner-radius;
 
             .p-sortable-column {
                 padding: 10px 8px;
@@ -231,10 +234,24 @@
         }
 
         .p-paginator-bottom {
+            border: none;
             border-bottom-left-radius: $inner-radius;
             border-bottom-right-radius: $inner-radius;
-            border: $thinBorder;
             padding: 12px 0px;
+
+            .p-paginator-first,
+            .p-paginator-last,
+            .p-paginator-prev,
+            .p-paginator-next,
+            .p-paginator-page {
+                color: $logo-color-1;
+            }
+
+            .p-highlight {
+                color: $txt-light;
+                background-color: $logo-color-1;
+                border: 1px solid $logo-color-1;
+            }
         }
 
         .p-datatable-row-expansion > td {
@@ -282,13 +299,24 @@
 
 #journalNewRef,
 #journalEditRef {
-    #amount {
+    #amount,
+    #editAmount {
+        border-radius: $normal-radius;
+        border: 1px solid $logo-color-2;
+        text-align: center;
+
         &::-webkit-inner-spin-button {
             display: none;
         }
         &::-webkit-outer-spin-button {
             display: none;
         }
+    }
+
+    #dataInfo,
+    #editInfo {
+        border-radius: $normal-radius;
+        border: 1px solid $logo-color-2;
     }
 
     .form-input-group {
@@ -299,6 +327,26 @@
 
     .input-group {
         flex-wrap: nowrap;
+        border: none;
+    }
+
+    .date-input-group {
+        flex-wrap: nowrap;
+        border: none;
+
+        button {
+            &:last-of-type {
+                border-left: none;
+            }
+
+            &:first-of-type:hover {
+                border-right: 1px solid $logo-color-2;
+            }
+
+            &:first-of-type:focus {
+                border-right: 1px solid $logo-color-2;
+            }
+        }
     }
 
     .form-row {
@@ -308,22 +356,25 @@
     }
 
     .dropdown-menu-journal {
-        max-height: 180px;
+        max-height: 350px;
         overflow: auto;
 
         .subcategory {
             pointer-events: none;
-            border-bottom: $thinBorder;
-            background-color: $bg-grey;
+            background-color: $bg-grey-mid;
             color: $txt-light;
+            height: 22px;
+            padding: 0px 16px;
+            font-weight: 300;
         }
     }
 
     .countBadge {
         span {
+            color: $txt-grey;
             font-size: 0.8rem;
         }
-        transform: translateY(25px);
+        transform: translate(16px, 25px);
     }
 }
 

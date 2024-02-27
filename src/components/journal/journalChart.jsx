@@ -93,7 +93,7 @@ export default function JournalChart() {
 
     return (
         <div className="journal-tile journal-chart">
-            <h3 className="journal-title">Monatsverlauf</h3>
+            <h3 className="journal-title">Kontostand</h3>
             <Chart type="line" data={chartData} options={chartOptions} />
         </div>
     );

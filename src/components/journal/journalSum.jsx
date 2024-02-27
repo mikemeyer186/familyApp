@@ -111,7 +111,7 @@ export default function JournalSum() {
 
     return (
         <div className="journal-tile">
-            <h3 className="journal-title">Bilanz</h3>
+            <h3 className="journal-title">Monatsbilanz</h3>
 
             <Accordion multiple>
                 <AccordionTab headerTemplate={incomeTemplate}>

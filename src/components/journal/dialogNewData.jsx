@@ -136,17 +136,17 @@ export default function DialogNewData() {
                         <h1 className="modal-title fs-5">Neuen Beleg eingeben</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleAddNewData}>
+                    <form onSubmit={handleAddNewData}>
+                        <div className="modal-body">
                             <div className="form-input-group">
                                 <div className="form-row">
                                     <div className="widthFull">
                                         <label htmlFor="date" className="col-form-label">
                                             Monat
                                         </label>
-                                        <div className="input-group mb-3">
+                                        <div className="input-group date-input-group mb-3">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width80"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width80"
                                                 id="date"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -165,7 +165,7 @@ export default function DialogNewData() {
                                             </ul>
 
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width130"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -190,7 +190,7 @@ export default function DialogNewData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
+                                                className="btn dropdown-toggle btn-secondary thinBorder width130"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
                                                 id="flow"
                                                 type="button"
@@ -219,7 +219,7 @@ export default function DialogNewData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width210"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210"
                                                 id="categorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -281,20 +281,20 @@ export default function DialogNewData() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="countBadge">
-                                <span>Belege:</span>
-                                <div className="badge text-bg-light">{activePayment ? activePayment.length : 0}</div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleAbort}>
-                                    Abbrechen
-                                </button>
-                                <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
-                                    Buchen
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="countBadge">
+                            <span>Belege:</span>
+                            <div className="badge text-bg-light">{activePayment ? activePayment.length : 0}</div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleAbort}>
+                                Abbrechen
+                            </button>
+                            <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
+                                Buchen
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

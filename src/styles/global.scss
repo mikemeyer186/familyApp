@@ -91,7 +91,7 @@ body {
 }
 
 .width130 {
-    width: 135px;
+    width: 130px;
 }
 
 .width108 {
@@ -267,6 +267,7 @@ body {
 
     &:disabled {
         background-color: $logo-color-4;
+        border: 1px solid $logo-color-4;
     }
 }
 
@@ -451,8 +452,37 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.p-dropdown-items {
-    padding-left: 0;
+.p-dropdown-panel {
+    background-color: $bg-white;
+    box-shadow: $glass-shadow;
+    border-radius: $normal-radius;
+    border: transparent;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    .p-dropdown-items {
+        padding-left: 0;
+
+        .p-dropdown-item {
+            border-radius: $inner-radius;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            color: $txt-light-dark;
+
+            &:hover {
+                background-color: $logo-color-4;
+            }
+        }
+
+        .p-highlight {
+            color: $txt-light;
+            background-color: $logo-color-1;
+
+            &:hover {
+                background-color: $logo-color-1;
+            }
+        }
+    }
 }
 
 .p-tooltip {

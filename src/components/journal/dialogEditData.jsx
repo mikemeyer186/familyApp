@@ -255,9 +255,9 @@ export default function DialogEditData() {
                                         <label htmlFor="editDate" className="col-form-label">
                                             Monat
                                         </label>
-                                        <div className="input-group mb-3">
+                                        <div className="input-group date-input-group mb-3">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width80"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width80"
                                                 id="editDate"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -275,7 +275,7 @@ export default function DialogEditData() {
                                                 })}
                                             </ul>
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width130"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -299,7 +299,7 @@ export default function DialogEditData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width130"
+                                                className="btn dropdown-toggle btn-secondary thinBorder width130"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
                                                 id="editFlow"
                                                 type="button"
@@ -327,7 +327,7 @@ export default function DialogEditData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-secondary thinBorder width210"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210"
                                                 id="editCategorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
