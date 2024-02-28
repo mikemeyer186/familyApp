@@ -75,7 +75,7 @@
         background-color: $bg-light;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
-        padding: 18px;
+        padding: 24px 16px;
         color: $txt-light-dark;
 
         @media (min-width: $breakpoint-sm) {
@@ -154,10 +154,19 @@
             border-right: none;
 
             .journal-detail-list {
-                border-bottom: $thinBorder;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding-right: 0px;
+            }
+
+            .list-group {
+                border-bottom: $thinBorder;
+                padding-left: 7px;
+
+                &:last-of-type {
+                    border-bottom: none;
+                }
             }
         }
     }
@@ -275,7 +284,7 @@
             }
 
             .td-info {
-                width: 180px;
+                width: 170px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
