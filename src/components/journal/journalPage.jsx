@@ -10,7 +10,7 @@ export default function JournalPage() {
 
     return (
         <>
-            <div className="journalPage-wrapper">
+            <div className="journal-page-wrapper">
                 <div className="journal-toolbar">
                     <JournalToolbar />
                 </div>
@@ -20,8 +20,10 @@ export default function JournalPage() {
                 ) : (
                     <>
                         <JournalChart />
-                        <JournalSum />
-                        <JournalTable />
+                        <div className="journal-page-row">
+                            <JournalSum />
+                            <JournalTable />
+                        </div>
                     </>
                 )}
             </div>

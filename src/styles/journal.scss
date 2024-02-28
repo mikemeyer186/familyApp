@@ -1,4 +1,4 @@
-.journalPage-wrapper {
+.journal-page-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -7,11 +7,26 @@
     gap: 28px;
     height: 100%;
     overflow: auto;
-    padding: 70px 50px;
+    padding: 70px 16px 100px 16px;
 
-    @media (max-width: 768px) {
-        padding: 70px 16px;
+    .journal-page-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         justify-content: flex-start;
+        gap: 28px;
+
+        @media (min-width: $breakpoint-xl) {
+            flex-direction: row;
+        }
+    }
+
+    @media (min-width: $breakpoint-lg) {
+        padding: 100px 80px;
+    }
+
+    @media (min-width: $breakpoint-xl) {
+        padding: 100px 160px;
     }
 
     .spinner-container {
@@ -40,6 +55,7 @@
 
         .input-group {
             border: none;
+            flex-wrap: nowrap;
 
             button {
                 &:last-of-type {
@@ -53,6 +69,11 @@
                 &:first-of-type:focus {
                     border-right: 1px solid $logo-color-4;
                 }
+
+                @media (max-width: $breakpoint-xxs) {
+                    padding: 6px 9px;
+                    width: auto;
+                }
             }
         }
 
@@ -65,6 +86,18 @@
                 margin-left: 10px;
                 width: 20px;
                 height: 20px;
+            }
+
+            @media (max-width: $breakpoint-xs) {
+                height: 38px;
+
+                span {
+                    display: none;
+                }
+
+                img {
+                    margin-left: 0;
+                }
             }
         }
     }
@@ -93,6 +126,10 @@
         .p-chart {
             width: 100%;
             height: 250px;
+        }
+
+        @media (min-width: $breakpoint-xl) {
+            max-width: calc($max-width * 2 + 28px);
         }
     }
 
@@ -142,16 +179,39 @@
                 align-items: center;
                 width: 100%;
 
+                @media (max-width: $breakpoint-xxs) {
+                    gap: 5px;
+
+                    .accordion-header-text {
+                        max-width: 70px;
+                        word-break: normal;
+                    }
+                }
+
                 .sum-text {
                     font-size: 1.1rem;
                     font-weight: 600;
+
+                    @media (max-width: $breakpoint-xxs) {
+                        font-size: 0.9rem;
+                    }
                 }
+            }
+
+            @media (max-width: $breakpoint-xxs) {
+                padding: 8px 10px;
+                font-size: 0.9rem;
             }
         }
 
         .p-accordion-content {
             border-left: none;
             border-right: none;
+
+            @media (max-width: $breakpoint-xxs) {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
 
             .journal-detail-list {
                 display: flex;
@@ -172,51 +232,6 @@
     }
 
     .journal-table {
-        .journal-search-icon {
-            position: absolute;
-            top: 50%;
-            margin-top: -0.5rem;
-            left: 0.75rem;
-            opacity: 0.5;
-        }
-
-        .journal-searchbar {
-            outline: none;
-            width: 220px;
-            border: $thinBorder;
-            border-radius: $inner-radius;
-
-            &::placeholder {
-                color: $txt-light-grey;
-            }
-        }
-
-        .journal-csv-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 100%;
-            background-color: $logo-color-1;
-            border: 1px solid $logo-color-1;
-
-            &:hover {
-                background-color: $logo-color-5;
-            }
-        }
-
-        tr {
-            &:hover {
-                background-color: $logo-color-6;
-            }
-        }
-
-        td {
-            padding: 10px;
-
-            @media (min-width: $breakpoint-md) {
-                padding: 16px;
-            }
-        }
-
         .p-datatable-header {
             border: none;
             background-color: $logo-color-6;
@@ -224,6 +239,46 @@
             border-top-right-radius: $inner-radius;
             border-left: $thinBorder;
             border-right: $thinBorder;
+
+            @media (max-width: $breakpoint-xxs) {
+                padding: 16px 8px;
+            }
+
+            .journal-search-icon {
+                position: absolute;
+                top: 50%;
+                margin-top: -0.5rem;
+                left: 0.75rem;
+                opacity: 0.5;
+            }
+
+            .journal-searchbar {
+                outline: none;
+                width: 220px;
+                border: $thinBorder;
+                border-radius: $inner-radius;
+
+                &::placeholder {
+                    color: $txt-light-grey;
+                }
+
+                @media (max-width: $breakpoint-xxs) {
+                    width: 80%;
+                }
+            }
+
+            .journal-csv-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 100%;
+                background-color: $logo-color-1;
+                border: 1px solid $logo-color-1;
+                flex-shrink: 0;
+
+                &:hover {
+                    background-color: $logo-color-5;
+                }
+            }
         }
 
         .p-datatable-wrapper {
@@ -239,6 +294,47 @@
                 &:hover {
                     background-color: $logo-color-6;
                 }
+
+                @media (max-width: $breakpoint-xxs) {
+                    padding: 10px 5px;
+
+                    svg {
+                        display: none;
+                    }
+                }
+            }
+
+            tr {
+                &:hover {
+                    background-color: $logo-color-6;
+                }
+            }
+
+            td {
+                padding: 10px;
+
+                @media (min-width: $breakpoint-md) {
+                    padding: 16px;
+                }
+
+                @media (max-width: $breakpoint-xxs) {
+                    padding: 10px 5px;
+                }
+
+                @media (max-width: 320px) {
+                    max-width: 70px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+
+            @media (max-width: $breakpoint-xs) {
+                font-size: 0.9rem;
+            }
+
+            @media (max-width: $breakpoint-xxs) {
+                font-size: 0.8rem;
             }
         }
 
@@ -247,6 +343,7 @@
             border-bottom-left-radius: $inner-radius;
             border-bottom-right-radius: $inner-radius;
             padding: 12px 0px;
+            row-gap: 8px;
 
             .p-paginator-first,
             .p-paginator-last,
@@ -288,12 +385,24 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                @media (max-width: $breakpoint-xxs) {
+                    width: 100px;
+                }
+
+                @media (max-width: 320px) {
+                    max-width: 70px;
+                }
             }
 
             .journal-table-edit {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                @media (max-width: 320px) {
+                    max-width: 90px;
+                }
 
                 .journal-table-edit-icon {
                     width: 25px;
