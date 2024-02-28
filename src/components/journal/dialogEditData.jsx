@@ -247,8 +247,8 @@ export default function DialogEditData() {
                         <h1 className="modal-title fs-5">Beleg ändern</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleEditData}>
+                    <form onSubmit={handleEditData}>
+                        <div className="modal-body">
                             <div className="form-input-group">
                                 <div className="form-row">
                                     <div className="widthFull">
@@ -388,20 +388,20 @@ export default function DialogEditData() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="countBadge">
-                                <span>Belege:</span>
-                                <div className="badge text-bg-light">{activePayment.length}</div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" onClick={handleDeletePayment}>
-                                    Löschen
-                                </button>
-                                <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
-                                    Ändern
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="countBadge">
+                            <span>Belege:</span>
+                            <div className="badge text-bg-light">{activePayment.length}</div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-danger" onClick={handleDeletePayment}>
+                                Löschen
+                            </button>
+                            <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
+                                Ändern
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

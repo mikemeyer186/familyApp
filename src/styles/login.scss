@@ -88,15 +88,16 @@
                 input {
                     width: 100%;
                     padding: 0.5rem;
-                    border: $medium-border;
-                    border-radius: $input-radius;
+
                     &:focus {
                         outline: none;
                         box-shadow: none;
                     }
+
                     &::placeholder {
                         color: $txt-light-grey;
                     }
+
                     &:disabled {
                         background-color: $bg-disabled;
                     }

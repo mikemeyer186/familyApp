@@ -47,11 +47,11 @@
                 }
 
                 &:first-of-type:hover {
-                    border-right: 1px solid $logo-color-2;
+                    border-right: 1px solid $logo-color-4;
                 }
 
                 &:first-of-type:focus {
-                    border-right: 1px solid $logo-color-2;
+                    border-right: 1px solid $logo-color-4;
                 }
             }
         }
@@ -178,7 +178,7 @@
             border-radius: $inner-radius;
 
             &::placeholder {
-                color: $txt-grey;
+                color: $txt-light-grey;
             }
         }
 
@@ -301,8 +301,6 @@
 #journalEditRef {
     #amount,
     #editAmount {
-        border-radius: $normal-radius;
-        border: 1px solid $logo-color-2;
         text-align: center;
 
         &::-webkit-inner-spin-button {
@@ -311,12 +309,10 @@
         &::-webkit-outer-spin-button {
             display: none;
         }
-    }
 
-    #dataInfo,
-    #editInfo {
-        border-radius: $normal-radius;
-        border: 1px solid $logo-color-2;
+        &::placeholder {
+            transform: translateX(-8px);
+        }
     }
 
     .form-input-group {
@@ -340,11 +336,11 @@
             }
 
             &:first-of-type:hover {
-                border-right: 1px solid $logo-color-2;
+                border-right: 1px solid $logo-color-4;
             }
 
             &:first-of-type:focus {
-                border-right: 1px solid $logo-color-2;
+                border-right: 1px solid $logo-color-4;
             }
         }
     }
