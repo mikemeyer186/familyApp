@@ -70,7 +70,7 @@
                     border-right: 1px solid $logo-color-4;
                 }
 
-                @media (max-width: 410px) {
+                @media (max-width: $breakpoint-xxs) {
                     padding: 6px 9px;
                     width: auto;
                 }
@@ -88,7 +88,7 @@
                 height: 20px;
             }
 
-            @media (max-width: 410px) {
+            @media (max-width: $breakpoint-xxs) {
                 height: 38px;
 
                 span {
@@ -418,7 +418,7 @@
                     width: 100px;
                 }
 
-                @media (max-width: 320px) {
+                @media (max-width: $breakpoint-xxxs) {
                     max-width: 70px;
                 }
             }
@@ -428,7 +428,7 @@
                 justify-content: center;
                 align-items: center;
 
-                @media (max-width: 320px) {
+                @media (max-width: $breakpoint-xxxs) {
                     max-width: 90px;
                 }
 
@@ -465,11 +465,21 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        @media (max-width: $breakpoint-xxs) {
+            gap: 8px;
+        }
     }
 
     .input-group {
         flex-wrap: nowrap;
         border: none;
+
+        @media (max-width: $breakpoint-xxs) {
+            .dropdown-menu {
+                width: 100%;
+            }
+        }
     }
 
     .date-input-group {
@@ -495,19 +505,44 @@
         display: flex;
         justify-content: flex-start;
         gap: 24px;
+
+        .category-drop-down {
+            width: 210px;
+        }
+
+        .amount-drop-down,
+        .flow-drop-down {
+            width: 100%;
+        }
+
+        @media (max-width: $breakpoint-xxs) {
+            flex-direction: column;
+            gap: 8px;
+
+            .category-drop-down {
+                width: 100%;
+            }
+        }
     }
 
     .dropdown-menu-journal {
         max-height: 350px;
         overflow: auto;
+        width: 210px;
+
+        @media (max-width: $breakpoint-xxs) {
+            width: 100%;
+        }
 
         .subcategory {
             pointer-events: none;
             background-color: $bg-grey-mid;
             color: $txt-light;
-            height: 22px;
+            height: 24px;
             padding: 0px 16px;
             font-weight: 300;
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -517,6 +552,10 @@
             font-size: 0.8rem;
         }
         transform: translate(16px, 25px);
+
+        @media (max-width: $breakpoint-xxs) {
+            transform: translate(16px, -3px);
+        }
     }
 }
 

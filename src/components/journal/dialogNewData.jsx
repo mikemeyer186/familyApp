@@ -190,7 +190,7 @@ export default function DialogNewData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-secondary thinBorder width130"
+                                                className="btn dropdown-toggle btn-secondary thinBorder width130 flow-drop-down"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
                                                 id="flow"
                                                 type="button"
@@ -219,7 +219,7 @@ export default function DialogNewData() {
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210"
+                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210 category-drop-down"
                                                 id="categorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -252,7 +252,7 @@ export default function DialogNewData() {
                                             </label>
                                             <CurrencyInput
                                                 id="amount"
-                                                className="form-control width130"
+                                                className="form-control width130 amount-drop-down"
                                                 placeholder="0,00 €"
                                                 decimalScale={2}
                                                 intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
@@ -274,7 +274,7 @@ export default function DialogNewData() {
                                             type="text"
                                             className="form-control"
                                             id="dataInfo"
-                                            placeholder="Zusätzliche Info zum Beleg"
+                                            placeholder="Zusätzliche Beleginfo..."
                                             value={info}
                                             onChange={(e) => setInfo(e.target.value)}
                                         />
