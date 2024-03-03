@@ -70,7 +70,7 @@
                     border-right: 1px solid $logo-color-4;
                 }
 
-                @media (max-width: $breakpoint-xxs) {
+                @media (max-width: 410px) {
                     padding: 6px 9px;
                     width: auto;
                 }
@@ -88,7 +88,7 @@
                 height: 20px;
             }
 
-            @media (max-width: $breakpoint-xs) {
+            @media (max-width: 410px) {
                 height: 38px;
 
                 span {
@@ -122,8 +122,10 @@
 
     .journal-chart {
         flex-direction: column;
+        min-height: 344px;
 
         .p-chart {
+            animation: fadeIn 100ms ease-in-out;
             width: 100%;
             height: 250px;
         }

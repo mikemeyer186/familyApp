@@ -8,6 +8,7 @@ export default function JournalChart() {
     const [journalBalances, setJournalBalances] = useState({});
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
+    const [isLoaded, setIsLoaded] = useState(false);
     const actualMonth = months[Number(selectedMonth) - 1];
 
     /**
@@ -23,6 +24,12 @@ export default function JournalChart() {
         [filterDailyBalances, isJournalLoaded]
     );
 
+    function setLoadedStatus() {
+        setTimeout(() => {
+            setIsLoaded(true);
+        }, 100);
+    }
+
     /**
      * filters the journal by actual month
      */
@@ -34,6 +41,7 @@ export default function JournalChart() {
      * sets data and options for the chart
      */
     useEffect(() => {
+        setIsLoaded(false);
         const data = {
             labels: journalBalances.dates,
             datasets: [
@@ -89,12 +97,21 @@ export default function JournalChart() {
 
         setChartData(data);
         setChartOptions(options);
+        setLoadedStatus();
     }, [journalBalances.dates, journalBalances.balances, actualMonth]);
 
     return (
         <div className="journal-tile journal-chart">
             <h3 className="journal-title">Kontostand</h3>
-            <Chart type="line" data={chartData} options={chartOptions} />
+            {isLoaded ? (
+                journalBalances.dates.length === 0 ? (
+                    <p>Es wurden noch keine Belege gebucht</p>
+                ) : (
+                    <Chart type="line" data={chartData} options={chartOptions} />
+                )
+            ) : (
+                <p></p>
+            )}
         </div>
     );
 }

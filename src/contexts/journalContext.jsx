@@ -165,6 +165,8 @@ function JournalProvider({ children }) {
                 dailyBalances.balances.push(Number(balance.toFixed(2)));
             });
 
+        dailyBalances.dates.unshift('');
+        dailyBalances.balances.unshift(0);
         return dailyBalances;
     }
 
