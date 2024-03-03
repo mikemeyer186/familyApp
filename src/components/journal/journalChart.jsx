@@ -104,7 +104,7 @@ export default function JournalChart() {
         <div className="journal-tile journal-chart">
             <h3 className="journal-title">Kontostand</h3>
             {isLoaded ? (
-                journalBalances.dates.length === 0 ? (
+                journalBalances.dates.length === 1 ? (
                     <p>Es wurden noch keine Belege gebucht</p>
                 ) : (
                     <Chart type="line" data={chartData} options={chartOptions} />
