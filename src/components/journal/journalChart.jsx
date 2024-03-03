@@ -4,7 +4,7 @@ import { useJournal } from '../../contexts/journalContext';
 import months from '../../data/months';
 
 export default function JournalChart() {
-    const { isJournalLoaded, selectedMonth, filterDailyBalances } = useJournal();
+    const { activePayment, isJournalLoaded, selectedMonth, filterDailyBalances } = useJournal();
     const [journalBalances, setJournalBalances] = useState({});
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
@@ -24,6 +24,10 @@ export default function JournalChart() {
         [filterDailyBalances, isJournalLoaded]
     );
 
+    /**
+     * set loaded status of chart after timeout of 100ms
+     * smoothes switching between months
+     */
     function setLoadedStatus() {
         setTimeout(() => {
             setIsLoaded(true);
@@ -43,11 +47,11 @@ export default function JournalChart() {
     useEffect(() => {
         setIsLoaded(false);
         const data = {
-            labels: journalBalances.dates,
+            labels: activePayment.length > 0 ? journalBalances.dates : ['', '01', '05', '10', '20', '28'],
             datasets: [
                 {
                     label: actualMonth,
-                    data: journalBalances.balances,
+                    data: activePayment.length > 0 ? journalBalances.balances : [0, 1200, 1300, 400, -300, 200],
                     fill: {
                         target: 'origin',
                         above: 'rgba(111, 224, 135, 0.7)',
@@ -98,19 +102,16 @@ export default function JournalChart() {
         setChartData(data);
         setChartOptions(options);
         setLoadedStatus();
-    }, [journalBalances.dates, journalBalances.balances, actualMonth]);
+    }, [journalBalances.dates, journalBalances.balances, actualMonth, activePayment]);
 
     return (
         <div className="journal-tile journal-chart">
             <h3 className="journal-title">Kontostand</h3>
-            {isLoaded ? (
-                journalBalances.dates.length === 1 ? (
-                    <p>Es wurden noch keine Belege gebucht</p>
-                ) : (
-                    <Chart type="line" data={chartData} options={chartOptions} />
-                )
-            ) : (
-                <p></p>
+            {isLoaded && <Chart type="line" data={chartData} options={chartOptions} />}
+            {activePayment.length === 0 && (
+                <div className="chart-example">
+                    <div>Es wurden noch keine Belege gebucht</div>
+                </div>
             )}
         </div>
     );
