@@ -10,8 +10,12 @@
         padding: 32px 80px 70px 80px;
     }
 
+    @media (min-width: $breakpoint-xl) {
+        padding: 64px 115px 70px 115px;
+    }
+
     @media (min-width: $breakpoint-xxl) {
-        padding: 64px 160px 70px 160px;
+        padding: 64px 240px 70px 240px;
     }
 
     .dashboard-row {
@@ -26,6 +30,10 @@
 
         @media (min-width: $breakpoint-lg) {
             width: calc(100vw - $padding-desktop);
+        }
+
+        @media (min-width: $breakpoint-xl) {
+            width: calc(100vw - $padding-desktop-xl);
         }
 
         @media (min-width: $breakpoint-xxl) {
@@ -85,6 +93,10 @@
             @media (min-width: $breakpoint-lg) {
                 width: calc(50vw - $padding-desktop / 2 - 8px);
                 height: 300px;
+            }
+
+            @media (min-width: $breakpoint-xl) {
+                width: calc(50vw - $padding-desktop-xl / 2 - 8px);
             }
 
             @media (min-width: $breakpoint-xxl) {
@@ -283,6 +295,10 @@
 
         @media (min-width: $breakpoint-lg) {
             width: calc(100vw - $padding-desktop);
+        }
+
+        @media (min-width: $breakpoint-xl) {
+            width: calc(100vw - $padding-desktop-xl);
         }
 
         @media (min-width: $breakpoint-xxl) {

@@ -27,7 +27,7 @@
     }
 
     @media (min-width: $breakpoint-xl) {
-        padding: 100px 160px;
+        padding: 100px 115px;
     }
 
     .calendarToolbar {
@@ -68,7 +68,7 @@
             max-width: $max-width;
         }
 
-        @media (min-width: $breakpoint-xxl) {
+        @media (min-width: $breakpoint-xl) {
             max-width: calc($max-width * 2);
         }
 
@@ -78,15 +78,13 @@
 
             .rbc-toolbar-top {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 align-items: center;
                 justify-content: space-between;
                 width: 100%;
 
                 .rbc-toolbar-label {
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    color: $txt-dark;
+                    text-align: center;
                 }
             }
 
@@ -117,17 +115,16 @@
                         font-size: 0.8rem;
                         padding: 0.5rem 0.75rem;
                         border: $thinBorder;
-
-                        img {
-                            opacity: 0.5;
-                        }
                     }
                 }
             }
         }
 
         .rbc-time-view {
-            border-radius: 4px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border-bottom-left-radius: $inner-radius;
+            border-bottom-right-radius: $inner-radius;
             border: $thinBorder;
 
             .rbc-time-content {
@@ -212,7 +209,8 @@
         }
 
         .rbc-agenda-view {
-            border-radius: 4px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
 
             .rbc-agenda-table {
                 border: $thinBorder;
@@ -263,11 +261,17 @@
                     }
                 }
             }
+
+            .rbc-agenda-empty {
+                text-align: center;
+                margin-top: 16px;
+            }
         }
 
         .rbc-month-view {
-            border-radius: 4px;
             border: $thinBorder;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
             border-bottom-left-radius: $inner-radius;
             border-bottom-right-radius: $inner-radius;
 

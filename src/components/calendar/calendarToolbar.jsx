@@ -2,9 +2,9 @@ import { Navigate as navigate } from 'react-big-calendar';
 
 function ViewNamesGroup({ views: viewNames, view, onView }) {
     const viewImages = {
-        week: '/assets/icons/calendar_week.svg',
-        month: '/assets/icons/calendar_month.svg',
-        agenda: '/assets/icons/calendar_agenda.svg',
+        week: '/assets/icons/calendar_week_blue.svg',
+        month: '/assets/icons/calendar_month_blue.svg',
+        agenda: '/assets/icons/calendar_agenda_blue.svg',
     };
 
     return viewNames.map((name) => (
@@ -18,19 +18,20 @@ export default function CalendarToolbar({ label, localizer: { messages }, onNavi
     return (
         <div className="rbc-toolbar">
             <div className="rbc-toolbar-top">
-                <span className="rbc-toolbar-label">{label}</span>
+                <h3 className="rbc-toolbar-label">{label.split('|')[0]}</h3>
+                <h6 className="rbc-toolbar-label">{label.split('|')[1]}</h6>
             </div>
 
             <div className="rbc-toolbar-bottom">
                 <span className="rbc-btn-group">
                     <button type="button" onClick={() => onNavigate(navigate.PREVIOUS)} aria-label={messages.previous}>
-                        <img src="/assets/icons/arrow_back.svg" alt="Back" />
+                        <img src="/assets/icons/arrow_back_blue.svg" alt="Back" />
                     </button>
                     <button type="button" onClick={() => onNavigate(navigate.TODAY)} aria-label={messages.today}>
-                        <img src="/assets/icons/today.svg" alt="Back" />
+                        <img src="/assets/icons/today_blue.svg" alt="Back" />
                     </button>
                     <button type="button" onClick={() => onNavigate(navigate.NEXT)} aria-label={messages.next}>
-                        <img src="/assets/icons/arrow_forward.svg" alt="Back" />
+                        <img src="/assets/icons/arrow_forward_blue.svg" alt="Back" />
                     </button>
                 </span>
 

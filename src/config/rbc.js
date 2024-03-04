@@ -41,7 +41,7 @@ export default function CalendarConfig() {
                 dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
                     'Woche ' +
                     localizer.format(start, 'WW', culture) +
-                    ' | ' +
+                    '|' +
                     localizer.format(start, 'dd.MM.yyyy', culture) +
                     ' - ' +
                     localizer.format(end, 'dd.MM.yyyy', culture),
