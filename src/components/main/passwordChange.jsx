@@ -145,7 +145,7 @@ export default function PasswordChange() {
                                 className="btn btn-primary"
                                 disabled={passwordError || oldPassword.length === 0 || newPassword.length === 0}
                             >
-                                Passwort ändern
+                                Ändern
                             </button>
                         </div>
                     </form>

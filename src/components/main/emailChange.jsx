@@ -107,7 +107,7 @@ export default function EmailChange() {
                                 Abbrechen
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={emailError || password.length === 0 || newEmail.length === 0}>
-                                E-Mail ändern
+                                Ändern
                             </button>
                         </div>
                     </form>
