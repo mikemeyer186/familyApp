@@ -55,8 +55,8 @@
     }
 
     .rbc-calendar {
-        min-height: 740px;
-        max-height: 740px;
+        min-height: 700px;
+        max-height: 700px;
         font-size: 0.8rem;
         width: calc(100vw - $padding-mobile);
         background-image: $bg-glass;
@@ -364,4 +364,48 @@
     font-size: 0.7rem;
     font-weight: 300;
     color: $error-color;
+}
+
+#calendarNewRef,
+#calendarEditRef {
+    .color-picker {
+        width: 100%;
+        height: 38px;
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .form-row {
+        .input-group {
+            border: none;
+
+            @media (max-width: $breakpoint-xxs) {
+                flex-direction: column;
+
+                .widthHalf {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .check-btn-group {
+        width: 100%;
+
+        .checkbox-btn {
+            width: 50%;
+            height: 38px;
+            transition: all 125ms ease-in-out;
+        }
+
+        .btn-check:checked + .btn {
+            background-color: $logo-color-3;
+            border-color: $logo-color-3;
+        }
+
+        .btn-check:hover + .btn {
+            background-color: $logo-color-1;
+        }
+    }
 }

@@ -223,11 +223,11 @@ export default function DialogNewMeeting() {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5">Neuen Termin eintragen</h1>
+                        <h1 className="modal-title fs-5">Neuer Termin</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleNewMeeting}>
+                    <form onSubmit={handleNewMeeting}>
+                        <div className="modal-body">
                             <div className="form-row mb-3">
                                 <div className="widthFull">
                                     <label htmlFor="title" className="col-form-label">
@@ -237,7 +237,7 @@ export default function DialogNewMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="title"
-                                        placeholder="Name des Termins"
+                                        placeholder="Titel des Termins"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                     />
@@ -250,7 +250,7 @@ export default function DialogNewMeeting() {
                                         <label htmlFor="allDayYes" className="col-form-label">
                                             Ganztägig
                                         </label>
-                                        <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <div className="btn-group check-btn-group" role="group" aria-label="Basic radio toggle button group">
                                             <input
                                                 type="checkbox"
                                                 className="btn-check"
@@ -260,7 +260,7 @@ export default function DialogNewMeeting() {
                                                 checked={allDayYes}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayYes">
+                                            <label className="btn btn-secondary checkbox-btn" htmlFor="allDayYes">
                                                 Ja
                                             </label>
 
@@ -273,7 +273,7 @@ export default function DialogNewMeeting() {
                                                 checked={allDayNo}
                                                 onChange={handleAllDayChange}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="allDayNo">
+                                            <label className="btn btn-secondary checkbox-btn" htmlFor="allDayNo">
                                                 Nein
                                             </label>
                                         </div>
@@ -371,23 +371,22 @@ export default function DialogNewMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="meetingInfo"
-                                        placeholder="Zusätzliche Info zum Termin"
+                                        placeholder="Zusätzliche Information"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}
                                     />
                                 </div>
                             </div>
-
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleReset}>
-                                    Abbrechen
-                                </button>
-                                <button type="submit" className="btn btn-primary" disabled={title === '' || errorDate || errorTime}>
-                                    Eintragen
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleReset}>
+                                Abbrechen
+                            </button>
+                            <button type="submit" className="btn btn-primary" disabled={title === '' || errorDate || errorTime}>
+                                Eintragen
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

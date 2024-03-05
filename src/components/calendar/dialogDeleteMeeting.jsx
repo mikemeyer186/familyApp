@@ -34,7 +34,7 @@ export default function DialogDeleteMeeting() {
                             Abbrechen
                         </button>
                         <button type="button" className="btn btn-danger" onClick={handleDeleteMeeting}>
-                            Termin löschen
+                            Löschen
                         </button>
                     </div>
                 </div>

@@ -190,8 +190,8 @@ export default function DialogEditMeeting() {
                         <h1 className="modal-title fs-5">Termin ändern</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
-                    <div className="modal-body">
-                        <form onSubmit={handleEditMeeting}>
+                    <form onSubmit={handleEditMeeting}>
+                        <div className="modal-body">
                             <div className="form-row mb-3">
                                 <div className="widthFull">
                                     <label htmlFor="editTitle" className="col-form-label">
@@ -201,7 +201,7 @@ export default function DialogEditMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="editTitle"
-                                        placeholder="Name des Termins"
+                                        placeholder="Titel des Termins"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         disabled={publicEvent}
@@ -215,7 +215,7 @@ export default function DialogEditMeeting() {
                                         <label htmlFor="editAllDayYes" className="col-form-label">
                                             Ganztägig
                                         </label>
-                                        <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <div className="btn-group check-btn-group" role="group" aria-label="Basic radio toggle button group">
                                             <input
                                                 type="checkbox"
                                                 className="btn-check"
@@ -226,7 +226,7 @@ export default function DialogEditMeeting() {
                                                 onChange={handleAllDayChange}
                                                 disabled={publicEvent}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayYes">
+                                            <label className="btn btn-secondary checkbox-btn" htmlFor="editAllDayYes">
                                                 Ja
                                             </label>
 
@@ -240,7 +240,7 @@ export default function DialogEditMeeting() {
                                                 onChange={handleAllDayChange}
                                                 disabled={publicEvent}
                                             />
-                                            <label className="btn btn-outline-secondary checkbox-btn" htmlFor="editAllDayNo">
+                                            <label className="btn btn-secondary checkbox-btn" htmlFor="editAllDayNo">
                                                 Nein
                                             </label>
                                         </div>
@@ -343,31 +343,30 @@ export default function DialogEditMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="meetingEditInfo"
-                                        placeholder="Zusätzliche Info zum Termin"
+                                        placeholder="Zusätzliche Information"
                                         value={info}
                                         onChange={(e) => setInfo(e.target.value)}
                                         disabled={publicEvent}
                                     />
                                 </div>
                             </div>
-
-                            {!publicEvent && (
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-danger" onClick={handleDialogDelete}>
-                                        Löschen
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                        disabled={title === '' || errorDate || errorTime}
-                                        onClick={handleCloseDialog}
-                                    >
-                                        Ändern
-                                    </button>
-                                </div>
-                            )}
-                        </form>
-                    </div>
+                        </div>
+                        {!publicEvent && (
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-danger" onClick={handleDialogDelete}>
+                                    Löschen
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={title === '' || errorDate || errorTime}
+                                    onClick={handleCloseDialog}
+                                >
+                                    Ändern
+                                </button>
+                            </div>
+                        )}
+                    </form>
                 </div>
             </div>
         </div>

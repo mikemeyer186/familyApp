@@ -381,7 +381,7 @@ export default function DialogEditData() {
                                             type="text"
                                             className="form-control"
                                             id="editInfo"
-                                            placeholder="Zusätzliche Beleginfo..."
+                                            placeholder="Zusätzliche Information"
                                             value={info}
                                             onChange={(e) => setInfo(e.target.value)}
                                         />

@@ -133,7 +133,7 @@ export default function DialogNewData() {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5">Neuen Beleg eingeben</h1>
+                        <h1 className="modal-title fs-5">Neuer Beleg</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <form onSubmit={handleAddNewData}>
@@ -274,7 +274,7 @@ export default function DialogNewData() {
                                             type="text"
                                             className="form-control"
                                             id="dataInfo"
-                                            placeholder="Zusätzliche Beleginfo..."
+                                            placeholder="Zusätzliche Information"
                                             value={info}
                                             onChange={(e) => setInfo(e.target.value)}
                                         />
