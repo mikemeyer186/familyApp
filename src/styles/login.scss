@@ -1,4 +1,5 @@
 .login-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,6 +10,13 @@
 
     @media (max-height: $breakpoint-md) {
         justify-content: flex-start;
+
+        .spinner-container {
+            position: absolute;
+            top: calc(50% + $navbarHeight);
+            left: 50%;
+            transform: translate(-50%, calc(-50% - $navbarHeight));
+        }
     }
 
     .spinner-border {
