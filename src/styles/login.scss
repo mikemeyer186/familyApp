@@ -33,7 +33,7 @@
 
         @media (max-height: $breakpoint-md) {
             transform: translateY(0);
-            padding: 48px 0;
+            padding: 32px 0;
             justify-content: flex-start;
         }
 
@@ -68,7 +68,7 @@
         }
 
         .login-form {
-            width: calc(100vw - 24px);
+            width: calc(100vw - $padding-mobile);
             background-image: $bg-glass;
             border-radius: $normal-radius;
             box-shadow: $glass-shadow;

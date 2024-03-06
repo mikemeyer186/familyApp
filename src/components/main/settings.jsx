@@ -204,7 +204,7 @@ export default function Settings() {
                                 Bundesland für Ferien & Feiertage
                             </label>
                             <button
-                                className="btn dropdown-toggle btn-outline-secondary thinBorder widthFull"
+                                className="btn dropdown-toggle btn-outline-primary thinBorder widthFull"
                                 id="countrySelection"
                                 type="button"
                                 data-bs-toggle="dropdown"
@@ -226,26 +226,28 @@ export default function Settings() {
                                 <span className="mb-1 settings-label" htmlFor="schoolHolidayColor">
                                     Schulferien
                                 </span>
-                                <input
-                                    type="color"
-                                    id="schoolHolidayColor"
-                                    className="form-control settings-list-color me-4"
-                                    value={calendarSettings.schoolHolidayColor}
-                                    onChange={(e) => handleHolidayColorChange(e.target.value, 'schoolHolidayColor')}
-                                    required
-                                ></input>
+                                <div className="form-control settings-list-color me-4">
+                                    <input
+                                        type="color"
+                                        id="schoolHolidayColor"
+                                        value={calendarSettings.schoolHolidayColor}
+                                        onChange={(e) => handleHolidayColorChange(e.target.value, 'schoolHolidayColor')}
+                                        required
+                                    ></input>
+                                </div>
 
                                 <span className="mb-1 settings-label" htmlFor="publicHolidayColor">
                                     Feiertage
                                 </span>
-                                <input
-                                    type="color"
-                                    id="publicHolidayColor"
-                                    className="form-control settings-list-color"
-                                    value={calendarSettings.publicHolidayColor}
-                                    onChange={(e) => handleHolidayColorChange(e.target.value, 'publicHolidayColor')}
-                                    required
-                                ></input>
+                                <div className="form-control settings-list-color me-4">
+                                    <input
+                                        type="color"
+                                        id="publicHolidayColor"
+                                        value={calendarSettings.publicHolidayColor}
+                                        onChange={(e) => handleHolidayColorChange(e.target.value, 'publicHolidayColor')}
+                                        required
+                                    ></input>
+                                </div>
                             </div>
                         </div>
 
@@ -264,14 +266,15 @@ export default function Settings() {
                                             onChange={(e) => handleListCategoryChange(e.target.value, index, 'category')}
                                             required
                                         />
-                                        <input
-                                            type="color"
-                                            id={`color${index}`}
-                                            className="form-control settings-list-color"
-                                            value={listCategories[index].color}
-                                            onChange={(e) => handleListCategoryChange(e.target.value, index, 'color')}
-                                            required
-                                        ></input>
+                                        <div className="form-control settings-list-color">
+                                            <input
+                                                type="color"
+                                                id={`color${index}`}
+                                                value={listCategories[index].color}
+                                                onChange={(e) => handleListCategoryChange(e.target.value, index, 'color')}
+                                                required
+                                            ></input>
+                                        </div>
                                         {index > 0 ? (
                                             <img
                                                 src="/assets/icons/dash-circle.svg"

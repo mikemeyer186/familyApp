@@ -5,20 +5,24 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-    padding: 90px 50px;
+    padding: 20px 16px 80px 16px;
 
-    @media (max-width: 480px) {
-        padding: 20px 20px 80px 20px;
+    @media (min-width: $breakpoint-xs) {
+        padding: 90px 50px;
     }
 
     .profile-content {
-        width: $max-width;
+        width: calc(100vw - $padding-mobile);
         border: $thinBorder;
         box-shadow: $shadow;
-        padding: 18px;
+        padding: 16px;
         position: relative;
         border-radius: 8px;
         background-color: $bg-white;
+
+        @media (min-width: $breakpoint-md) {
+            width: $max-width;
+        }
 
         .profile-image {
             display: flex;
@@ -101,6 +105,11 @@
         justify-content: flex-end;
         align-items: center;
         gap: 12px;
+
+        @media (max-width: $breakpoint-xxxs) {
+            flex-direction: column;
+            align-items: flex-end;
+        }
     }
 
     //settings styles
@@ -115,12 +124,15 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
+
+        @media (max-width: $breakpoint-xxs) {
+            flex-direction: column;
+        }
     }
 
     .settings-label {
         color: $txt-grey;
         font-size: 0.9rem;
-        text-wrap: nowrap;
     }
 
     .settings-box {
@@ -142,11 +154,23 @@
     }
 
     .settings-list-color {
-        flex-shrink: 0;
         height: 38px;
         width: 38px;
-        padding: 0.375rem;
-        cursor: pointer;
+        flex-shrink: 0;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 100%;
+
+        @media (max-width: $breakpoint-xxs) {
+            margin: 0 !important;
+        }
+
+        input {
+            width: 150%;
+            height: 150%;
+            transform: translate(-10px, -10px);
+            cursor: pointer;
+        }
     }
 
     .delete-icon {
@@ -175,6 +199,7 @@
             opacity: 0.4;
             font-size: 0.9rem;
             font-weight: 400;
+            text-align: end;
         }
     }
 
