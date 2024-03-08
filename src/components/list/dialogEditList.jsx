@@ -61,7 +61,7 @@ export default function DialogEditList() {
                             <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" disabled={newTitle === ''}>
                                 Umbenennen
                             </button>
                         </div>

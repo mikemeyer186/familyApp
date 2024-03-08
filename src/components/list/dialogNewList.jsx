@@ -55,7 +55,7 @@ export default function DialogNewList() {
                             <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" disabled={title === ''}>
                                 Erstellen
                             </button>
                         </div>
