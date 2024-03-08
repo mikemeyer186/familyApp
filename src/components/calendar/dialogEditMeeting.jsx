@@ -328,7 +328,7 @@ export default function DialogEditMeeting() {
                                                     disabled={publicEvent}
                                                 />
                                             </div>
-                                            {errorTime && <span className="error-date">Das Enddatum liegt vor dem Startdatum!</span>}
+                                            {errorTime && <span className="error-date">Das Ende liegt vor dem Beginn!</span>}
                                         </div>
                                     </div>
                                 </>

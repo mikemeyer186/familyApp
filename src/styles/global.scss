@@ -108,7 +108,7 @@ body {
     left: 0;
     right: 0;
     animation: slideIn 250ms ease-out;
-    z-index: 9999;
+    z-index: 2222;
 }
 
 .slideOut-alert {
@@ -184,6 +184,10 @@ body {
 
 .text-secondary {
     color: $logo-color-5 !important;
+}
+
+.modal {
+    z-index: 3333;
 }
 
 .modal-backdrop,

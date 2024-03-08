@@ -308,7 +308,7 @@ export default function DialogEditData() {
                                             >
                                                 {selectedFlow}
                                             </button>
-                                            <ul className="dropdown-menu">
+                                            <ul className="dropdown-menu dropdown-menu-journal">
                                                 {defaultFlows.map((flow) => {
                                                     return (
                                                         <li key={flow} onClick={() => handleFlowSelection(flow)}>
@@ -397,7 +397,11 @@ export default function DialogEditData() {
                             <button type="button" className="btn btn-danger" onClick={handleDeletePayment}>
                                 Löschen
                             </button>
-                            <button type="submit" className="btn btn-primary" disabled={selectedCategory === 'Auswählen...'}>
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                disabled={selectedCategory === 'Auswählen...' || amount === undefined || amount === '' || amount === '0,00'}
+                            >
                                 Ändern
                             </button>
                         </div>

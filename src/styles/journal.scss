@@ -474,12 +474,6 @@
     .input-group {
         flex-wrap: nowrap;
         border: none;
-
-        @media (max-width: $breakpoint-xxs) {
-            .dropdown-menu {
-                width: 100%;
-            }
-        }
     }
 
     .date-input-group {
@@ -528,11 +522,7 @@
     .dropdown-menu-journal {
         max-height: 350px;
         overflow: auto;
-        width: 210px;
-
-        @media (max-width: $breakpoint-xxs) {
-            width: 100%;
-        }
+        width: max-content;
 
         .subcategory {
             pointer-events: none;
