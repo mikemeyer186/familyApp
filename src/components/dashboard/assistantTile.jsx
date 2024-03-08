@@ -1,7 +1,7 @@
 export default function AssistantTile({ navigateToPage }) {
     return (
         <>
-            <div className="dashboard-tile" onClick={() => navigateToPage('/app/lists?page=Listen')}>
+            <div className="dashboard-tile" onClick={() => navigateToPage('/app/assistant?page=Assistent')}>
                 <h6>Assistent</h6>
                 <img src="/assets/img/assistant.webp" alt="Assistent" />
                 <div className="tile-content">

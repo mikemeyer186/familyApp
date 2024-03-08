@@ -24,6 +24,7 @@ const PasswordChange = lazy(() => import('./components/main/passwordChange'));
 const DashboardPage = lazy(() => import('./components/dashboard/dashboardPage'));
 const JournalPage = lazy(() => import('./components/journal/journalPage'));
 const CalendarPage = lazy(() => import('./components/calendar/calendarPage'));
+const AssistantPage = lazy(() => import('./components/assistant/assistantPage'));
 const ListPage = lazy(() => import('./components/list/listPage'));
 const Imprint = lazy(() => import('./components/main/imprint'));
 const DataProtection = lazy(() => import('./components/main/dataprotection'));
@@ -69,6 +70,7 @@ export default function App() {
                             <Route path="lists" element={<ListPage />} />
                             <Route path="journal" element={<JournalPage />} />
                             <Route path="calendar" element={<CalendarPage />} />
+                            <Route path="assistant" element={<AssistantPage />} />
                             <Route path="userprofile" element={<UserProfile />} />
                             <Route path="settings" element={<Settings />} />
                             <Route path="problem" element={<Problem />} />

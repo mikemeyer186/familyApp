@@ -73,6 +73,12 @@ export default function Navbar() {
                                         </NavLink>
                                     </li>
                                     <li data-bs-dismiss="offcanvas">
+                                        <NavLink to="calendar?page=Kalender" className="nav-item">
+                                            <img src="/assets/icons/calendar3.svg" alt="Kalender" />
+                                            <span className="nav-link">Kalender</span>
+                                        </NavLink>
+                                    </li>
+                                    <li data-bs-dismiss="offcanvas">
                                         <NavLink to="lists?page=Listen" className="nav-item">
                                             <img src="/assets/icons/card-checklist.svg" alt="Listen" />
                                             <span className="nav-link">Listen</span>
@@ -80,16 +86,17 @@ export default function Navbar() {
                                     </li>
                                     <li data-bs-dismiss="offcanvas">
                                         <NavLink to="journal?page=Finanzen" className="nav-item">
-                                            <img src="/assets/icons/cash-coin.svg" alt="Journal" />
+                                            <img src="/assets/icons/cash-coin.svg" alt="Finanzen" />
                                             <span className="nav-link">Finanzen</span>
                                         </NavLink>
                                     </li>
                                     <li data-bs-dismiss="offcanvas">
-                                        <NavLink to="calendar?page=Kalender" className="nav-item">
-                                            <img src="/assets/icons/calendar3.svg" alt="Kalender" />
-                                            <span className="nav-link">Kalender</span>
+                                        <NavLink to="assistant?page=Assistent" className="nav-item">
+                                            <img src="/assets/icons/robot.svg" alt="Assistent" />
+                                            <span className="nav-link">Assistent</span>
                                         </NavLink>
                                     </li>
+
                                     <li>
                                         <hr className="nav-divider" />
                                     </li>

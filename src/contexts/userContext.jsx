@@ -238,6 +238,8 @@ function UserPovider({ children }) {
             setActivePage('journal?page=Finanzen');
         } else if (params === 'Kalender') {
             setActivePage('calendar?page=Kalender');
+        } else if (params === 'Assistent') {
+            setActivePage('assistant?page=Assistent');
         } else if (params === null) {
             params = 'Login';
         }
