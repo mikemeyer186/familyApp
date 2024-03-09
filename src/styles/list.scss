@@ -3,9 +3,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: 100%;
+    height: calc(100svh - $navbarHeight);
     overflow: auto;
-    padding: 70px 16px 100px 16px;
+    padding: 70px 16px;
 
     @media (min-width: $breakpoint-lg) {
         padding: 100px 80px;

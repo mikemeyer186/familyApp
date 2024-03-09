@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100svh - $navbarHeight);
     overflow: auto;
     padding: 16px 16px 70px 16px;
 

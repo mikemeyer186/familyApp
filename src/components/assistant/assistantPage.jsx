@@ -27,14 +27,18 @@ export default function AssistantPage() {
 
     return (
         <div className="assistant-page-wrapper">
-            {chatHistory.map((chat) => {
-                return (
-                    <div key={chat.id}>
-                        <div>{chat.prompt}</div>
-                        <div>{chat.response}</div>
-                    </div>
-                );
-            })}
+            <div className="assistant-chat-wrapper">
+                {chatHistory.map((chat) => {
+                    return (
+                        <div key={chat.id}>
+                            <div className="chat-prompt">
+                                <div className="chat-prompt-text">{chat.prompt}</div>
+                            </div>
+                            <div className="chat-response-text">{chat.response}</div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

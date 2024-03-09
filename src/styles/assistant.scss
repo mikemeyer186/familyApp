@@ -2,9 +2,50 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
-    height: 100%;
+    height: calc(100svh - $navbarHeight);
     overflow: auto;
-    padding: 70px 16px 100px 16px;
+    padding: 16px;
+
+    .assistant-chat-wrapper {
+        width: calc(100vw - $padding-mobile);
+        border: $thinBorder;
+        box-shadow: $shadow;
+        padding: 16px;
+        position: relative;
+        border-radius: $normal-radius;
+        background-color: $bg-white;
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: $breakpoint-xl) {
+            width: calc($max-width * 2);
+        }
+
+        .chat-prompt {
+            display: flex;
+            justify-content: flex-end;
+
+            .chat-prompt-text {
+                border-radius: $inner-radius;
+                border: $thinBorder;
+                padding: 4px 8px;
+                margin-bottom: 12px;
+                background-color: $logo-color-4;
+                width: max-content;
+                max-width: 70%;
+            }
+        }
+
+        .chat-response-text {
+            border-radius: $inner-radius;
+            border: $thinBorder;
+            padding: 4px 8px;
+            text-align: start;
+            margin-bottom: 12px;
+            width: max-content;
+            max-width: 70%;
+        }
+    }
 }
