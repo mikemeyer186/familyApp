@@ -24,29 +24,27 @@ export default function ListPage() {
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));
 
     return (
-        <>
-            <div className="listpage-wrapper">
-                <div className="list-toolbar">
-                    <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
-                </div>
-
-                {!isListLoaded ? (
-                    <Spinner>{'Listen laden...'}</Spinner>
-                ) : (
-                    <div ref={parent} className="listcollection">
-                        {sortedLists.length == 0 ? (
-                            <span className="empty-listcollection">
-                                Es sind gerade keine Listen gespeichert. Du kannst eine neue Liste hinzufügen, indem du auf den Button &quot;Neue
-                                Liste&quot; klickst.
-                            </span>
-                        ) : (
-                            sortedLists.map((list) => {
-                                return <ItemList key={list.id} list={list} />;
-                            })
-                        )}
-                    </div>
-                )}
+        <div className="listpage-wrapper">
+            <div className="list-toolbar">
+                <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
             </div>
-        </>
+
+            {!isListLoaded ? (
+                <Spinner>{'Listen laden...'}</Spinner>
+            ) : (
+                <div ref={parent} className="listcollection">
+                    {sortedLists.length == 0 ? (
+                        <span className="empty-listcollection">
+                            Es sind gerade keine Listen gespeichert. Du kannst eine neue Liste hinzufügen, indem du auf den Button &quot;Neue
+                            Liste&quot; klickst.
+                        </span>
+                    ) : (
+                        sortedLists.map((list) => {
+                            return <ItemList key={list.id} list={list} />;
+                        })
+                    )}
+                </div>
+            )}
+        </div>
     );
 }

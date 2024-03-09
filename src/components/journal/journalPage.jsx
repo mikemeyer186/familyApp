@@ -9,24 +9,22 @@ export default function JournalPage() {
     const { isJournalLoaded } = useJournal();
 
     return (
-        <>
-            <div className="journal-page-wrapper">
-                <div className="journal-toolbar">
-                    <JournalToolbar />
-                </div>
-
-                {!isJournalLoaded ? (
-                    <Spinner>{'Journal laden...'}</Spinner>
-                ) : (
-                    <>
-                        <JournalChart />
-                        <div className="journal-page-row">
-                            <JournalSum />
-                            <JournalTable />
-                        </div>
-                    </>
-                )}
+        <div className="journal-page-wrapper">
+            <div className="journal-toolbar">
+                <JournalToolbar />
             </div>
-        </>
+
+            {!isJournalLoaded ? (
+                <Spinner>{'Journal laden...'}</Spinner>
+            ) : (
+                <>
+                    <JournalChart />
+                    <div className="journal-page-row">
+                        <JournalSum />
+                        <JournalTable />
+                    </div>
+                </>
+            )}
+        </div>
     );
 }
