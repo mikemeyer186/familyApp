@@ -28,6 +28,7 @@
         .chat-prompt {
             display: flex;
             justify-content: flex-end;
+            gap: 4px;
 
             .chat-prompt-text {
                 border-radius: $inner-radius;
@@ -38,16 +39,36 @@
                 width: max-content;
                 max-width: 70%;
             }
+
+            .chat-prompt-image {
+                width: 25px;
+                height: 25px;
+                object-fit: cover;
+                border-radius: 100%;
+            }
         }
 
-        .chat-response-text {
-            border-radius: $inner-radius;
-            border: $thinBorder;
-            padding: 4px 8px;
-            text-align: start;
-            margin-bottom: 12px;
-            width: max-content;
-            max-width: 70%;
+        .chat-response {
+            display: flex;
+            justify-content: flex-start;
+            gap: 4px;
+
+            .chat-response-text {
+                border-radius: $inner-radius;
+                border: $thinBorder;
+                padding: 4px 8px;
+                text-align: start;
+                margin-bottom: 12px;
+                width: max-content;
+                max-width: 70%;
+            }
+
+            .chat-response-image {
+                width: 25px;
+                height: 25px;
+                object-fit: cover;
+                border-radius: 100%;
+            }
         }
 
         .chat-input {

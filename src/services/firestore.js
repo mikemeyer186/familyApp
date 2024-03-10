@@ -109,7 +109,7 @@ export async function updatePaymentInFirestore(familyID, payment, journalId) {
     }
 }
 
-//calendar functions
+// Calendar functions
 export async function loadEventsFromFirestore(familyID) {
     const docRef = doc(db, familyID, 'events');
     const docSnap = await getDoc(docRef);
@@ -124,6 +124,15 @@ export async function loadEventsFromFirestore(familyID) {
 export async function addEventInFirestore(familyID, events) {
     try {
         await setDoc(doc(db, familyID, 'events'), { events });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
+// Assistant functions
+export async function addPromptInFirestore(familyID, id, date, user, prompt) {
+    try {
+        await setDoc(doc(db, familyID, id), { prompt: prompt, id: id, date: date, user: user });
     } catch (e) {
         console.error('Error adding document: ', e);
     }
