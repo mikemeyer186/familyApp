@@ -3,6 +3,7 @@ import { db } from '../../config/firebase';
 import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useUser } from '../../contexts/userContext';
 import { addPromptInFirestore } from '../../services/firestore';
+import TypingLoader from '../global/typingLoader';
 
 export default function AssistantPage() {
     const { familyID, activeUser } = useUser();
@@ -16,10 +17,11 @@ export default function AssistantPage() {
      */
     async function handlePromptSubmit(e) {
         e.preventDefault();
-        const id = 'chat_' + crypto.randomUUID();
+        const id = 'chat_' + new Date();
         const date = new Date();
         const user = activeUser.uid;
-        await addPromptInFirestore(familyID, id, date, user, prompt);
+        const photoURL = activeUser.photoURL;
+        await addPromptInFirestore(familyID, id, date, user, photoURL, prompt);
         setPrompt('');
     }
 
@@ -58,6 +60,15 @@ export default function AssistantPage() {
     return (
         <div className="assistant-page-wrapper">
             <div className="assistant-chat-wrapper">
+                <>
+                    <div className="chat-response">
+                        <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />
+                        <div className="chat-response-text">
+                            Hi, wie kann ich dir helfen? Du kannst mich z.B. nach leckeren Rezepten fragen oder nach Ideen für spannende Aktivitäten.
+                        </div>
+                    </div>
+                </>
+
                 {chatHistory.map((chat) => {
                     return (
                         <div key={chat.id}>
@@ -65,13 +76,13 @@ export default function AssistantPage() {
                                 <div className="chat-prompt-text">{chat.prompt}</div>
                                 <img
                                     className="chat-prompt-image"
-                                    src={activeUser.photoURL ? activeUser.photoURL : '/assets/img/profile-picture.png'}
+                                    src={chat.photoURL ? chat.photoURL : '/assets/img/profile-picture.png'}
                                     alt="User"
                                 />
                             </div>
                             <div className="chat-response">
                                 <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />
-                                <div className="chat-response-text">{chat.response}</div>
+                                <div className="chat-response-text">{chat.response ? chat.response : <TypingLoader />}</div>
                             </div>
                         </div>
                     );

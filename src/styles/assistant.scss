@@ -41,8 +41,8 @@
             }
 
             .chat-prompt-image {
-                width: 25px;
-                height: 25px;
+                width: 34px;
+                height: 34px;
                 object-fit: cover;
                 border-radius: 100%;
             }
@@ -61,13 +61,21 @@
                 margin-bottom: 12px;
                 width: max-content;
                 max-width: 70%;
+                min-height: 34px;
+                display: flex;
+                align-items: center;
             }
 
             .chat-response-image {
-                width: 25px;
-                height: 25px;
+                width: 34px;
+                height: 34px;
                 object-fit: cover;
                 border-radius: 100%;
+            }
+
+            .spinner-grow {
+                height: 15px;
+                width: 15px;
             }
         }
 

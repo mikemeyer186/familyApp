@@ -5,8 +5,8 @@ export default function AssistantTile({ navigateToPage }) {
                 <h6>Assistent</h6>
                 <img src="/assets/img/assistant.webp" alt="Assistent" />
                 <div className="tile-content">
-                    <span className="tile-content-header">ChatGPT</span>
-                    <div className="tile-content-body">Sprich mit deinem persönlichen Assistenten</div>
+                    <span className="tile-content-header">Gemini AI</span>
+                    <div className="tile-content-body">Dein KI-Assistent unterstützt dich</div>
                 </div>
             </div>
         </>
