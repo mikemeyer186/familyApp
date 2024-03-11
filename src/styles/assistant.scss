@@ -8,6 +8,19 @@
     overflow: auto;
     padding: 16px;
 
+    .spinner-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, calc(-50% - $navbarHeight + 28px));
+
+        .spinner-border {
+            width: 8rem;
+            height: 8rem;
+            border-width: 0.75em;
+        }
+    }
+
     .assistant-chat-wrapper {
         width: calc(100vw - $padding-mobile);
         height: 100%;
