@@ -145,3 +145,18 @@ export async function deletePromptInFirestore(familyID, id) {
         console.error('Error deleting document: ', e);
     }
 }
+
+export async function addChatInHistory(chatID, chat, deletionDate) {
+    try {
+        await setDoc(doc(db, 'chat-history', chatID), {
+            user: chat.user,
+            userPrompt: chat.prompt,
+            creationDate: chat.date,
+            aiResponse: chat.response,
+            status: chat.status,
+            deltionDate: deletionDate,
+        });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}

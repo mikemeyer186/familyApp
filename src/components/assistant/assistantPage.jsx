@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { db } from '../../config/firebase';
 import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useUser } from '../../contexts/userContext';
-import { addPromptInFirestore, deletePromptInFirestore } from '../../services/firestore';
+import { addPromptInFirestore, deletePromptInFirestore, addChatInHistory } from '../../services/firestore';
 import TypingLoader from '../global/typingLoader';
 import Spinner from '../global/spinner';
 
@@ -20,17 +20,23 @@ export default function AssistantPage() {
      */
     async function handlePromptSubmit(e) {
         e.preventDefault();
-        const id = 'chat_' + new Date();
+        const id = 'chat_' + new Date().toISOString();
         const date = new Date();
         const user = activeUser.uid;
         const photoURL = activeUser.photoURL;
         await addPromptInFirestore(familyID, id, date, user, photoURL, prompt);
-        await addPromptInFirestore('chat-history', id, date, user, photoURL, prompt);
         setPrompt('');
     }
 
-    /** handles the deleting of prompts in firestore */
-    async function handleDeletePrompt(chatID) {
+    /**
+     * handles the deletion of prompts in firestore
+     * adds the deleted chat in chat-history
+     * @param {string} chatID - ID of selected chat
+     * @param {object} chat - complete chat object
+     */
+    async function handleDeletePrompt(chatID, chat) {
+        const deletionDate = new Date();
+        await addChatInHistory(chatID, chat, deletionDate);
         await deletePromptInFirestore(familyID, chatID);
     }
 
@@ -94,7 +100,7 @@ export default function AssistantPage() {
                                     </div>
                                     <ul className="dropdown-menu dropdown-menu-assistant dropdown-menu-end">
                                         <li>
-                                            <button className="dropdown-item" type="button" onClick={() => handleDeletePrompt(chat.id)}>
+                                            <button className="dropdown-item" type="button" onClick={() => handleDeletePrompt(chat.id, chat)}>
                                                 Prompt löschen
                                             </button>
                                         </li>

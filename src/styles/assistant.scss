@@ -48,6 +48,7 @@
             display: flex;
             justify-content: flex-end;
             gap: 4px;
+            animation: fadeIn 225ms ease-in-out both;
 
             .chat-prompt-text {
                 border-radius: $inner-radius;
