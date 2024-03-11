@@ -137,3 +137,11 @@ export async function addPromptInFirestore(familyID, id, date, user, photoURL, p
         console.error('Error adding document: ', e);
     }
 }
+
+export async function deletePromptInFirestore(familyID, id) {
+    try {
+        await deleteDoc(doc(db, familyID, id));
+    } catch (e) {
+        console.error('Error deleting document: ', e);
+    }
+}

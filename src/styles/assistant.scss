@@ -21,6 +21,12 @@
         }
     }
 
+    .dropdown-menu-assistant {
+        max-height: 350px;
+        overflow: auto;
+        width: max-content;
+    }
+
     .assistant-chat-wrapper {
         width: calc(100vw - $padding-mobile);
         height: 100%;
@@ -51,6 +57,13 @@
                 background-color: $logo-color-4;
                 width: max-content;
                 max-width: 70%;
+                cursor: pointer;
+                transition: all 225ms ease-in-out;
+
+                &:hover {
+                    background-color: $logo-color-2;
+                    color: $txt-light;
+                }
             }
 
             .chat-prompt-image {

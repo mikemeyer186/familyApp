@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { db } from '../../config/firebase';
 import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useUser } from '../../contexts/userContext';
-import { addPromptInFirestore } from '../../services/firestore';
+import { addPromptInFirestore, deletePromptInFirestore } from '../../services/firestore';
 import TypingLoader from '../global/typingLoader';
 import Spinner from '../global/spinner';
 
@@ -15,6 +15,7 @@ export default function AssistantPage() {
 
     /**
      * handles the submitting of new prompts to firestore
+     * all prompts are also saved in chat-history
      * @param {event} e - event from form submit
      */
     async function handlePromptSubmit(e) {
@@ -24,7 +25,13 @@ export default function AssistantPage() {
         const user = activeUser.uid;
         const photoURL = activeUser.photoURL;
         await addPromptInFirestore(familyID, id, date, user, photoURL, prompt);
+        await addPromptInFirestore('chat-history', id, date, user, photoURL, prompt);
         setPrompt('');
+    }
+
+    /** handles the deleting of prompts in firestore */
+    async function handleDeletePrompt(chatID) {
+        await deletePromptInFirestore(familyID, chatID);
     }
 
     /**
@@ -82,7 +89,16 @@ export default function AssistantPage() {
                         return (
                             <div key={chat.id}>
                                 <div className="chat-prompt">
-                                    <div className="chat-prompt-text">{chat.prompt}</div>
+                                    <div className="chat-prompt-text" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {chat.prompt}
+                                    </div>
+                                    <ul className="dropdown-menu dropdown-menu-assistant dropdown-menu-end">
+                                        <li>
+                                            <button className="dropdown-item" type="button" onClick={() => handleDeletePrompt(chat.id)}>
+                                                Prompt löschen
+                                            </button>
+                                        </li>
+                                    </ul>
                                     <img
                                         className="chat-prompt-image"
                                         src={chat.photoURL ? chat.photoURL : '/assets/img/profile-picture.png'}
