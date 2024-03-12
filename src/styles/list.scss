@@ -28,19 +28,6 @@
         }
     }
 
-    .spinner-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, calc(-50% - $navbarHeight));
-
-        .spinner-border {
-            width: 8rem;
-            height: 8rem;
-            border-width: 0.75em;
-        }
-    }
-
     .empty-listcollection {
         font-weight: 400;
         font-size: 1.1rem;

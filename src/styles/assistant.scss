@@ -8,19 +8,6 @@
     overflow: auto;
     padding: 16px;
 
-    .spinner-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, calc(-50% - $navbarHeight + 28px));
-
-        .spinner-border {
-            width: 8rem;
-            height: 8rem;
-            border-width: 0.75em;
-        }
-    }
-
     .dropdown-menu-assistant {
         max-height: 350px;
         overflow: auto;
@@ -39,6 +26,10 @@
         display: flex;
         flex-direction: column;
         overflow: auto;
+
+        @media (min-width: $breakpoint-sm) {
+            width: $max-width;
+        }
 
         @media (min-width: $breakpoint-xl) {
             width: calc($max-width * 2);
@@ -72,6 +63,11 @@
                 height: 34px;
                 object-fit: cover;
                 border-radius: 100%;
+
+                @media (max-width: $breakpoint-xxs) {
+                    width: 28px;
+                    height: 28px;
+                }
             }
         }
 
@@ -98,6 +94,11 @@
                 height: 34px;
                 object-fit: cover;
                 border-radius: 100%;
+
+                @media (max-width: $breakpoint-xxs) {
+                    width: 28px;
+                    height: 28px;
+                }
             }
 
             .spinner-grow {
@@ -118,12 +119,16 @@
             padding: 4px 0 16px 0;
             background-color: rgba(255, 255, 255, 0.8);
 
-            @media (min-width: $breakpoint-xl) {
-                width: calc($max-width * 2 - 32px);
+            @media (min-width: $breakpoint-sm) {
+                width: calc($max-width - 32px);
                 margin-left: auto;
                 margin-right: auto;
                 left: 0;
                 right: 0;
+            }
+
+            @media (min-width: $breakpoint-xl) {
+                width: calc($max-width * 2 - 32px);
             }
 
             button {

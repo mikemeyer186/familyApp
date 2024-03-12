@@ -101,7 +101,7 @@ export default function AssistantPage() {
                                     <ul className="dropdown-menu dropdown-menu-assistant dropdown-menu-end">
                                         <li>
                                             <button className="dropdown-item" type="button" onClick={() => handleDeletePrompt(chat.id, chat)}>
-                                                Prompt löschen
+                                                Nachricht löschen
                                             </button>
                                         </li>
                                     </ul>

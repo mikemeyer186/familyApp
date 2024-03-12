@@ -36,6 +36,23 @@ body {
     overflow: hidden;
 }
 
+.spinner-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .spinner-border {
+        width: 8rem;
+        height: 8rem;
+        border-width: 0.75em;
+    }
+}
+
 .iconClickable {
     width: 1.5rem;
     height: 1.5rem;

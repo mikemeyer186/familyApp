@@ -9,19 +9,6 @@
     overflow: auto;
     padding: 70px 16px;
 
-    .spinner-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, calc(-50% - $navbarHeight));
-
-        .spinner-border {
-            width: 8rem;
-            height: 8rem;
-            border-width: 0.75em;
-        }
-    }
-
     @media (min-width: $breakpoint-lg) {
         padding: 100px 80px;
     }
