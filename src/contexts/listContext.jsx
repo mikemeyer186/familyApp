@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useState } from 'react';
-import { addListInFirestore, deleteListInFirestore, loadListsFromFirestore, updateListInFirestore } from '../services/firestore';
+import { createContext, useContext, useState } from 'react';
+import { addListInFirestore, deleteListInFirestore, updateListInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 import { useUser } from './userContext';
 
@@ -12,18 +12,6 @@ function ListProvider({ children }) {
     const [selectedList, setSelectedList] = useState({});
     const [modalType, setModalType] = useState('');
     const [isListLoaded, setIsListLoaded] = useState(false);
-
-    /**
-     * loads lists from firestore
-     */
-    const getLists = useCallback(
-        async function getLists() {
-            const lists = await loadListsFromFirestore(familyID);
-            setLists(lists);
-            setIsListLoaded(true);
-        },
-        [familyID]
-    );
 
     /**
      * adds new list to firestore
@@ -115,7 +103,6 @@ function ListProvider({ children }) {
                 modalType: modalType,
                 isListLoaded: isListLoaded,
                 setLists,
-                getLists,
                 addNewList,
                 deleteList,
                 clearList,

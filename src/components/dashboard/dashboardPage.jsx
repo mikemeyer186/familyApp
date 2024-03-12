@@ -69,7 +69,7 @@ export default function DashboardPage() {
      * loads the motivation sentence from firestore
      */
     const loadMotivationSentence = useCallback(
-        async function loadMotivationSentence() {
+        function loadMotivationSentence() {
             if (isMotivationLoaded) {
                 setMotivationLoaded(true);
             }
@@ -78,7 +78,7 @@ export default function DashboardPage() {
     );
 
     /**
-     * loads the data on initial loading of the dashboard
+     * loads the data on initial loading of dashboard
      */
     useEffect(() => {
         filterNextEvents();

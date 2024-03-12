@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { addPaymentInFirestore, loadJournalFromFirestore, updatePaymentInFirestore } from '../services/firestore';
+import { addPaymentInFirestore, updatePaymentInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 import { useUser } from './userContext';
 
@@ -20,18 +20,6 @@ function JournalProvider({ children }) {
     const [isJournalLoaded, setIsJournalLoaded] = useState(false);
     const [expansionData, setExpansionData] = useState({});
     const [expandedRows, setExpandedRows] = useState(null);
-
-    /**
-     * loads journals from firestore
-     */
-    const loadJournals = useCallback(
-        async function loadJournals() {
-            const loadedJournals = await loadJournalFromFirestore(familyID);
-            setJournals(loadedJournals);
-            setIsJournalLoaded(true);
-        },
-        [familyID]
-    );
 
     /**
      * adds new payment to firestore
@@ -204,7 +192,7 @@ function JournalProvider({ children }) {
                 setSelectedYear,
                 setSelectedMonth,
                 setJournals,
-                loadJournals,
+                setIsJournalLoaded,
                 setSelectedJournalId,
                 setActiveJournal,
                 setActivePayment,

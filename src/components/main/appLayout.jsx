@@ -12,29 +12,16 @@ import Dialogs from './dialogs';
 export default function AppLayout() {
     const { familyID, setAppSettings, loadMotivation } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
-    const { getLists, setLists } = useList();
-    const { setJournals, loadJournals } = useJournal();
+    const { setLists, setIsListLoaded } = useList();
+    const { setJournals, setIsJournalLoaded } = useJournal();
 
     /**
-     * loads public events for the calendar from API
+     * loads public events from API
+     * only on initial laoding
      */
     useEffect(() => {
         loadPublicEvents();
     }, [loadPublicEvents]);
-
-    /**
-     * loads the lists from firestore
-     */
-    useEffect(() => {
-        getLists();
-    }, [getLists]);
-
-    /**
-     * loads the journals from firestore
-     */
-    useEffect(() => {
-        loadJournals();
-    }, [loadJournals]);
 
     /**
      * loads the motivation from firestore
@@ -87,12 +74,13 @@ export default function AppLayout() {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newLists = querySnapshot.docs.map((doc) => doc.data());
             setLists(newLists);
+            setIsListLoaded(true);
         });
 
         return () => {
             unsubscribe();
         };
-    }, [setLists, familyID]);
+    }, [setLists, familyID, setIsListLoaded]);
 
     /**
      * observable for journals from firebase
@@ -104,12 +92,13 @@ export default function AppLayout() {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newJournal = querySnapshot.docs.map((doc) => doc.data());
             setJournals(newJournal);
+            setIsJournalLoaded(true);
         });
 
         return () => {
             unsubscribe();
         };
-    }, [setJournals, familyID]);
+    }, [setJournals, familyID, setIsJournalLoaded]);
 
     return (
         <>
