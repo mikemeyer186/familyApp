@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
 import { useAlert } from '../../contexts/alertContext';
+import { useSessionStorage } from '../../hooks/useSessionStorage';
 import countries from '../../data/countries';
 
 export default function Settings() {
@@ -14,7 +14,7 @@ export default function Settings() {
     const [journalCategories, setJournalCategories] = useState(JSON.parse(JSON.stringify(appSettings.journal)));
     const [calendarSettings, setCalendarSettings] = useState(JSON.parse(JSON.stringify(appSettings.calendar)));
     const [selectedCountry, setSelectedCountry] = useState('');
-    const [lastPage] = useLocalStorage('lastPage');
+    const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
     /**

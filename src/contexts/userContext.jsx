@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../config/firebase';
 import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
@@ -21,8 +20,8 @@ function UserPovider({ children }) {
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [lastPage, setLastPage] = useLocalStorage('lastPage');
-    const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
+    const [lastPage, setLastPage] = useSessionStorage('lastPage');
+    const [loggedIn, setLoggedIn] = useSessionStorage('loggedIn');
     const [isAppLoaded, setIsAppLoaded] = useSessionStorage('isAppLoaded');
     const [activePage, setActivePage] = useState(lastPage);
     const [motivationSentence, setMotivationSentence] = useState('');

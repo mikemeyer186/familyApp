@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
+import { useSessionStorage } from '../../hooks/useSessionStorage';
 
 export default function PasswordChange() {
     const { isGuest, updateUserPassword } = useUser();
@@ -10,7 +10,7 @@ export default function PasswordChange() {
     const [validPassword, setValidPassword] = useState(false);
     const [passwordCheck, setPasswordCheck] = useState('');
     const [passwordError, setPasswordError] = useState(false);
-    const [lastPage] = useLocalStorage('lastPage');
+    const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
     /**

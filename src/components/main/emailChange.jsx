@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
+import { useSessionStorage } from '../../hooks/useSessionStorage';
 
 export default function EmailChange() {
     const { activeUser, isGuest, newEmail, setNewEmail, updateUserEmail } = useUser();
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
-    const [lastPage] = useLocalStorage('lastPage');
+    const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
     /**

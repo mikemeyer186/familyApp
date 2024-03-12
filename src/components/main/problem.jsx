@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useUser } from '../../contexts/userContext';
 import { useState } from 'react';
+import { useSessionStorage } from '../../hooks/useSessionStorage';
 
 export default function Problem() {
     const { activeUser, message, setMessage } = useUser();
     const [validMessage, setValidMessage] = useState(false);
     const [isSending, setIsSending] = useState(false);
-    const [lastPage] = useLocalStorage('lastPage');
+    const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
     const mailURL = import.meta.env.VITE_MAIL_URL;
 

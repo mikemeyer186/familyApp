@@ -3,7 +3,7 @@ import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../contexts/userContext';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useSessionStorage } from '../../hooks/useSessionStorage';
 
 export default function UserProfile() {
     const { activeUser, isGuest, updateUserProfile } = useUser();
@@ -12,7 +12,7 @@ export default function UserProfile() {
     const [newPhotoUrl, setNewPhotoUrl] = useState('');
     const [file, setFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
-    const [lastPage] = useLocalStorage('lastPage');
+    const [lastPage] = useSessionStorage('lastPage');
     const [isChanged, setIsChanged] = useState(false);
     const photoInputRef = useRef(null);
     const userID = activeUser.uid;
