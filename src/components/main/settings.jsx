@@ -149,7 +149,7 @@ export default function Settings() {
     );
 
     /**
-     * chnages the color of holidays
+     * changes the color of holidays
      * @param {string} color - color code
      * @param {*} colorKey - color field in settings (school or public)
      */

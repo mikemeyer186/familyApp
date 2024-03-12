@@ -55,7 +55,7 @@ export default function PasswordChange() {
     }
 
     /**
-     * handels the abort of password change
+     * handles the aborting of password change
      */
     function handleAbort() {
         navigate(`/app/${lastPage}`);

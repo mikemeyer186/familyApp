@@ -25,7 +25,7 @@ export default function Problem() {
     }
 
     /**
-     * send the message to mail
+     * sends the message to mail
      */
     async function sendMail() {
         let formData = new FormData();
