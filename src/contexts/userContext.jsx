@@ -263,8 +263,6 @@ function UserPovider({ children }) {
                 newEmail: newEmail,
                 message: message,
                 greeting: greeting,
-                setActiveUser,
-                setFamilyID,
                 signInUser,
                 signOutUser,
                 updateUserProfile,

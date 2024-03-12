@@ -251,6 +251,12 @@
             text-align: center;
         }
 
+        .p-datatable-emptymessage {
+            td {
+                text-align: center;
+            }
+        }
+
         .p-datatable-header {
             border: none;
             background-color: $logo-color-6;

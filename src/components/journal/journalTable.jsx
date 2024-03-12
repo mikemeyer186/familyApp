@@ -150,7 +150,7 @@ export default function JournalTable() {
                     header={tableHeader}
                     style={{ width: '100%', cursor: 'pointer' }}
                     exportFilename={activeJournal.id}
-                    emptyMessage="Keine Belege in diesem Monat gebucht"
+                    emptyMessage="Keine Belege in diesem Monat vorhanden"
                     onRowClick={(e) => onRowClickToggle(e)}
                     expandedRows={expandedRows}
                     rowExpansionTemplate={rowExpansionTemplate}

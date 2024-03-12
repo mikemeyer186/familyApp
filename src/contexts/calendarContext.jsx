@@ -269,7 +269,6 @@ function CalendarProvider({ children }) {
         <CalendarContext.Provider
             value={{
                 events: events,
-                firestoreEvents: firestoreEvents,
                 isCalendarLoaded: isCalendarLoaded,
                 selectedEvent: selectedEvent,
                 selectedTimeSlot: selectedTimeSlot,
@@ -277,8 +276,6 @@ function CalendarProvider({ children }) {
                 meetingID: meetingID,
                 loadEvents,
                 loadPublicEvents,
-                setEvents,
-                setFirestoreEvents,
                 addNewMeeting,
                 editMeeting,
                 deleteMeeting,
@@ -287,7 +284,6 @@ function CalendarProvider({ children }) {
                 onSelectTimeSlot,
                 setTimeSlotClicked,
                 getDrilldownView,
-                setMeetingID,
                 filterEventsForNextWeek,
                 filterEventsForToday,
             }}
