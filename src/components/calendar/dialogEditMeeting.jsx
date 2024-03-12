@@ -164,7 +164,7 @@ export default function DialogEditMeeting() {
     }, [startTime, endTime, checkTime]);
 
     /**
-     * sets form values to selected event values if selected event is available
+     * sets form values to selected event values, if selected event is available
      * selectedEvent is changing when user clicks on an event in the calendar
      */
     useEffect(() => {
