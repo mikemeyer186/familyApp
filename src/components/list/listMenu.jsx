@@ -29,35 +29,33 @@ export default function ListMenu({ list }) {
     }
 
     return (
-        <>
-            <div className="dropdown list-menu">
-                <img
-                    src="/assets/icons/three-dots-vertical.svg"
-                    className="dropdown-toggle menu-icon"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    onClick={handleSetSelectedList}
-                />
-                <ul className="dropdown-menu">
-                    <li>
-                        <button
-                            className={`dropdown-item ${list.list.length === 0 ? 'not-allowed' : ''}`}
-                            type="button"
-                            onClick={handleOpenClearDialog}
-                            disabled={list.list.length === 0}
-                        >
-                            Liste leeren
-                        </button>
-                        <button className="dropdown-item" type="button" onClick={() => openDialog('listEditRef')}>
-                            Liste umbenennen
-                        </button>
-                        <button className="dropdown-item" type="button" onClick={handleOpenDeleteDialog}>
-                            Liste löschen
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </>
+        <div className="dropdown list-menu">
+            <img
+                src="/assets/icons/three-dots-vertical.svg"
+                className="dropdown-toggle menu-icon"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                onClick={handleSetSelectedList}
+            />
+            <ul className="dropdown-menu">
+                <li>
+                    <button
+                        className={`dropdown-item ${list.list.length === 0 ? 'not-allowed' : ''}`}
+                        type="button"
+                        onClick={handleOpenClearDialog}
+                        disabled={list.list.length === 0}
+                    >
+                        Liste leeren
+                    </button>
+                    <button className="dropdown-item" type="button" onClick={() => openDialog('listEditRef')}>
+                        Liste umbenennen
+                    </button>
+                    <button className="dropdown-item" type="button" onClick={handleOpenDeleteDialog}>
+                        Liste löschen
+                    </button>
+                </li>
+            </ul>
+        </div>
     );
 }

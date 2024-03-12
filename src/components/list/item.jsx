@@ -6,7 +6,6 @@ export default function Item({ item, updateItem, deleteItem }) {
     const { appSettings } = useUser();
     const itemCategory = appSettings.list.find((category) => category.category === item.category);
     const itemColor = itemCategory ? itemCategory.color : '#6d767e';
-
     const date = new Date(item.date).toLocaleDateString('de-DE', {
         day: '2-digit',
         month: '2-digit',
