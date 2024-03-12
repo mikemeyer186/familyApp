@@ -10,24 +10,22 @@ export default function JournalTableExpansion() {
             <table className="table journal-detail-table">
                 <thead>
                     <tr>
-                        <th scope="col" className="fw-normal th-left" style={{ width: '113px' }}>
+                        <th scope="col" className="fw-normal th-left">
                             Von
                         </th>
-                        <th scope="col" className="fw-normal" style={{ width: '315px' }}>
+                        <th scope="col" className="fw-normal th-mid">
                             Beleginfo
                         </th>
-                        <th scope="col" className="fw-normal th-right" style={{ width: '15%' }}>
-                            Bearbeiten
+                        <th scope="col" className="fw-normal th-right">
+                            Ändern
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="td-left">{expansionData.user}</td>
-                        <td>
-                            <div className="td-info">{expansionData.info}</div>
-                        </td>
-                        <td className="journal-table-edit td-right">
+                        <td>{expansionData.user}</td>
+                        <td className="td-info">{expansionData.info}</td>
+                        <td className="journal-table-edit">
                             <img
                                 src="/assets/icons/pencil-fill-black.svg"
                                 alt="Bearbeiten"

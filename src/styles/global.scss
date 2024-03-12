@@ -183,6 +183,14 @@ body {
     pointer-events: none;
 }
 
+.spend {
+    color: $txt-spend !important;
+}
+
+.income {
+    color: $txt-income !important;
+}
+
 //Bootstrap overrides
 .spinner-grow {
     background-color: $logo-color-5;

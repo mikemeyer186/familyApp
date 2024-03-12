@@ -247,6 +247,10 @@
     }
 
     .journal-table {
+        .journal-payments-empty {
+            text-align: center;
+        }
+
         .p-datatable-header {
             border: none;
             background-color: $logo-color-6;
@@ -304,10 +308,14 @@
             border-bottom-right-radius: $inner-radius;
 
             .p-sortable-column {
-                padding: 10px 8px;
+                padding: 10px;
 
                 &:hover {
                     background-color: $logo-color-6;
+                }
+
+                @media (min-width: $breakpoint-md) {
+                    padding: 16px;
                 }
 
                 @media (max-width: $breakpoint-xxs) {
@@ -388,26 +396,36 @@
             th {
                 font-size: 0.8rem;
                 background-color: $logo-color-6;
+                padding: 10px;
+
+                @media (min-width: $breakpoint-md) {
+                    padding: 16px;
+                }
+
+                @media (max-width: $breakpoint-xxs) {
+                    padding: 10px 5px;
+                }
+            }
+
+            .th-left {
+                width: 30%;
+            }
+
+            .th-mid {
+                width: 54%;
+            }
+
+            .th-right {
+                width: 15%;
+                text-align: center;
             }
 
             td {
                 color: $txt-dark;
                 border: none;
-            }
-
-            .td-info {
-                width: 170px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-
-                @media (max-width: $breakpoint-xxs) {
-                    width: 100px;
-                }
-
-                @media (max-width: $breakpoint-xxxs) {
-                    max-width: 70px;
-                }
             }
 
             .journal-table-edit {
@@ -534,12 +552,4 @@
             transform: translate(16px, -3px);
         }
     }
-}
-
-.spend {
-    color: $txt-spend !important;
-}
-
-.income {
-    color: $txt-income !important;
 }

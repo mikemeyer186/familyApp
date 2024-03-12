@@ -16,7 +16,7 @@ export default function JournalTable() {
     const formattedPayments = formatPaymentData(activeJournal ? activeJournal.payment : []);
 
     /**
-     * handle global filter change
+     * handles global filter change
      * @param {event} e - event from filter change
      */
     function onGlobalFilterChange(e) {
@@ -29,7 +29,7 @@ export default function JournalTable() {
     }
 
     /**
-     * handle journal export as csv file
+     * handles journal export as csv file
      * @param {boolean} selectionOnly - false (all data should be exported)
      */
     function exportCSV(selectionOnly) {
@@ -133,47 +133,51 @@ export default function JournalTable() {
     }
 
     return (
-        <>
-            <div className="journal-table journal-tile">
-                <h3 className="journal-title">Belege</h3>
+        <div className="journal-table journal-tile">
+            <h3 className="journal-title">Belege</h3>
 
-                {activeJournal ? (
-                    <DataTable
-                        ref={dt}
-                        value={formattedPayments}
-                        paginator
-                        rows={5}
-                        rowsPerPageOptions={[5, 10, 20]}
-                        pageLinkSize={3}
-                        removableSort
-                        filters={filters}
-                        globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
-                        header={tableHeader}
-                        style={{ width: '100%', cursor: 'pointer' }}
-                        exportFilename={activeJournal.id}
-                        emptyMessage="Keine Belege in diesem Monat gebucht"
-                        onRowClick={(e) => onRowClickToggle(e)}
-                        expandedRows={expandedRows}
-                        rowExpansionTemplate={rowExpansionTemplate}
-                    >
-                        <Column field="date" header="Datum" dataType="date" sortable style={{ width: '5%', textAlign: 'center' }}></Column>
-                        <Column field="user" header="User" dataType="text" style={{ display: 'none' }}></Column>
-                        <Column field="aggregate" header="Zuordnung" dataType="text" style={{ display: 'none' }}></Column>
-                        <Column field="category" header="Kategorie" dataType="text" sortable style={{ width: '50%' }}></Column>
-                        <Column field="info" header="Info" dataType="text" style={{ display: 'none' }}></Column>
-                        <Column
-                            field="amount"
-                            header="Betrag"
-                            dataType="numeric"
-                            body={amountBodyTemplate}
-                            sortable
-                            style={{ width: '5%', textAlign: 'right' }}
-                        ></Column>
-                    </DataTable>
-                ) : (
-                    <div className="journal-payment__date">Es wurden noch keine Belege gebucht</div>
-                )}
-            </div>
-        </>
+            {activeJournal ? (
+                <DataTable
+                    ref={dt}
+                    value={formattedPayments}
+                    paginator
+                    rows={5}
+                    rowsPerPageOptions={[5, 10, 20]}
+                    pageLinkSize={3}
+                    removableSort
+                    filters={filters}
+                    globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
+                    header={tableHeader}
+                    style={{ width: '100%', cursor: 'pointer' }}
+                    exportFilename={activeJournal.id}
+                    emptyMessage="Keine Belege in diesem Monat gebucht"
+                    onRowClick={(e) => onRowClickToggle(e)}
+                    expandedRows={expandedRows}
+                    rowExpansionTemplate={rowExpansionTemplate}
+                >
+                    <Column
+                        field="date"
+                        header="Datum"
+                        dataType="date"
+                        sortable
+                        style={{ minWidth: '30%', width: '30%', textAlign: 'start' }}
+                    ></Column>
+                    <Column field="user" header="User" dataType="text" style={{ display: 'none' }}></Column>
+                    <Column field="aggregate" header="Zuordnung" dataType="text" style={{ display: 'none' }}></Column>
+                    <Column field="category" header="Kategorie" dataType="text" sortable style={{ minWidth: '49%', width: '49%' }}></Column>
+                    <Column field="info" header="Info" dataType="text" style={{ display: 'none' }}></Column>
+                    <Column
+                        field="amount"
+                        header="Betrag"
+                        dataType="numeric"
+                        body={amountBodyTemplate}
+                        sortable
+                        style={{ minWidth: '15%', width: '15%', textAlign: 'right' }}
+                    ></Column>
+                </DataTable>
+            ) : (
+                <div className="journal-payments-empty">Es wurden noch keine Belege gebucht</div>
+            )}
+        </div>
     );
 }
