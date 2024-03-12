@@ -7,7 +7,7 @@
 
     .offcanvas {
         background-color: transparent;
-        background-image: $bg-glass-menu;
+        background-color: $bg-light;
 
         @media (max-width: 480px) {
             width: 100vw !important;
@@ -19,7 +19,7 @@
     }
 
     .navbarBg {
-        background-image: $bg-glass-navbar;
+        background-color: $bg-light;
         box-shadow: $shadow;
     }
 

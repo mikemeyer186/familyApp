@@ -60,7 +60,7 @@
         gap: 16px;
 
         .dashboard-tile {
-            background-image: $bg-glass;
+            background-color: $bg-light;
             border-radius: $normal-radius;
             box-shadow: $glass-shadow;
             position: relative;
@@ -151,7 +151,7 @@
 
             .tile-content {
                 position: absolute;
-                background-image: $bg-glass;
+                background-color: $bg-light;
                 z-index: 1;
                 left: 0;
                 bottom: 0;
@@ -271,7 +271,7 @@
     }
 
     .tile-motivation {
-        background-image: $bg-glass;
+        background-color: $bg-light;
         border-radius: $normal-radius;
         box-shadow: $glass-shadow;
         position: relative;
