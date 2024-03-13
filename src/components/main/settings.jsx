@@ -4,6 +4,7 @@ import { useUser } from '../../contexts/userContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
 import { useAlert } from '../../contexts/alertContext';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import countries from '../../data/countries';
 
 export default function Settings() {
@@ -15,6 +16,8 @@ export default function Settings() {
     const [calendarSettings, setCalendarSettings] = useState(JSON.parse(JSON.stringify(appSettings.calendar)));
     const [selectedCountry, setSelectedCountry] = useState('');
     const [lastPage] = useSessionStorage('lastPage');
+    const [listParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
+    const [journalParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const navigate = useNavigate();
 
     /**
@@ -253,7 +256,7 @@ export default function Settings() {
 
                         <div className="settings-divider"></div>
 
-                        <div className="mb-3">
+                        <div ref={listParent} className="mb-3">
                             <h6 className="mb-3">Kategorien für Listeneinträge</h6>
                             {listCategories.map((category, index) => {
                                 return (
@@ -307,7 +310,7 @@ export default function Settings() {
                             <h6 className="mb-3">Kategorien für das Journal</h6>
                             {journalCategories.map((category, nameIndex) => {
                                 return (
-                                    <div className="settings-box mb-4" key={nameIndex}>
+                                    <div ref={journalParent} className="settings-box mb-4" key={nameIndex}>
                                         <p className="settings-box-title mb-2">{category.name}</p>
                                         {category.values.map((value, valueIndex) => {
                                             return (

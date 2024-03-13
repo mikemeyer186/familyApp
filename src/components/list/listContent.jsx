@@ -9,7 +9,7 @@ export default function ListContent() {
     const [sortBy, setSortBy] = useState('Alphabet');
 
     const sortCategories = ['Datum', 'Alphabet'];
-    const [parent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
+    const [collectionParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     let sortedLists;
 
     /**
@@ -28,7 +28,7 @@ export default function ListContent() {
             <div className="list-toolbar">
                 <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
             </div>
-            <div ref={parent} className="listcollection">
+            <div ref={collectionParent} className="listcollection">
                 {sortedLists.length == 0 ? (
                     <span className="empty-listcollection">
                         Es sind gerade keine Listen gespeichert. Du kannst eine neue Liste hinzufügen, indem du auf den Button &quot;Neue Liste&quot;

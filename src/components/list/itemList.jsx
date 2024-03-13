@@ -9,7 +9,7 @@ import ListHeader from './listHeader';
 
 export default function ItemList({ list }) {
     const { activeUser, familyID } = useUser();
-    const [parent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
+    const [itemParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
     const [listTitle, setListTitle] = useState(list.title);
@@ -104,7 +104,7 @@ export default function ItemList({ list }) {
 
             <ListHeader sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
 
-            <ul ref={parent} className="list-group">
+            <ul ref={itemParent} className="list-group">
                 {sortedItems.length === 0 && <span className="px-1 text-center mt-3">Es sind noch keine Einträge vorhanden</span>}
                 {sortedItems.map((item) => {
                     return <Item key={item.id} item={item} listID={listID} updateItem={updateItem} deleteItem={deleteItem} />;
