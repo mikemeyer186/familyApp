@@ -2,7 +2,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: calc(100svh - $navbarHeight);
+    height: calc(100svh - $navbar-height);
     width: 100%;
     overflow: auto;
     padding: 16px 16px 70px 16px;
@@ -13,7 +13,7 @@
 
     .profile-content {
         width: calc(100vw - $padding-mobile);
-        border: $thinBorder;
+        border: $thin-border;
         box-shadow: $shadow;
         padding: 16px;
         position: relative;
@@ -115,7 +115,7 @@
     //settings styles
     .settings-divider {
         width: 100%;
-        border-bottom: $thinBorder;
+        border-bottom: $thin-border;
         margin: 48px 0;
     }
 
@@ -212,20 +212,5 @@
         width: 1rem;
         height: 1rem;
         border-width: 0.2em;
-    }
-}
-
-@keyframes loading {
-    0% {
-        background-color: $bg-white;
-        box-shadow: 0px 4px 20px 0px $bg-white;
-    }
-    50% {
-        background-color: $logo-color-2;
-        box-shadow: 0px 4px 20px 0px $logo-color-2;
-    }
-    100% {
-        background-color: $bg-white;
-        box-shadow: 0px 4px 20px 0px $bg-white;
     }
 }

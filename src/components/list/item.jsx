@@ -44,7 +44,7 @@ export default function Item({ item, updateItem, deleteItem }) {
         <li className="list-group-item d-flex justify-content-between align-items-center item-clickable" key={item.id}>
             <div className="item-touch-area" onClick={handleStatusChange}></div>
             {!item.done && (
-                <div className="item-priority iconClickable" onClick={handlePriorityChange}>
+                <div className="item-priority icon-clickable" onClick={handlePriorityChange}>
                     {item.priority ? <img src="/assets/icons/star-fill.svg" alt="Priority" /> : <img src="/assets/icons/star.svg" alt="Priority" />}
                 </div>
             )}
@@ -77,7 +77,7 @@ export default function Item({ item, updateItem, deleteItem }) {
                 </div>
             </label>
 
-            <img src="/assets/icons/x-lg.svg" className="iconClickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
+            <img src="/assets/icons/x-lg.svg" className="icon-clickable z-1" alt="delete" onClick={() => deleteItem(item.id)} />
         </li>
     );
 }

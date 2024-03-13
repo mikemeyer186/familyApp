@@ -8,7 +8,7 @@ $bg-grey-midlight: rgba(109, 118, 126, 0.3);
 $bg-grey-mid: rgba(109, 118, 126, 0.6);
 $bg-grey: rgb(109, 118, 126);
 $holiday-color: #a3dda3;
-$publicHoliday-color: #d89393;
+$public-holiday-color: #d89393;
 $error-color: #e43d3d;
 $bs-blue: rgb(13, 110, 253);
 $chart-green: rgba(111, 224, 135, 0.7);
@@ -41,7 +41,7 @@ $glass-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
 $shadow-logo: 10px 20px 20px rgba(119, 119, 119, 0.3);
 
 /* borders */
-$thinBorder: 1px solid rgba(217, 217, 217, 0.5);
+$thin-border: 1px solid rgba(217, 217, 217, 0.5);
 $medium-border: 1px solid rgba(217, 217, 217, 0.8);
 $normal-radius: 16px;
 $inner-radius: 12px;
@@ -49,7 +49,7 @@ $input-radius: 8px;
 $blue-border: 1px solid $logo-color-4;
 
 /* dimensions */
-$navbarHeight: 56px;
+$navbar-height: 56px;
 $max-width: 550px;
 $padding-mobile: 32px;
 $padding-desktop: 160px;

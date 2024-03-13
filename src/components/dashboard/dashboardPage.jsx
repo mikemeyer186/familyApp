@@ -91,7 +91,7 @@ export default function DashboardPage() {
     }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence, eventsLoaded, itemsLoaded, journalLoaded, motivationLoaded]);
 
     return (
-        <div className="dashboardPage-wrapper">
+        <div className="dashboard-page-wrapper">
             {!isLoaded ? (
                 <Spinner>{'Dashboard laden...'}</Spinner>
             ) : (

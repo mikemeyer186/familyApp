@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 28px;
-    height: calc(100svh - $navbarHeight);
+    height: calc(100svh - $navbar-height);
     overflow: auto;
     padding: 70px 16px;
 
@@ -149,7 +149,7 @@
     }
 
     .p-accordion {
-        border: $thinBorder;
+        border: $thin-border;
         border-radius: $inner-radius;
         background-color: transparent;
         padding: 0;
@@ -177,7 +177,7 @@
 
         .p-accordion-header-link {
             border: none;
-            border-bottom: $thinBorder;
+            border-bottom: $thin-border;
             background-color: $bg-light;
             text-decoration: none;
             color: $txt-dark;
@@ -236,7 +236,7 @@
             }
 
             .list-group {
-                border-bottom: $thinBorder;
+                border-bottom: $thin-border;
                 padding-left: 7px;
 
                 &:last-of-type {
@@ -262,8 +262,8 @@
             background-color: $logo-color-6;
             border-top-left-radius: $inner-radius;
             border-top-right-radius: $inner-radius;
-            border-left: $thinBorder;
-            border-right: $thinBorder;
+            border-left: $thin-border;
+            border-right: $thin-border;
 
             @media (max-width: $breakpoint-xxs) {
                 padding: 16px 8px;
@@ -280,7 +280,7 @@
             .journal-searchbar {
                 outline: none;
                 width: 220px;
-                border: $thinBorder;
+                border: $thin-border;
                 border-radius: $inner-radius;
 
                 &::placeholder {
@@ -307,9 +307,9 @@
         }
 
         .p-datatable-wrapper {
-            border-left: $thinBorder;
-            border-right: $thinBorder;
-            border-bottom: $thinBorder;
+            border-left: $thin-border;
+            border-right: $thin-border;
+            border-bottom: $thin-border;
             border-bottom-left-radius: $inner-radius;
             border-bottom-right-radius: $inner-radius;
 
@@ -547,7 +547,7 @@
         }
     }
 
-    .countBadge {
+    .count-badge {
         span {
             color: $txt-grey;
             font-size: 0.8rem;

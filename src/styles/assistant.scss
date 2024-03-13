@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: calc(100svh - $navbarHeight);
+    height: calc(100svh - $navbar-height);
     overflow: auto;
     padding: 16px;
 
@@ -17,7 +17,7 @@
     .assistant-chat-wrapper {
         width: calc(100vw - $padding-mobile);
         height: 100%;
-        border: $thinBorder;
+        border: $thin-border;
         box-shadow: $shadow;
         padding: 16px 16px 70px 16px;
         position: relative;
@@ -43,7 +43,7 @@
 
             .chat-prompt-text {
                 border-radius: $inner-radius;
-                border: $thinBorder;
+                border: $thin-border;
                 padding: 4px 8px;
                 margin-bottom: 12px;
                 background-color: $logo-color-4;
@@ -78,7 +78,7 @@
 
             .chat-response-text {
                 border-radius: $inner-radius;
-                border: $thinBorder;
+                border: $thin-border;
                 padding: 4px 8px;
                 text-align: start;
                 margin-bottom: 12px;

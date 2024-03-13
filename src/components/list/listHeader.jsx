@@ -4,7 +4,7 @@ export default function ListHeader({ sortBy, sortCategories, handleSorting }) {
             <span className="sort-label">Sortierung: </span>
 
             <button
-                className="btn dropdown-toggle btn-outline-primary sort-options thinBorder"
+                className="btn dropdown-toggle btn-outline-primary sort-options thin-border"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"

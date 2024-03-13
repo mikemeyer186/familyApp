@@ -31,14 +31,14 @@ export default function Navbar() {
 
     return (
         <div className="navbar-container">
-            <nav className="navbar fixed-top navbarBg">
+            <nav className="navbar fixed-top bg-navbar">
                 <div className="container-fluid">
                     <div className="navbar-logo">
                         <img className="navbar-logo-img" src="/assets/img/logo_blue.png" alt="Logo" />
                         <span className="navbar-brand">familyApp</span>
                     </div>
                     <button
-                        className="navbar-toggler navbarMenuIcon"
+                        className="navbar-toggler navbar-menu-icon"
                         type="button"
                         data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar"
@@ -61,7 +61,7 @@ export default function Navbar() {
                                     {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
                                 </h4>
                             </div>
-                            <button type="button" className="btn-close iconClickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            <button type="button" className="btn-close icon-clickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">

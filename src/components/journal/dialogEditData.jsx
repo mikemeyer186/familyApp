@@ -251,13 +251,13 @@ export default function DialogEditData() {
                         <div className="modal-body">
                             <div className="form-input-group">
                                 <div className="form-row">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="editDate" className="col-form-label">
                                             Monat
                                         </label>
                                         <div className="input-group date-input-group mb-3">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width80"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-80"
                                                 id="editDate"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -275,7 +275,7 @@ export default function DialogEditData() {
                                                 })}
                                             </ul>
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width130"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-130"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -293,13 +293,13 @@ export default function DialogEditData() {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="editFlow" className="col-form-label">
                                             Art
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-secondary thinBorder width130 flow-drop-down"
+                                                className="btn dropdown-toggle btn-secondary thin-border width-130 flow-drop-down"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
                                                 id="editFlow"
                                                 type="button"
@@ -321,13 +321,13 @@ export default function DialogEditData() {
                                     </div>
                                 </div>
                                 <div className="form-row">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="editCategorie" className="col-form-label">
                                             Kategorie
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210 category-drop-down"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-210 category-drop-down"
                                                 id="editCategorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -353,14 +353,14 @@ export default function DialogEditData() {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <div className="mb-3">
                                             <label htmlFor="editAmount" className="col-form-label">
                                                 Betrag
                                             </label>
                                             <CurrencyInput
                                                 id="editAmount"
-                                                className="form-control width130 amount-drop-down"
+                                                className="form-control width-130 amount-drop-down"
                                                 placeholder="0,00 €"
                                                 decimalScale={2}
                                                 intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
@@ -373,7 +373,7 @@ export default function DialogEditData() {
                                     </div>
                                 </div>
                                 <div className="form-row mb-3">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="editInfo" className="col-form-label">
                                             Kommentar
                                         </label>
@@ -389,7 +389,7 @@ export default function DialogEditData() {
                                 </div>
                             </div>
                         </div>
-                        <div className="countBadge">
+                        <div className="count-badge">
                             <span>Belege:</span>
                             <div className="badge text-bg-light">{activePayment.length}</div>
                         </div>

@@ -9,7 +9,7 @@ export default function CalendarContent() {
 
     return (
         <>
-            <div className="calendarToolbar">
+            <div className="calendar-toolbar">
                 <CalendarPageToolbar />
             </div>
             <Calendar

@@ -101,7 +101,7 @@ export default function Problem() {
                             <button type="button" className="btn btn-secondary" onClick={handleAbort} disabled={isSending}>
                                 Abbrechen
                             </button>
-                            <button type="button" className="btn btn-primary width108" onClick={handleSubmit} disabled={!validMessage || isSending}>
+                            <button type="button" className="btn btn-primary width-108" onClick={handleSubmit} disabled={!validMessage || isSending}>
                                 {isSending ? (
                                     <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
                                 ) : (

@@ -53,7 +53,7 @@ body {
     }
 }
 
-.iconClickable {
+.icon-clickable {
     width: 1.5rem;
     height: 1.5rem;
     cursor: pointer;
@@ -73,54 +73,39 @@ body {
     cursor: pointer;
 }
 
-.thinBorder {
+.thin-border {
     border: 1px solid #dee2e6;
 }
 
-.centered-vertical {
-    display: flex;
-    align-items: center;
-}
-
-.centeredHorizontal {
-    display: flex;
-    justify-content: center;
-}
-
-.elementRight {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.spaceBetween {
+.space-between {
     justify-content: space-between;
 }
 
-.widthFull {
+.width-full {
     width: 100%;
 }
 
-.widthHalf {
+.width-half {
     width: 48%;
 }
 
-.width210 {
+.width-210 {
     width: 210px;
 }
 
-.width130 {
+.width-130 {
     width: 130px;
 }
 
-.width108 {
+.width-108 {
     width: 108px;
 }
 
-.width80 {
+.width-80 {
     width: 80px;
 }
 
-.slideIn-alert {
+.slide-in-alert {
     position: absolute;
     top: 0;
     left: 0;
@@ -129,7 +114,7 @@ body {
     z-index: 2222;
 }
 
-.slideOut-alert {
+.slide-out-alert {
     animation: slideOut 250ms ease-in;
 }
 
@@ -589,5 +574,30 @@ body {
     100% {
         transform: scale(0);
         opacity: 0.5;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) rotate(-180deg);
+    }
+    100% {
+        transform: translateX(0);
+        rotate: 0;
+    }
+}
+
+@keyframes loading {
+    0% {
+        background-color: $bg-white;
+        box-shadow: 0px 4px 20px 0px $bg-white;
+    }
+    50% {
+        background-color: $logo-color-2;
+        box-shadow: 0px 4px 20px 0px $logo-color-2;
+    }
+    100% {
+        background-color: $bg-white;
+        box-shadow: 0px 4px 20px 0px $bg-white;
     }
 }

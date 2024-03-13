@@ -2,12 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: $navbarHeight;
+    height: $navbar-height;
     padding: 0 1rem;
 
     .offcanvas {
         background-color: transparent;
         background-color: $bg-light;
+        border: none;
 
         @media (max-width: 480px) {
             width: 100vw !important;
@@ -18,7 +19,7 @@
         padding: 24px;
     }
 
-    .navbarBg {
+    .bg-navbar {
         background-color: $bg-light;
         box-shadow: $shadow;
     }
@@ -44,14 +45,14 @@
         }
     }
 
-    .navbarMenuIcon {
+    .navbar-menu-icon {
         transition: all 125ms ease-in-out;
         &:hover {
             border: 1px solid #969696;
         }
 
         &:focus {
-            border: $thinBorder;
+            border: $thin-border;
             outline: none;
             box-shadow: none;
         }

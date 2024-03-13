@@ -1,8 +1,8 @@
-.dashboardPage-wrapper {
+.dashboard-page-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: calc(100svh - $navbarHeight);
+    height: calc(100svh - $navbar-height);
     overflow: auto;
     padding: 16px 16px 70px 16px;
 
@@ -173,7 +173,7 @@
                 .tile-content-header {
                     font-size: 0.9rem;
                     display: inline-block;
-                    border-bottom: $thinBorder;
+                    border-bottom: $thin-border;
                     margin-bottom: 4px;
                     width: max-content;
 

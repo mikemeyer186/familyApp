@@ -29,7 +29,7 @@ export default function JournalTableExpansion() {
                             <img
                                 src="/assets/icons/pencil-fill-black.svg"
                                 alt="Bearbeiten"
-                                className="journal-table-edit-icon iconClickable"
+                                className="journal-table-edit-icon icon-clickable"
                                 onClick={() => openDialog('journalEditRef')}
                             />
                         </td>

@@ -5,5 +5,5 @@ import CalendarContent from './calendarContent';
 export default function CalendarPage() {
     const { isCalendarLoaded } = useCalendar();
 
-    return <div className="calendarPage-wrapper">{!isCalendarLoaded ? <Spinner>{'Kalender laden...'}</Spinner> : <CalendarContent />}</div>;
+    return <div className="calendar-page-wrapper">{!isCalendarLoaded ? <Spinner>{'Kalender laden...'}</Spinner> : <CalendarContent />}</div>;
 }

@@ -34,7 +34,7 @@ export default function JournalToolbar() {
             <div className="form-input-group">
                 <div className="input-group">
                     <button
-                        className="btn dropdown-toggle btn-outline-primary thinBorder width80"
+                        className="btn dropdown-toggle btn-outline-primary thin-border width-80"
                         id="date"
                         type="button"
                         data-bs-toggle="dropdown"
@@ -53,7 +53,7 @@ export default function JournalToolbar() {
                     </ul>
 
                     <button
-                        className="btn dropdown-toggle btn-outline-primary thinBorder width130"
+                        className="btn dropdown-toggle btn-outline-primary thin-border width-130"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"

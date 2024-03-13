@@ -204,7 +204,7 @@ export default function Settings() {
                                 Bundesland für Ferien & Feiertage
                             </label>
                             <button
-                                className="btn dropdown-toggle btn-outline-primary thinBorder widthFull"
+                                className="btn dropdown-toggle btn-outline-primary thin-border width-full"
                                 id="countrySelection"
                                 type="button"
                                 data-bs-toggle="dropdown"
@@ -279,7 +279,7 @@ export default function Settings() {
                                             <img
                                                 src="/assets/icons/dash-circle.svg"
                                                 alt="Löschen"
-                                                className="iconClickable delete-icon"
+                                                className="icon-clickable delete-icon"
                                                 onClick={() => handleDeleteListCategory(index)}
                                             />
                                         ) : (
@@ -294,7 +294,7 @@ export default function Settings() {
                                     <img
                                         src="/assets/icons/plus-circle.svg"
                                         alt="Hinzufügen"
-                                        className="iconClickable add-icon"
+                                        className="icon-clickable add-icon"
                                         onClick={handleAddListCategory}
                                     />
                                 </div>
@@ -324,7 +324,7 @@ export default function Settings() {
                                                         <img
                                                             src="/assets/icons/dash-circle.svg"
                                                             alt="Löschen"
-                                                            className="iconClickable delete-icon"
+                                                            className="icon-clickable delete-icon"
                                                             onClick={() => handleDeleteJournalCategory(nameIndex, valueIndex)}
                                                         />
                                                     ) : (
@@ -339,7 +339,7 @@ export default function Settings() {
                                                 <img
                                                     src="/assets/icons/plus-circle.svg"
                                                     alt="Hinzufügen"
-                                                    className="iconClickable add-icon"
+                                                    className="icon-clickable add-icon"
                                                     onClick={() => handleAddJournalCategory(nameIndex)}
                                                 />
                                             </div>

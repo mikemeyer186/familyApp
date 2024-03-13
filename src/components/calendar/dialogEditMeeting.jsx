@@ -193,7 +193,7 @@ export default function DialogEditMeeting() {
                     <form onSubmit={handleEditMeeting}>
                         <div className="modal-body">
                             <div className="form-row mb-3">
-                                <div className="widthFull">
+                                <div className="width-full">
                                     <label htmlFor="editTitle" className="col-form-label">
                                         Termin
                                     </label>
@@ -210,8 +210,8 @@ export default function DialogEditMeeting() {
                             </div>
 
                             <div className="form-row mb-3">
-                                <div className="input-group mb-3 spaceBetween">
-                                    <div className="widthHalf">
+                                <div className="input-group mb-3 space-between">
+                                    <div className="width-half">
                                         <label htmlFor="editAllDayYes" className="col-form-label">
                                             Ganztägig
                                         </label>
@@ -245,7 +245,7 @@ export default function DialogEditMeeting() {
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="widthHalf">
+                                    <div className="width-half">
                                         <label htmlFor="editColor" className="col-form-label">
                                             Farbe
                                         </label>
@@ -262,8 +262,8 @@ export default function DialogEditMeeting() {
                             </div>
 
                             <div className="form-row mb-3">
-                                <div className="input-group mb-3 spaceBetween">
-                                    <div className={allDayNo ? 'widthFull' : 'widthHalf'}>
+                                <div className="input-group mb-3 space-between">
+                                    <div className={allDayNo ? 'width-full' : 'width-half'}>
                                         <label htmlFor="editStartDate" className="col-form-label">
                                             {allDayNo ? 'Datum' : 'Startdatum'}
                                         </label>
@@ -278,7 +278,7 @@ export default function DialogEditMeeting() {
                                     </div>
 
                                     {allDayYes && (
-                                        <div className="widthHalf">
+                                        <div className="width-half">
                                             <label htmlFor="editEndDate" className="col-form-label">
                                                 Enddatum
                                             </label>
@@ -300,8 +300,8 @@ export default function DialogEditMeeting() {
                             {allDayNo && (
                                 <>
                                     <div className="form-row mb-3">
-                                        <div className="input-group mb-3 spaceBetween">
-                                            <div className="widthHalf">
+                                        <div className="input-group mb-3 space-between">
+                                            <div className="width-half">
                                                 <label htmlFor="editStartTime" className="col-form-label">
                                                     Von
                                                 </label>
@@ -315,7 +315,7 @@ export default function DialogEditMeeting() {
                                                 />
                                             </div>
 
-                                            <div className="widthHalf">
+                                            <div className="width-half">
                                                 <label htmlFor="editEndTime" className="col-form-label">
                                                     Bis
                                                 </label>
@@ -335,7 +335,7 @@ export default function DialogEditMeeting() {
                             )}
 
                             <div className="form-row mb-3">
-                                <div className="widthFull">
+                                <div className="width-full">
                                     <label htmlFor="meetingEditInfo" className="col-form-label">
                                         Weitere Informationen
                                     </label>

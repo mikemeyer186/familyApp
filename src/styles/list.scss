@@ -3,7 +3,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: calc(100svh - $navbarHeight);
+    height: calc(100svh - $navbar-height);
     overflow: auto;
     padding: 70px 16px;
 
@@ -198,8 +198,8 @@
                 }
 
                 &:focus {
-                    border-left: $thinBorder;
-                    border-right: $thinBorder;
+                    border-left: $thin-border;
+                    border-right: $thin-border;
                     outline: none;
                     box-shadow: none;
                 }

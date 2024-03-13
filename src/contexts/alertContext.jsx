@@ -12,7 +12,7 @@ function AlertProvider({ children }) {
      */
     useEffect(() => {
         const alertTime = setTimeout(() => {
-            setSlideOut('slideOut-alert');
+            setSlideOut('slide-out-alert');
         }, 3000);
 
         const slideTime = setTimeout(() => {

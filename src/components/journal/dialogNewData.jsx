@@ -140,13 +140,13 @@ export default function DialogNewData() {
                         <div className="modal-body">
                             <div className="form-input-group">
                                 <div className="form-row">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="date" className="col-form-label">
                                             Monat
                                         </label>
                                         <div className="input-group date-input-group mb-3">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width80"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-80"
                                                 id="date"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -165,7 +165,7 @@ export default function DialogNewData() {
                                             </ul>
 
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width130"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-130"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -184,13 +184,13 @@ export default function DialogNewData() {
                                         </div>
                                     </div>
 
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="flow" className="col-form-label">
                                             Art
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-secondary thinBorder width130 flow-drop-down"
+                                                className="btn dropdown-toggle btn-secondary thin-border width-130 flow-drop-down"
                                                 style={selectedFlow === 'Einnahme' ? { color: '#9dde9d' } : { color: '#ff9f9f' }}
                                                 id="flow"
                                                 type="button"
@@ -213,13 +213,13 @@ export default function DialogNewData() {
                                 </div>
 
                                 <div className="form-row">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="categorie" className="col-form-label">
                                             Kategorie
                                         </label>
                                         <div className="input-group mb-3 flex-column">
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thinBorder width210 category-drop-down"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-210 category-drop-down"
                                                 id="categorie"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
@@ -245,14 +245,14 @@ export default function DialogNewData() {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <div className="mb-3">
                                             <label htmlFor="amount" className="col-form-label">
                                                 Betrag
                                             </label>
                                             <CurrencyInput
                                                 id="amount"
-                                                className="form-control width130 amount-drop-down"
+                                                className="form-control width-130 amount-drop-down"
                                                 placeholder="0,00 €"
                                                 decimalScale={2}
                                                 intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
@@ -266,7 +266,7 @@ export default function DialogNewData() {
                                 </div>
 
                                 <div className="form-row mb-3">
-                                    <div className="widthFull">
+                                    <div className="width-full">
                                         <label htmlFor="dataInfo" className="col-form-label">
                                             Kommentar
                                         </label>
@@ -282,7 +282,7 @@ export default function DialogNewData() {
                                 </div>
                             </div>
                         </div>
-                        <div className="countBadge">
+                        <div className="count-badge">
                             <span>Belege:</span>
                             <div className="badge text-bg-light">{activePayment ? activePayment.length : 0}</div>
                         </div>

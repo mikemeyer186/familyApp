@@ -229,7 +229,7 @@ export default function DialogNewMeeting() {
                     <form onSubmit={handleNewMeeting}>
                         <div className="modal-body">
                             <div className="form-row mb-3">
-                                <div className="widthFull">
+                                <div className="width-full">
                                     <label htmlFor="title" className="col-form-label">
                                         Termin
                                     </label>
@@ -245,8 +245,8 @@ export default function DialogNewMeeting() {
                             </div>
 
                             <div className="form-row mb-3">
-                                <div className="input-group mb-3 spaceBetween">
-                                    <div className="widthHalf">
+                                <div className="input-group mb-3 space-between">
+                                    <div className="width-half">
                                         <label htmlFor="allDayYes" className="col-form-label">
                                             Ganztägig
                                         </label>
@@ -278,7 +278,7 @@ export default function DialogNewMeeting() {
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="widthHalf">
+                                    <div className="width-half">
                                         <label htmlFor="color" className="col-form-label">
                                             Farbe
                                         </label>
@@ -294,8 +294,8 @@ export default function DialogNewMeeting() {
                             </div>
 
                             <div className="form-row mb-3">
-                                <div className="input-group mb-3 spaceBetween">
-                                    <div className={allDayNo ? 'widthFull' : 'widthHalf'}>
+                                <div className="input-group mb-3 space-between">
+                                    <div className={allDayNo ? 'width-full' : 'width-half'}>
                                         <label htmlFor="startDate" className="col-form-label">
                                             {allDayNo ? 'Datum' : 'Startdatum'}
                                         </label>
@@ -309,7 +309,7 @@ export default function DialogNewMeeting() {
                                     </div>
 
                                     {allDayYes && (
-                                        <div className="widthHalf">
+                                        <div className="width-half">
                                             <label htmlFor="endDate" className="col-form-label">
                                                 Enddatum
                                             </label>
@@ -330,8 +330,8 @@ export default function DialogNewMeeting() {
                             {allDayNo && (
                                 <>
                                     <div className="form-row mb-3">
-                                        <div className="input-group mb-3 spaceBetween">
-                                            <div className="widthHalf">
+                                        <div className="input-group mb-3 space-between">
+                                            <div className="width-half">
                                                 <label htmlFor="startTime" className="col-form-label">
                                                     Von
                                                 </label>
@@ -344,7 +344,7 @@ export default function DialogNewMeeting() {
                                                 />
                                             </div>
 
-                                            <div className="widthHalf">
+                                            <div className="width-half">
                                                 <label htmlFor="endTime" className="col-form-label">
                                                     Bis
                                                 </label>
@@ -363,7 +363,7 @@ export default function DialogNewMeeting() {
                             )}
 
                             <div className="form-row mb-3">
-                                <div className="widthFull">
+                                <div className="width-full">
                                     <label htmlFor="meetingInfo" className="col-form-label">
                                         Weitere Informationen
                                     </label>
