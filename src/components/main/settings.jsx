@@ -196,7 +196,7 @@ export default function Settings() {
             <div className="profile-content">
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Einstellungen</h4>
-                    <span>Hier kannst die globalen Einstellungen ändern</span>
+                    <span>Hier kannst die globalen Einstellungen ändern. Alle Änderungen sind für die gesamte Familie sichtbar.</span>
                 </div>
                 <div className="profile-body mt-5">
                     <form onSubmit={handleSubmit}>
