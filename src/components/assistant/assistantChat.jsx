@@ -35,7 +35,7 @@ export default function AssistantChat({ chatHistory }) {
     }, [chatHistory]);
 
     return (
-        <div className="assistant-chat-wrapper">
+        <div className="assistant-chat-wrapper fade-effect">
             <div className="chat-response">
                 <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />
                 <div className="chat-response-text">

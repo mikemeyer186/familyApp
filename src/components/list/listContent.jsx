@@ -24,7 +24,7 @@ export default function ListContent() {
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));
 
     return (
-        <>
+        <div className="fade-effect">
             <div className="list-toolbar">
                 <ListToolbar sortBy={sortBy} sortCategories={sortCategories} handleSorting={handleSorting} />
             </div>
@@ -40,6 +40,6 @@ export default function ListContent() {
                     })
                 )}
             </div>
-        </>
+        </div>
     );
 }

@@ -8,7 +8,7 @@ export default function CalendarContent() {
     const { localizer, messages, formats, components, min, max } = CalendarConfig();
 
     return (
-        <>
+        <div className="fade-effect">
             <div className="calendar-toolbar">
                 <CalendarPageToolbar />
             </div>
@@ -34,6 +34,6 @@ export default function CalendarContent() {
                 onSelectSlot={onSelectTimeSlot}
                 selectable
             />
-        </>
+        </div>
     );
 }

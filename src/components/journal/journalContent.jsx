@@ -5,7 +5,7 @@ import JournalChart from './journalChart';
 
 export default function JournalContent() {
     return (
-        <>
+        <div className="fade-effect">
             <div className="journal-toolbar">
                 <JournalToolbar />
             </div>
@@ -14,6 +14,6 @@ export default function JournalContent() {
                 <JournalSum />
                 <JournalTable />
             </div>
-        </>
+        </div>
     );
 }

@@ -189,7 +189,7 @@ export default function Settings() {
     }, [calendarSettings, findCountryName]);
 
     return (
-        <div className="profile-wrapper">
+        <div className="profile-wrapper fade-effect">
             <div className="profile-content">
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Einstellungen</h4>

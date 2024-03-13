@@ -38,7 +38,7 @@ export default function LoginForm() {
     }
 
     return (
-        <div className="login-wrapper">
+        <div className="login-wrapper fade-effect">
             <div className="login-header">
                 <img src="/assets/img/logo_blue.png" alt="Logo" />
                 <span>familyApp</span>

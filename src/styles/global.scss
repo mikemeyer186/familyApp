@@ -503,6 +503,10 @@ body {
 }
 
 // global animations
+.fade-effect {
+    animation: fadeIn 225ms ease-in-out forwards;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

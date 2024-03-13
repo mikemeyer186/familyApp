@@ -9,7 +9,7 @@ export default function DashboardContent({ todayEvents, importantItems, numberOf
     const { activeUser, greeting } = useUser();
 
     return (
-        <>
+        <div className="fade-effect">
             <div className="dashboard-top">
                 <h5 className="title">
                     {greeting}
@@ -28,6 +28,6 @@ export default function DashboardContent({ todayEvents, importantItems, numberOf
                     <AssistantTile />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Imprint() {
     return (
-        <div className="scroll-container">
+        <div className="scroll-container fade-effect">
             <div className="imprint-container">
                 <NavLink to="/">
                     <button type="button" className="btn-close icon-clickable close-icon" aria-label="Close"></button>
