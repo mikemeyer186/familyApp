@@ -3,7 +3,7 @@ import Spinner from '../global/spinner';
 import LoginForm from './loginForm';
 
 export default function Login() {
-    const { loggedIn } = useUser();
+    const { loggedIn, loading } = useUser();
 
-    return <div className="login-container">{loggedIn ? <Spinner>{'Anmelden...'}</Spinner> : <LoginForm />}</div>;
+    return <div className="login-container">{loading || loggedIn ? <Spinner>{'Anmelden...'}</Spinner> : <LoginForm />}</div>;
 }

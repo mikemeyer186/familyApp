@@ -20,9 +20,9 @@ function UserPovider({ children }) {
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [lastPage, setLastPage] = useSessionStorage('lastPage');
     const [loggedIn, setLoggedIn] = useSessionStorage('loggedIn');
-    const [isAppLoaded, setIsAppLoaded] = useSessionStorage('isAppLoaded');
     const [activePage, setActivePage] = useState(lastPage);
     const [motivationSentence, setMotivationSentence] = useState('');
     const [isMotivationLoaded, setIsMotivationLoaded] = useState(false);
@@ -42,7 +42,6 @@ function UserPovider({ children }) {
             const user = userCredential.user;
             setActiveUser(user);
             setLoggedIn(true);
-            setIsAppLoaded(true);
             navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
@@ -56,9 +55,9 @@ function UserPovider({ children }) {
     async function signOutUser() {
         try {
             await signOut(auth);
+            setLoggedIn(false);
             setActiveUser(null);
             setFamilyID('');
-            setLoggedIn(false);
             setSuccess('Du hast dich erfolgreich ausgeloggt!');
             setActivePage('');
             navigate('/');
@@ -135,13 +134,16 @@ function UserPovider({ children }) {
                 setActiveUser(user);
                 setIsAuthenticated(true);
                 checkGuest(user.uid);
+                setLoggedIn(true);
 
-                if (isAppLoaded) {
+                if (loggedIn) {
                     navigate(`app/${activePage}`);
                 } else {
                     navigate('app/dashboard?page=Dashboard');
                 }
             } else {
+                setLoading(false);
+                setLoggedIn(false);
                 setIsAuthenticated(false);
                 navigate('/');
             }
@@ -225,7 +227,6 @@ function UserPovider({ children }) {
 
     /**
      * sets active page and document title
-     * and sets "isAppLoaded" to true (session active)
      */
     useEffect(() => {
         let params = searchParams.get('page');
@@ -244,8 +245,7 @@ function UserPovider({ children }) {
         }
         document.title = `familyApp | ${params}`;
         setLastPage(activePage);
-        setIsAppLoaded(true);
-    }, [activePage, searchParams, setActivePage, setLastPage, setIsAppLoaded]);
+    }, [activePage, searchParams, setActivePage, setLastPage]);
 
     return (
         <UserContext.Provider
@@ -254,6 +254,7 @@ function UserPovider({ children }) {
                 isGuest: isGuest,
                 isAuthenticated: isAuthenticated,
                 loggedIn: loggedIn,
+                loading: loading,
                 familyID: familyID,
                 appSettings: appSettings,
                 activeYears: activeYears,
