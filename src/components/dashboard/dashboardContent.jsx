@@ -10,7 +10,7 @@ export default function DashboardContent({ todayEvents, importantItems, numberOf
 
     return (
         <>
-            <div className="mb-5">
+            <div className="dashboard-top">
                 <h5 className="title">
                     {greeting}
                     {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
