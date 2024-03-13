@@ -71,7 +71,7 @@ export default function EmailChange() {
                             <label htmlFor="oldEmail" className="col-form-label">
                                 Aktuelle E-Mail Adresse
                             </label>
-                            <input type="text" className="form-control" id="oldEmail" value={activeUser.email} disabled />
+                            <input type="text" className="form-control" id="oldEmail" value={isGuest ? '' : activeUser.email} disabled />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="newEmail" className="col-form-label">
