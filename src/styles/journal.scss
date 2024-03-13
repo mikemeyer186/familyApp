@@ -389,6 +389,11 @@
             }
         }
 
+        .p-datatable-row-expansion {
+            transform-origin: top;
+            animation: scaleIn 50ms ease-in-out forwards;
+        }
+
         .p-datatable-row-expansion > td {
             padding: 0;
             cursor: default;

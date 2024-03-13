@@ -102,12 +102,11 @@ export default function JournalTable() {
     }
 
     /**
-     * sets the expanded rows to null if there are expanded rows (closes expanded row)
-     * otherwise it sets the expanded rows to the selected row data (opens expanded row)
+     * toggles the expanded rows on click on a table row
      * @param {event} e - event from row click
      */
     function onRowClickToggle(e) {
-        if (expandedRows) {
+        if (expandedRows && e.data.id === expandedRows[0].id) {
             setExpandedRows(null);
         } else {
             setExpansionData(e.data);
