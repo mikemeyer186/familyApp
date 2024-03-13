@@ -105,7 +105,7 @@ export default function JournalChart() {
     }, [journalBalances.dates, journalBalances.balances, actualMonth, activePayment]);
 
     return (
-        <div className="journal-tile journal-chart">
+        <div className="journal-chart">
             <h3 className="journal-title">Kontostand</h3>
             {isLoaded && <Chart type="line" data={chartData} options={chartOptions} />}
             {activePayment.length === 0 && (

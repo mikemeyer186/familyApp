@@ -10,8 +10,14 @@
         background-color: $bg-light;
         border: none;
 
-        @media (max-width: 480px) {
+        @media (max-width: $breakpoint-xs) {
             width: 100vw !important;
+        }
+    }
+
+    .dropdown-menu-offcanvas {
+        @media (max-width: $breakpoint-xs) {
+            width: calc(100vw - 48px) !important;
         }
     }
 
@@ -151,15 +157,5 @@
 
     .nav-divider {
         opacity: 0.1;
-    }
-
-    @media (max-width: 480px) {
-        .offcanvas {
-            width: 100vw !important;
-        }
-
-        .dropdown-menu-offcanvas {
-            width: calc(100vw - 48px) !important;
-        }
     }
 }

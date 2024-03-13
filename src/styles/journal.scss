@@ -13,19 +13,20 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 28px;
+        gap: 16px;
 
-        @media (min-width: $breakpoint-xl) {
+        @media (min-width: $breakpoint-lg) {
             flex-direction: row;
         }
     }
 
     @media (min-width: $breakpoint-lg) {
-        padding: 100px 80px;
+        padding: 70px 80px;
+        align-items: flex-start;
     }
 
     @media (min-width: $breakpoint-xl) {
-        padding: 100px 115px;
+        padding: 70px 115px;
     }
 
     .journal-toolbar {
@@ -97,8 +98,12 @@
         padding: 24px 16px;
         color: $txt-light-dark;
 
-        @media (min-width: $breakpoint-sm) {
-            max-width: $max-width;
+        @media (min-width: $breakpoint-lg) {
+            width: calc(50vw - $padding-desktop / 2 - 14px);
+        }
+
+        @media (min-width: $breakpoint-xl) {
+            width: calc(50vw - $padding-desktop-xl / 2 - 14px);
         }
 
         .journal-title {
@@ -108,15 +113,21 @@
 
     .journal-chart {
         position: relative;
+        width: calc(100vw - $padding-mobile);
         flex-direction: column;
         height: 344px;
         min-height: 344px;
-        margin-bottom: 28px;
+        margin-bottom: 16px;
+        background-color: $bg-light;
+        border-radius: $normal-radius;
+        box-shadow: $glass-shadow;
+        padding: 24px 16px;
+        color: $txt-light-dark;
 
         .p-chart {
             animation: fadeIn 100ms ease-in-out;
             width: 100%;
-            height: 250px;
+            height: calc(100% - 48px);
         }
 
         .chart-example {
@@ -143,8 +154,12 @@
             }
         }
 
+        @media (min-width: $breakpoint-lg) {
+            max-width: calc(100vw - $padding-desktop);
+        }
+
         @media (min-width: $breakpoint-xl) {
-            max-width: calc($max-width * 2 + 28px);
+            max-width: calc(100vw - $padding-desktop-xl);
         }
     }
 
@@ -350,7 +365,7 @@
                     padding: 10px 5px;
                 }
 
-                @media (max-width: 320px) {
+                @media (max-width: $breakpoint-xxxs) {
                     max-width: 70px;
                     overflow: hidden;
                     text-overflow: ellipsis;

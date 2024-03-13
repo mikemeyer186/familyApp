@@ -27,12 +27,12 @@
         flex-direction: column;
         overflow: auto;
 
-        @media (min-width: $breakpoint-sm) {
-            width: $max-width;
+        @media (min-width: $breakpoint-lg) {
+            max-width: calc(100vw - $padding-desktop);
         }
 
         @media (min-width: $breakpoint-xl) {
-            width: calc($max-width * 2);
+            max-width: calc(100vw - $padding-desktop-xl);
         }
 
         .chat-prompt {
@@ -119,16 +119,12 @@
             padding: 4px 0 16px 0;
             background-color: rgba(255, 255, 255, 0.8);
 
-            @media (min-width: $breakpoint-sm) {
-                width: calc($max-width - 32px);
-                margin-left: auto;
-                margin-right: auto;
-                left: 0;
-                right: 0;
+            @media (min-width: $breakpoint-lg) {
+                width: calc(100vw - $padding-desktop - 32px);
             }
 
             @media (min-width: $breakpoint-xl) {
-                width: calc($max-width * 2 - 32px);
+                width: calc(100vw - $padding-desktop-xl - 32px);
             }
 
             button {

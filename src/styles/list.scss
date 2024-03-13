@@ -8,11 +8,11 @@
     padding: 70px 16px;
 
     @media (min-width: $breakpoint-lg) {
-        padding: 100px 80px;
+        padding: 70px 80px;
     }
 
     @media (min-width: $breakpoint-xl) {
-        padding: 100px 115px;
+        padding: 70px 115px;
     }
 
     .dropdown-menu {
@@ -342,7 +342,7 @@
                         background-color: #ffffff;
                         border: $medium-border;
 
-                        @media (max-width: 340px) {
+                        @media (max-width: $breakpoint-xxxs) {
                             display: none;
                         }
                     }
