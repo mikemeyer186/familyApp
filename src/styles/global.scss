@@ -247,6 +247,10 @@ body {
         font-weight: 300;
         color: $txt-light-grey;
     }
+
+    &:disabled {
+        background-color: $bg-disabled;
+    }
 }
 
 .input-group {

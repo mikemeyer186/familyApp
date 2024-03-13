@@ -92,12 +92,6 @@
         .uploading-image {
             animation: loading 1s infinite linear;
         }
-
-        input {
-            &:disabled {
-                background-color: $bg-disabled;
-            }
-        }
     }
 
     .profile-footer {
