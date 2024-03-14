@@ -351,7 +351,7 @@
 
 .error-date {
     position: absolute;
-    bottom: -19px;
+    bottom: -22px;
     left: 1px;
     font-size: 0.7rem;
     color: $error-color;
@@ -366,7 +366,14 @@
         height: 38px;
         padding: 0;
         overflow: hidden;
-        cursor: pointer;
+        border-radius: $normal-radius;
+
+        input {
+            width: 150%;
+            height: 150%;
+            transform: translate(-20px, -10px);
+            cursor: pointer;
+        }
     }
 
     .form-row {
@@ -376,7 +383,7 @@
             @media (max-width: $breakpoint-xxs) {
                 flex-direction: column;
 
-                .widthHalf {
+                .width-half {
                     width: 100%;
                 }
             }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useDialog } from '../../contexts/dialogContext';
 
@@ -8,8 +8,8 @@ export default function DialogEditMeeting() {
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
-    const [startTime, setStartTime] = useState(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
     const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
+    const [startTime, setStartTime] = useState(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
     const [endTime, setEndTime] = useState(new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
     const [allDayYes, setAllDayYes] = useState(false);
     const [allDayNo, setAllDayNo] = useState(true);
@@ -60,30 +60,24 @@ export default function DialogEditMeeting() {
     /**
      * checks if end date is before start date
      */
-    const checkDate = useCallback(
-        function checkDate() {
-            if (endDate < startDate) {
-                setErrorDate(true);
-            } else {
-                setErrorDate(false);
-            }
-        },
-        [endDate, startDate]
-    );
+    function checkDate(startDateInput, endDateInput) {
+        if (endDateInput < startDateInput) {
+            setErrorDate(true);
+        } else {
+            setErrorDate(false);
+        }
+    }
 
     /**
      * checks if end time is before start time
      */
-    const checkTime = useCallback(
-        function checkTime() {
-            if (endTime < startTime) {
-                setErrorTime(true);
-            } else {
-                setErrorTime(false);
-            }
-        },
-        [endTime, startTime]
-    );
+    function checkTime(startTimeInput, endTimeInput) {
+        if (endTimeInput < startTimeInput) {
+            setErrorTime(true);
+        } else {
+            setErrorTime(false);
+        }
+    }
 
     /**
      * combines date and time to one date for calendar
@@ -113,21 +107,73 @@ export default function DialogEditMeeting() {
     }
 
     /**
-     * sets end date and start date
-     * @param {date} date
+     * validates the date
+     * @param {date} dateInput - from input (YYYY-MM-DD)
+     * @returns
      */
-    function handleStartDateChange(date) {
-        setStartDate(new Date(date).toISOString().split('T')[0]);
-        setEndDate(new Date(date).toISOString().split('T')[0]);
+    function validateDateInput(dateInput) {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (dateInput.match(regex) === null) {
+            return false;
+        } else {
+            const date = new Date(dateInput);
+            return date;
+        }
     }
 
     /**
-     * sets end time and start time
+     * sets start date and same value as end date (avoids date error)
+     * validates and checks date in case of user types manually
+     * @param {date} date
+     */
+    function handleStartDateChange(date) {
+        const validatedDate = validateDateInput(date);
+
+        if (validatedDate) {
+            setStartDate(validatedDate.toISOString().split('T')[0]);
+            setEndDate(validatedDate.toISOString().split('T')[0]);
+            checkDate(date, date);
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * sets end date
+     * validates and checks date in case of user types manually
+     * @param {date} date
+     */
+    function handleEndDateChange(date) {
+        const validatedDate = validateDateInput(date);
+
+        if (validatedDate) {
+            setEndDate(validatedDate.toISOString().split('T')[0]);
+            checkDate(startDate, date);
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * sets start time and same value as end time (avoids time error)
+     * checks time in case of user types manually
      * @param {date} time - time from timepicker
      */
     function handleStartTimeChange(time) {
         setStartTime(time);
         setEndTime(time);
+        checkTime(time, time);
+    }
+
+    /**
+     * sets end time
+     * checks time in case of user types manually
+     * @param {date} time - time from timepicker
+     */
+    function handleEndTimeChange(time) {
+        setEndTime(time);
+        checkTime(startTime, time);
     }
 
     /**
@@ -145,42 +191,31 @@ export default function DialogEditMeeting() {
             setAllDayYes(true);
             setAllDayNo(false);
             setStartTime('01:00');
-            setEndTime('01:00');
+            setEndTime('23:59');
         }
     }
-
-    /**
-     * checks if end date is before start date on change
-     */
-    useEffect(() => {
-        checkDate();
-    }, [startDate, endDate, checkDate]);
-
-    /**
-     * checks if end time is before start time on change
-     */
-    useEffect(() => {
-        checkTime();
-    }, [startTime, endTime, checkTime]);
 
     /**
      * sets form values to selected event values, if selected event is available
      * selectedEvent is changing when user clicks on an event in the calendar
      */
-    useEffect(() => {
-        if (selectedEvent) {
-            setTitle(selectedEvent.title);
-            setStartDate(new Date(selectedEvent.start).toISOString().split('T')[0]);
-            setEndDate(new Date(selectedEvent.end).toISOString().split('T')[0]);
-            setStartTime(new Date(selectedEvent.start).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-            setEndTime(new Date(selectedEvent.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
-            setAllDayYes(selectedEvent.allDay);
-            setAllDayNo(!selectedEvent.allDay);
-            setInfo(selectedEvent.data.info);
-            setColor(selectedEvent.data.color);
-            setPublicEvent(selectedEvent.data.public);
-        }
-    }, [selectedEvent]);
+    useMemo(
+        function updateDialog() {
+            if (selectedEvent) {
+                setTitle(selectedEvent.title);
+                setStartDate(new Date(selectedEvent.start).toISOString().split('T')[0]);
+                setEndDate(new Date(selectedEvent.end).toISOString().split('T')[0]);
+                setStartTime(new Date(selectedEvent.start).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+                setEndTime(new Date(selectedEvent.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }));
+                setAllDayYes(selectedEvent.allDay);
+                setAllDayNo(!selectedEvent.allDay);
+                setInfo(selectedEvent.data.info);
+                setColor(selectedEvent.data.color);
+                setPublicEvent(selectedEvent.data.public);
+            }
+        },
+        [selectedEvent]
+    );
 
     return (
         <div className="modal fade" id="calendarEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.calendarEditRef}>
@@ -205,6 +240,7 @@ export default function DialogEditMeeting() {
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         disabled={publicEvent}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -249,14 +285,16 @@ export default function DialogEditMeeting() {
                                         <label htmlFor="editColor" className="col-form-label">
                                             Farbe
                                         </label>
-                                        <input
-                                            type="color"
-                                            className="form-control color-picker"
-                                            id="editColor"
-                                            value={color}
-                                            onChange={(e) => setColor(e.target.value)}
-                                            disabled={publicEvent}
-                                        />
+                                        <div className="color-picker">
+                                            <input
+                                                type="color"
+                                                className="form-control"
+                                                id="editColor"
+                                                value={color}
+                                                onChange={(e) => setColor(e.target.value)}
+                                                disabled={publicEvent}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +326,7 @@ export default function DialogEditMeeting() {
                                                 id="editEndDate"
                                                 min={startDate}
                                                 value={endDate}
-                                                onChange={(e) => setEndDate(e.target.value)}
+                                                onChange={(e) => handleEndDateChange(e.target.value)}
                                                 disabled={publicEvent}
                                             />
                                         </div>
@@ -324,7 +362,7 @@ export default function DialogEditMeeting() {
                                                     className="form-control"
                                                     id="editEndTime"
                                                     value={endTime}
-                                                    onChange={(e) => setEndTime(e.target.value)}
+                                                    onChange={(e) => handleEndTimeChange(e.target.value)}
                                                     disabled={publicEvent}
                                                 />
                                             </div>
