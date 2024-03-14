@@ -22,6 +22,18 @@ export default function DashboardPage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     /**
+     * check if complete dashboard data is laoded
+     */
+    const checkLoadingStatus = useCallback(
+        function checkLoadingStatus() {
+            if (eventsLoaded && itemsLoaded && journalLoaded && motivationLoaded) {
+                setIsLoaded(true);
+            }
+        },
+        [eventsLoaded, itemsLoaded, journalLoaded, motivationLoaded]
+    );
+
+    /**
      * loads the filtered and sorted events for the next seven days
      */
     const filterNextEvents = useCallback(
@@ -78,17 +90,15 @@ export default function DashboardPage() {
     );
 
     /**
-     * loads the data on initial loading of dashboard
+     * fetches dashboard data on initial loading of component
      */
     useEffect(() => {
         filterNextEvents();
         filterListItems();
         filterJournal();
         loadMotivationSentence();
-        if (eventsLoaded && itemsLoaded && journalLoaded && motivationLoaded) {
-            setIsLoaded(true);
-        }
-    }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence, eventsLoaded, itemsLoaded, journalLoaded, motivationLoaded]);
+        checkLoadingStatus();
+    }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence, checkLoadingStatus]);
 
     return (
         <div className="dashboard-page-wrapper">
