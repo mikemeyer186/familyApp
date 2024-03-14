@@ -60,6 +60,9 @@ export default function DialogNewData() {
         handleCloseDialog();
     }
 
+    /**
+     * closes the new data dialog
+     */
     function handleCloseDialog() {
         closeDialog('journalNewRef');
     }

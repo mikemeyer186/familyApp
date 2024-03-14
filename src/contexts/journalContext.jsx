@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { addPaymentInFirestore, updatePaymentInFirestore } from '../services/firestore';
 import { useAlert } from './alertContext';
 import { useUser } from './userContext';
@@ -10,16 +10,25 @@ function JournalProvider({ children }) {
     const { familyID } = useUser();
     const { setSuccess } = useAlert();
     const [journals, setJournals] = useState([]);
-    const [activeJournal, setActiveJournal] = useState({});
-    const [activePayment, setActivePayment] = useState([]);
     const [newActivePayment, setNewActivePayment] = useState([]);
-    const [sumOfPayments, setSumOfPayments] = useState([]);
-    const [selectedJournalId, setSelectedJournalId] = useState('');
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
     const [isJournalLoaded, setIsJournalLoaded] = useState(false);
     const [expansionData, setExpansionData] = useState({});
     const [expandedRows, setExpandedRows] = useState(null);
+    const selectedJournalId = `${selectedYear}-${selectedMonth}`;
+    const activeJournal = setJournalData();
+    const activePayment = useMemo(() => (activeJournal ? activeJournal.payment : []), [activeJournal]);
+
+    /**
+     * filters the journals regarding the selected month and year
+     * @returns - active journal of selected month and year
+     */
+    function setJournalData() {
+        const filteredJournals = journals.filter((journal) => journal.id === `${selectedYear}-${selectedMonth}`);
+        const filteredJournal = filteredJournals[0];
+        return filteredJournal;
+    }
 
     /**
      * adds new payment to firestore
@@ -94,21 +103,7 @@ function JournalProvider({ children }) {
                 }
             });
 
-            setSumOfPayments(sum);
-        },
-        [activePayment]
-    );
-
-    /**
-     * creates an object with daily balances
-     * @returns object with 2 arrays (dates and balances)
-     */
-    const filterDailyBalances = useCallback(
-        function filterDailyBalances() {
-            const dailyPayments = activePayment;
-            const groupedPayments = groupDailyPayments(dailyPayments);
-            const dailyBalances = createBalanceArray(groupedPayments);
-            return dailyBalances;
+            return sum;
         },
         [activePayment]
     );
@@ -118,7 +113,7 @@ function JournalProvider({ children }) {
      * @param {Object} dailyPayments - active payments from selected month
      * @returns - grouped payments
      */
-    function groupDailyPayments(dailyPayments) {
+    const groupDailyPayments = useCallback(function groupDailyPayments(dailyPayments) {
         const groupedByDate = dailyPayments.reduce((acc, payment) => {
             const date = payment.date.slice(5, 10);
             if (!acc[date]) {
@@ -128,14 +123,14 @@ function JournalProvider({ children }) {
             return acc;
         }, {});
         return groupedByDate;
-    }
+    }, []);
 
     /**
      * creates an object with dates and daily balances
      * @param {Object} groupedPayments - payments grouped by date
      * @returns - daily balances
      */
-    function createBalanceArray(groupedPayments) {
+    const createBalanceArray = useCallback(function createBalanceArray(groupedPayments) {
         let balance = 0;
         const dailyBalances = {
             dates: [],
@@ -156,25 +151,23 @@ function JournalProvider({ children }) {
         dailyBalances.dates.unshift('');
         dailyBalances.balances.unshift(0);
         return dailyBalances;
-    }
+    }, []);
 
     /**
-     * sums payments on activePayment change
+     * creates an object with daily balances
+     * @returns object with 2 arrays (dates and balances)
      */
-    useEffect(() => {
-        sumPayments();
-    }, [activePayment, sumPayments]);
+    const filterDailyBalances = useCallback(
+        function filterDailyBalances() {
+            const dailyPayments = activePayment;
+            const groupedPayments = groupDailyPayments(dailyPayments);
+            const dailyBalances = createBalanceArray(groupedPayments);
+            return dailyBalances;
+        },
+        [activePayment, groupDailyPayments, createBalanceArray]
+    );
 
-    /**
-     * sets active journal and active payment on selected month or year change
-     */
-    useEffect(() => {
-        const filteredJournals = journals.filter((journal) => journal.id === `${selectedYear}-${selectedMonth}`);
-        const filteredJournal = filteredJournals[0];
-        setSelectedJournalId(`${selectedYear}-${selectedMonth}`);
-        setActiveJournal(filteredJournal);
-        setActivePayment(filteredJournal ? filteredJournal.payment : []);
-    }, [journals, selectedYear, selectedMonth]);
+    const sumOfPayments = useMemo(() => sumPayments(), [sumPayments]);
 
     return (
         <JournalContext.Provider
@@ -193,7 +186,6 @@ function JournalProvider({ children }) {
                 setSelectedMonth,
                 setJournals,
                 setIsJournalLoaded,
-                setActivePayment,
                 addNewPayment,
                 editPayment,
                 addEditedPayment,

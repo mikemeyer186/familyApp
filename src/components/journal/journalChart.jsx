@@ -1,28 +1,15 @@
 import { Chart } from 'primereact/chart';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useJournal } from '../../contexts/journalContext';
 import months from '../../data/months';
 
 export default function JournalChart() {
-    const { activePayment, isJournalLoaded, selectedMonth, filterDailyBalances } = useJournal();
-    const [journalBalances, setJournalBalances] = useState({});
+    const { activePayment, selectedMonth, filterDailyBalances } = useJournal();
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
     const actualMonth = months[Number(selectedMonth) - 1];
-
-    /**
-     * loads the daily balances for actual month
-     */
-    const filterJournal = useCallback(
-        function filterJournal() {
-            if (isJournalLoaded) {
-                const dailyBalances = filterDailyBalances();
-                setJournalBalances(dailyBalances);
-            }
-        },
-        [filterDailyBalances, isJournalLoaded]
-    );
+    const journalBalances = useMemo(() => filterDailyBalances(), [filterDailyBalances]);
 
     /**
      * set loaded status of chart after timeout of 100ms
@@ -33,13 +20,6 @@ export default function JournalChart() {
             setIsLoaded(true);
         }, 100);
     }
-
-    /**
-     * filters the journal by actual month
-     */
-    useEffect(() => {
-        filterJournal();
-    }, [filterJournal]);
 
     /**
      * sets data and options for the chart
@@ -102,7 +82,7 @@ export default function JournalChart() {
         setChartData(data);
         setChartOptions(options);
         setLoadedStatus();
-    }, [journalBalances.dates, journalBalances.balances, actualMonth, activePayment]);
+    }, [journalBalances, actualMonth, activePayment]);
 
     return (
         <div className="journal-chart">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useAlert } from '../../contexts/alertContext';
@@ -13,7 +13,6 @@ export default function DialogEditData() {
         activePayment,
         editPayment,
         addEditedPayment,
-        setActivePayment,
         setNewActivePayment,
         deletePayment,
         expansionData,
@@ -29,12 +28,13 @@ export default function DialogEditData() {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedAggregate, setSelectedAggregate] = useState('');
     const [info, setInfo] = useState('');
-    const [newJournalId, setNewJournalId] = useState('');
+    const [badgeNumber, setBadgeNumber] = useState(activePayment.length);
     const defaultYears = activeYears;
     const defaultMonths = months;
-    const convertedMonth = months[selectedMonth - 1];
     const defaultFlows = ['Einnahme', 'Ausgabe'];
     const defaultCategories = filterCategories();
+    const convertedMonth = months[selectedMonth - 1];
+    const newJournalId = setNewJournalId(selectedMonth, selectedYear);
 
     /**
      * filters the journal categories from appsettings
@@ -147,6 +147,7 @@ export default function DialogEditData() {
      */
     function handleYearSelection(year) {
         setSelectedYear(year);
+        setNewPaymentMonth(selectedMonth, year);
     }
 
     /**
@@ -158,9 +159,8 @@ export default function DialogEditData() {
         if (month < 10) {
             month = `0${month}`;
         }
-        const year = selectedYear;
-        setNewJournalId(`${year}-${month}`);
         setSelectedMonth(month);
+        setNewPaymentMonth(month, selectedYear);
     }
 
     /**
@@ -184,60 +184,57 @@ export default function DialogEditData() {
 
     /**
      * sets the new journal id on month or year change
+     * @returns - new journal id
      */
-    useEffect(() => {
-        let month = months.indexOf(convertedMonth) + 1;
+    function setNewJournalId(newMonth, newYear) {
+        let month = months.indexOf(months[newMonth - 1]) + 1;
+
         if (month < 10) {
             month = `0${month}`;
         }
-        const year = selectedYear;
-        setNewJournalId(`${year}-${month}`);
-    }, [selectedYear, convertedMonth]);
+
+        return `${newYear}-${month}`;
+    }
 
     /**
-     * sets the active payment on initial laoding of the modal
+     * sets the new payment array for saving data in new month or year
+     * sets the visible badge number
+     * @param {string} newMonth - new selected month
+     * @param {string} newYear - new selected year
      */
-    useEffect(() => {
-        if (activeJournal) {
-            const filteredJournals = journals.filter((journal) => journal.id === activeJournal.id);
-            if (filteredJournals.length > 0) {
-                const filteredPayment = filteredJournals[0].payment;
-                setActivePayment(filteredPayment);
-            } else {
-                setActivePayment([]);
-            }
-        }
-    }, [activeJournal, journals, setActivePayment]);
-
-    /**
-     * sets the new active payment on changing the month or year (to transfer the payment to the new month)
-     */
-    useEffect(() => {
+    function setNewPaymentMonth(newMonth, newYear) {
+        const newJournalId = setNewJournalId(newMonth, newYear);
         const filteredJournals = journals.filter((journal) => journal.id === newJournalId);
         if (filteredJournals.length > 0) {
             const filteredPayment = filteredJournals[0].payment;
             setNewActivePayment(filteredPayment);
+            setBadgeNumber(filteredPayment.length);
         } else {
             setNewActivePayment([]);
+            setBadgeNumber(0);
         }
-    }, [selectedYear, selectedMonth, journals, newJournalId, setNewActivePayment]);
+    }
 
     /**
      * sets modal data when expansion row in table is clicked
      */
-    useEffect(() => {
-        setSelectedYear(expansionData.year);
-        setSelectedMonth(expansionData.month);
-        setAmount(convertAmountOnLoad(expansionData.amount));
-        setSelectedFlow(expansionData.flow ? expansionData.flow : 'Ausgabe');
-        setSelectedCategory(expansionData.category);
-        setSelectedAggregate(expansionData.aggregate);
-        if (expansionData.info) {
-            setInfo(expansionData.info);
-        } else {
-            setInfo('');
-        }
-    }, [expansionData]);
+    useMemo(
+        function updateDialog() {
+            setSelectedYear(expansionData.year);
+            setSelectedMonth(expansionData.month);
+            setAmount(convertAmountOnLoad(expansionData.amount));
+            setSelectedFlow(expansionData.flow ? expansionData.flow : 'Ausgabe');
+            setSelectedCategory(expansionData.category);
+            setSelectedAggregate(expansionData.aggregate);
+            setBadgeNumber(activePayment.length);
+            if (expansionData.info) {
+                setInfo(expansionData.info);
+            } else {
+                setInfo('');
+            }
+        },
+        [expansionData, activePayment]
+    );
 
     return (
         <div className="modal fade" id="journalEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.journalEditRef}>
@@ -390,8 +387,8 @@ export default function DialogEditData() {
                             </div>
                         </div>
                         <div className="count-badge">
-                            <span>Belege:</span>
-                            <div className="badge text-bg-light">{activePayment.length}</div>
+                            <span>Anzahl Belege:</span>
+                            <div className="badge text-bg-light ms-1">{badgeNumber}</div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger" onClick={handleDeletePayment}>
