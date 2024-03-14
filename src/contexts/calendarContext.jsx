@@ -214,56 +214,64 @@ function CalendarProvider({ children }) {
 
     /**
      * identifies the events which are today and for the next seven days
+     * this function is actually unused, but will be implemented in future
      * @returns - filterd events for the next seven days
      */
-    function filterEventsForNextWeek() {
-        const currentDate = new Date();
-        const nextSevenDays = new Date();
-        currentDate.setHours(0, 0, 0, 0);
-        nextSevenDays.setDate(currentDate.getDate() + 8);
+    const filterEventsForNextWeek = useCallback(
+        function filterEventsForNextWeek() {
+            const currentDate = new Date();
+            const nextSevenDays = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+            nextSevenDays.setDate(currentDate.getDate() + 8);
 
-        const filteredEvents = events.slice().filter((event) => {
-            const eventStartDate = new Date(event.start);
-            const eventEndDate = new Date(event.end);
-            return (
-                (eventStartDate >= currentDate && eventStartDate <= nextSevenDays) || (eventEndDate >= currentDate && eventEndDate <= nextSevenDays)
-            );
-        });
+            const filteredEvents = events.slice().filter((event) => {
+                const eventStartDate = new Date(event.start);
+                const eventEndDate = new Date(event.end);
+                return (
+                    (eventStartDate >= currentDate && eventStartDate <= nextSevenDays) ||
+                    (eventEndDate >= currentDate && eventEndDate <= nextSevenDays)
+                );
+            });
 
-        filteredEvents.sort((a, b) => {
-            const startDateA = new Date(a.start);
-            const startDateB = new Date(b.start);
-            return startDateA - startDateB;
-        });
+            filteredEvents.sort((a, b) => {
+                const startDateA = new Date(a.start);
+                const startDateB = new Date(b.start);
+                return startDateA - startDateB;
+            });
 
-        return filteredEvents;
-    }
+            return filteredEvents;
+        },
+        [events]
+    );
 
     /**
      * identifies the events which are today
      * @returns - filterd events for just today
      */
-    function filterEventsForToday() {
-        const currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
+    const filterEventsForToday = useCallback(
+        function filterEventsForToday() {
+            const currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
 
-        const filteredEvents = events.filter((event) => {
-            const eventStartDate = new Date(event.start);
-            eventStartDate.setHours(0, 0, 0, 0);
-            const eventEndDate = new Date(event.end);
-            eventEndDate.setHours(0, 0, 0, 0);
+            const filteredEvents = events.filter((event) => {
+                const eventStartDate = new Date(event.start);
+                eventStartDate.setHours(0, 0, 0, 0);
+                const eventEndDate = new Date(event.end);
+                eventEndDate.setHours(0, 0, 0, 0);
 
-            return eventStartDate.getTime() <= currentDate.getTime() && eventEndDate.getTime() >= currentDate.getTime();
-        });
+                return eventStartDate.getTime() <= currentDate.getTime() && eventEndDate.getTime() >= currentDate.getTime();
+            });
 
-        filteredEvents.sort((a, b) => {
-            const startDateA = new Date(a.start);
-            const startDateB = new Date(b.start);
-            return startDateA - startDateB;
-        });
+            filteredEvents.sort((a, b) => {
+                const startDateA = new Date(a.start);
+                const startDateB = new Date(b.start);
+                return startDateA - startDateB;
+            });
 
-        return filteredEvents;
-    }
+            return filteredEvents;
+        },
+        [events]
+    );
 
     return (
         <CalendarContext.Provider
