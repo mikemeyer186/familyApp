@@ -163,6 +163,37 @@
             max-width: $max-width;
             border: $medium-border;
             background-color: $bg-white;
+            height: 38px;
+
+            .submit-button {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .text-submit-desktop {
+                    display: block;
+                }
+
+                .text-submit-mobile {
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    display: none;
+                }
+
+                @media (max-width: $breakpoint-xs) {
+                    font-size: 0.9rem;
+                    width: 40px;
+
+                    .text-submit-desktop {
+                        display: none;
+                    }
+
+                    .text-submit-mobile {
+                        display: block;
+                    }
+                }
+            }
 
             .category-button {
                 width: 135px;
@@ -178,13 +209,6 @@
                     span {
                         display: none;
                     }
-                }
-            }
-
-            @media (max-width: $breakpoint-xs) {
-                .btn-primary {
-                    font-size: 0.9rem;
-                    width: 40px;
                 }
             }
 

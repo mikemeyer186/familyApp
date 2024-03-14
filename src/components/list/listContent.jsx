@@ -7,7 +7,6 @@ import ItemList from './itemList';
 export default function ListContent() {
     const { lists } = useList();
     const [sortBy, setSortBy] = useState('Alphabet');
-
     const sortCategories = ['Datum', 'Alphabet'];
     const [collectionParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     let sortedLists;

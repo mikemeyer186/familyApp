@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateListInFirestore } from '../../services/firestore';
 import { useUser } from '../../contexts/userContext';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -12,7 +12,7 @@ export default function ItemList({ list }) {
     const [itemParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const [sortBy, setSortBy] = useState('Datum');
     const [listItems, setListItems] = useState(list.list);
-    const [listTitle, setListTitle] = useState(list.title);
+    const listTitle = list.title;
     const listID = list.id;
     const sortCategories = ['Datum', 'Kategorie', 'Erledigt', 'Priorität'];
     let sortedItems;
@@ -81,14 +81,6 @@ export default function ItemList({ list }) {
     function handleSorting(category) {
         setSortBy(category);
     }
-
-    /**
-     * sets list items and title from list context when list changes
-     */
-    useEffect(() => {
-        setListItems(list.list);
-        setListTitle(list.title);
-    }, [list]);
 
     if (sortBy === 'Datum') sortedItems = listItems.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
     if (sortBy === 'Kategorie') sortedItems = listItems.slice().sort((a, b) => a.category.localeCompare(b.category));

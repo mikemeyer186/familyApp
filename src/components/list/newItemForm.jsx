@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 
 export default function NewItemForm({ addItem }) {
     const { appSettings } = useUser();
     const [newItem, setNewItem] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Kategorie');
-    const [isMobile, setIsMobile] = useState(false);
     const defaultCategories = appSettings.list.slice().sort((a, b) => a.category.localeCompare(b.category));
 
     /**
@@ -31,38 +30,6 @@ export default function NewItemForm({ addItem }) {
     function handleCategorySelection(category) {
         setSelectedCategory(category);
     }
-
-    /**
-     * checks if window size is mobile on page load
-     */
-    useEffect(() => {
-        if (window.innerWidth > 480) {
-            setIsMobile(false);
-        }
-
-        if (window.innerWidth <= 480) {
-            setIsMobile(true);
-        }
-    }, []);
-
-    /**
-     * checks if window size is mobile on window resize
-     */
-    useEffect(() => {
-        const sizeListener = window.addEventListener('resize', () => {
-            if (window.innerWidth > 480) {
-                setIsMobile(false);
-            }
-
-            if (window.innerWidth <= 480) {
-                setIsMobile(true);
-            }
-        });
-
-        return () => {
-            window.removeEventListener('resize', sizeListener);
-        };
-    }, []);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -95,8 +62,9 @@ export default function NewItemForm({ addItem }) {
                     onChange={(event) => setNewItem(event.target.value)}
                 />
 
-                <button className="btn btn-primary" type="submit" id="addListItemButton" disabled={newItem === ''}>
-                    {isMobile ? <strong>+</strong> : 'Hinzufügen'}
+                <button className="btn btn-primary submit-button" type="submit" id="addListItemButton" disabled={newItem === ''}>
+                    <span className="text-submit-desktop">Hinzufügen</span>
+                    <span className="text-submit-mobile">+</span>
                 </button>
             </div>
         </form>

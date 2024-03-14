@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useList } from '../../contexts/listContext';
 import { useDialog } from '../../contexts/dialogContext';
 
@@ -26,13 +26,16 @@ export default function DialogEditList() {
     }
 
     /**
-     * sets the title of selected list if user clicks on the dropdown menu
+     * sets the title of selected list if user clicks on the list menu
      */
-    useEffect(() => {
-        if (selectedList.title) {
-            setNewTitle(selectedList.title);
-        }
-    }, [selectedList]);
+    useMemo(
+        function updateTitle() {
+            if (selectedList.title) {
+                setNewTitle(selectedList.title);
+            }
+        },
+        [selectedList]
+    );
 
     return (
         <div className="modal fade" id="listEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.listEditRef}>

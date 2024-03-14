@@ -105,6 +105,11 @@ body {
     width: 80px;
 }
 
+.centered-vertical {
+    display: flex;
+    align-items: center;
+}
+
 .slide-in-alert {
     position: absolute;
     top: 0;
