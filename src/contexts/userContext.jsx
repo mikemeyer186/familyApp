@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { auth } from '../config/firebase';
 import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
@@ -228,7 +228,7 @@ function UserPovider({ children }) {
     /**
      * sets active page and document title
      */
-    useEffect(() => {
+    useMemo(() => {
         let params = searchParams.get('page');
         if (params === 'Dashboard') {
             setActivePage('dashboard?page=Dashboard');
