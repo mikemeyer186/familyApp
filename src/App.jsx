@@ -2,7 +2,7 @@ import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Routes, Route } from 'react-router-dom';
-import { Suspense, lazy, useEffect, useRef } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { JournalProvider } from './contexts/journalContext';
 import { ListProvider } from './contexts/listContext';
 import { CalendarProvider } from './contexts/calendarContext';
@@ -32,16 +32,12 @@ const DataProtection = lazy(() => import('./components/main/dataprotection'));
 export default function App() {
     const { error, success, slideOut } = useAlert();
     const { authCheck } = useUser();
-    const didInit = useRef(false);
 
     /**
      * checks if authenticated user exists on initial loading
      */
     useEffect(() => {
-        if (!didInit.current) {
-            authCheck();
-            didInit.current = true;
-        }
+        authCheck();
     }, []);
 
     return (
