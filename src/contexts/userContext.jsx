@@ -291,4 +291,4 @@ function useUser() {
     return context;
 }
 
-export { UserPovider, useUser }; //eslint-disable-line
+export { UserPovider, useUser };

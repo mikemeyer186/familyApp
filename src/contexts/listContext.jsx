@@ -129,4 +129,4 @@ function useList() {
     return context;
 }
 
-export { ListProvider, useList }; //eslint-disable-line
+export { ListProvider, useList };

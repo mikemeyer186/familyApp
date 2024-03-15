@@ -18,13 +18,18 @@
     .dropdown-menu {
         width: auto;
 
-        @media (max-width: $breakpoint-xxs) {
-            min-width: max-content;
-            width: max-content;
-        }
-
         .dropdown-item {
             text-wrap: nowrap;
+        }
+
+        @media (max-width: $breakpoint-xxs) {
+            width: max-content;
+            max-width: 100vw;
+
+            .dropdown-item {
+                text-wrap: wrap;
+                word-break: break-all;
+            }
         }
     }
 
@@ -196,7 +201,19 @@
             }
 
             .category-button {
-                width: 135px;
+                width: 145px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    display: inline-block;
+                    width: max-content;
+                    max-width: 120px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
 
                 @media (max-width: $breakpoint-xs) {
                     font-size: 0.9rem;
@@ -316,7 +333,7 @@
                         padding-left: 4px;
                         font-size: 1rem;
                         font-weight: 400;
-                        color: #595959;
+                        color: $txt-light-dark;
                         transition: all 250ms ease-in-out;
                         width: 100%;
                         max-height: 48px;
@@ -329,7 +346,7 @@
                         padding-left: 4px;
                         font-size: 1rem;
                         font-weight: 400;
-                        color: #949494;
+                        color: $txt-light-grey;
                         transition: all 250ms ease-in-out;
                         width: 100%;
                         max-height: 48px;
@@ -349,21 +366,33 @@
                     .category {
                         font-size: 0.7rem;
                         font-weight: 300;
-                        color: #ffffff;
+                        color: $txt-light;
                         text-align: center;
                         vertical-align: middle;
                         padding: 5px 8px 4px 8px;
+                        max-width: 200px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        @media (max-width: $breakpoint-xs) {
+                            max-width: 130px;
+                        }
+
+                        @media (max-width: $breakpoint-xxs) {
+                            max-width: 90px;
+                        }
                     }
 
                     .info-icon {
                         z-index: 1;
                         font-size: 0.7rem;
                         font-weight: 300;
-                        color: #a1a1a1;
+                        color: $txt-grey;
                         text-align: center;
                         vertical-align: middle;
                         padding: 4px 8px 3px 8px;
-                        background-color: #ffffff;
+                        background-color: $bg-white;
                         border: $medium-border;
 
                         @media (max-width: $breakpoint-xxxs) {

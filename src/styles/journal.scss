@@ -529,6 +529,12 @@
                 border-right: 1px solid $logo-color-4;
             }
         }
+
+        .month-button {
+            @media (max-width: $breakpoint-xxs) {
+                width: calc(100% - 80px);
+            }
+        }
     }
 
     .form-row {
@@ -538,6 +544,18 @@
 
         .category-drop-down {
             width: 210px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span {
+                display: inline-block;
+                width: max-content;
+                max-width: 170px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
 
         .amount-drop-down,
@@ -569,6 +587,16 @@
             font-weight: 300;
             display: flex;
             align-items: center;
+        }
+
+        @media (max-width: $breakpoint-xxs) {
+            width: max-content;
+            max-width: 100vw;
+
+            .dropdown-item {
+                text-wrap: wrap;
+                word-break: break-all;
+            }
         }
     }
 

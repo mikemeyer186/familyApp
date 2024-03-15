@@ -119,6 +119,10 @@
             border-bottom-right-radius: $inner-radius;
             border: $thin-border;
 
+            &:hover {
+                cursor: pointer;
+            }
+
             .rbc-time-content {
                 border-top: $thin-border;
             }
@@ -143,13 +147,27 @@
                 border-top-right-radius: 4px;
             }
 
+            .rbc-time-header-cell {
+                &:hover {
+                    cursor: default;
+                }
+            }
+
             .rbc-time-header-gutter {
                 width: 44px;
+
+                &:hover {
+                    cursor: default;
+                }
             }
 
             .rbc-time-gutter {
                 width: 44px;
                 color: $txt-dark;
+
+                &:hover {
+                    cursor: default;
+                }
             }
 
             .rbc-allday-cell {
@@ -267,9 +285,17 @@
             border-bottom-left-radius: $inner-radius;
             border-bottom-right-radius: $inner-radius;
 
+            &:hover {
+                cursor: pointer;
+            }
+
             .rbc-month-header {
                 border-bottom: $thin-border;
                 background-color: $bg-grey-midlight;
+
+                &:hover {
+                    cursor: default;
+                }
 
                 span {
                     color: $txt-dark;

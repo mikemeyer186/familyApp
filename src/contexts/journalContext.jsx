@@ -211,4 +211,4 @@ function useJournal() {
     return context;
 }
 
-export { JournalProvider, useJournal }; //eslint-disable-line
+export { JournalProvider, useJournal };

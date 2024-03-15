@@ -11,7 +11,7 @@ export default function ItemList({ list }) {
     const { activeUser, familyID } = useUser();
     const [itemParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const [sortBy, setSortBy] = useState('Datum');
-    const [listItems, setListItems] = useState(list.list);
+    const listItems = list.list;
     const listTitle = list.title;
     const listID = list.id;
     const sortCategories = ['Datum', 'Kategorie', 'Erledigt', 'Priorität'];
@@ -23,23 +23,21 @@ export default function ItemList({ list }) {
      * @param {string} category - category of new item
      */
     function addItem(title, category) {
-        setListItems((currentListItems) => {
-            const list = [
-                ...currentListItems,
-                {
-                    id: crypto.randomUUID(),
-                    title: title,
-                    done: false,
-                    user: activeUser.displayName,
-                    date: new Date().toISOString(),
-                    category: category === 'Kategorie' ? 'Sonstiges' : category,
-                    amount: 1,
-                    priority: false,
-                },
-            ];
-            updateListInFirestore(familyID, list, listID, listTitle);
-            return list;
-        });
+        const list = [
+            ...listItems,
+            {
+                id: crypto.randomUUID(),
+                title: title,
+                done: false,
+                user: activeUser.displayName,
+                date: new Date().toISOString(),
+                category: category === 'Kategorie' ? 'Sonstiges' : category,
+                amount: 1,
+                priority: false,
+            },
+        ];
+
+        updateListInFirestore(familyID, list, listID, listTitle);
     }
 
     /**
@@ -50,16 +48,14 @@ export default function ItemList({ list }) {
      * @param {boolean} priority - priority state of item
      */
     function updateItem(itemId, done, amount, priority) {
-        setListItems((currentListItems) => {
-            const list = currentListItems.map((item) => {
-                if (item.id === itemId) {
-                    return { ...item, done, amount, priority };
-                }
-                return item;
-            });
-            updateListInFirestore(familyID, list, listID, listTitle);
-            return list;
+        const list = listItems.map((item) => {
+            if (item.id === itemId) {
+                return { ...item, done, amount, priority };
+            }
+            return item;
         });
+
+        updateListInFirestore(familyID, list, listID, listTitle);
     }
 
     /**
@@ -67,11 +63,8 @@ export default function ItemList({ list }) {
      * @param {string} itemId - id of item to delete
      */
     function deleteItem(itemId) {
-        setListItems((currentListItems) => {
-            const list = currentListItems.filter((item) => item.id !== itemId);
-            updateListInFirestore(familyID, list, listID, listTitle);
-            return list;
-        });
+        const list = listItems.filter((item) => item.id !== itemId);
+        updateListInFirestore(familyID, list, listID, listTitle);
     }
 
     /**

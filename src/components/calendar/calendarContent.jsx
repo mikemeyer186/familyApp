@@ -17,7 +17,7 @@ export default function CalendarContent() {
                 localizer={localizer}
                 culture={'de-DE'}
                 messages={messages}
-                defaultView="agenda"
+                defaultView="month"
                 views={['agenda', 'week', 'month']}
                 formats={formats}
                 components={components}

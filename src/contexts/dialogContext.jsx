@@ -74,4 +74,4 @@ function useDialog() {
     return context;
 }
 
-export { DialogProvider, useDialog }; //eslint-disable-line
+export { DialogProvider, useDialog };

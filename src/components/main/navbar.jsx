@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
-import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
+import { Popover } from 'bootstrap';
 
 export default function Navbar() {
     const { activeUser, greeting, signOutUser, checkDaytime } = useUser();

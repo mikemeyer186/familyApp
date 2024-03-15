@@ -313,4 +313,4 @@ function useCalendar() {
     return context;
 }
 
-export { CalendarProvider, useCalendar }; // eslint-disable-line
+export { CalendarProvider, useCalendar };

@@ -272,7 +272,7 @@ export default function DialogEditData() {
                                                 })}
                                             </ul>
                                             <button
-                                                className="btn dropdown-toggle btn-outline-primary thin-border width-130"
+                                                className="btn dropdown-toggle btn-outline-primary thin-border width-130 month-button"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
@@ -330,7 +330,7 @@ export default function DialogEditData() {
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
                                             >
-                                                {selectedCategory}
+                                                <span>{selectedCategory}</span>
                                             </button>
                                             <ul className="dropdown-menu dropdown-menu-journal">
                                                 {defaultCategories.map((categorie) => {
