@@ -174,7 +174,8 @@ export default function Settings() {
     }
 
     /**
-     * if appSettings changes (observable) then states will be updated
+     * if appSettings changes (observable) then states will be updated (deep copy)
+     * needs to be in sync with firestore api
      */
     useEffect(() => {
         if (appSettings) {
@@ -186,6 +187,7 @@ export default function Settings() {
 
     /**
      * if calendarSettings changes (from appSettings) then the selectedCountry in drop down field will be updated
+     * needs to be in sync with firestore api
      */
     useEffect(() => {
         findCountryName();

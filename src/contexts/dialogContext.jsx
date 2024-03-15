@@ -13,6 +13,7 @@ function DialogProvider({ children }) {
     const listNewRef = useRef();
     const listEditRef = useRef();
     const listDeleteRef = useRef();
+    const didInit = useRef(false);
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
         () => ({
@@ -48,13 +49,16 @@ function DialogProvider({ children }) {
     };
 
     /**
-     * creates modals for dialogs
+     * creates modals for dialogs on initial loading
      * one instance of each dialog is needed for showing and hiding
      */
     useEffect(() => {
-        Object.keys(dialogs).forEach((dialog) => {
-            modals[dialog] = new Modal(dialogs[dialog].current);
-        });
+        if (!didInit.current) {
+            Object.keys(dialogs).forEach((dialog) => {
+                modals[dialog] = new Modal(dialogs[dialog].current);
+            });
+            didInit.current = true;
+        }
     }, [dialogs, modals]);
 
     return <DialogContext.Provider value={{ dialogs: dialogs, openDialog, closeDialog }}>{children}</DialogContext.Provider>;

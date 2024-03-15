@@ -29,6 +29,7 @@ export default function AssistantChat({ chatHistory }) {
 
     /**
      * scrolls chat history to bottom, if new messages are added
+     * needs to be in sync with responding chat completion from api
      */
     useEffect(() => {
         scrollToBottom();

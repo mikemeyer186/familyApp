@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
@@ -15,33 +15,21 @@ export default function DashboardPage() {
     const [importantItems, setImportantItems] = useState([]);
     const [numberOfItems, setNumberOfItems] = useState({});
     const [journalBalances, setJournalBalances] = useState({});
-    const [eventsLoaded, setEventsLoaded] = useState(false);
-    const [itemsLoaded, setItemsLoaded] = useState(false);
-    const [journalLoaded, setJournalLoaded] = useState(false);
-    const [motivationLoaded, setMotivationLoaded] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    /**
-     * check if complete dashboard data is laoded
-     */
-    const checkLoadingStatus = useCallback(
-        function checkLoadingStatus() {
-            if (eventsLoaded && itemsLoaded && journalLoaded && motivationLoaded) {
-                setIsLoaded(true);
-            }
-        },
-        [eventsLoaded, itemsLoaded, journalLoaded, motivationLoaded]
-    );
+    const eventsLoaded = useRef(false);
+    const itemsLoaded = useRef(false);
+    const journalLoaded = useRef(false);
+    const motivationLoaded = useRef(false);
+    const loadingComplete = eventsLoaded.current && itemsLoaded.current && journalLoaded.current && motivationLoaded.current;
 
     /**
      * loads the filtered and sorted events for the next seven days
      */
     const filterNextEvents = useCallback(
         function filterNextEvents() {
-            if (isCalendarLoaded) {
+            if (isCalendarLoaded && !eventsLoaded.current) {
                 const todayEvents = filterEventsForToday();
                 setTodayEvents(todayEvents);
-                setEventsLoaded(true);
+                eventsLoaded.current = true;
             }
         },
         [filterEventsForToday, isCalendarLoaded]
@@ -52,12 +40,12 @@ export default function DashboardPage() {
      */
     const filterListItems = useCallback(
         function filterListItems() {
-            if (isListLoaded) {
+            if (isListLoaded && !itemsLoaded.current) {
                 const importantItems = filterImportantItems();
                 const countedItems = countItems();
                 setNumberOfItems(countedItems);
                 setImportantItems(importantItems);
-                setItemsLoaded(true);
+                itemsLoaded.current = true;
             }
         },
         [filterImportantItems, countItems, isListLoaded]
@@ -68,10 +56,10 @@ export default function DashboardPage() {
      */
     const filterJournal = useCallback(
         function filterJournal() {
-            if (isJournalLoaded) {
+            if (isJournalLoaded && !journalLoaded.current) {
                 const dailyBalances = filterDailyBalances();
                 setJournalBalances(dailyBalances);
-                setJournalLoaded(true);
+                journalLoaded.current = true;
             }
         },
         [filterDailyBalances, isJournalLoaded]
@@ -82,8 +70,8 @@ export default function DashboardPage() {
      */
     const loadMotivationSentence = useCallback(
         function loadMotivationSentence() {
-            if (isMotivationLoaded) {
-                setMotivationLoaded(true);
+            if (isMotivationLoaded && !motivationLoaded.current) {
+                motivationLoaded.current = true;
             }
         },
         [isMotivationLoaded]
@@ -97,12 +85,11 @@ export default function DashboardPage() {
         filterListItems();
         filterJournal();
         loadMotivationSentence();
-        checkLoadingStatus();
-    }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence, checkLoadingStatus]);
+    }, [filterNextEvents, filterListItems, filterJournal, loadMotivationSentence]);
 
     return (
         <div className="dashboard-page-wrapper">
-            {!isLoaded ? (
+            {!loadingComplete ? (
                 <Spinner>{'Dashboard laden...'}</Spinner>
             ) : (
                 <DashboardContent

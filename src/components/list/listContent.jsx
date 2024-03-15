@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useList } from '../../contexts/listContext';
+import { Popover } from 'bootstrap';
 import ListToolbar from './listToolbar';
 import ItemList from './itemList';
 
@@ -18,6 +19,15 @@ export default function ListContent() {
     function handleSorting(category) {
         setSortBy(category);
     }
+
+    /**
+     * initializes and controls popovers from Bootsrap
+     * used for info badge hover in each item
+     */
+    useEffect(() => {
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        [...popoverTriggerList].map((popoverTriggerEl) => new Popover(popoverTriggerEl));
+    }, []);
 
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));

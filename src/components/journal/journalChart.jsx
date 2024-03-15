@@ -23,6 +23,7 @@ export default function JournalChart() {
 
     /**
      * sets data and options for the chart
+     * chart needs to be in sync with selected journal
      */
     useEffect(() => {
         setIsLoaded(false);

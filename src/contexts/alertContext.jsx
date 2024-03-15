@@ -8,7 +8,7 @@ function AlertProvider({ children }) {
     const [slideOut, setSlideOut] = useState('');
 
     /**
-     * sets timeout for slide out animation
+     * sets timeout for slide animation of alert
      */
     useEffect(() => {
         const alertTime = setTimeout(() => {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
@@ -6,6 +6,7 @@ import { Popover } from 'bootstrap'; // eslint-disable-line no-unused-vars
 export default function Navbar() {
     const { activeUser, greeting, signOutUser, checkDaytime } = useUser();
     const navigate = useNavigate();
+    const didInit = useRef(false);
 
     /**
      * handles sign out of user
@@ -23,10 +24,13 @@ export default function Navbar() {
     }
 
     /**
-     * checks daytime on page load
+     * checks daytime on initial loading
      */
     useEffect(() => {
-        checkDaytime();
+        if (!didInit.current) {
+            checkDaytime();
+            didInit.current = true;
+        }
     }, [checkDaytime]);
 
     return (

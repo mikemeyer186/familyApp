@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '../../contexts/userContext';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
 
@@ -29,12 +29,24 @@ export default function PasswordChange() {
     }
 
     /**
-     * handles the password change and validates the new password
-     * @param {string} password - new password from input
+     * handles new password change
+     * validates and compares the new password
+     * @param {string} password - new password from from input
      */
     function handleNewPasswordChange(password) {
         setNewPassword(password);
-        validatePassword(password);
+        const validation = validatePassword(password);
+        comparePasswords(password, passwordCheck, validation);
+    }
+
+    /**
+     * handles check password change
+     * validates and compares the check password
+     * @param {string} password - check password from form input
+     */
+    function handleCheckPasswordChange(password) {
+        setPasswordCheck(password);
+        comparePasswords(newPassword, password, validPassword);
     }
 
     /**
@@ -49,8 +61,10 @@ export default function PasswordChange() {
 
         if (isLongEnough && hasNumber && hasSpecialChar) {
             setValidPassword(true);
+            return true;
         } else {
             setValidPassword(false);
+            return;
         }
     }
 
@@ -65,17 +79,20 @@ export default function PasswordChange() {
     }
 
     /**
-     * compares the entered passwords
+     * compares both password entered in form input
+     * @param {string} newPW - new password from form input
+     * @param {string} checkPW - check password from from string
+     * @param {boolean} validPW - result of validation
      */
-    useEffect(() => {
-        if (newPassword === passwordCheck && validPassword) {
+    function comparePasswords(newPW, checkPW, validPW) {
+        if (newPW === checkPW && validPW) {
             setPasswordError(false);
         } else {
-            if (!newPassword == '' || !passwordCheck == '') {
+            if (!newPW == '' || !checkPW == '') {
                 setPasswordError(true);
             }
         }
-    }, [newPassword, passwordCheck, validPassword]);
+    }
 
     return (
         <div className="profile-wrapper fade-effect">
@@ -131,7 +148,7 @@ export default function PasswordChange() {
                                 }`}
                                 id="newPasswordCheck"
                                 value={passwordCheck}
-                                onChange={(e) => setPasswordCheck(e.target.value)}
+                                onChange={(e) => handleCheckPasswordChange(e.target.value)}
                                 disabled={isGuest}
                                 required
                             />

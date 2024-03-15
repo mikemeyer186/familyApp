@@ -11,7 +11,8 @@ export default function AssistantPage() {
     const [isAssistantLoaded, setIsAssistantLoaded] = useState(false);
 
     /**
-     * observable for chats from firebase
+     * observable for chat completions from firebase
+     * ensures that responding chat completions are in sync with the app
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);

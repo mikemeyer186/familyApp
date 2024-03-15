@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { Popover } from 'bootstrap';
 import { useUser } from '../../contexts/userContext';
 
 export default function Item({ item, updateItem, deleteItem }) {
@@ -31,14 +29,6 @@ export default function Item({ item, updateItem, deleteItem }) {
         item.priority = !item.priority;
         updateItem(item.id, item.done, item.amount, item.priority);
     }
-
-    /**
-     * initializes popover for info icon
-     */
-    useEffect(() => {
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-        [...popoverTriggerList].map((popoverTriggerEl) => new Popover(popoverTriggerEl));
-    }, []);
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center item-clickable" key={item.id}>

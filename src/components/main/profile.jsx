@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
@@ -50,34 +50,35 @@ export default function UserProfile() {
     }
 
     /**
-     * uploads photo to storage and gets download url
+     * uploads photo to firebase storage and gets download url
      * and triggers setIsUploading state (3 seconds delay)
      */
-    useEffect(() => {
-        const uploadTime = setTimeout(() => {
-            const storageRef = ref(storage, userID + '_' + file.name);
-            if (file) {
-                uploadBytes(storageRef, file).then(() => {
-                    getPhotoUrl(storageRef).then(() => {
-                        setIsUploading(false);
+    const uploadNewPhoto = useCallback(
+        function uploadNewPhoto() {
+            setTimeout(() => {
+                const storageRef = ref(storage, userID + '_' + file.name);
+                if (file) {
+                    uploadBytes(storageRef, file).then(() => {
+                        getPhotoUrl(storageRef).then(() => {
+                            setIsUploading(false);
+                        });
                     });
-                });
-            }
-        }, 3000);
-
-        return () => {
-            clearTimeout(uploadTime);
-        };
-    }, [newPhotoUrl, file, userID]);
+                }
+            }, 3000);
+        },
+        [file, userID]
+    );
 
     /**
      * sets isUploading state to true on file change
+     * needs to be started after uploading from file explorer
      */
     useEffect(() => {
         if (file) {
             setIsUploading(true);
+            uploadNewPhoto();
         }
-    }, [file]);
+    }, [file, uploadNewPhoto]);
 
     return (
         <div className="profile-wrapper fade-effect">

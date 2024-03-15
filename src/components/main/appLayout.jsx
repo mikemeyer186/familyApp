@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { db } from '../../config/firebase';
 import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
@@ -14,21 +14,19 @@ export default function AppLayout() {
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { setLists, setIsListLoaded } = useList();
     const { setJournals, setIsJournalLoaded } = useJournal();
+    const didInit = useRef(false);
 
     /**
-     * loads public events from API
-     * only on initial laoding
+     * loads public events from api on initial loading
+     * loads motivation from firestore api on initial loading
      */
     useEffect(() => {
-        loadPublicEvents();
-    }, [loadPublicEvents]);
-
-    /**
-     * loads the motivation from firestore
-     */
-    useEffect(() => {
-        loadMotivation();
-    }, [loadMotivation]);
+        if (!didInit.current) {
+            loadPublicEvents();
+            loadMotivation();
+            didInit.current = true;
+        }
+    }, [loadPublicEvents, loadMotivation]);
 
     /**
      * observable for settings from firebase
