@@ -12,6 +12,7 @@ export default function CalendarContent() {
             <div className="calendar-toolbar">
                 <CalendarPageToolbar />
             </div>
+
             <Calendar
                 localizer={localizer}
                 culture={'de-DE'}

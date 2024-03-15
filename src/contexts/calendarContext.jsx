@@ -17,10 +17,11 @@ function CalendarProvider({ children }) {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [timeSlotClicked, setTimeSlotClicked] = useState(false);
     const [meetingID, setMeetingID] = useState('');
+    const [newCountryCode, setNewCountryCode] = useState('');
     const firstDate = activeYears[1];
     const lastDate = activeYears[activeYears.length - 2];
     const calendarRange = `${firstDate}-01-01&validTo=${lastDate}-12-31&subdivisionCode=DE-`;
-    const countryCode = appSettings.calendar.country;
+    const countryCode = newCountryCode ? newCountryCode : appSettings.calendar.country;
     const urlSchoolHolidays = import.meta.env.VITE_SCHOOLHOLIDAYS_URL + calendarRange + countryCode;
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL + calendarRange + countryCode;
     const schoolHolidayColor = appSettings.calendar.schoolHolidayColor;
@@ -284,6 +285,7 @@ function CalendarProvider({ children }) {
                 meetingID: meetingID,
                 loadEvents,
                 loadPublicEvents,
+                setNewCountryCode,
                 addNewMeeting,
                 editMeeting,
                 deleteMeeting,

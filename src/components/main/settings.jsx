@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
+import { useCalendar } from '../../contexts/calendarContext';
 import { saveSettingsInFirestore } from '../../services/firestore';
 import { useAlert } from '../../contexts/alertContext';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
@@ -9,6 +10,7 @@ import countries from '../../data/countries';
 
 export default function Settings() {
     const { familyID, appSettings } = useUser();
+    const { loadPublicEvents, loadEvents, setNewCountryCode } = useCalendar();
     const { setSuccess } = useAlert();
     const [newAppSettings, setNewAppSettings] = useState([]);
     const [listCategories, setListCategories] = useState(JSON.parse(JSON.stringify(appSettings.list)));
@@ -19,16 +21,22 @@ export default function Settings() {
     const [listParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const [journalParent] = useAutoAnimate({ duration: 150, easing: 'ease-in' });
     const navigate = useNavigate();
+    const oldCountry = appSettings.calendar.country;
 
     /**
      * handles user data update
      * @param {event} e - event from form submit
      */
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         saveSettingsInFirestore(familyID, newAppSettings);
         navigate(`/app/${lastPage}`);
         setSuccess('Deine Einstellungnen wurden aktualisiert!');
+
+        if (oldCountry !== calendarSettings.country) {
+            await loadPublicEvents();
+            await loadEvents();
+        }
     }
 
     /**
@@ -136,6 +144,7 @@ export default function Settings() {
         updatedCalendarSettings.country = short;
         setCalendarSettings(updatedCalendarSettings);
         setSelectedCountry(name);
+        setNewCountryCode(short);
         updateNewAppSettings('calendar', updatedCalendarSettings);
     }
 
