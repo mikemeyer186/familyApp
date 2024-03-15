@@ -208,3 +208,19 @@
         border-width: 0.2em;
     }
 }
+
+.settings-wrapper {
+    padding: 16px 16px 70px 16px;
+
+    @media (min-width: $breakpoint-xs) {
+        padding: 16px 16px 70px 16px;
+    }
+}
+
+.problem-wrapper {
+    padding: 16px 16px 70px 16px;
+
+    @media (min-width: $breakpoint-xs) {
+        padding: 70px 16px;
+    }
+}
