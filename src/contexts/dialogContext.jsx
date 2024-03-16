@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 const DialogContext = createContext();
 
 function DialogProvider({ children }) {
+    const testAppRef = useRef();
     const calendarDeleteRef = useRef();
     const calendarEditRef = useRef();
     const calendarNewRef = useRef();
@@ -17,6 +18,7 @@ function DialogProvider({ children }) {
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
         () => ({
+            testAppRef,
             calendarDeleteRef,
             calendarEditRef,
             calendarNewRef,

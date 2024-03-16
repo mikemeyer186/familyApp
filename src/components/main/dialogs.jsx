@@ -7,10 +7,12 @@ import DialogDeleteData from '../journal/dialogDeleteData';
 import DialogNewList from '../list/dialogNewList';
 import DialogEditList from '../list/dialogEditList';
 import DialogDeleteList from '../list/dialogDeleteList';
+import DialogTestApp from '../dashboard/dialogTestApp';
 
 export default function Dialogs() {
     return (
         <>
+            <DialogTestApp />
             <DialogNewMeeting />
             <DialogEditMeeting />
             <DialogDeleteMeeting />
