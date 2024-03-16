@@ -27,7 +27,7 @@ export default function ListContent() {
     useEffect(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         [...popoverTriggerList].map((popoverTriggerEl) => new Popover(popoverTriggerEl));
-    }, []);
+    }, [lists]);
 
     if (sortBy === 'Alphabet') sortedLists = lists.slice().sort((a, b) => a.title.localeCompare(b.title));
     if (sortBy === 'Datum') sortedLists = lists.slice().sort((a, b) => b.date.localeCompare(a.date));
