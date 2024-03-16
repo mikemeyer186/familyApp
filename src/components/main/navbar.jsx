@@ -7,6 +7,7 @@ export default function Navbar() {
     const { activeUser, greeting, signOutUser, checkDaytime } = useUser();
     const navigate = useNavigate();
     const didInit = useRef(false);
+    const offcanvasMenu = useRef(null);
 
     /**
      * handles sign out of user
@@ -24,6 +25,18 @@ export default function Navbar() {
     }
 
     /**
+     * removes all multiple offcanvas backdrops except index 1
+     * caused by offcanvas menu rendering
+     */
+    function removeMultipleBackdrops() {
+        document.querySelectorAll('.offcanvas-backdrop').forEach((backdrop, index) => {
+            if (index !== 1) {
+                backdrop.remove();
+            }
+        });
+    }
+
+    /**
      * checks daytime on initial loading
      */
     useEffect(() => {
@@ -32,6 +45,18 @@ export default function Navbar() {
             didInit.current = true;
         }
     }, [checkDaytime]);
+
+    /**
+     * listens to show offcanvas event to remove the multiple backdrops on rendering
+     */
+    useEffect(() => {
+        const menu = offcanvasMenu.current;
+        menu.addEventListener('show.bs.offcanvas', removeMultipleBackdrops);
+
+        return () => {
+            menu.removeEventListener('show.bs.offcanvas', removeMultipleBackdrops);
+        };
+    }, []);
 
     return (
         <div className="navbar-container">
@@ -52,7 +77,13 @@ export default function Navbar() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div
+                        ref={offcanvasMenu}
+                        className="offcanvas offcanvas-end"
+                        tabIndex="-1"
+                        id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel"
+                    >
                         <div className="offcanvas-header">
                             <div className="offcanvas-user">
                                 <img
