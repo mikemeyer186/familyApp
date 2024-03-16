@@ -32,7 +32,7 @@ export default function Item({ item, updateItem, deleteItem }) {
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center item-clickable" key={item.id}>
-            <div className="item-touch-area" onClick={handleStatusChange}></div>
+            <div className="item-touch-area" onClick={handleStatusChange} title={item.title}></div>
             {!item.done && (
                 <div className="item-priority icon-clickable" onClick={handlePriorityChange}>
                     {item.priority ? <img src="/assets/icons/star-fill.svg" alt="Priority" /> : <img src="/assets/icons/star.svg" alt="Priority" />}

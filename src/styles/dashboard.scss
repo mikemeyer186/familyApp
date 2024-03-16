@@ -50,8 +50,24 @@
     }
 
     .title {
-        width: 100%;
+        display: flex;
         margin-bottom: 10px;
+
+        @media (max-width: $breakpoint-xxxs) {
+            flex-direction: column !important;
+        }
+
+        .title-greeting {
+            flex-shrink: 0;
+            margin-right: 8px;
+        }
+
+        .title-name {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
 
         @media (min-width: $breakpoint-md) {
             font-size: 1.4rem;

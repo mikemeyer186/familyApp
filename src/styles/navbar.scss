@@ -6,6 +6,7 @@
     padding: 0 1rem;
 
     .offcanvas {
+        width: 440px;
         background-color: transparent;
         background-color: $bg-light;
         border: none;
@@ -75,6 +76,31 @@
             height: 50px;
             object-fit: cover;
             border-radius: 100%;
+        }
+
+        .offcanvas-title {
+            display: flex;
+            font-size: 1.3rem;
+
+            @media (max-width: $breakpoint-xxs) {
+                flex-direction: column !important;
+            }
+
+            .title-greeting {
+                flex-shrink: 0;
+                margin-right: 8px;
+            }
+
+            .title-name {
+                max-width: 270px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                @media (max-width: $breakpoint-xxs) {
+                    width: calc(100vw - 32px - 90px - 12px);
+                }
+            }
         }
     }
 

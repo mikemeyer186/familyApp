@@ -91,9 +91,12 @@ export default function Navbar() {
                                     className="offcanvas-image"
                                     alt="User image"
                                 />
-                                <h4 className="offcanvas-title" id="offcanvasNavbarLabel">
-                                    {greeting}
-                                    {activeUser.displayName ? ', ' + activeUser.displayName + '!' : ''}
+                                <h4
+                                    className={`offcanvas-title ${activeUser.displayName.length > 10 ? 'flex-column' : 'flex-row'}`}
+                                    id="offcanvasNavbarLabel"
+                                >
+                                    <span className="title-greeting">{activeUser.displayName ? greeting + ',' : greeting}</span>
+                                    <span className="title-name">{activeUser.displayName && activeUser.displayName + '!'}</span>
                                 </h4>
                             </div>
                             <button type="button" className="btn-close icon-clickable" data-bs-dismiss="offcanvas" aria-label="Close"></button>
