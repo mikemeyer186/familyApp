@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useDialog } from '../../contexts/dialogContext';
 
 export default function DialogEditMeeting() {
-    const { selectedEvent, editMeeting } = useCalendar();
+    const { selectedEvent, editMeeting, setSelectedEvent } = useCalendar();
     const { dialogs, openDialog, closeDialog } = useDialog();
     const [title, setTitle] = useState('');
     const [info, setInfo] = useState('');
@@ -132,8 +132,7 @@ export default function DialogEditMeeting() {
 
         if (validatedDate) {
             setStartDate(validatedDate.toISOString().split('T')[0]);
-            setEndDate(validatedDate.toISOString().split('T')[0]);
-            checkDate(date, date);
+            checkDate(date, endDate);
         } else {
             return;
         }
@@ -162,8 +161,7 @@ export default function DialogEditMeeting() {
      */
     function handleStartTimeChange(time) {
         setStartTime(time);
-        setEndTime(time);
-        checkTime(time, time);
+        checkTime(time, endTime);
     }
 
     /**
@@ -196,6 +194,18 @@ export default function DialogEditMeeting() {
     }
 
     /**
+     * resets the edited meeting data on hiding the modal
+     */
+    const resetSelectedEvent = useCallback(
+        function resetSelectedEvent() {
+            setSelectedEvent(null);
+            setErrorDate(false);
+            setErrorTime(false);
+        },
+        [setSelectedEvent]
+    );
+
+    /**
      * sets form values to selected event values, if selected event is available
      * selectedEvent is changing when user clicks on an event in the calendar
      */
@@ -216,6 +226,18 @@ export default function DialogEditMeeting() {
         },
         [selectedEvent]
     );
+
+    /**
+     * listens to hidden modal event to reset the states
+     */
+    useEffect(() => {
+        const editModal = dialogs.calendarEditRef.current;
+        editModal.addEventListener('hidden.bs.modal', resetSelectedEvent);
+
+        return () => {
+            editModal.removeEventListener('hidden.bs.modal', resetSelectedEvent);
+        };
+    }, [dialogs.calendarEditRef, resetSelectedEvent]);
 
     return (
         <div className="modal fade" id="calendarEditRef" tabIndex="-1" aria-hidden="true" ref={dialogs.calendarEditRef}>

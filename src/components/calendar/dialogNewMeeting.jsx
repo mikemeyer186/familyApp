@@ -127,8 +127,7 @@ export default function DialogNewMeeting() {
 
         if (validatedDate) {
             setStartDate(validatedDate.toISOString().split('T')[0]);
-            setEndDate(validatedDate.toISOString().split('T')[0]);
-            checkDate(date, date);
+            checkDate(date, endDate);
         } else {
             return;
         }
@@ -157,8 +156,7 @@ export default function DialogNewMeeting() {
      */
     function handleStartTimeChange(time) {
         setStartTime(time);
-        setEndTime(time);
-        checkTime(time, time);
+        checkTime(time, endTime);
     }
 
     /**
