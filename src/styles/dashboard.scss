@@ -343,3 +343,11 @@
         }
     }
 }
+
+#testAppRef {
+    z-index: 1111;
+
+    .checkbox {
+        transform: translateY(-1px);
+    }
+}

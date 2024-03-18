@@ -36,7 +36,7 @@ export default function DialogTestApp() {
 
     return (
         <div
-            className="modal fade testApp-modal"
+            className="modal fade"
             id="testAppRef"
             tabIndex="-1"
             data-bs-backdrop="static"
@@ -75,7 +75,7 @@ export default function DialogTestApp() {
                             <p>
                                 <strong>Bitte nutze die Testversion nur, wenn du mit diesen Bedingungen einverstanden bist.</strong>
                             </p>
-                            <div className="mb-3 centered-horizontal">
+                            <div className="mb-3 centered-horizontal centered-vertical">
                                 <input
                                     type="checkbox"
                                     className="checkbox me-2 pointer"
