@@ -11,6 +11,14 @@
         background-color: $bg-light;
         border: none;
 
+        .offcanvas-header {
+            padding: 16px 24px;
+        }
+
+        .offcanvas-body {
+            padding: 24px;
+        }
+
         @media (max-width: $breakpoint-xs) {
             width: 100vw !important;
         }
@@ -20,10 +28,6 @@
         @media (max-width: $breakpoint-xs) {
             width: calc(100vw - 48px) !important;
         }
-    }
-
-    .offcanvas-body {
-        padding: 24px;
     }
 
     .bg-navbar {
@@ -82,13 +86,17 @@
             display: flex;
             font-size: 1.3rem;
 
+            @media (max-width: $breakpoint-xs) {
+                font-size: 1.2rem;
+            }
+
             @media (max-width: $breakpoint-xxs) {
                 flex-direction: column !important;
             }
 
             .title-greeting {
                 flex-shrink: 0;
-                margin-right: 8px;
+                margin-right: 6px;
             }
 
             .title-name {

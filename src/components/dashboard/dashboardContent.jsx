@@ -11,7 +11,7 @@ export default function DashboardContent({ todayEvents, importantItems, numberOf
     return (
         <div className="fade-effect">
             <div className="dashboard-top">
-                <h5 className={`title ${activeUser.displayName.length > 10 ? 'flex-column' : 'flex-row'}`}>
+                <h5 className="title">
                     <span className="title-greeting">{activeUser.displayName ? greeting + ',' : greeting}</span>
                     <span className="title-name">{activeUser.displayName && activeUser.displayName + '!'}</span>{' '}
                 </h5>

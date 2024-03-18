@@ -52,10 +52,7 @@
     .title {
         display: flex;
         margin-bottom: 10px;
-
-        @media (max-width: $breakpoint-xxxs) {
-            flex-direction: column !important;
-        }
+        flex-wrap: wrap;
 
         .title-greeting {
             flex-shrink: 0;
@@ -63,7 +60,7 @@
         }
 
         .title-name {
-            width: 100%;
+            width: max-content;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
