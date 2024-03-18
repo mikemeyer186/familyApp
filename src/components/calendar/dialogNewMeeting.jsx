@@ -48,6 +48,7 @@ export default function DialogNewMeeting() {
      * closes new meeting dialog
      */
     function handleCloseDialog() {
+        setTimeSlotClicked(false);
         closeDialog('calendarNewRef');
     }
 
@@ -202,7 +203,6 @@ export default function DialogNewMeeting() {
             setInfo('');
             setAllDayYes(false);
             setAllDayNo(true);
-            setTimeSlotClicked(false);
         }, 300);
         handleCloseDialog();
     }
@@ -241,20 +241,32 @@ export default function DialogNewMeeting() {
      * opens modal if time slot is clicked
      * sets date and time data from calendar view (time or allday)
      */
-    useMemo(
+    const openModalOnClick = useCallback(
         function openModalOnClick() {
-            if (timeSlotClicked) {
-                setTimeEventOnClick();
+            setTimeEventOnClick();
 
-                if (selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) === '00:00') {
-                    setAllDayEventOnClick();
-                }
-
-                openDialog('calendarNewRef');
+            if (selectedTimeSlot.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) === '00:00') {
+                setAllDayEventOnClick();
             }
+
+            openDialog('calendarNewRef');
         },
-        [timeSlotClicked, openDialog, selectedTimeSlot, setAllDayEventOnClick, setTimeEventOnClick]
+        [openDialog, selectedTimeSlot, setAllDayEventOnClick, setTimeEventOnClick]
     );
+
+    /**
+     * opens the modal, if timeslot is clicked
+     * sets timeslot clicked to flase after 1 sec to prevent opening after hide event
+     */
+    useMemo(() => {
+        if (timeSlotClicked) {
+            openModalOnClick();
+
+            setTimeout(() => {
+                setTimeSlotClicked(false);
+            }, 1000);
+        }
+    }, [timeSlotClicked, openModalOnClick, setTimeSlotClicked]);
 
     return (
         <div ref={dialogs.calendarNewRef} className="modal fade" id="calendarNewRef" tabIndex="-1" aria-hidden="true">
