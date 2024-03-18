@@ -258,7 +258,7 @@ export default function DialogEditMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="editTitle"
-                                        placeholder="Titel des Termins"
+                                        placeholder="Titel eingeben..."
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         disabled={publicEvent}

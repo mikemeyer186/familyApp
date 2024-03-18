@@ -285,7 +285,7 @@ export default function DialogNewMeeting() {
                                         type="text"
                                         className="form-control"
                                         id="title"
-                                        placeholder="Titel des Termins"
+                                        placeholder="Titel eingeben..."
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         required
