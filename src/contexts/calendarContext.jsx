@@ -262,7 +262,7 @@ function CalendarProvider({ children }) {
             const currentDate = new Date();
             currentDate.setHours(0, 0, 0, 0);
 
-            const filteredEvents = events.filter((event) => {
+            const filteredEvents = events.slice().filter((event) => {
                 const eventStartDate = new Date(event.start);
                 eventStartDate.setHours(0, 0, 0, 0);
                 const eventEndDate = new Date(event.end);

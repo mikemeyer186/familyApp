@@ -27,7 +27,7 @@ export default function DashboardPage() {
     const loadingComplete = eventsLoaded.current && itemsLoaded.current && journalLoaded.current && motivationLoaded.current;
 
     /**
-     * loads the filtered and sorted events for the next seven days
+     * loads the filtered and sorted events for today
      */
     const filterNextEvents = useCallback(
         function filterNextEvents() {
