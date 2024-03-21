@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useRef, useState } from 'react';
 import { useAlert } from './alertContext';
 import { addEventInFirestore, loadEventsFromFirestore } from '../services/firestore';
 import { useUser } from './userContext';
@@ -12,7 +12,6 @@ function CalendarProvider({ children }) {
     const [schoolHolidays, setSchoolHolidays] = useState([]);
     const [publicHolidays, setPublicHolidays] = useState([]);
     const [firestoreEvents, setFirestoreEvents] = useState([]);
-    const [isCalendarLoaded, setIsCalendarloaded] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [timeSlotClicked, setTimeSlotClicked] = useState(false);
@@ -26,6 +25,10 @@ function CalendarProvider({ children }) {
     const urlPublicHolidays = import.meta.env.VITE_PUBLICHOLIDAYS_URL + calendarRange + countryCode;
     const schoolHolidayColor = appSettings.calendar.schoolHolidayColor;
     const publicHolidayColor = appSettings.calendar.publicHolidayColor;
+    const publicEventsLoaded = useRef(false);
+    const publicEventsConverted = useRef(false);
+    const fireStoreEventsLoaded = useRef(false);
+    const isCalendarLoaded = publicEventsConverted.current && fireStoreEventsLoaded.current;
 
     /**
      * fetches school holidays from API
@@ -96,8 +99,8 @@ function CalendarProvider({ children }) {
                 const events = [...currentEvents, event];
                 return events;
             });
-            setFirestoreEvents(rawEvents);
         });
+        setFirestoreEvents(rawEvents);
     }, []);
 
     /**
@@ -110,6 +113,7 @@ function CalendarProvider({ children }) {
             const rawPublicHolidays = await fetchPublicHolidaysFromAPI();
             setSchoolHolidays(rawSchoolHolidays);
             setPublicHolidays(rawPublicHolidays);
+            publicEventsLoaded.current = true;
         },
         [fetchPublicHolidaysFromAPI, fetchSchoolHolidaysFromAPI]
     );
@@ -121,6 +125,7 @@ function CalendarProvider({ children }) {
         async function loadFirestoreEvents() {
             const rawFirestoreEvents = await loadEventsFromFirestore(familyID);
             await convertEventsFromFirestore(rawFirestoreEvents);
+            fireStoreEventsLoaded.current = true;
         },
         [convertEventsFromFirestore, familyID]
     );
@@ -132,10 +137,13 @@ function CalendarProvider({ children }) {
         async function loadEvents() {
             setEvents([]);
             setFirestoreEvents([]);
-            await convertRawEvents(schoolHolidays, schoolHolidayColor);
-            await convertRawEvents(publicHolidays, publicHolidayColor);
-            await loadFirestoreEvents();
-            setIsCalendarloaded(true);
+
+            if (publicEventsLoaded.current) {
+                await convertRawEvents(schoolHolidays, schoolHolidayColor);
+                await convertRawEvents(publicHolidays, publicHolidayColor);
+                await loadFirestoreEvents();
+                publicEventsConverted.current = true;
+            }
         },
         [loadFirestoreEvents, convertRawEvents, schoolHolidays, publicHolidays, schoolHolidayColor, publicHolidayColor]
     );
@@ -214,7 +222,7 @@ function CalendarProvider({ children }) {
     }, []);
 
     /**
-     * identifies the events which are today and for the next seven days
+     * filters the events for the next seven days
      * this function is actually unused, but will be implemented in future
      * @returns - filterd events for the next seven days
      */
@@ -246,8 +254,8 @@ function CalendarProvider({ children }) {
     );
 
     /**
-     * identifies the events which are today
-     * @returns - filterd events for just today
+     * filters the events which are today
+     * @returns - filterd events for today
      */
     const filterEventsForToday = useCallback(
         function filterEventsForToday() {
@@ -259,7 +267,6 @@ function CalendarProvider({ children }) {
                 eventStartDate.setHours(0, 0, 0, 0);
                 const eventEndDate = new Date(event.end);
                 eventEndDate.setHours(0, 0, 0, 0);
-
                 return eventStartDate.getTime() <= currentDate.getTime() && eventEndDate.getTime() >= currentDate.getTime();
             });
 
