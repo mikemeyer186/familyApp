@@ -133,6 +133,11 @@ export default function DialogEditMeeting() {
         if (validatedDate) {
             setStartDate(validatedDate.toISOString().split('T')[0]);
             checkDate(date, endDate);
+
+            if (allDayNo) {
+                setEndDate(validatedDate.toISOString().split('T')[0]);
+                checkDate(date, date);
+            }
         } else {
             return;
         }
