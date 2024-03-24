@@ -160,3 +160,12 @@ export async function addChatInHistory(chatID, chat, deletionDate) {
         console.error('Error updating document: ', e);
     }
 }
+
+// Test version functions
+export async function testVersionTracking(id, date) {
+    try {
+        await setDoc(doc(db, 'test-tracker', id), date);
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}

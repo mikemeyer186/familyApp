@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
+import { testVersionTracking } from '../../services/firestore';
 
 export default function LoginForm() {
     const { signInUser } = useUser();
@@ -27,6 +28,10 @@ export default function LoginForm() {
         setPassword('');
     }
 
+    /**
+     * handles the guest login with pre-defined email and passwort
+     * tracks the date of test version login
+     */
     async function handleGuestLogIn() {
         setIsGuestLoggingIn(true);
         setIsLoggingIn(true);
@@ -35,6 +40,17 @@ export default function LoginForm() {
         setIsLoggingIn(false);
         setEmail('');
         setPassword('');
+        await trackTestVersion();
+    }
+
+    /**
+     * tracks the usage of test version with date and time
+     */
+    async function trackTestVersion() {
+        const id = new Date().toISOString();
+        const date = { login: new Date() };
+
+        await testVersionTracking(id, date);
     }
 
     return (
