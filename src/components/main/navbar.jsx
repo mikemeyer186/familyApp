@@ -1,13 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 import { Popover } from 'bootstrap';
 
 export default function Navbar() {
-    const { activeUser, greeting, signOutUser, checkDaytime } = useUser();
-    const navigate = useNavigate();
+    const { activeUser, greeting, deferredPrompt, signOutUser, checkDaytime } = useUser();
+    const [isInstalled, setIsInstalled] = useState(false);
     const didInit = useRef(false);
     const offcanvasMenu = useRef(null);
+    const standalone = getPWADisplayMode();
+    const navigate = useNavigate();
 
     /**
      * handles sign out of user
@@ -34,6 +36,36 @@ export default function Navbar() {
                 backdrop.remove();
             }
         });
+    }
+
+    /**
+     * checks if displaymode is standalone or browser
+     * (is pwa installed or not)
+     * @returns boolean
+     */
+    function getPWADisplayMode() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+        if (document.referrer.startsWith('android-app://')) {
+            return true;
+        } else if (navigator.standalone || isStandalone) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * handles installing of app from browser
+     */
+    async function handlePWAInstall() {
+        if (deferredPrompt.current) {
+            deferredPrompt.current.prompt();
+
+            await deferredPrompt.current.userChoice;
+            deferredPrompt.current = null;
+            setIsInstalled(true);
+        }
     }
 
     /**
@@ -66,16 +98,23 @@ export default function Navbar() {
                         <img className="navbar-logo-img" src="/assets/img/logo_blue.png" alt="Logo" />
                         <span className="navbar-brand">familyApp</span>
                     </div>
-                    <button
-                        className="navbar-toggler navbar-menu-icon"
-                        type="button"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar"
-                        aria-controls="offcanvasNavbar"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                    <div className="navbar-right">
+                        {!standalone && deferredPrompt.current && !isInstalled && (
+                            <button className="btn btn-secondary pwa-button" onClick={handlePWAInstall}>
+                                App installieren
+                            </button>
+                        )}
+                        <button
+                            className="navbar-toggler navbar-menu-icon"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbar"
+                            aria-controls="offcanvasNavbar"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
 
                     <div
                         ref={offcanvasMenu}
@@ -184,6 +223,19 @@ export default function Navbar() {
                                     <span className="nav-link pointer">Abmelden</span>
                                 </li>
                             </ul>
+                            {!standalone && deferredPrompt.current && !isInstalled && (
+                                <ul className="navbar-nav">
+                                    <li>
+                                        <hr className="nav-divider" />
+                                    </li>
+                                    <div className="pwa-install-info">
+                                        <p>Installiere die App auf direkt deinem Homescreen oder deinem Desktop</p>
+                                        <button className="btn btn-secondary pwa-button" onClick={handlePWAInstall}>
+                                            App installieren
+                                        </button>
+                                    </div>
+                                </ul>
+                            )}
                         </div>
                     </div>
                 </div>

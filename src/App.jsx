@@ -2,7 +2,7 @@ import './styles/global.scss';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Routes, Route } from 'react-router-dom';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useCallback, useEffect } from 'react';
 import { JournalProvider } from './contexts/journalContext';
 import { ListProvider } from './contexts/listContext';
 import { CalendarProvider } from './contexts/calendarContext';
@@ -31,7 +31,7 @@ const DataProtection = lazy(() => import('./components/login/dataprotection'));
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
-    const { authCheck } = useUser();
+    const { authCheck, deferredPrompt } = useUser();
 
     /**
      * checks if authenticated user exists on initial loading
@@ -39,6 +39,49 @@ export default function App() {
     useEffect(() => {
         authCheck();
     }, []);
+
+    /**
+     * saves the deferred pwa install prompt event
+     */
+    const setPWAPrompt = useCallback(
+        function setPWAPrompt(e) {
+            e.preventDefault();
+            deferredPrompt.current = e;
+        },
+        [deferredPrompt]
+    );
+
+    /**
+     * removes the deferred pwa install prompt event
+     */
+    const removePWAPrompt = useCallback(
+        function removePWAPrompt() {
+            deferredPrompt.current = null;
+        },
+        [deferredPrompt]
+    );
+
+    /**
+     * listens to pwa install prompt event to save the deferred prompt
+     */
+    useEffect(() => {
+        window.addEventListener('beforeinstallprompt', setPWAPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', setPWAPrompt);
+        };
+    }, [deferredPrompt, setPWAPrompt]);
+
+    /**
+     * listens to pwa installation completed event to remove the deferred prompt
+     */
+    useEffect(() => {
+        window.addEventListener('appinstalled', removePWAPrompt);
+
+        return () => {
+            window.removeEventListener('appinstalled', removePWAPrompt);
+        };
+    }, [deferredPrompt, removePWAPrompt]);
 
     return (
         <>

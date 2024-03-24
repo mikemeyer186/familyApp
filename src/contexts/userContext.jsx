@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useRef, useState } from 'react';
 import { auth } from '../config/firebase';
 import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
@@ -29,6 +29,7 @@ function UserPovider({ children }) {
     const [greeting, setGreeting] = useState('Hallo');
     const [searchParams] = useSearchParams('');
     const [yearDay] = useState(dayOfYear());
+    const deferredPrompt = useRef(null);
     const navigate = useNavigate();
 
     /**
@@ -263,6 +264,7 @@ function UserPovider({ children }) {
                 newEmail: newEmail,
                 message: message,
                 greeting: greeting,
+                deferredPrompt: deferredPrompt,
                 signInUser,
                 signOutUser,
                 updateUserProfile,

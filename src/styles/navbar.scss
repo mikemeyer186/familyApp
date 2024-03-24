@@ -56,16 +56,27 @@
         }
     }
 
-    .navbar-menu-icon {
-        transition: all 125ms ease-in-out;
-        &:hover {
-            border: 1px solid #969696;
+    .navbar-right {
+        display: flex;
+        gap: 8px;
+
+        .pwa-button {
+            @media (max-width: $breakpoint-xs) {
+                display: none;
+            }
         }
 
-        &:focus {
-            border: $thin-border;
-            outline: none;
-            box-shadow: none;
+        .navbar-menu-icon {
+            transition: all 125ms ease-in-out;
+            &:hover {
+                border: 1px solid #969696;
+            }
+
+            &:focus {
+                border: $thin-border;
+                outline: none;
+                box-shadow: none;
+            }
         }
     }
 
@@ -191,5 +202,19 @@
 
     .nav-divider {
         opacity: 0.1;
+    }
+
+    .pwa-install-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 32px;
+        color: $txt-light-dark;
+        text-align: center;
+
+        @media (max-width: $breakpoint-xxxs) {
+            padding: 32px 0;
+        }
     }
 }
