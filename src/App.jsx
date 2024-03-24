@@ -9,25 +9,25 @@ import { CalendarProvider } from './contexts/calendarContext';
 import { useAlert } from './contexts/alertContext';
 import { useUser } from './contexts/userContext';
 import { DialogProvider } from './contexts/dialogContext';
-import Login from './components/main/login';
+import Login from './components/login/login';
 import Error from './components/global/error';
 import Success from './components/global/success';
 import LazySpinner from './components/global/lazySpinner';
 
 const AppLayout = lazy(() => import('./components/main/appLayout'));
 const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));
-const UserProfile = lazy(() => import('./components/main/profile'));
-const Settings = lazy(() => import('./components/main/settings'));
-const Problem = lazy(() => import('./components/main/problem'));
-const EmailChange = lazy(() => import('./components/main/emailChange'));
-const PasswordChange = lazy(() => import('./components/main/passwordChange'));
+const UserProfile = lazy(() => import('./components/profile/profile'));
+const Settings = lazy(() => import('./components/profile/settings'));
+const Problem = lazy(() => import('./components/profile/problem'));
+const EmailChange = lazy(() => import('./components/profile/emailChange'));
+const PasswordChange = lazy(() => import('./components/profile/passwordChange'));
 const DashboardPage = lazy(() => import('./components/dashboard/dashboardPage'));
 const JournalPage = lazy(() => import('./components/journal/journalPage'));
 const CalendarPage = lazy(() => import('./components/calendar/calendarPage'));
 const AssistantPage = lazy(() => import('./components/assistant/assistantPage'));
 const ListPage = lazy(() => import('./components/list/listPage'));
-const Imprint = lazy(() => import('./components/main/imprint'));
-const DataProtection = lazy(() => import('./components/main/dataprotection'));
+const Imprint = lazy(() => import('./components/login/imprint'));
+const DataProtection = lazy(() => import('./components/login/dataprotection'));
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
