@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 export default function Imprint() {
     return (
         <div className="scroll-container fade-effect">
-            <div className="imprint-container">
-                <NavLink to="/">
-                    <button type="button" className="btn-close icon-clickable close-icon" aria-label="Close"></button>
-                </NavLink>
+            <NavLink to="/">
+                <button type="button" className="btn-close icon-clickable close-icon" aria-label="Close"></button>
+            </NavLink>
 
+            <div className="imprint-container">
                 <img className="logo" src="/assets/img/logo_blue.png" alt="Logo Family App" />
 
                 <div>

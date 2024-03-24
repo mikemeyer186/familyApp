@@ -4,9 +4,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100svh;
     gap: 24px;
     overflow-y: auto;
+
+    @media (max-height: $breakpoint-md) {
+        justify-content: flex-start;
+    }
 
     .spinner-border-small {
         width: 1rem;
@@ -23,9 +27,13 @@
         transform: translateY($offsetY-login);
 
         @media (max-height: $breakpoint-md) {
-            transform: translateY(0);
+            transform: translateY(calc($offsetY-login / -2));
             padding: 32px 0;
             justify-content: flex-start;
+        }
+
+        @media (max-height: $breakpoint-xxs) {
+            padding: 0 0 32px 0;
         }
 
         .login-header {
@@ -38,6 +46,10 @@
             @media (max-width: $breakpoint-xxs) {
                 transform: translateX(0);
                 flex-direction: column;
+            }
+
+            @media (max-height: $breakpoint-xxs) {
+                display: none;
             }
 
             img {

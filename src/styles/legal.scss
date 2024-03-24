@@ -20,6 +20,7 @@
     }
 
     @media (max-height: $breakpoint-sm) {
+        align-items: flex-start;
         justify-content: flex-start;
     }
 
@@ -37,6 +38,10 @@
 
         @media (max-width: $breakpoint-xs) {
             width: 70%;
+        }
+
+        @media (max-height: $breakpoint-sm) {
+            align-self: center;
         }
     }
 }
