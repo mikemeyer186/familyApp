@@ -9,6 +9,8 @@ export default function Navbar() {
     const didInit = useRef(false);
     const offcanvasMenu = useRef(null);
     const standalone = getPWADisplayMode();
+    const browserVendor = window.navigator.vendor;
+    const isApple = /Apple/.test(browserVendor);
     const navigate = useNavigate();
 
     /**
@@ -62,9 +64,13 @@ export default function Navbar() {
         if (deferredPrompt.current) {
             deferredPrompt.current.prompt();
 
-            await deferredPrompt.current.userChoice;
-            deferredPrompt.current = null;
-            setIsInstalled(true);
+            const choice = await deferredPrompt.current.userChoice;
+            console.log(choice);
+
+            if (choice === 'accepted') {
+                deferredPrompt.current = null;
+                setIsInstalled(true);
+            }
         }
     }
 
@@ -104,6 +110,7 @@ export default function Navbar() {
                                 App installieren
                             </button>
                         )}
+                        {!standalone && isApple && <button className="btn btn-secondary pwa-button">APP installieren (Apple)</button>}
                         <button
                             className="navbar-toggler navbar-menu-icon"
                             type="button"
@@ -233,6 +240,17 @@ export default function Navbar() {
                                         <button className="btn btn-secondary pwa-button" onClick={handlePWAInstall}>
                                             App installieren
                                         </button>
+                                    </div>
+                                </ul>
+                            )}
+                            {!standalone && isApple && (
+                                <ul className="navbar-nav">
+                                    <li>
+                                        <hr className="nav-divider" />
+                                    </li>
+                                    <div className="pwa-install-info">
+                                        <p>Installiere die App auf direkt deinem Homescreen</p>
+                                        <button className="btn btn-secondary pwa-button">App installieren (Apple)</button>
                                     </div>
                                 </ul>
                             )}
