@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
+import { useDialog } from '../../contexts/dialogContext';
 import { Popover } from 'bootstrap';
 
 export default function Navbar() {
     const { activeUser, greeting, deferredPrompt, signOutUser, checkDaytime } = useUser();
+    const { openDialog } = useDialog();
     const [isInstalled, setIsInstalled] = useState(false);
     const didInit = useRef(false);
     const offcanvasMenu = useRef(null);
     const standalone = getPWADisplayMode();
-    const browserVendor = window.navigator.vendor;
+    const browserVendor = window.navigator.vendor ? window.navigator.vendor : 'unknown';
     const isApple = /Apple/.test(browserVendor);
     const navigate = useNavigate();
 
@@ -75,6 +77,14 @@ export default function Navbar() {
     }
 
     /**
+     * opens the pwa install dialog
+     * instructions for apple devives
+     */
+    function handleOpenPWADialogApple() {
+        openDialog('installPWARef');
+    }
+
+    /**
      * checks daytime on initial loading
      */
     useEffect(() => {
@@ -110,7 +120,11 @@ export default function Navbar() {
                                 App installieren
                             </button>
                         )}
-                        {!standalone && isApple && <button className="btn btn-secondary pwa-button">APP installieren (Apple)</button>}
+                        {!standalone && isApple && (
+                            <button className="btn btn-secondary pwa-button" onClick={handleOpenPWADialogApple}>
+                                APP installieren
+                            </button>
+                        )}
                         <button
                             className="navbar-toggler navbar-menu-icon"
                             type="button"
@@ -249,8 +263,14 @@ export default function Navbar() {
                                         <hr className="nav-divider" />
                                     </li>
                                     <div className="pwa-install-info">
-                                        <p>Installiere die App auf direkt deinem Homescreen</p>
-                                        <button className="btn btn-secondary pwa-button">App installieren (Apple)</button>
+                                        <p>Installiere die App auf direkt deinem Homescreen oder im Dock</p>
+                                        <button
+                                            className="btn btn-secondary pwa-button"
+                                            data-bs-dismiss="offcanvas"
+                                            onClick={handleOpenPWADialogApple}
+                                        >
+                                            App installieren
+                                        </button>
                                     </div>
                                 </ul>
                             )}

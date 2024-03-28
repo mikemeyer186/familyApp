@@ -5,6 +5,7 @@ const DialogContext = createContext();
 
 function DialogProvider({ children }) {
     const testAppRef = useRef();
+    const installPWARef = useRef();
     const calendarDeleteRef = useRef();
     const calendarEditRef = useRef();
     const calendarNewRef = useRef();
@@ -19,6 +20,7 @@ function DialogProvider({ children }) {
     const dialogs = useMemo(
         () => ({
             testAppRef,
+            installPWARef,
             calendarDeleteRef,
             calendarEditRef,
             calendarNewRef,

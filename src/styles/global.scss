@@ -69,6 +69,17 @@ body {
     }
 }
 
+.icon-instruction {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $bg-grey-midlight;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    margin-left: 4px;
+}
+
 .pointer {
     cursor: pointer;
 }

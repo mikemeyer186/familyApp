@@ -8,11 +8,13 @@ import DialogNewList from '../list/dialogNewList';
 import DialogEditList from '../list/dialogEditList';
 import DialogDeleteList from '../list/dialogDeleteList';
 import DialogTestApp from '../dashboard/dialogTestApp';
+import DialogPWAInstall from './dialogPWAInstall';
 
 export default function Dialogs() {
     return (
         <>
             <DialogTestApp />
+            <DialogPWAInstall />
             <DialogNewMeeting />
             <DialogEditMeeting />
             <DialogDeleteMeeting />
