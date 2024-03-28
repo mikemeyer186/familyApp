@@ -27,13 +27,13 @@ export default function DialogPWAInstall() {
                         </div>
                         <br />
                         <div>
-                            <span>2. Navigiere dann zu &quot;Zum Homescreen hinzufügen&quot;</span>
+                            <span>2. Navigiere dann zu &quot;Zum Home-Bildschirm&quot;</span>
                             <div className="icon-instruction">
                                 <img src="/assets/icons/plus-square.svg" alt="Share" />
                             </div>
                             <br />
                             <br />
-                            <div className="width-full">oder auf einem Mac:</div>
+                            <div className="width-full">oder auf einem Mac (ab macOS Sonoma):</div>
                             <span>Navigiere zu &quot;Zum Dock hinzufügen&quot;</span>
                             <div className="icon-instruction">
                                 <img src="/assets/icons/plus-square.svg" alt="Share" />
