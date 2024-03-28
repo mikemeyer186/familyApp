@@ -49,7 +49,9 @@ export default function LoginForm() {
     async function trackTestVersion() {
         const id = new Date().toISOString();
         const userAgent = window.navigator.userAgent;
-        const data = { login: new Date(), device: userAgent };
+        const browserVendor = window.navigator.vendor ? window.navigator.vendor : 'unknown';
+        const browserPlatform = window.navigator.platform ? window.navigator.platform : 'unknown';
+        const data = { login: new Date(), device: userAgent, vendor: browserVendor, platform: browserPlatform };
 
         await testVersionTracking(id, data);
     }
