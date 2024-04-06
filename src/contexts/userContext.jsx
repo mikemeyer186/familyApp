@@ -1,6 +1,15 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
 import { auth } from '../config/firebase';
-import { updateProfile, signOut, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from 'firebase/auth';
+import {
+    updateProfile,
+    signOut,
+    reauthenticateWithCredential,
+    EmailAuthProvider,
+    verifyBeforeUpdateEmail,
+    updatePassword,
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+} from 'firebase/auth';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
@@ -31,6 +40,30 @@ function UserPovider({ children }) {
     const [yearDay] = useState(dayOfYear());
     const deferredPrompt = useRef(null);
     const navigate = useNavigate();
+
+    /**
+     * signs the new user up (new family or existing with invitation code)
+     * creates firestore user account
+     * creates initial user settings
+     * @param {string} name - username from signup form
+     * @param {string} email - email from signup form
+     * @param {string} password - password from signup form
+     * @param {string} invitationCode - invitation code from signup form
+     */
+    async function signUpUser(username, email, password, invitationCode) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            setActiveUser(user);
+            setLoggedIn(true);
+            navigate('app/dashboard?page=Dashboard');
+            setSuccess('Du bist erfolgreich eingeloggt!');
+            await sendEmailVerification(auth.currentUser);
+            console.log(username, invitationCode); //to be replaced -> updateUserProfile (displayName, user settings)
+        } catch (err) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
+    }
 
     /**
      * signs in user with email and password
@@ -265,6 +298,7 @@ function UserPovider({ children }) {
                 message: message,
                 greeting: greeting,
                 deferredPrompt: deferredPrompt,
+                signUpUser,
                 signInUser,
                 signOutUser,
                 updateUserProfile,

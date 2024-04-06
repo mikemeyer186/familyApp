@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useUser } from '../../contexts/userContext';
 
 export default function SignupForm() {
+    const { signUpUser } = useUser();
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -20,8 +22,9 @@ export default function SignupForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoggingIn(true);
+        await signUpUser(username, email, password, invitationCode);
         setIsLoggingIn(false);
-        setName('');
+        setUsername('');
         setEmail('');
         setPassword('');
         setPasswordCheck('');
@@ -111,8 +114,8 @@ export default function SignupForm() {
                         type="text"
                         className="form-control"
                         placeholder="Dein Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         disabled={isLoggingIn}
                         required
                     />
@@ -228,7 +231,7 @@ export default function SignupForm() {
                     <button
                         type="submit"
                         className="btn btn-primary mt-2 width-108"
-                        disabled={isLoggingIn || name === '' || email === '' || invitation === 'Auswählen...' || passwordError}
+                        disabled={isLoggingIn || username === '' || email === '' || invitation === 'Auswählen...' || passwordError}
                     >
                         {isLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>

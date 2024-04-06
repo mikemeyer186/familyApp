@@ -188,5 +188,17 @@
             padding: 16px 0;
             justify-content: flex-start;
         }
+
+        @media (max-height: $breakpoint-md) {
+            transform: translateY(calc($offsetY-login / -2));
+            padding: 16px 0;
+            justify-content: flex-start;
+        }
+
+        @media (max-height: $breakpoint-xxs) {
+            transform: translateY(calc($offsetY-login / -2));
+            padding: 16px 0;
+            justify-content: flex-start;
+        }
     }
 }
