@@ -56,6 +56,11 @@
 
 a {
     color: $txt-blue;
+    transition: all 225ms ease-in-out;
+
+    &:hover {
+        color: $txt-dark-blue;
+    }
 
     @media (max-width: $breakpoint-xxs) {
         word-break: break-all;

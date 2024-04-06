@@ -75,7 +75,7 @@
             background-color: $bg-light;
             border-radius: $normal-radius;
             box-shadow: $glass-shadow;
-            padding: 2rem;
+            padding: 32px 32px 16px 32px;
 
             @media (min-width: $breakpoint-xs) {
                 width: 400px;
@@ -94,16 +94,52 @@
                 }
             }
 
-            .login-btn {
-                width: 100%;
-                padding: 0.75rem;
-                border: none;
-                border-radius: 5px;
-                font-size: 1rem;
-                cursor: pointer;
-                &:focus {
-                    outline: none;
-                    box-shadow: none;
+            .login-button-box {
+                align-items: center;
+
+                @media (max-width: $breakpoint-xxxs) {
+                    flex-direction: column;
+                }
+
+                .login-btn {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            .signup-text {
+                margin-top: 16px;
+                font-size: 0.8rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                gap: 8px;
+
+                @media (max-width: $breakpoint-xxs) {
+                    flex-direction: column;
+                    gap: 4px;
+                }
+
+                a {
+                    color: $txt-blue;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $txt-dark-blue;
+                    }
+
+                    @media (max-width: $breakpoint-xxs) {
+                        word-break: keep-all;
+                    }
                 }
             }
         }

@@ -28,6 +28,7 @@ const AssistantPage = lazy(() => import('./components/assistant/assistantPage'))
 const ListPage = lazy(() => import('./components/list/listPage'));
 const Imprint = lazy(() => import('./components/login/imprint'));
 const DataProtection = lazy(() => import('./components/login/dataprotection'));
+const Signup = lazy(() => import('./components/login/signup'));
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
@@ -92,6 +93,7 @@ export default function App() {
                 <Suspense fallback={<LazySpinner />}>
                     <Routes>
                         <Route path="/" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
                         <Route path="imprint" element={<Imprint />} />
                         <Route path="dataprotection" element={<DataProtection />} />
 

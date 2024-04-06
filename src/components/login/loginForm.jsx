@@ -63,7 +63,7 @@ export default function LoginForm() {
                 <span>familyApp</span>
             </div>
             <form className="login-form" onSubmit={handleSubmit}>
-                <h5 className="mb-4">Bitte melde dich an:</h5>
+                <h5 className="mb-4 text-center">Bitte melde dich an:</h5>
                 <div className="form-group">
                     <label htmlFor="email">E-Mail</label>
                     <input
@@ -90,7 +90,7 @@ export default function LoginForm() {
                         required
                     />
                 </div>
-                <div className="form-group d-flex justify-content-center gap-2">
+                <div className="form-group login-button-box d-flex justify-content-center gap-2">
                     <button type="submit" className="btn btn-primary mt-2 width-108" disabled={isLoggingIn}>
                         {isUserLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
@@ -105,6 +105,12 @@ export default function LoginForm() {
                             <span role="status">Testen</span>
                         )}
                     </button>
+                </div>
+                <div className="signup-text">
+                    <span>Kein Account? </span>
+                    <NavLink to="signup?page=Registrieren" className="links pointer">
+                        Hier registrieren
+                    </NavLink>
                 </div>
             </form>
             <div className="login-links">
