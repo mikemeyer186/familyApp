@@ -13,7 +13,7 @@ export default function DashboardContent({ todayEvents, importantItems, numberOf
             <div className="dashboard-top">
                 <h5 className="title">
                     <span className="title-greeting">{activeUser.displayName ? greeting + ',' : greeting}</span>
-                    <span className="title-name">{activeUser.displayName && activeUser.displayName + '!'}</span>{' '}
+                    <span className="title-name">{activeUser.displayName && activeUser.displayName + '!'}</span>
                 </h5>
                 <MotivationTile />
             </div>

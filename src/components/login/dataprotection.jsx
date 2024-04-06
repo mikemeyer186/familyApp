@@ -123,7 +123,7 @@ export default function DataProtection() {
                 <p>
                     Telefon: +49 (0) 151 255 267 04
                     <br />
-                    E-Mail:{' '}
+                    E-Mail:
                     <a className="mail-link" href="mailto:contact@mike-meyer.dev?subject=Family App">
                         contact@mike-meyer.dev
                     </a>

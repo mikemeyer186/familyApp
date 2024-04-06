@@ -142,6 +142,20 @@
                     }
                 }
             }
+
+            label {
+                display: flex !important;
+                flex-direction: column;
+
+                .signup-input-info {
+                    font-size: 0.7rem;
+                    opacity: 0.7;
+                }
+            }
+
+            .input-group {
+                border: none;
+            }
         }
 
         .login-links {
@@ -159,6 +173,20 @@
                     color: $txt-dark;
                 }
             }
+        }
+    }
+}
+
+.signup-container {
+    @media (max-height: $breakpoint-xl) {
+        justify-content: flex-start;
+    }
+
+    .login-wrapper {
+        @media (max-height: $breakpoint-xl) {
+            transform: translateY(calc($offsetY-login / -2));
+            padding: 16px 0;
+            justify-content: flex-start;
         }
     }
 }
