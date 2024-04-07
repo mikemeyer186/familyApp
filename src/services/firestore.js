@@ -14,6 +14,16 @@ export async function loadUserDataFromFirestore(uid) {
     }
 }
 
+export async function addNewUserInFirestore(uid, familyID, defaultSettings, events) {
+    try {
+        await setDoc(doc(db, 'user', uid), { familyID: familyID });
+        await setDoc(doc(db, familyID, 'settings'), defaultSettings);
+        await setDoc(doc(db, familyID, 'events'), { events });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
 // Settings functions
 export async function loadSettingsFromFirestore(familyID) {
     const docRef = doc(db, familyID, 'settings');

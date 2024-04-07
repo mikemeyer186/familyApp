@@ -15,7 +15,8 @@ import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
 import { useSessionStorage } from '../hooks/useSessionStorage';
-import { loadUserDataFromFirestore, loadSettingsFromFirestore, loadMotivationFromFirestore } from '../services/firestore';
+import { loadUserDataFromFirestore, loadSettingsFromFirestore, loadMotivationFromFirestore, addNewUserInFirestore } from '../services/firestore';
+import defaultUserSettings from '../data/defaultUserSettings';
 
 const UserContext = createContext();
 
@@ -54,14 +55,51 @@ function UserPovider({ children }) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            setActiveUser(user);
+            await setNewUserData(user, username, invitationCode);
+            await sendEmailVerification(auth.currentUser);
+            await authCheck();
             setLoggedIn(true);
             navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
-            await sendEmailVerification(auth.currentUser);
-            console.log(username, invitationCode); //to be replaced -> updateUserProfile (displayName, user settings)
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
+    }
+
+    /**
+     * sets all default documents in firestore (settings, events)
+     * updates displayname in user profile
+     * gets new familyID or familyID from invitation
+     * @param {string} user - user from auth
+     * @param {string} username - username from signup form
+     * @param {string} invitationCode - invitation code from signup form
+     */
+    async function setNewUserData(user, username, invitationCode) {
+        const userID = user.uid;
+        const familyID = await getFamilyID(invitationCode);
+        const defaultSettings = defaultUserSettings;
+        const events = [];
+        let newUser = user;
+        newUser.displayName = username;
+        setActiveUser(newUser);
+        await addNewUserInFirestore(userID, familyID, defaultSettings, events);
+        await updateProfile(auth.currentUser, {
+            displayName: username,
+        });
+    }
+
+    /**
+     * checks invitation code from signup form
+     * creates a new familyID or from invitation
+     * @param {string} invitationCode - invitation code from signup form
+     * @returns - familyID
+     */
+    async function getFamilyID(invitationCode) {
+        if (invitationCode) {
+            console.log(invitationCode); // query invitation code
+            return;
+        } else {
+            return crypto.randomUUID();
         }
     }
 
