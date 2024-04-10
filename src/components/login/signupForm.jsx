@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 
 export default function SignupForm() {
@@ -9,10 +9,12 @@ export default function SignupForm() {
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [isLoggingIn, setIsLoggingIn] = useState(false);
-    const [invitation, setInvitation] = useState('Auswählen...');
-    const [invitationCode, setInvitationCode] = useState('');
     const [validPassword, setValidPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [searchParams] = useSearchParams('');
+    let params = searchParams.get('invitation');
+    const [invitation, setInvitation] = useState(params ? 'Ja' : 'Auswählen...');
+    const [invitationCode, setInvitationCode] = useState(params ? params : '');
     const navigate = useNavigate();
 
     /**

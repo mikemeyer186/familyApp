@@ -217,7 +217,9 @@ function UserPovider({ children }) {
                 setLoading(false);
                 setLoggedIn(false);
                 setIsAuthenticated(false);
-                navigate('/');
+                if (location.pathname !== '/signup') {
+                    navigate('/');
+                }
             }
         });
     }
