@@ -24,7 +24,7 @@ export default function SignupForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoggingIn(true);
-        await signUpUser(username, email, password, invitationCode);
+        await signUpUser(username, email, password, invitationCode, invitation);
         setIsLoggingIn(false);
         setUsername('');
         setEmail('');
@@ -223,7 +223,7 @@ export default function SignupForm() {
                             placeholder="Code"
                             value={invitationCode}
                             onChange={(e) => setInvitationCode(e.target.value)}
-                            disabled={isLoggingIn}
+                            disabled
                             required
                         />
                     </div>

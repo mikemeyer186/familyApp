@@ -24,6 +24,25 @@ export async function addNewUserInFirestore(uid, familyID, defaultSettings, even
     }
 }
 
+export async function checkInvitationCode(invitationCode) {
+    const docRef = doc(db, 'invitation', invitationCode);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        throw new Error('Request failed');
+    }
+}
+
+export async function addInvitedUserInFirestore(uid, familyID) {
+    try {
+        await setDoc(doc(db, 'user', uid), { familyID: familyID });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
 // Settings functions
 export async function loadSettingsFromFirestore(familyID) {
     const docRef = doc(db, familyID, 'settings');

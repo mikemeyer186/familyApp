@@ -15,7 +15,14 @@ import { useNavigate } from 'react-router';
 import { useAlert } from './alertContext';
 import { useSearchParams } from 'react-router-dom';
 import { useSessionStorage } from '../hooks/useSessionStorage';
-import { loadUserDataFromFirestore, loadSettingsFromFirestore, loadMotivationFromFirestore, addNewUserInFirestore } from '../services/firestore';
+import {
+    loadUserDataFromFirestore,
+    loadSettingsFromFirestore,
+    loadMotivationFromFirestore,
+    addNewUserInFirestore,
+    checkInvitationCode,
+    addInvitedUserInFirestore,
+} from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
 const UserContext = createContext();
@@ -46,19 +53,22 @@ function UserPovider({ children }) {
      * signs the new user up (new family or existing with invitation code)
      * creates firestore user account
      * creates initial user settings
-     * @param {string} name - username from signup form
+     * @param {string} username - username from signup form
      * @param {string} email - email from signup form
      * @param {string} password - password from signup form
      * @param {string} invitationCode - invitation code from signup form
+     * @param {string} invitation - yes or no from signup form
      */
-    async function signUpUser(username, email, password, invitationCode) {
+    async function signUpUser(username, email, password, invitationCode, invitation) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const newFamilyID = await getFamilyID(invitationCode, invitation);
             const user = userCredential.user;
-            await setNewUserData(user, username, invitationCode);
+            await setNewUserData(user, username, newFamilyID, invitation);
+            await updateProfile(auth.currentUser, {
+                displayName: username,
+            });
             await sendEmailVerification(auth.currentUser);
-            await authCheck();
-            setLoggedIn(true);
             navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
@@ -72,32 +82,35 @@ function UserPovider({ children }) {
      * gets new familyID or familyID from invitation
      * @param {string} user - user from auth
      * @param {string} username - username from signup form
-     * @param {string} invitationCode - invitation code from signup form
+     * @param {string} newFamilyID - new familyID or from invitation
+     * @param {string} invitation - yes or no from signup form
      */
-    async function setNewUserData(user, username, invitationCode) {
+    async function setNewUserData(user, username, newFamilyID, invitation) {
         const userID = user.uid;
-        const familyID = await getFamilyID(invitationCode);
-        const defaultSettings = defaultUserSettings;
         const events = [];
+        const defaultSettings = defaultUserSettings;
         let newUser = user;
         newUser.displayName = username;
         setActiveUser(newUser);
-        await addNewUserInFirestore(userID, familyID, defaultSettings, events);
-        await updateProfile(auth.currentUser, {
-            displayName: username,
-        });
+
+        if (invitation === 'Ja') {
+            await addInvitedUserInFirestore(userID, newFamilyID);
+        } else {
+            await addNewUserInFirestore(userID, newFamilyID, defaultSettings, events);
+        }
     }
 
     /**
      * checks invitation code from signup form
-     * creates a new familyID or from invitation
+     * creates a new familyID or gets it from invitation
      * @param {string} invitationCode - invitation code from signup form
+     * @param {string} invitation - yes or no from signup form
      * @returns - familyID
      */
-    async function getFamilyID(invitationCode) {
-        if (invitationCode) {
-            console.log(invitationCode); // query invitation code
-            return;
+    async function getFamilyID(invitationCode, invitation) {
+        if (invitation === 'Ja') {
+            const familyIDFromInvitation = await checkInvitationCode(invitationCode);
+            return familyIDFromInvitation.familyID;
         } else {
             return crypto.randomUUID();
         }
@@ -217,6 +230,7 @@ function UserPovider({ children }) {
                 setLoading(false);
                 setLoggedIn(false);
                 setIsAuthenticated(false);
+
                 if (location.pathname !== '/signup') {
                     navigate('/');
                 }
