@@ -68,8 +68,8 @@ function UserPovider({ children }) {
             await updateProfile(auth.currentUser, {
                 displayName: username,
             });
+            await authCheck();
             await sendEmailVerification(auth.currentUser);
-            navigate('app/dashboard?page=Dashboard');
             setSuccess('Du bist erfolgreich eingeloggt!');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
@@ -215,17 +215,19 @@ function UserPovider({ children }) {
     async function authCheck() {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                await loadUserData(user.uid);
-                setActiveUser(user);
-                setIsAuthenticated(true);
-                checkGuest(user.uid);
-                setLoggedIn(true);
+                setTimeout(async () => {
+                    await loadUserData(user.uid);
+                    setActiveUser(user);
+                    setIsAuthenticated(true);
+                    checkGuest(user.uid);
+                    setLoggedIn(true);
 
-                if (loggedIn) {
-                    navigate(`app/${activePage}`);
-                } else {
-                    navigate('app/dashboard?page=Dashboard');
-                }
+                    if (loggedIn) {
+                        navigate(`app/${activePage}`);
+                    } else {
+                        navigate('app/dashboard?page=Dashboard');
+                    }
+                }, 2000);
             } else {
                 setLoading(false);
                 setLoggedIn(false);

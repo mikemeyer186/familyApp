@@ -25,14 +25,6 @@ export default function SignupForm() {
         e.preventDefault();
         setIsLoggingIn(true);
         await signUpUser(username, email, password, invitationCode, invitation);
-        setIsLoggingIn(false);
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setPasswordCheck('');
-        setPasswordError(false);
-        setValidPassword(false);
-        setInvitation('Auswählen...');
     }
 
     /**
@@ -136,6 +128,7 @@ export default function SignupForm() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoggingIn}
+                        autoComplete="true"
                         required
                     />
                 </div>
@@ -223,7 +216,7 @@ export default function SignupForm() {
                             placeholder="Code"
                             value={invitationCode}
                             onChange={(e) => setInvitationCode(e.target.value)}
-                            disabled
+                            disabled={params}
                             required
                         />
                     </div>
@@ -242,7 +235,7 @@ export default function SignupForm() {
                         )}
                     </button>
                     <button type="button" className="btn btn-secondary mt-2 width-108" disabled={isLoggingIn} onClick={handleAbortSignup}>
-                        {isLoggingIn ? <span className="spinner-border spinner-border-small" aria-hidden="true"></span> : <span>Zurück</span>}
+                        <span>Zurück</span>
                     </button>
                 </div>
             </form>

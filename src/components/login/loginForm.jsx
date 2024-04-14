@@ -74,6 +74,7 @@ export default function LoginForm() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoggingIn}
+                        autoComplete="true"
                         required
                     />
                 </div>

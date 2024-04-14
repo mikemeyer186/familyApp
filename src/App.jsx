@@ -32,14 +32,7 @@ const Signup = lazy(() => import('./components/login/signup'));
 
 export default function App() {
     const { error, success, slideOut } = useAlert();
-    const { authCheck, deferredPrompt } = useUser();
-
-    /**
-     * checks if authenticated user exists on initial loading
-     */
-    useEffect(() => {
-        authCheck();
-    }, []);
+    const { deferredPrompt } = useUser();
 
     /**
      * saves the deferred pwa install prompt event
