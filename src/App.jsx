@@ -17,6 +17,7 @@ import LazySpinner from './components/global/lazySpinner';
 const AppLayout = lazy(() => import('./components/main/appLayout'));
 const ProtectedRoute = lazy(() => import('./components/main/protectedRoute'));
 const UserProfile = lazy(() => import('./components/profile/profile'));
+const Family = lazy(() => import('./components/profile/family'));
 const Settings = lazy(() => import('./components/profile/settings'));
 const Problem = lazy(() => import('./components/profile/problem'));
 const EmailChange = lazy(() => import('./components/profile/emailChange'));
@@ -113,6 +114,7 @@ export default function App() {
                             <Route path="calendar" element={<CalendarPage />} />
                             <Route path="assistant" element={<AssistantPage />} />
                             <Route path="userprofile" element={<UserProfile />} />
+                            <Route path="family" element={<Family />} />
                             <Route path="settings" element={<Settings />} />
                             <Route path="problem" element={<Problem />} />
                             <Route path="emailchange" element={<EmailChange />} />

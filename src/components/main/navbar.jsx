@@ -228,6 +228,12 @@ export default function Navbar() {
                                     </ul>
                                 </li>
                                 <li data-bs-dismiss="offcanvas">
+                                    <NavLink to="family?page=Familie" className="nav-item">
+                                        <img src="/assets/icons/people.svg" alt="Familie" />
+                                        <span className="nav-link">Familie verwalten</span>
+                                    </NavLink>
+                                </li>
+                                <li data-bs-dismiss="offcanvas">
                                     <NavLink to="settings?page=Einstellungen" className="nav-item">
                                         <img src="/assets/icons/gear.svg" alt="Einstellungen" />
                                         <span className="nav-link">Einstellungen</span>
@@ -263,7 +269,7 @@ export default function Navbar() {
                                         <hr className="nav-divider" />
                                     </li>
                                     <div className="pwa-install-info">
-                                        <p>Installiere die App auf direkt deinem Homescreen oder im Dock</p>
+                                        <p>Installiere die App direkt auf deinem Homescreen oder im Dock</p>
                                         <button
                                             className="btn btn-secondary pwa-button"
                                             data-bs-dismiss="offcanvas"

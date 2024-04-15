@@ -10,7 +10,7 @@ import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
-    const { familyID, setAppSettings, loadMotivation } = useUser();
+    const { familyID, setFamilyManagement, setAppSettings, loadMotivation } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { setLists, setIsListLoaded } = useList();
     const { setJournals, setIsJournalLoaded } = useJournal();
@@ -44,6 +44,23 @@ export default function AppLayout() {
             unsubscribe();
         };
     }, [familyID, setAppSettings]);
+
+    /**
+     * observable for family management from firebase
+     */
+    useEffect(() => {
+        const familyCollection = collection(db, familyID);
+        const prefix = 'management';
+        const q = query(familyCollection, orderBy('__name__'), startAt(prefix), endAt(prefix + '\uf8ff'));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const management = querySnapshot.docs.map((doc) => doc.data());
+            setFamilyManagement(management[0]);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [familyID, setFamilyManagement]);
 
     /**
      * observable for events from firebase
