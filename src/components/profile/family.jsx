@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
 import { useUser } from '../../contexts/userContext';
 import { useState } from 'react';
+import { useDialog } from '../../contexts/dialogContext';
 
 export default function Family() {
     const { familyManagement } = useUser();
+    const { openDialog } = useDialog();
     const [familyName, setFamiliyName] = useState(familyManagement.name || '');
     const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
@@ -51,7 +53,7 @@ export default function Family() {
                                 })}
                             </div>
                             <div className="member-action mt-3">
-                                <button type="button" className="btn btn-primary">
+                                <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')}>
                                     Familienmitglied einladen
                                 </button>
                             </div>

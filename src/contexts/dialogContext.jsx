@@ -15,6 +15,7 @@ function DialogProvider({ children }) {
     const listNewRef = useRef();
     const listEditRef = useRef();
     const listDeleteRef = useRef();
+    const invitationRef = useRef();
     const didInit = useRef(false);
     const modals = useMemo(() => ({}), []);
     const dialogs = useMemo(
@@ -30,6 +31,7 @@ function DialogProvider({ children }) {
             listNewRef,
             listEditRef,
             listDeleteRef,
+            invitationRef,
         }),
         []
     );

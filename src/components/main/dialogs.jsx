@@ -9,6 +9,7 @@ import DialogEditList from '../list/dialogEditList';
 import DialogDeleteList from '../list/dialogDeleteList';
 import DialogTestApp from '../dashboard/dialogTestApp';
 import DialogPWAInstall from './dialogPWAInstall';
+import DialogInvitation from '../profile/dialogInvitation';
 
 export default function Dialogs() {
     return (
@@ -24,6 +25,7 @@ export default function Dialogs() {
             <DialogNewList />
             <DialogEditList />
             <DialogDeleteList />
+            <DialogInvitation />
         </>
     );
 }
