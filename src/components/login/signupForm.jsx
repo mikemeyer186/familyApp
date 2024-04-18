@@ -226,7 +226,7 @@ export default function SignupForm() {
                     <button
                         type="submit"
                         className="btn btn-primary mt-2 width-108"
-                        disabled={isLoggingIn || username === '' || email === '' || invitation === 'Auswählen...' || passwordError}
+                        disabled={isLoggingIn || username === '' || email === '' || invitation === 'Auswählen...' || password === '' || passwordError}
                     >
                         {isLoggingIn ? (
                             <span className="spinner-border spinner-border-small" aria-hidden="true"></span>

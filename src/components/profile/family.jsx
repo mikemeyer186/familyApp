@@ -17,6 +17,10 @@ export default function Family() {
         navigate(`/app/${lastPage}`);
     }
 
+    function handleDeleteInvitation(invitedUser) {
+        console.log(invitedUser);
+    }
+
     return (
         <div className="profile-wrapper fade-effect">
             <div className="profile-content family-management">
@@ -46,7 +50,11 @@ export default function Family() {
                                 {familyManagement.member.map((member) => {
                                     return (
                                         <div className="member" key={member.id}>
-                                            <img className="member-image" src={member.photo} alt="User image" />
+                                            <img
+                                                className="member-image"
+                                                src={member.photo === '' ? '/assets/img/profile-picture.png' : member.photo}
+                                                alt="User image"
+                                            />
                                             <span className="member-name">{member.name}</span>
                                         </div>
                                     );
@@ -56,6 +64,34 @@ export default function Family() {
                                 <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')}>
                                     Familienmitglied einladen
                                 </button>
+                            </div>
+                        </div>
+
+                        <div className="settings-divider"></div>
+
+                        <div className="mb-3">
+                            <h6 className="mb-3">Ausstehende Einladungen</h6>
+                            <div className="invited-box">
+                                {familyManagement.invited.map((invitedUser) => {
+                                    return (
+                                        <div key={invitedUser.code}>
+                                            <div className="btn btn-outline-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span className="member-name">{invitedUser.email}</span>
+                                                <ul className="dropdown-menu dropdown-menu-invitation">
+                                                    <li>
+                                                        <button
+                                                            className="dropdown-item"
+                                                            type="button"
+                                                            onClick={() => handleDeleteInvitation(invitedUser)}
+                                                        >
+                                                            Einladung zurückziehen
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
 

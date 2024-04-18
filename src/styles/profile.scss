@@ -108,7 +108,8 @@
 
     //settings styles
     .family-management {
-        .member-box {
+        .member-box,
+        .invited-box {
             padding: 16px;
             display: flex;
             justify-content: center;
@@ -117,7 +118,8 @@
             row-gap: 32px;
             flex-wrap: wrap;
 
-            .member {
+            .member,
+            .invited-member {
                 display: flex;
                 align-items: center;
                 gap: 8px;
@@ -141,6 +143,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        .invited-box {
+            flex-direction: column;
+
+            .dropdown-menu-invitation {
+                width: auto;
+            }
         }
     }
 

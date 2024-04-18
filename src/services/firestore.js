@@ -1,4 +1,4 @@
-import { collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc } from 'firebase/firestore';
+import { arrayUnion, collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -24,6 +24,15 @@ export async function addNewUserInFirestore(uid, familyID, defaultSettings, even
     }
 }
 
+export async function addInvitationCodeInFirestore(code, invitation, familyID) {
+    try {
+        await setDoc(doc(db, 'invitation', code), { ...invitation });
+        await updateDoc(doc(db, familyID, 'management'), { invited: arrayUnion(invitation) });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
 export async function checkInvitationCode(invitationCode) {
     const docRef = doc(db, 'invitation', invitationCode);
     const docSnap = await getDoc(docRef);
@@ -35,9 +44,10 @@ export async function checkInvitationCode(invitationCode) {
     }
 }
 
-export async function addInvitedUserInFirestore(uid, familyID) {
+export async function addInvitedUserInFirestore(uid, familyID, familyUser) {
     try {
         await setDoc(doc(db, 'user', uid), { familyID: familyID });
+        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(familyUser) });
     } catch (e) {
         console.error('Error adding document: ', e);
     }

@@ -90,12 +90,13 @@ function UserPovider({ children }) {
         const userID = user.uid;
         const events = [];
         const defaultSettings = defaultUserSettings;
+        const familyUser = { id: userID, name: username, photo: '' };
         let newUser = user;
         newUser.displayName = username;
         setActiveUser(newUser);
 
         if (invitation === 'Ja') {
-            await addInvitedUserInFirestore(userID, newFamilyID);
+            await addInvitedUserInFirestore(userID, newFamilyID, familyUser);
         } else {
             await addNewUserInFirestore(userID, newFamilyID, defaultSettings, events);
         }
