@@ -5,8 +5,15 @@ import TypingLoader from '../global/typingLoader';
 import AssistantPrompt from './assistantPrompt';
 
 export default function AssistantChat({ chatHistory }) {
-    const { familyID } = useUser();
+    const { familyID, familyManagement } = useUser();
     const endOfMessagesRef = useRef(null);
+    const familyImages = familyManagement.member.reduce(
+        (map, member) => ({
+            ...map,
+            [member.id]: member.photo,
+        }),
+        {}
+    );
 
     /**
      * handles the deletion of prompts in firestore
@@ -58,7 +65,7 @@ export default function AssistantChat({ chatHistory }) {
                                     </button>
                                 </li>
                             </ul>
-                            <img className="chat-prompt-image" src={chat.photoURL ? chat.photoURL : '/assets/img/profile-picture.png'} alt="User" />
+                            <img className="chat-prompt-image" src={familyImages[chat.user] ?? '/assets/img/profile-picture.png'} alt="User" />
                         </div>
                         <div className="chat-response">
                             <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />

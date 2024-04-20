@@ -195,9 +195,9 @@ export async function addEventInFirestore(familyID, events) {
 }
 
 // Assistant functions
-export async function addPromptInFirestore(familyID, id, date, user, photoURL, prompt) {
+export async function addPromptInFirestore(familyID, id, date, user, prompt) {
     try {
-        await setDoc(doc(db, familyID, id), { prompt: prompt, id: id, date: date, user: user, photoURL: photoURL });
+        await setDoc(doc(db, familyID, id), { prompt: prompt, id: id, date: date, user: user });
     } catch (e) {
         console.error('Error adding document: ', e);
     }

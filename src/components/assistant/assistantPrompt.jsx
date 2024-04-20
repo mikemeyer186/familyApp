@@ -16,8 +16,7 @@ export default function AssistantPrompt() {
         const id = 'chat_' + new Date().toISOString();
         const date = new Date();
         const user = activeUser.uid;
-        const photoURL = activeUser.photoURL;
-        await addPromptInFirestore(familyID, id, date, user, photoURL, prompt);
+        await addPromptInFirestore(familyID, id, date, user, prompt);
         setPrompt('');
     }
 
