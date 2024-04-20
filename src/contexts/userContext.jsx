@@ -23,6 +23,7 @@ import {
     checkInvitationCode,
     addInvitedUserInFirestore,
     deleteInvitationCodeInFirestore,
+    updateUserDataInFirestore,
 } from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
@@ -158,6 +159,20 @@ function UserPovider({ children }) {
     }
 
     /**
+     * updates user data in family management
+     * @param {string} displayName - display name of user
+     * @param {string} photoURL - photo url of user in firebase storage
+     */
+    function updateUserDatainFamilyMangement(displayName, photoURL) {
+        const familyMember = familyManagement.member;
+        const memberIndex = familyMember.findIndex((member) => member.id === auth.currentUser.uid);
+        let updatedMember = familyMember.find((member) => member.id === auth.currentUser.uid);
+        updatedMember = { ...updatedMember, name: displayName, photo: photoURL };
+        familyMember[memberIndex] = updatedMember;
+        updateUserDataInFirestore(familyID, familyMember);
+    }
+
+    /**
      * updates user profile in firebase auth
      * @param {string} displayName - display name of user
      * @param {string} photoURL - photo url of user in firebase storage
@@ -168,6 +183,7 @@ function UserPovider({ children }) {
                 displayName: displayName,
                 photoURL: photoURL,
             });
+            updateUserDatainFamilyMangement(displayName, photoURL);
             setSuccess('Dein Profil wurde erfolgreich aktualisiert!');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');

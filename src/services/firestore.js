@@ -14,6 +14,14 @@ export async function loadUserDataFromFirestore(uid) {
     }
 }
 
+export async function updateUserDataInFirestore(familyID, updatedMember) {
+    try {
+        await updateDoc(doc(db, familyID, 'management'), { member: updatedMember });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
+
 export async function addNewUserInFirestore(uid, familyID, defaultSettings, events, defaultManagement) {
     try {
         await setDoc(doc(db, 'user', uid), { familyID: familyID });
