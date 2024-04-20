@@ -69,7 +69,18 @@ export default function AssistantChat({ chatHistory }) {
                         </div>
                         <div className="chat-response">
                             <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />
-                            <div className="chat-response-text">{chat.response ? chat.response : <TypingLoader />}</div>
+                            {chat.status.state !== 'COMPLETED' && chat.status.state !== 'ERROR' && (
+                                <div className="chat-response-text">
+                                    <TypingLoader />
+                                </div>
+                            )}
+                            {chat.status.state === 'COMPLETED' && <div className="chat-response-text">{chat.response}</div>}
+                            {chat.status.state === 'ERROR' && (
+                                <div className="chat-response-text">
+                                    Es tut mir Leid, aber ich konnte deine Anfrage leider nicht beantworten. Gibt es etwas anderes bei dem ich dir
+                                    helfen kann?
+                                </div>
+                            )}
                         </div>
                     </div>
                 );

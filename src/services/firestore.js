@@ -195,9 +195,9 @@ export async function addEventInFirestore(familyID, events) {
 }
 
 // Assistant functions
-export async function addPromptInFirestore(familyID, id, date, user, prompt) {
+export async function addPromptInFirestore(familyID, id, date, user, prompt, status) {
     try {
-        await setDoc(doc(db, familyID, id), { prompt: prompt, id: id, date: date, user: user });
+        await setDoc(doc(db, familyID, id), { prompt: prompt, id: id, date: date, user: user, status: status });
     } catch (e) {
         console.error('Error adding document: ', e);
     }
@@ -217,7 +217,7 @@ export async function addChatInHistory(chatID, chat, deletionDate) {
             user: chat.user,
             userPrompt: chat.prompt,
             creationDate: chat.date,
-            aiResponse: chat.response,
+            aiResponse: chat.response ? chat.response : 'Response error',
             status: chat.status,
             deltionDate: deletionDate,
         });

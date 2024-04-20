@@ -16,7 +16,8 @@ export default function AssistantPrompt() {
         const id = 'chat_' + new Date().toISOString();
         const date = new Date();
         const user = activeUser.uid;
-        await addPromptInFirestore(familyID, id, date, user, prompt);
+        const status = { state: 'STARTED' };
+        await addPromptInFirestore(familyID, id, date, user, prompt, status);
         setPrompt('');
     }
 
