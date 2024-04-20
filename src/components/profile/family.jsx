@@ -3,7 +3,7 @@ import { useSessionStorage } from '../../hooks/useSessionStorage';
 import { useUser } from '../../contexts/userContext';
 import { useState } from 'react';
 import { useDialog } from '../../contexts/dialogContext';
-import { deleteInvitationCodeInFirestore } from '../../services/firestore';
+import { deleteInvitationCodeInFirestore, updateFamilyManagementInFirestore } from '../../services/firestore';
 
 export default function Family() {
     const { familyID, familyManagement } = useUser();
@@ -18,7 +18,7 @@ export default function Family() {
      */
     function handleMangementSubmit(e) {
         e.preventDefault();
-        console.log(familyName);
+        updateFamilyManagementInFirestore(familyID, familyName);
         navigate(`/app/${lastPage}`);
     }
 

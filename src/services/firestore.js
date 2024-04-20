@@ -62,6 +62,14 @@ export async function addInvitedUserInFirestore(uid, familyID, familyUser) {
     }
 }
 
+export async function updateFamilyManagementInFirestore(familyID, newName) {
+    try {
+        await updateDoc(doc(db, familyID, 'management'), { name: newName });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
+
 // Settings functions
 export async function loadSettingsFromFirestore(familyID) {
     const docRef = doc(db, familyID, 'settings');
