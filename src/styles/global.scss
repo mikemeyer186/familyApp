@@ -349,6 +349,7 @@ body {
 
 .btn-outline-primary.show {
     background-color: $logo-color-4;
+    color: $txt-grey;
     border: 1px solid $logo-color-4;
 
     &:active {

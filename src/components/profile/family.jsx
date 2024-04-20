@@ -3,22 +3,31 @@ import { useSessionStorage } from '../../hooks/useSessionStorage';
 import { useUser } from '../../contexts/userContext';
 import { useState } from 'react';
 import { useDialog } from '../../contexts/dialogContext';
+import { deleteInvitationCodeInFirestore } from '../../services/firestore';
 
 export default function Family() {
-    const { familyManagement } = useUser();
+    const { familyID, familyManagement } = useUser();
     const { openDialog } = useDialog();
     const [familyName, setFamiliyName] = useState(familyManagement.name || '');
     const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
+    /**
+     * handles submit of family management changes (family name change)
+     * @param {event} e - submit event
+     */
     function handleMangementSubmit(e) {
         e.preventDefault();
         console.log(familyName);
         navigate(`/app/${lastPage}`);
     }
 
-    function handleDeleteInvitation(invitedUser) {
-        console.log(invitedUser);
+    /**
+     * deletes the invitation in firestore
+     * @param {object} invitation - invitation object from firestore
+     */
+    function handleDeleteInvitation(invitation) {
+        deleteInvitationCodeInFirestore(invitation.code, invitation, familyID);
     }
 
     return (
@@ -45,7 +54,7 @@ export default function Family() {
                         <div className="settings-divider"></div>
 
                         <div className="mb-3">
-                            <h6 className="mb-3">Mitglieder</h6>
+                            <h6 className="mb-3">{`Mitglieder (${familyManagement.member.length})`}</h6>
                             <div className="member-box">
                                 {familyManagement.member.map((member) => {
                                     return (
@@ -70,7 +79,7 @@ export default function Family() {
                         <div className="settings-divider"></div>
 
                         <div className="mb-3">
-                            <h6 className="mb-3">Ausstehende Einladungen</h6>
+                            <h6 className="mb-3">{`Ausstehende Einladungen (${familyManagement.invited.length})`}</h6>
                             <div className="invited-box">
                                 {familyManagement.invited.map((invitedUser) => {
                                     return (
@@ -92,6 +101,7 @@ export default function Family() {
                                         </div>
                                     );
                                 })}
+                                {familyManagement.invited.length === 0 && <span>Keine offenen Einladungen</span>}
                             </div>
                         </div>
 

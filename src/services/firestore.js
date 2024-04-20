@@ -1,4 +1,4 @@
-import { arrayUnion, collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, collection, deleteDoc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -30,6 +30,15 @@ export async function addInvitationCodeInFirestore(code, invitation, familyID) {
         await updateDoc(doc(db, familyID, 'management'), { invited: arrayUnion(invitation) });
     } catch (e) {
         console.error('Error adding document: ', e);
+    }
+}
+
+export async function deleteInvitationCodeInFirestore(code, invitation, familyID) {
+    try {
+        await deleteDoc(doc(db, 'invitation', code));
+        await updateDoc(doc(db, familyID, 'management'), { invited: arrayRemove(invitation) });
+    } catch (e) {
+        console.error('Error deleting document: ', e);
     }
 }
 

@@ -22,6 +22,7 @@ import {
     addNewUserInFirestore,
     checkInvitationCode,
     addInvitedUserInFirestore,
+    deleteInvitationCodeInFirestore,
 } from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
@@ -58,14 +59,14 @@ function UserPovider({ children }) {
      * @param {string} email - email from signup form
      * @param {string} password - password from signup form
      * @param {string} invitationCode - invitation code from signup form
-     * @param {string} invitation - yes or no from signup form
+     * @param {string} invited - yes or no from signup form
      */
-    async function signUpUser(username, email, password, invitationCode, invitation) {
+    async function signUpUser(username, email, password, invitationCode, invited) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const newFamilyID = await getFamilyID(invitationCode, invitation);
+            const newFamilyID = await getFamilyID(invitationCode, invited);
             const user = userCredential.user;
-            await setNewUserData(user, username, newFamilyID, invitation);
+            await setNewUserData(user, username, newFamilyID, invited, invitationCode);
             await updateProfile(auth.currentUser, {
                 displayName: username,
             });
@@ -78,15 +79,15 @@ function UserPovider({ children }) {
     }
 
     /**
-     * sets all default documents in firestore (settings, events)
-     * updates displayname in user profile
-     * gets new familyID or familyID from invitation
+     * sets all user documents in firestore (settings, events)
+     * deletes invitation
      * @param {string} user - user from auth
      * @param {string} username - username from signup form
      * @param {string} newFamilyID - new familyID or from invitation
-     * @param {string} invitation - yes or no from signup form
+     * @param {string} invited - yes or no from signup form
+     * @param {string} invitationCode - invitation code from signup form
      */
-    async function setNewUserData(user, username, newFamilyID, invitation) {
+    async function setNewUserData(user, username, newFamilyID, invited, invitationCode) {
         const userID = user.uid;
         const events = [];
         const defaultSettings = defaultUserSettings;
@@ -95,8 +96,10 @@ function UserPovider({ children }) {
         newUser.displayName = username;
         setActiveUser(newUser);
 
-        if (invitation === 'Ja') {
+        if (invited === 'Ja') {
+            const invitation = await checkInvitationCode(invitationCode);
             await addInvitedUserInFirestore(userID, newFamilyID, familyUser);
+            deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
         } else {
             await addNewUserInFirestore(userID, newFamilyID, defaultSettings, events);
         }
@@ -106,11 +109,11 @@ function UserPovider({ children }) {
      * checks invitation code from signup form
      * creates a new familyID or gets it from invitation
      * @param {string} invitationCode - invitation code from signup form
-     * @param {string} invitation - yes or no from signup form
+     * @param {string} invited - yes or no from signup form
      * @returns - familyID
      */
-    async function getFamilyID(invitationCode, invitation) {
-        if (invitation === 'Ja') {
+    async function getFamilyID(invitationCode, invited) {
+        if (invited === 'Ja') {
             const familyIDFromInvitation = await checkInvitationCode(invitationCode);
             return familyIDFromInvitation.familyID;
         } else {
