@@ -22,6 +22,7 @@ export default function SignupForm() {
 
     /**
      * handles signup of user
+     * checks if invitation code is valid
      * @param {event} e - event from form submit
      */
     async function handleSubmit(e) {
