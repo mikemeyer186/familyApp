@@ -16,7 +16,8 @@ const firebaseConfig = {
 // Initializing imported Firebase apps
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const dbInvitations = getFirestore(app, 'invitations');
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-export { auth, db, storage };
+export { auth, db, storage, dbInvitations };

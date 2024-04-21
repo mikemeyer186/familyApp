@@ -20,7 +20,7 @@ import {
     loadSettingsFromFirestore,
     loadMotivationFromFirestore,
     addNewUserInFirestore,
-    checkInvitationCode,
+    loadInvitation,
     addInvitedUserInFirestore,
     deleteInvitationCodeInFirestore,
     updateUserDataInFirestore,
@@ -99,7 +99,7 @@ function UserPovider({ children }) {
         setActiveUser(newUser);
 
         if (invited === 'Ja') {
-            const invitation = await checkInvitationCode(invitationCode);
+            const invitation = await loadInvitation(invitationCode);
             await addInvitedUserInFirestore(userID, newFamilyID, familyUser);
             deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
         } else {
@@ -116,7 +116,7 @@ function UserPovider({ children }) {
      */
     async function getFamilyID(invitationCode, invited) {
         if (invited === 'Ja') {
-            const familyIDFromInvitation = await checkInvitationCode(invitationCode);
+            const familyIDFromInvitation = await loadInvitation(invitationCode);
             return familyIDFromInvitation.familyID;
         } else {
             return crypto.randomUUID();

@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
+import { checkInvitationCode } from '../../services/firestore';
+import { useAlert } from '../../contexts/alertContext';
 
 export default function SignupForm() {
     const { signUpUser } = useUser();
+    const { setError } = useAlert();
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -24,7 +27,14 @@ export default function SignupForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoggingIn(true);
-        await signUpUser(username, email, password, invitationCode, invitation);
+        const validCode = await checkInvitationCode(invitationCode);
+
+        if (validCode) {
+            await signUpUser(username, email, password, invitationCode, invitation);
+        } else {
+            setError('Der Einladungscode ist abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
+            setIsLoggingIn(false);
+        }
     }
 
     /**
