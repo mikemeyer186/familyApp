@@ -36,7 +36,7 @@ export async function addNewUserInFirestore(uid, familyID, defaultSettings, even
 export async function addInvitationCodeInFirestore(code, invitation, familyID) {
     try {
         await setDoc(doc(db, 'invitation', code), { ...invitation });
-        await setDoc(doc(dbInvitations, 'familyApp', code), { code: code, data: invitation.date });
+        await setDoc(doc(dbInvitations, 'familyApp', code), { code: code, date: invitation.date });
         await updateDoc(doc(db, familyID, 'management'), { invited: arrayUnion(invitation) });
     } catch (e) {
         console.error('Error adding document: ', e);

@@ -80,7 +80,7 @@ export default function Family() {
                         <div className="settings-divider"></div>
 
                         <div className="mb-3">
-                            <h6 className="mb-3">{`Ausstehende Einladungen (${familyManagement.invited.length})`}</h6>
+                            <h6 className="mb-3">{`Einladungen (${familyManagement.invited.length})`}</h6>
                             <div className="invited-box">
                                 {familyManagement.invited.map((invitedUser) => {
                                     return (
@@ -102,7 +102,7 @@ export default function Family() {
                                         </div>
                                     );
                                 })}
-                                {familyManagement.invited.length === 0 && <span>Keine offenen Einladungen</span>}
+                                {familyManagement.invited.length === 0 && <span className="text-center">Keine offenen Einladungen</span>}
                             </div>
                         </div>
 

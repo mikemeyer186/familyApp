@@ -58,9 +58,7 @@ export default function DialogTestApp() {
                                 Finanzen sowie Termine immer im Blick und vergessene Einkaufszettel gehören der Vergangenheit an. Der freundliche
                                 KI-Assistent unterstützt dich im Familienalltag mit leckeren Rezeptideen oder mit Vorschlägen für spannende
                                 Aktivitäten. Alle Daten werden innerhalb der Familie geteilt, sodass jedes Familienmitglied die gleichen Informationen
-                                hat. Da sich die App aktuell in einer intensiven Testphase mit eingeschränktem Nutzerkreis befindet, ist eine
-                                Anmeldung neuer Nutzer noch nicht möglich. Aber keine Sorge: Du kannst alle Funktionen der App vollständig testen
-                                (ausgenommen die Bearbeitung des Benutzerprofils).
+                                hat.
                             </p>
                             <h6>Hinweise zur Testversion</h6>
                             <p>
