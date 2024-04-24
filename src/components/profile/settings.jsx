@@ -183,7 +183,7 @@ export default function Settings() {
     }
 
     /**
-     * if appSettings changes (observable) then states will be updated (deep copy)
+     * if appSettings changes (listener) then states will be updated (deep copy)
      * needs to be in sync with firestore api
      */
     useEffect(() => {

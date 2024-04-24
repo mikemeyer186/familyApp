@@ -345,6 +345,13 @@ body {
         color: $txt-grey;
         border: 1px solid $logo-color-4;
     }
+
+    &:disabled {
+        background-color: $bg-light;
+        color: $txt-grey;
+        border: $blue-border;
+        opacity: 1;
+    }
 }
 
 .btn-outline-primary.show {

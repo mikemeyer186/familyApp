@@ -28,7 +28,7 @@ export default function DialogInvitation() {
         e.preventDefault();
         addInvitationCodeInFirestore(invitationCode, invitation, familyID);
         window.open(
-            `mailto:${email}?subject=Einladung%20zur%20familyApp&body=Hallo%20${name},%0D%0A%0D%0Abitte%20werde%20Mitglied%20bei%20unserer%20Familie%20in%20der%20familyApp%20und%20registriere%20dich%20über%20folgenden%20Link:%0D%0A%0D%0A%0D%0A${invitationLink}%0D%0A%0D%0A%0D%0AAlternativ%20gib%20den%20folgenden%20Code%20bei%20der%20Registrierung%20ein.%0D%0A%0D%0A${invitationCode}%0D%0A%0D%0A%0D%0A%0D%0AViele%20Grüße%0D%0A%0D%0A${activeUser.displayName}`
+            `mailto:${email}?subject=Einladung%20zur%20familyApp&body=Hallo%20${name},%0D%0A%0D%0Abitte%20werde%20Mitglied%20bei%20unserer%20Familie%20in%20der%20familyApp%20und%20registriere%20dich%20über%20folgenden%20Link:%0D%0A%0D%0A%0D%0A${invitationLink}%0D%0A%0D%0A%0D%0AWenn%20du%20bereits%20registriert%20bist,%20gib%20den%20folgenden%20Code%20unter%20"Familie%20verwalten"%20ein.%0D%0A%0D%0A${invitationCode}%0D%0A%0D%0A%0D%0A%0D%0AViele%20Grüße%0D%0A%0D%0A${activeUser.displayName}`
         );
         handleCloseDialog();
     }

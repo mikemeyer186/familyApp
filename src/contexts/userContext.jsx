@@ -24,6 +24,9 @@ import {
     addInvitedUserInFirestore,
     deleteInvitationCodeInFirestore,
     updateUserDataInFirestore,
+    addConnectedUserInFirestore,
+    changeFamilyConnectionInFirestore,
+    loadFamilyManagementFromFirestore,
 } from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
@@ -36,6 +39,7 @@ function UserPovider({ children }) {
     const [newEmail, setNewEmail] = useState('');
     const [message, setMessage] = useState('');
     const [familyID, setFamilyID] = useState('');
+    const [availableFamilies, setAvailableFamilies] = useState([]);
     const [familyManagement, setFamilyManagement] = useState({});
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
@@ -121,6 +125,29 @@ function UserPovider({ children }) {
         } else {
             return crypto.randomUUID();
         }
+    }
+
+    /**
+     * adds a new family to user after invitation
+     * @param {string} invitationCode - invitation code from email
+     */
+    async function addNewFamilyConnection(invitationCode) {
+        const invitation = await loadInvitation(invitationCode);
+        const newFamilyID = invitation.familyID;
+        const familyUser = { id: activeUser.uid, name: activeUser.displayName, photo: activeUser.photoURL };
+        await addConnectedUserInFirestore(activeUser.uid, newFamilyID, familyUser);
+        deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
+    }
+
+    /**
+     * connects with the selected family from drop down
+     * @param {string} familyID - new family to be connected
+     */
+    async function connectFamily(familyID) {
+        const newFamilyManagement = await loadFamilyManagementFromFirestore(familyID);
+        await changeFamilyConnectionInFirestore(activeUser.uid, familyID);
+        setFamilyManagement(newFamilyManagement);
+        setFamilyID(familyID);
     }
 
     /**
@@ -284,6 +311,7 @@ function UserPovider({ children }) {
         const userData = await loadUserDataFromFirestore(uid);
         const settings = await loadSettingsFromFirestore(userData.familyID);
         setFamilyID(userData.familyID);
+        setAvailableFamilies(userData.available);
         setAppSettings(settings);
         generateYearList();
     }
@@ -368,6 +396,7 @@ function UserPovider({ children }) {
                 loggedIn: loggedIn,
                 loading: loading,
                 familyID: familyID,
+                availableFamilies: availableFamilies,
                 familyManagement: familyManagement,
                 appSettings: appSettings,
                 activeYears: activeYears,
@@ -380,9 +409,12 @@ function UserPovider({ children }) {
                 signUpUser,
                 signInUser,
                 signOutUser,
+                addNewFamilyConnection,
+                connectFamily,
                 updateUserProfile,
                 authCheck,
                 setFamilyManagement,
+                setAvailableFamilies,
                 setAppSettings,
                 loadMotivation,
                 updateUserEmail,

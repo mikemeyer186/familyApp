@@ -14,6 +14,17 @@ export async function loadUserDataFromFirestore(uid) {
     }
 }
 
+export async function loadFamilyManagementFromFirestore(familyID) {
+    const docRef = doc(db, familyID, 'management');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log('No such document!');
+    }
+}
+
 export async function updateUserDataInFirestore(familyID, updatedMember) {
     try {
         await updateDoc(doc(db, familyID, 'management'), { member: updatedMember });
@@ -24,7 +35,7 @@ export async function updateUserDataInFirestore(familyID, updatedMember) {
 
 export async function addNewUserInFirestore(uid, familyID, defaultSettings, events, defaultManagement) {
     try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID });
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID] });
         await setDoc(doc(db, familyID, 'settings'), defaultSettings);
         await setDoc(doc(db, familyID, 'events'), { events });
         await setDoc(doc(db, familyID, 'management'), defaultManagement);
@@ -77,10 +88,27 @@ export async function loadInvitation(invitationCode) {
 
 export async function addInvitedUserInFirestore(uid, familyID, familyUser) {
     try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID });
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID] });
         await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(familyUser) });
     } catch (e) {
         console.error('Error adding document: ', e);
+    }
+}
+
+export async function addConnectedUserInFirestore(uid, familyID, familyUser) {
+    try {
+        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(familyUser) });
+        await updateDoc(doc(db, 'user', uid), { available: arrayUnion(familyID) });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
+
+export async function changeFamilyConnectionInFirestore(uid, familyID) {
+    try {
+        await updateDoc(doc(db, 'user', uid), { familyID: familyID });
+    } catch (e) {
+        console.error('Error updating document: ', e);
     }
 }
 

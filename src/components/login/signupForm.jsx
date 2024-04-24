@@ -28,13 +28,18 @@ export default function SignupForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoggingIn(true);
-        const validCode = await checkInvitationCode(invitationCode);
 
-        if (validCode) {
-            await signUpUser(username, email, password, invitationCode, invitation);
+        if (invitation === 'Ja') {
+            const validCode = await checkInvitationCode(invitationCode);
+
+            if (validCode) {
+                await signUpUser(username, email, password, invitationCode, invitation);
+            } else {
+                setError('Der Einladungscode ist abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
+                setIsLoggingIn(false);
+            }
         } else {
-            setError('Der Einladungscode ist abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
-            setIsLoggingIn(false);
+            await signUpUser(username, email, password, invitationCode, invitation);
         }
     }
 

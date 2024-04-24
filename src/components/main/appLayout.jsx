@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { useEffect, useRef } from 'react';
 import { db } from '../../config/firebase';
-import { collection, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
+import { collection, doc, endAt, onSnapshot, orderBy, query, startAt } from 'firebase/firestore';
 import { useCalendar } from '../../contexts/calendarContext';
 import { useList } from '../../contexts/listContext';
 import { useJournal } from '../../contexts/journalContext';
@@ -10,7 +10,7 @@ import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
-    const { familyID, setFamilyManagement, setAppSettings, loadMotivation } = useUser();
+    const { activeUser, familyID, setFamilyManagement, setAppSettings, setAvailableFamilies, loadMotivation } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { setLists, setIsListLoaded } = useList();
     const { setJournals, setIsJournalLoaded } = useJournal();
@@ -29,7 +29,7 @@ export default function AppLayout() {
     }, [loadPublicEvents, loadMotivation]);
 
     /**
-     * observable for settings from firebase
+     * listener for app settings from firebase
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);
@@ -46,7 +46,21 @@ export default function AppLayout() {
     }, [familyID, setAppSettings]);
 
     /**
-     * observable for family management from firebase
+     * listener for user settings from firebase
+     */
+    useEffect(() => {
+        const unsubscribe = onSnapshot(doc(db, 'user', activeUser.uid), (doc) => {
+            const newUserSettings = doc.data();
+            setAvailableFamilies(newUserSettings.available);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [activeUser, setAvailableFamilies]);
+
+    /**
+     * listener for family management from firebase
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);
@@ -63,7 +77,7 @@ export default function AppLayout() {
     }, [familyID, setFamilyManagement]);
 
     /**
-     * observable for events from firebase
+     * listener for events from firebase
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);
@@ -80,7 +94,7 @@ export default function AppLayout() {
     }, [loadEvents, familyID]);
 
     /**
-     * observable for lists from firebase
+     * listener for lists from firebase
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);
@@ -98,7 +112,7 @@ export default function AppLayout() {
     }, [setLists, familyID, setIsListLoaded]);
 
     /**
-     * observable for journals from firebase
+     * listener for journals from firebase
      */
     useEffect(() => {
         const familyCollection = collection(db, familyID);
