@@ -14,12 +14,12 @@ export async function loadUserDataFromFirestore(uid) {
     }
 }
 
-export async function loadFamilyManagementFromFirestore(familyID) {
+export async function loadFamilyNamesFromFirestore(familyID) {
     const docRef = doc(db, familyID, 'management');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return docSnap.data();
+        return { id: familyID, name: docSnap.data()['name'] };
     } else {
         console.log('No such document!');
     }

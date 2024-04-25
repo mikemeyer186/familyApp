@@ -26,7 +26,6 @@ import {
     updateUserDataInFirestore,
     addConnectedUserInFirestore,
     changeFamilyConnectionInFirestore,
-    loadFamilyManagementFromFirestore,
 } from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
@@ -144,9 +143,7 @@ function UserPovider({ children }) {
      * @param {string} familyID - new family to be connected
      */
     async function connectFamily(familyID) {
-        const newFamilyManagement = await loadFamilyManagementFromFirestore(familyID);
         await changeFamilyConnectionInFirestore(activeUser.uid, familyID);
-        setFamilyManagement(newFamilyManagement);
         setFamilyID(familyID);
     }
 
@@ -190,7 +187,7 @@ function UserPovider({ children }) {
      * @param {string} displayName - display name of user
      * @param {string} photoURL - photo url of user in firebase storage
      */
-    function updateUserDatainFamilyMangement(displayName, photoURL) {
+    function updateUserDataInFamilyMangement(displayName, photoURL) {
         const familyMember = familyManagement.member;
         const memberIndex = familyMember.findIndex((member) => member.id === auth.currentUser.uid);
         let updatedMember = familyMember.find((member) => member.id === auth.currentUser.uid);
@@ -210,7 +207,7 @@ function UserPovider({ children }) {
                 displayName: displayName,
                 photoURL: photoURL,
             });
-            updateUserDatainFamilyMangement(displayName, photoURL);
+            updateUserDataInFamilyMangement(displayName, photoURL);
             setSuccess('Dein Profil wurde erfolgreich aktualisiert!');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');

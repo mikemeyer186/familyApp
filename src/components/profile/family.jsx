@@ -2,14 +2,15 @@ import { useNavigate } from 'react-router';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
 import { useUser } from '../../contexts/userContext';
 import { useDialog } from '../../contexts/dialogContext';
-import { deleteInvitationCodeInFirestore, updateFamilyManagementInFirestore } from '../../services/firestore';
-import { useState } from 'react';
+import { deleteInvitationCodeInFirestore, loadFamilyNamesFromFirestore, updateFamilyManagementInFirestore } from '../../services/firestore';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Family() {
     const { familyID, availableFamilies, familyManagement, connectFamily } = useUser();
     const { openDialog } = useDialog();
-    const [activeFamily, setActiveFamily] = useState(familyID);
+    const [activeFamily, setActiveFamily] = useState(familyManagement);
     const [familyName, setFamilyName] = useState(familyManagement.name);
+    const [selectableFamilies, setSelectableFamilies] = useState([]);
     const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
@@ -19,7 +20,8 @@ export default function Family() {
      */
     async function handleConnectFamily(e) {
         e.preventDefault();
-        await connectFamily(activeFamily);
+        await connectFamily(activeFamily.id);
+        navigate('/');
     }
 
     /**
@@ -40,6 +42,26 @@ export default function Family() {
         deleteInvitationCodeInFirestore(invitation.code, invitation, familyID);
     }
 
+    /**
+     * loads the family names for dropdown menu
+     */
+    const loadFamilyNames = useCallback(
+        function loadFamilyNames() {
+            let familyNames = [];
+
+            availableFamilies.map(async (family) => {
+                const familyName = await loadFamilyNamesFromFirestore(family);
+                familyNames = [...familyNames, familyName];
+                setSelectableFamilies(familyNames);
+            });
+        },
+        [availableFamilies]
+    );
+
+    useEffect(() => {
+        loadFamilyNames();
+    }, [loadFamilyNames]);
+
     return (
         <div className="profile-wrapper fade-effect">
             <div className="profile-content family-management">
@@ -57,19 +79,24 @@ export default function Family() {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                {activeFamily}
+                                {activeFamily.name}
                             </button>
                             <ul className="dropdown-menu">
-                                {availableFamilies.map((family) => {
+                                {selectableFamilies.map((family) => {
                                     return (
-                                        <li key={family} onClick={() => setActiveFamily(family)}>
-                                            <span className="dropdown-item pointer">{family}</span>
+                                        <li key={family.id} onClick={() => setActiveFamily(family)}>
+                                            <div className="dropdown-item pointer">
+                                                <span>{family.name} </span>
+                                                <span>({family.id.slice(0, 8)})</span>
+                                            </div>
                                         </li>
                                     );
                                 })}
-                                <li onClick={() => openDialog('connectionRef')}>
-                                    <span className="dropdown-item pointer">Weitere Familie hinzufügen</span>
-                                </li>
+                                {availableFamilies.length < 2 && (
+                                    <li onClick={() => openDialog('connectionRef')}>
+                                        <span className="dropdown-item pointer">Einladungslink eingeben</span>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                         <div className="member-action mt-3">
