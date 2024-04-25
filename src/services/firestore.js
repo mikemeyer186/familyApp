@@ -25,22 +25,56 @@ export async function loadFamilyNamesFromFirestore(familyID) {
     }
 }
 
-export async function updateUserDataInFirestore(familyID, updatedMember) {
+export async function updateUserDataInFirestore(uid, updatedMember) {
     try {
-        await updateDoc(doc(db, familyID, 'management'), { member: updatedMember });
+        await updateDoc(doc(db, 'user', uid), { profile: updatedMember });
     } catch (e) {
         console.error('Error updating document: ', e);
     }
 }
 
-export async function addNewUserInFirestore(uid, familyID, defaultSettings, events, defaultManagement) {
+export async function updateFamilyManagementInFirestore(familyID, newName) {
     try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID] });
+        await updateDoc(doc(db, familyID, 'management'), { name: newName });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
+
+export async function addNewUserInFirestore(uid, familyID, defaultSettings, events, defaultManagement, defaultUserProfile) {
+    try {
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile });
         await setDoc(doc(db, familyID, 'settings'), defaultSettings);
         await setDoc(doc(db, familyID, 'events'), { events });
         await setDoc(doc(db, familyID, 'management'), defaultManagement);
     } catch (e) {
         console.error('Error adding document: ', e);
+    }
+}
+
+export async function addInvitedUserInFirestore(uid, familyID, defaultUserProfile) {
+    try {
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile });
+        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(uid) });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
+export async function addConnectedUserInFirestore(uid, familyID) {
+    try {
+        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(uid) });
+        await updateDoc(doc(db, 'user', uid), { available: arrayUnion(familyID) });
+    } catch (e) {
+        console.error('Error updating document: ', e);
+    }
+}
+
+export async function changeFamilyConnectionInFirestore(uid, familyID) {
+    try {
+        await updateDoc(doc(db, 'user', uid), { familyID: familyID });
+    } catch (e) {
+        console.error('Error updating document: ', e);
     }
 }
 
@@ -83,40 +117,6 @@ export async function loadInvitation(invitationCode) {
         return docSnap.data();
     } else {
         throw new Error('Request failed');
-    }
-}
-
-export async function addInvitedUserInFirestore(uid, familyID, familyUser) {
-    try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID] });
-        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(familyUser) });
-    } catch (e) {
-        console.error('Error adding document: ', e);
-    }
-}
-
-export async function addConnectedUserInFirestore(uid, familyID, familyUser) {
-    try {
-        await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(familyUser) });
-        await updateDoc(doc(db, 'user', uid), { available: arrayUnion(familyID) });
-    } catch (e) {
-        console.error('Error updating document: ', e);
-    }
-}
-
-export async function changeFamilyConnectionInFirestore(uid, familyID) {
-    try {
-        await updateDoc(doc(db, 'user', uid), { familyID: familyID });
-    } catch (e) {
-        console.error('Error updating document: ', e);
-    }
-}
-
-export async function updateFamilyManagementInFirestore(familyID, newName) {
-    try {
-        await updateDoc(doc(db, familyID, 'management'), { name: newName });
-    } catch (e) {
-        console.error('Error updating document: ', e);
     }
 }
 

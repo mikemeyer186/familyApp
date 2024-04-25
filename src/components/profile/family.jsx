@@ -2,7 +2,12 @@ import { useNavigate } from 'react-router';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
 import { useUser } from '../../contexts/userContext';
 import { useDialog } from '../../contexts/dialogContext';
-import { deleteInvitationCodeInFirestore, loadFamilyNamesFromFirestore, updateFamilyManagementInFirestore } from '../../services/firestore';
+import {
+    deleteInvitationCodeInFirestore,
+    loadFamilyNamesFromFirestore,
+    loadUserDataFromFirestore,
+    updateFamilyManagementInFirestore,
+} from '../../services/firestore';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function Family() {
@@ -11,6 +16,7 @@ export default function Family() {
     const [activeFamily, setActiveFamily] = useState(familyManagement);
     const [familyName, setFamilyName] = useState(familyManagement.name);
     const [selectableFamilies, setSelectableFamilies] = useState([]);
+    const [memberData, setMemberData] = useState([]);
     const [lastPage] = useSessionStorage('lastPage');
     const navigate = useNavigate();
 
@@ -58,9 +64,23 @@ export default function Family() {
         [availableFamilies]
     );
 
+    const loadMemberData = useCallback(
+        function loadMemberData() {
+            let memberData = [];
+
+            familyManagement.member.map(async (member) => {
+                const data = await loadUserDataFromFirestore(member);
+                memberData = [...memberData, data.profile];
+                setMemberData(memberData);
+            });
+        },
+        [familyManagement]
+    );
+
     useEffect(() => {
         loadFamilyNames();
-    }, [loadFamilyNames]);
+        loadMemberData();
+    }, [loadFamilyNames, loadMemberData]);
 
     return (
         <div className="profile-wrapper fade-effect">
@@ -100,7 +120,7 @@ export default function Family() {
                             </ul>
                         </div>
                         <div className="member-action mt-3">
-                            <button type="button" className="btn btn-primary" onClick={handleConnectFamily} disabled={activeFamily === familyID}>
+                            <button type="button" className="btn btn-primary" onClick={handleConnectFamily} disabled={activeFamily.id === familyID}>
                                 {activeFamily === familyID ? 'Aktive Familie' : 'Familie wechseln'}
                             </button>
                         </div>
@@ -125,7 +145,7 @@ export default function Family() {
                         <div className="mb-3">
                             <h6 className="mb-3">{`Mitglieder (${familyManagement.member.length})`}</h6>
                             <div className="member-box">
-                                {familyManagement.member.map((member) => {
+                                {memberData.map((member) => {
                                     return (
                                         <div className="member" key={member.id}>
                                             <img

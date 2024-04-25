@@ -95,18 +95,19 @@ function UserPovider({ children }) {
         const userID = user.uid;
         const events = [];
         const defaultSettings = defaultUserSettings;
-        const familyUser = { id: userID, name: username, photo: '' };
-        const defaultManagement = { invited: [], name: '', member: [{ id: userID, name: username, photo: '' }] };
+        const defaultFamilyName = 'Meine Familie';
+        const defaultManagement = { invited: [], name: defaultFamilyName, member: [userID], id: newFamilyID };
+        const defaultUserProfile = { id: userID, name: username, photo: '' };
         let newUser = user;
         newUser.displayName = username;
         setActiveUser(newUser);
 
         if (invited === 'Ja') {
             const invitation = await loadInvitation(invitationCode);
-            await addInvitedUserInFirestore(userID, newFamilyID, familyUser);
+            await addInvitedUserInFirestore(userID, newFamilyID, defaultUserProfile);
             deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
         } else {
-            await addNewUserInFirestore(userID, newFamilyID, defaultSettings, events, defaultManagement);
+            await addNewUserInFirestore(userID, newFamilyID, defaultSettings, events, defaultManagement, defaultUserProfile);
         }
     }
 
@@ -133,8 +134,7 @@ function UserPovider({ children }) {
     async function addNewFamilyConnection(invitationCode) {
         const invitation = await loadInvitation(invitationCode);
         const newFamilyID = invitation.familyID;
-        const familyUser = { id: activeUser.uid, name: activeUser.displayName, photo: activeUser.photoURL };
-        await addConnectedUserInFirestore(activeUser.uid, newFamilyID, familyUser);
+        await addConnectedUserInFirestore(auth.currentUser.uid, newFamilyID);
         deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
     }
 
@@ -143,7 +143,7 @@ function UserPovider({ children }) {
      * @param {string} familyID - new family to be connected
      */
     async function connectFamily(familyID) {
-        await changeFamilyConnectionInFirestore(activeUser.uid, familyID);
+        await changeFamilyConnectionInFirestore(auth.currentUser.uid, familyID);
         setFamilyID(familyID);
     }
 
@@ -183,17 +183,17 @@ function UserPovider({ children }) {
     }
 
     /**
-     * updates user data in family management
+     * updates user data in user collection
      * @param {string} displayName - display name of user
      * @param {string} photoURL - photo url of user in firebase storage
      */
-    function updateUserDataInFamilyMangement(displayName, photoURL) {
-        const familyMember = familyManagement.member;
-        const memberIndex = familyMember.findIndex((member) => member.id === auth.currentUser.uid);
-        let updatedMember = familyMember.find((member) => member.id === auth.currentUser.uid);
-        updatedMember = { ...updatedMember, name: displayName, photo: photoURL };
-        familyMember[memberIndex] = updatedMember;
-        updateUserDataInFirestore(familyID, familyMember);
+    function updateUserData(displayName, photoURL) {
+        const newUserData = {
+            id: auth.currentUser.uid,
+            name: displayName,
+            photo: photoURL,
+        };
+        updateUserDataInFirestore(auth.currentUser.uid, newUserData);
     }
 
     /**
@@ -207,7 +207,7 @@ function UserPovider({ children }) {
                 displayName: displayName,
                 photoURL: photoURL,
             });
-            updateUserDataInFamilyMangement(displayName, photoURL);
+            updateUserData(displayName, photoURL);
             setSuccess('Dein Profil wurde erfolgreich aktualisiert!');
         } catch (err) {
             setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
