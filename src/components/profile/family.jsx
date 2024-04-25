@@ -64,6 +64,9 @@ export default function Family() {
         [availableFamilies]
     );
 
+    /**
+     * loads the user data of family members
+     */
     const loadMemberData = useCallback(
         function loadMemberData() {
             let memberData = [];
