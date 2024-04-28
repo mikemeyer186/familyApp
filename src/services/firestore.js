@@ -43,7 +43,7 @@ export async function updateFamilyManagementInFirestore(familyID, newName) {
 
 export async function addNewUserInFirestore(uid, familyID, defaultSettings, events, defaultManagement, defaultUserProfile) {
     try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile });
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile, invited: false });
         await setDoc(doc(db, familyID, 'settings'), defaultSettings);
         await setDoc(doc(db, familyID, 'events'), { events });
         await setDoc(doc(db, familyID, 'management'), defaultManagement);
@@ -52,9 +52,20 @@ export async function addNewUserInFirestore(uid, familyID, defaultSettings, even
     }
 }
 
+export async function addNewFamilyInFirestore(uid, familyID, defaultSettings, events, defaultManagement) {
+    try {
+        await setDoc(doc(db, familyID, 'settings'), defaultSettings);
+        await setDoc(doc(db, familyID, 'events'), { events });
+        await setDoc(doc(db, familyID, 'management'), defaultManagement);
+        await updateDoc(doc(db, 'user', uid), { available: arrayUnion(familyID) });
+    } catch (e) {
+        console.error('Error adding document: ', e);
+    }
+}
+
 export async function addInvitedUserInFirestore(uid, familyID, defaultUserProfile) {
     try {
-        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile });
+        await setDoc(doc(db, 'user', uid), { familyID: familyID, available: [familyID], profile: defaultUserProfile, invited: true });
         await updateDoc(doc(db, familyID, 'management'), { member: arrayUnion(uid) });
     } catch (e) {
         console.error('Error adding document: ', e);

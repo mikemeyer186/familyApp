@@ -26,6 +26,7 @@ import {
     updateUserDataInFirestore,
     addConnectedUserInFirestore,
     changeFamilyConnectionInFirestore,
+    addNewFamilyInFirestore,
 } from '../services/firestore';
 import defaultUserSettings from '../data/defaultUserSettings';
 
@@ -38,7 +39,7 @@ function UserPovider({ children }) {
     const [newEmail, setNewEmail] = useState('');
     const [message, setMessage] = useState('');
     const [familyID, setFamilyID] = useState('');
-    const [availableFamilies, setAvailableFamilies] = useState([]);
+    const [userSettings, setUserSettings] = useState({});
     const [familyManagement, setFamilyManagement] = useState({});
     const [appSettings, setAppSettings] = useState({});
     const [activeYears, setActiveYears] = useState([]);
@@ -145,6 +146,16 @@ function UserPovider({ children }) {
     async function connectFamily(familyID) {
         await changeFamilyConnectionInFirestore(auth.currentUser.uid, familyID);
         setFamilyID(familyID);
+    }
+
+    async function createOwnFamily() {
+        const userID = auth.currentUser.uid;
+        const newFamilyID = crypto.randomUUID();
+        const events = [];
+        const defaultSettings = defaultUserSettings;
+        const defaultFamilyName = 'Meine Familie';
+        const defaultManagement = { invited: [], name: defaultFamilyName, member: [userID], id: newFamilyID };
+        await addNewFamilyInFirestore(userID, newFamilyID, defaultSettings, events, defaultManagement);
     }
 
     /**
@@ -308,7 +319,7 @@ function UserPovider({ children }) {
         const userData = await loadUserDataFromFirestore(uid);
         const settings = await loadSettingsFromFirestore(userData.familyID);
         setFamilyID(userData.familyID);
-        setAvailableFamilies(userData.available);
+        setUserSettings(userData);
         setAppSettings(settings);
         generateYearList();
     }
@@ -393,7 +404,7 @@ function UserPovider({ children }) {
                 loggedIn: loggedIn,
                 loading: loading,
                 familyID: familyID,
-                availableFamilies: availableFamilies,
+                userSettings: userSettings,
                 familyManagement: familyManagement,
                 appSettings: appSettings,
                 activeYears: activeYears,
@@ -408,10 +419,11 @@ function UserPovider({ children }) {
                 signOutUser,
                 addNewFamilyConnection,
                 connectFamily,
+                createOwnFamily,
                 updateUserProfile,
                 authCheck,
                 setFamilyManagement,
-                setAvailableFamilies,
+                setUserSettings,
                 setAppSettings,
                 loadMotivation,
                 updateUserEmail,

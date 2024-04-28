@@ -11,7 +11,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 
 export default function Family() {
-    const { familyID, availableFamilies, familyManagement, connectFamily } = useUser();
+    const { familyID, userSettings, familyManagement, connectFamily } = useUser();
     const { openDialog } = useDialog();
     const [activeFamily, setActiveFamily] = useState(familyManagement);
     const [familyName, setFamilyName] = useState(familyManagement.name);
@@ -55,13 +55,13 @@ export default function Family() {
         function loadFamilyNames() {
             let familyNames = [];
 
-            availableFamilies.map(async (family) => {
+            userSettings.available.map(async (family) => {
                 const familyName = await loadFamilyNamesFromFirestore(family);
                 familyNames = [...familyNames, familyName];
                 setSelectableFamilies(familyNames);
             });
         },
-        [availableFamilies]
+        [userSettings]
     );
 
     /**
@@ -90,7 +90,10 @@ export default function Family() {
             <div className="profile-content family-management">
                 <div className="profil-header">
                     <h4 className="profil-title mb-2">Familie verwalten</h4>
-                    <span>Hier kannst du deine aktive Familie wählen, deine Familie verwalten oder neue Familienmitglieder einladen.</span>
+                    <span>
+                        Hier kannst du deine aktive Familie wählen, deine Familie verwalten oder neue Familienmitglieder einladen. Du kannst maximal
+                        zwischen deiner eigenen Familie und eine Familie, zu der du eingeladen wurdest, wählen.
+                    </span>
                 </div>
                 <div className="profile-body mt-5">
                     <form onSubmit={handleMangementSubmit}>
@@ -115,16 +118,21 @@ export default function Family() {
                                         </li>
                                     );
                                 })}
-                                {availableFamilies.length < 2 && (
+                                {userSettings.available.length === 1 && !userSettings.invited && (
                                     <li onClick={() => openDialog('connectionRef')}>
-                                        <span className="dropdown-item pointer">Einladungslink eingeben</span>
+                                        <span className="dropdown-item pointer">Mit Familie verbinden</span>
+                                    </li>
+                                )}
+                                {userSettings.available.length === 1 && userSettings.invited && (
+                                    <li onClick={() => openDialog('createRef')}>
+                                        <span className="dropdown-item pointer">Eigene Familie erstellen</span>
                                     </li>
                                 )}
                             </ul>
                         </div>
                         <div className="member-action mt-3">
                             <button type="button" className="btn btn-primary" onClick={handleConnectFamily} disabled={activeFamily.id === familyID}>
-                                {activeFamily === familyID ? 'Aktive Familie' : 'Familie wechseln'}
+                                {activeFamily.id === familyID ? 'Aktive Familie' : 'Familie wechseln'}
                             </button>
                         </div>
 

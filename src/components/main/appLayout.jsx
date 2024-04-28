@@ -10,7 +10,7 @@ import Navbar from './navbar';
 import Dialogs from './dialogs';
 
 export default function AppLayout() {
-    const { activeUser, familyID, setFamilyManagement, setAppSettings, setAvailableFamilies, loadMotivation } = useUser();
+    const { activeUser, familyID, setFamilyManagement, setAppSettings, setUserSettings, loadMotivation } = useUser();
     const { loadEvents, loadPublicEvents } = useCalendar();
     const { setLists, setIsListLoaded } = useList();
     const { setJournals, setIsJournalLoaded } = useJournal();
@@ -51,13 +51,13 @@ export default function AppLayout() {
     useEffect(() => {
         const unsubscribe = onSnapshot(doc(db, 'user', activeUser.uid), (doc) => {
             const newUserSettings = doc.data();
-            setAvailableFamilies(newUserSettings.available);
+            setUserSettings(newUserSettings);
         });
 
         return () => {
             unsubscribe();
         };
-    }, [activeUser, setAvailableFamilies]);
+    }, [activeUser, setUserSettings]);
 
     /**
      * listener for family management from firebase

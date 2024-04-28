@@ -35,7 +35,7 @@ export default function SignupForm() {
             if (validCode) {
                 await signUpUser(username, email, password, invitationCode, invitation);
             } else {
-                setError('Der Einladungscode ist abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
+                setError('Der Einladungscode ist ungültig oder abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
                 setIsLoggingIn(false);
             }
         } else {

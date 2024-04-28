@@ -11,6 +11,7 @@ import DialogTestApp from '../dashboard/dialogTestApp';
 import DialogPWAInstall from './dialogPWAInstall';
 import DialogInvitation from '../profile/dialogInvitation';
 import DialogConnect from '../profile/dialogConnect';
+import DialogCreate from '../profile/dialogCreate';
 
 export default function Dialogs() {
     return (
@@ -28,6 +29,7 @@ export default function Dialogs() {
             <DialogDeleteList />
             <DialogInvitation />
             <DialogConnect />
+            <DialogCreate />
         </>
     );
 }
