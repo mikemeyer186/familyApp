@@ -18,6 +18,7 @@ export default function SignupForm() {
     let params = searchParams.get('invitation');
     const [invitation, setInvitation] = useState(params ? 'Ja' : 'Auswählen...');
     const [invitationCode, setInvitationCode] = useState(params ? params : '');
+    const invited = invitation === 'Ja' ? true : false;
     const navigate = useNavigate();
 
     /**
@@ -29,17 +30,24 @@ export default function SignupForm() {
         e.preventDefault();
         setIsLoggingIn(true);
 
-        if (invitation === 'Ja') {
-            const validCode = await checkInvitationCode(invitationCode);
-
-            if (validCode) {
-                await signUpUser(username, email, password, invitationCode, invitation);
-            } else {
-                setError('Der Einladungscode ist ungültig oder abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
-                setIsLoggingIn(false);
-            }
+        if (invited) {
+            invitationCheckAndSignUp();
         } else {
-            await signUpUser(username, email, password, invitationCode, invitation);
+            await signUpUser(username, email, password, invitationCode, invited);
+        }
+    }
+
+    /**
+     * checks the inviation code before sign up
+     */
+    async function invitationCheckAndSignUp() {
+        const validCode = await checkInvitationCode(invitationCode);
+
+        if (validCode) {
+            await signUpUser(username, email, password, invitationCode, invited);
+        } else {
+            setError('Der Einladungscode ist ungültig oder abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
+            setIsLoggingIn(false);
         }
     }
 
@@ -217,7 +225,7 @@ export default function SignupForm() {
                     </div>
                 </div>
 
-                {invitation === 'Ja' && (
+                {invited && (
                     <div className="form-group">
                         <label htmlFor="familyInvitationCode">
                             <span>Einladungscode</span>

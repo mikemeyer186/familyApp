@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useDialog } from '../../contexts/dialogContext';
 import { useUser } from '../../contexts/userContext';
 import { addInvitationCodeInFirestore } from '../../services/firestore';
+import { useAlert } from '../../contexts/alertContext';
 
 export default function DialogInvitation() {
     const { dialogs, closeDialog } = useDialog();
     const { activeUser, familyID } = useUser();
+    const { setError, setSuccess } = useAlert();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const invitationCode = crypto.randomUUID();
@@ -17,6 +19,7 @@ export default function DialogInvitation() {
      * @param {event} e
      */
     async function handleInviteUser(e) {
+        e.preventDefault();
         const invitation = {
             name: name,
             email: email,
@@ -25,12 +28,16 @@ export default function DialogInvitation() {
             date: new Date(),
         };
 
-        e.preventDefault();
-        addInvitationCodeInFirestore(invitationCode, invitation, familyID);
-        window.open(
-            `mailto:${email}?subject=Einladung%20zur%20familyApp&body=Hallo%20${name},%0D%0A%0D%0Abitte%20werde%20Mitglied%20bei%20unserer%20Familie%20in%20der%20familyApp%20und%20registriere%20dich%20über%20folgenden%20Link:%0D%0A%0D%0A%0D%0A${invitationLink}%0D%0A%0D%0A%0D%0AWenn%20du%20bereits%20registriert%20bist,%20gib%20den%20folgenden%20Code%20unter%20"Familie%20verwalten"%20ein.%0D%0A%0D%0A${invitationCode}%0D%0A%0D%0A%0D%0A%0D%0AViele%20Grüße%0D%0A%0D%0A${activeUser.displayName}`
-        );
-        handleCloseDialog();
+        try {
+            addInvitationCodeInFirestore(invitationCode, invitation, familyID);
+            window.open(
+                `mailto:${email}?subject=Einladung%20zur%20familyApp&body=Hallo%20${name},%0D%0A%0D%0Abitte%20werde%20Mitglied%20bei%20unserer%20Familie%20in%20der%20familyApp%20und%20registriere%20dich%20über%20folgenden%20Link:%0D%0A%0D%0A%0D%0A${invitationLink}%0D%0A%0D%0A%0D%0AWenn%20du%20bereits%20registriert%20bist,%20gib%20den%20folgenden%20Code%20unter%20"Familie%20verwalten"%20ein.%0D%0A%0D%0A${invitationCode}%0D%0A%0D%0A%0D%0A%0D%0AViele%20Grüße%0D%0A%0D%0A${activeUser.displayName}`
+            );
+            handleCloseDialog();
+            setSuccess('Der Einladungslink wurde erfolgreich erstellt!');
+        } catch (e) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
     /**

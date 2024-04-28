@@ -20,7 +20,7 @@ export default function DialogConnect() {
 
         if (validCode) {
             addNewFamilyConnection(code);
-            setSuccess('Die neue wurde Familie hinzugefügt.');
+            setSuccess('Du bist jetzt mit der Familie verbunden.');
         } else {
             setError('Der Einladungscode ist ungültig oder abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
         }

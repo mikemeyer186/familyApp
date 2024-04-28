@@ -9,10 +9,12 @@ import {
     updateFamilyManagementInFirestore,
 } from '../../services/firestore';
 import { useCallback, useEffect, useState } from 'react';
+import { useAlert } from '../../contexts/alertContext';
 
 export default function Family() {
     const { familyID, userSettings, familyManagement, connectFamily } = useUser();
     const { openDialog } = useDialog();
+    const { setError, setSuccess } = useAlert();
     const [activeFamily, setActiveFamily] = useState(familyManagement);
     const [familyName, setFamilyName] = useState(familyManagement.name);
     const [selectableFamilies, setSelectableFamilies] = useState([]);
@@ -36,8 +38,13 @@ export default function Family() {
      */
     function handleMangementSubmit(e) {
         e.preventDefault();
-        updateFamilyManagementInFirestore(familyID, familyName);
-        navigate(`/app/${lastPage}`);
+        try {
+            updateFamilyManagementInFirestore(familyID, familyName);
+            navigate(`/app/${lastPage}`);
+            setSuccess('Die Daten der Familie wurden erfolgreich geändert!');
+        } catch (e) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
     /**
@@ -45,7 +52,12 @@ export default function Family() {
      * @param {object} invitation - invitation object from firestore
      */
     function handleDeleteInvitation(invitation) {
-        deleteInvitationCodeInFirestore(invitation.code, invitation, familyID);
+        try {
+            deleteInvitationCodeInFirestore(invitation.code, invitation, familyID);
+            setSuccess('Die Einladung wurde erfolgreich gelöscht!');
+        } catch (e) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
     /**

@@ -103,7 +103,7 @@ function UserPovider({ children }) {
         newUser.displayName = username;
         setActiveUser(newUser);
 
-        if (invited === 'Ja') {
+        if (invited) {
             const invitation = await loadInvitation(invitationCode);
             await addInvitedUserInFirestore(userID, newFamilyID, defaultUserProfile);
             deleteInvitationCodeInFirestore(invitationCode, invitation, newFamilyID);
@@ -120,7 +120,7 @@ function UserPovider({ children }) {
      * @returns - familyID
      */
     async function getFamilyID(invitationCode, invited) {
-        if (invited === 'Ja') {
+        if (invited) {
             const familyIDFromInvitation = await loadInvitation(invitationCode);
             return familyIDFromInvitation.familyID;
         } else {
@@ -144,18 +144,31 @@ function UserPovider({ children }) {
      * @param {string} familyID - new family to be connected
      */
     async function connectFamily(familyID) {
-        await changeFamilyConnectionInFirestore(auth.currentUser.uid, familyID);
-        setFamilyID(familyID);
+        try {
+            await changeFamilyConnectionInFirestore(auth.currentUser.uid, familyID);
+            setFamilyID(familyID);
+            setSuccess('Deine aktive Familie wurde erfolgreich geändert!');
+        } catch (err) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
+    /**
+     * creates a new familiy for active user
+     */
     async function createOwnFamily() {
-        const userID = auth.currentUser.uid;
-        const newFamilyID = crypto.randomUUID();
-        const events = [];
-        const defaultSettings = defaultUserSettings;
-        const defaultFamilyName = 'Meine Familie';
-        const defaultManagement = { invited: [], name: defaultFamilyName, member: [userID], id: newFamilyID };
-        await addNewFamilyInFirestore(userID, newFamilyID, defaultSettings, events, defaultManagement);
+        try {
+            const userID = auth.currentUser.uid;
+            const newFamilyID = crypto.randomUUID();
+            const events = [];
+            const defaultSettings = defaultUserSettings;
+            const defaultFamilyName = 'Meine Familie';
+            const defaultManagement = { invited: [], name: defaultFamilyName, member: [userID], id: newFamilyID };
+            await addNewFamilyInFirestore(userID, newFamilyID, defaultSettings, events, defaultManagement);
+            setSuccess('Deine Familie wurde erfolgreich erstellt!');
+        } catch (err) {
+            setError('Irgendetwas ist schiefgelaufen. Versuch es noch einmal.');
+        }
     }
 
     /**
