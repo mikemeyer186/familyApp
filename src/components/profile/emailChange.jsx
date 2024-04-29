@@ -62,7 +62,7 @@ export default function EmailChange() {
                     <h4 className="profil-title mb-2">E-Mail Adresse ändern</h4>
                     <span>
                         Du erhältst einen Bestätigungslink an deine neue E-Mail Adresse. Sobald du sie bestätigt hast, kannst du dich mit der neuen
-                        E-Mail Adresse anmelden{isGuest && <span className="not-allowed"> (als Gast nicht möglich)</span>}.
+                        E-Mail Adresse anmelden{isGuest && <span className="not-allowed"> (in der Testversion nicht möglich)</span>}.
                     </span>
                 </div>
                 <div className="profile-body mt-5">

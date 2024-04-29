@@ -87,7 +87,7 @@ export default function UserProfile() {
                     <h4 className="profil-title mb-2">Benutzerprofil</h4>
                     <span>
                         Hier kannst du dein Profilbild und deinen Benutzernamen ändern
-                        {isGuest && <span className="not-allowed"> (als Gast nicht möglich)</span>}.
+                        {isGuest && <span className="not-allowed"> (in der Testversion nicht möglich)</span>}.
                     </span>
                 </div>
                 <div className="profile-body mt-5">

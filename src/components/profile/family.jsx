@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAlert } from '../../contexts/alertContext';
 
 export default function Family() {
-    const { familyID, userSettings, familyManagement, connectFamily } = useUser();
+    const { familyID, userSettings, familyManagement, isGuest, connectFamily } = useUser();
     const { openDialog } = useDialog();
     const { setError, setSuccess } = useAlert();
     const [activeFamily, setActiveFamily] = useState(familyManagement);
@@ -104,7 +104,8 @@ export default function Family() {
                     <h4 className="profil-title mb-2">Familie verwalten</h4>
                     <span>
                         Hier kannst du deine aktive Familie wählen, deine Familie verwalten oder neue Familienmitglieder einladen. Du kannst maximal
-                        zwischen deiner eigenen Familie und eine Familie, zu der du eingeladen wurdest, wählen.
+                        zwischen deiner eigenen Familie und eine Familie, zu der du eingeladen wurdest, wählen{' '}
+                        {isGuest && <span className="not-allowed"> (in der Testversion nicht möglich)</span>}.
                     </span>
                 </div>
                 <div className="profile-body mt-5">
@@ -130,12 +131,12 @@ export default function Family() {
                                         </li>
                                     );
                                 })}
-                                {userSettings.available.length === 1 && !userSettings.invited && (
+                                {userSettings.available.length === 1 && !userSettings.invited && !isGuest && (
                                     <li onClick={() => openDialog('connectionRef')}>
                                         <span className="dropdown-item pointer">Mit Familie verbinden</span>
                                     </li>
                                 )}
-                                {userSettings.available.length === 1 && userSettings.invited && (
+                                {userSettings.available.length === 1 && userSettings.invited && !isGuest && (
                                     <li onClick={() => openDialog('createRef')}>
                                         <span className="dropdown-item pointer">Eigene Familie erstellen</span>
                                     </li>
@@ -159,6 +160,7 @@ export default function Family() {
                                 id="userName"
                                 value={familyName}
                                 onChange={(e) => setFamilyName(e.target.value)}
+                                disabled={isGuest}
                                 required
                             />
                         </div>
@@ -210,7 +212,7 @@ export default function Family() {
                                 })}
                                 {familyManagement.invited.length === 0 && <span className="text-center">Keine offenen Einladungen</span>}
                                 <div className="member-action mt-3">
-                                    <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')}>
+                                    <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')} disabled={isGuest}>
                                         Familienmitglied einladen
                                     </button>
                                 </div>
@@ -223,7 +225,7 @@ export default function Family() {
                             <button type="button" className="btn btn-secondary" onClick={() => navigate(`/app/${lastPage}`)}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" disabled={familyName === familyManagement.name}>
                                 Speichern
                             </button>
                         </div>
