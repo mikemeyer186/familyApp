@@ -146,6 +146,8 @@ export default function JournalTable() {
                     removableSort
                     filters={filters}
                     globalFilterFields={['date', 'category', 'amount', 'aggregate', 'info', 'user', 'flow']}
+                    sortField="date"
+                    sortOrder={-1}
                     header={tableHeader}
                     style={{ width: '100%', cursor: 'pointer' }}
                     exportFilename={activeJournal.id}

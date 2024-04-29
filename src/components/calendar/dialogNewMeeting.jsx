@@ -188,7 +188,7 @@ export default function DialogNewMeeting() {
         } else {
             setAllDayYes(true);
             setAllDayNo(false);
-            setStartTime('01:00');
+            setStartTime('02:00');
             setEndTime('23:59');
         }
     }
@@ -232,7 +232,7 @@ export default function DialogNewMeeting() {
         function setAllDayEventOnClick() {
             setStartDate(selectedTimeSlot.end.toISOString().split('T')[0]);
             setEndDate(selectedTimeSlot.end.toISOString().split('T')[0]);
-            setStartTime('01:00');
+            setStartTime('02:00');
             setEndTime('23:59');
             setAllDayYes(true);
             setAllDayNo(false);

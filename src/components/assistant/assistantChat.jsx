@@ -1,18 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useUser } from '../../contexts/userContext';
-import { deletePromptInFirestore, addChatInHistory } from '../../services/firestore';
+import { deletePromptInFirestore, addChatInHistory, loadUserDataFromFirestore } from '../../services/firestore';
 import TypingLoader from '../global/typingLoader';
 import AssistantPrompt from './assistantPrompt';
 
 export default function AssistantChat({ chatHistory }) {
     const { familyID, familyManagement } = useUser();
+    const [memberData, setMemberData] = useState([]);
     const endOfMessagesRef = useRef(null);
-    const familyImages = familyManagement.member.reduce(
+    const familyImages = memberData.reduce(
         (map, member) => ({
             ...map,
             [member.id]: member.photo,
         }),
         {}
+    );
+
+    /**
+     * loads the user data of family members from firestore
+     */
+    const loadMemberData = useCallback(
+        function loadMemberData() {
+            let memberData = [];
+
+            familyManagement.member.map(async (member) => {
+                const data = await loadUserDataFromFirestore(member);
+                memberData = [...memberData, data.profile];
+                setMemberData(memberData);
+            });
+        },
+        [familyManagement]
     );
 
     /**
@@ -33,6 +50,13 @@ export default function AssistantChat({ chatHistory }) {
     function scrollToBottom() {
         endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+
+    /**
+     * loads user data on component loading from firestore
+     */
+    useEffect(() => {
+        loadMemberData();
+    }, [loadMemberData]);
 
     /**
      * scrolls chat history to bottom, if new messages are added

@@ -164,15 +164,10 @@ function CalendarProvider({ children }) {
      * @param {object} editedMeeting - edited meeting to be added to firestore
      */
     async function editMeeting(editedMeeting) {
-        const filteredEvents = events.filter((event) => {
-            return event.data.id !== editedMeeting.data.id;
-        });
         const filteredFirestoreEvents = firestoreEvents.filter((firestoreEvent) => {
             return firestoreEvent.data.id !== editedMeeting.data.id;
         });
         const newFirestoreEvents = [...filteredFirestoreEvents, editedMeeting];
-        setEvents(filteredEvents);
-        setFirestoreEvents(newFirestoreEvents);
         await addEventInFirestore(familyID, newFirestoreEvents);
         setSuccess('Der Termin wurde erfolgreich geändert!');
     }
@@ -182,14 +177,9 @@ function CalendarProvider({ children }) {
      * @param {string} meetingID - ID of the meeting to be deleted
      */
     async function deleteMeeting(meetingID) {
-        const filteredEvents = events.filter((event) => {
-            return event.data.id !== meetingID;
-        });
         const filteredFirestoreEvents = firestoreEvents.filter((firestoreEvent) => {
             return firestoreEvent.data.id !== meetingID;
         });
-        setEvents(filteredEvents);
-        setFirestoreEvents(filteredFirestoreEvents);
         await addEventInFirestore(familyID, filteredFirestoreEvents);
         setSuccess('Der Termin wurde erfolgreich gelöscht!');
     }

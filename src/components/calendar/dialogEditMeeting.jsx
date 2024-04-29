@@ -193,7 +193,7 @@ export default function DialogEditMeeting() {
         } else {
             setAllDayYes(true);
             setAllDayNo(false);
-            setStartTime('01:00');
+            setStartTime('02:00');
             setEndTime('23:59');
         }
     }

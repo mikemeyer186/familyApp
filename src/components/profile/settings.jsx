@@ -31,7 +31,7 @@ export default function Settings() {
         e.preventDefault();
         saveSettingsInFirestore(familyID, newAppSettings);
         navigate(`/app/${lastPage}`);
-        setSuccess('Deine Einstellungnen wurden aktualisiert!');
+        setSuccess('Deine Einstellungnen wurden erfolgreich aktualisiert!');
 
         if (oldCountry !== calendarSettings.country) {
             await loadPublicEvents();
