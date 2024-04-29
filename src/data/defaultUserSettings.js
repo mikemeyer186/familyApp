@@ -11,7 +11,7 @@ const defaultUserSettings = {
     journal: [
         { values: ['Einkommen'], name: 'Einnahmen' },
         { name: 'Einkäufe', values: ['Lebensmittel', 'Kleidung', 'Haushalt'] },
-        { name: 'Familie', values: ['Gast', 'User 2'] },
+        { name: 'Familie', values: ['Gast', 'Testuser'] },
         { name: 'Mobilität', values: ['ÖPNV', 'Kraftstoff', 'Parkgebühren'] },
         { name: 'Kommunikation', values: ['Handy', 'Festnetz'] },
         { values: ['Lieferdienst', 'Entertainment', 'Ausflüge', 'Sport', 'Urlaub'], name: 'Leben' },

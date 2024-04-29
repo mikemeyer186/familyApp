@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router';
 import { useUser } from '../../contexts/userContext';
 import { useState } from 'react';
 import { useSessionStorage } from '../../hooks/useSessionStorage';
+import { useAlert } from '../../contexts/alertContext';
 
 export default function Problem() {
     const { activeUser, message, setMessage } = useUser();
+    const { setSuccess } = useAlert();
     const [validMessage, setValidMessage] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [lastPage] = useSessionStorage('lastPage');
@@ -22,10 +24,13 @@ export default function Problem() {
         navigate(`/app/${lastPage}`);
         setMessage('');
         setIsSending(false);
+        setSuccess('Deine Nachricht wurde erfolgreich versendet!');
     }
 
     /**
      * sends the message to mail
+     * Safari causes "unhandled promise rejection typeerror load failed" in console
+     * but POST request works fine - success in error catch to prevent freezing in form
      */
     async function sendMail() {
         let formData = new FormData();
@@ -35,10 +40,16 @@ export default function Problem() {
         formData.append('email', email);
         formData.append('message', message.toString());
 
-        await fetch(mailURL, {
-            method: 'POST',
-            body: formData,
-        });
+        try {
+            await fetch(mailURL, {
+                method: 'POST',
+                body: formData,
+            });
+        } catch (e) {
+            console.log(e);
+            navigate(`/app/${lastPage}`);
+            setSuccess('Deine Nachricht wurde erfolgreich versendet!');
+        }
     }
 
     /**

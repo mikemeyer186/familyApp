@@ -5,10 +5,10 @@
     height: calc(100svh - $navbar-height);
     width: 100%;
     overflow: auto;
-    padding: 16px 16px 70px 16px;
+    padding: 32px 16px 70px 16px;
 
     @media (min-width: $breakpoint-xs) {
-        padding: 90px 50px;
+        padding: 32px 16px 50px 16px;
     }
 
     .profile-content {
@@ -257,17 +257,17 @@
 }
 
 .settings-wrapper {
-    padding: 16px 16px 70px 16px;
+    padding: 32px 16px 70px 16px;
 
     @media (min-width: $breakpoint-xs) {
-        padding: 16px 16px 70px 16px;
+        padding: 32px 16px 50px 16px;
     }
 }
 
 .problem-wrapper {
-    padding: 16px 16px 70px 16px;
+    padding: 32px 16px 70px 16px;
 
     @media (min-width: $breakpoint-xs) {
-        padding: 70px 16px;
+        padding: 32px 16px 50px 16px;
     }
 }

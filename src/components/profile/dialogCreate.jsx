@@ -29,8 +29,8 @@ export default function DialogCreate() {
                     <div>
                         <div className="modal-body">
                             <p>
-                                Du kannst eine eigene Familie erstellen, die du als deinen eigenen Bereich nutzen kannst. Du kannst auch weitere
-                                Familienmitgleider zu deiner Familie einladen.
+                                Du kannst eine eigene Familie erstellen, um sie als deinen eigenen Bereich zu nutzen oder um weitere
+                                Familienmitgleider zu deiner Familie einzuladen.
                             </p>
                         </div>
                         <div className="modal-footer">
