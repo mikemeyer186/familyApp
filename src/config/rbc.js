@@ -8,9 +8,9 @@ export default function CalendarConfig() {
     const { localizer } = useMemo(() => ({ localizer: luxonLocalizer(DateTime, { firstDayOfWeek: 1 }) }), []);
     const { min, max, messages, formats, components } = useMemo(
         () => ({
-            // start time and end time in week view (8 - 20)
+            // start time and end time in week view (8 - 23)
             min: new Date(2023, 0, 1, 8, 0, 0),
-            max: new Date(2023, 0, 1, 20, 0, 0),
+            max: new Date(2023, 0, 1, 23, 59, 0),
 
             // translated titles and names
             messages: {
