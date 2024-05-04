@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { useDialog } from '../../contexts/dialogContext';
 import { useUser } from '../../contexts/userContext';
 
 export default function DialogCreate() {
     const { dialogs, closeDialog } = useDialog();
     const { createOwnFamily } = useUser();
+    const [isCreating, setIsCreating] = useState(false);
 
     async function handleCreateFamily(e) {
         e.preventDefault();
+        setIsCreating(true);
         await createOwnFamily();
         handleCloseDialog();
+        setIsCreating(false);
     }
 
     /**
@@ -37,8 +41,12 @@ export default function DialogCreate() {
                             <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                                 Abbrechen
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleCreateFamily}>
-                                Erstellen
+                            <button type="button" className="btn btn-primary width-108" onClick={handleCreateFamily} disabled={isCreating}>
+                                {isCreating ? (
+                                    <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
+                                ) : (
+                                    <span role="status">Erstellen</span>
+                                )}
                             </button>
                         </div>
                     </div>

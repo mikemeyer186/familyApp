@@ -9,6 +9,7 @@ export default function DialogConnect() {
     const { addNewFamilyConnection } = useUser();
     const { setError, setSuccess } = useAlert();
     const [code, setCode] = useState('');
+    const [isConnecting, setIsConnecting] = useState(false);
 
     /**
      * handles the connection of a new family after invitation
@@ -16,6 +17,7 @@ export default function DialogConnect() {
      */
     async function handleFamilyConnection(e) {
         e.preventDefault();
+        setIsConnecting(true);
         const validCode = await checkInvitationCode(code);
 
         if (validCode) {
@@ -25,6 +27,7 @@ export default function DialogConnect() {
             setError('Der Einladungscode ist ungültig oder abgelaufen. Bitte ein Familienmitglied dich erneut einzuladen.');
         }
         handleCloseDialog();
+        setIsConnecting(false);
     }
 
     /**
@@ -65,8 +68,12 @@ export default function DialogConnect() {
                             <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                                 Abbrechen
                             </button>
-                            <button type="submit" className="btn btn-primary" disabled={code === ''}>
-                                Verbinden
+                            <button type="submit" className="btn btn-primary width-108" disabled={code === '' || isConnecting}>
+                                {isConnecting ? (
+                                    <span className="spinner-border spinner-border-small" aria-hidden="true"></span>
+                                ) : (
+                                    <span role="status">Verbinden</span>
+                                )}
                             </button>
                         </div>
                     </form>

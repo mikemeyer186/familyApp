@@ -212,7 +212,7 @@ export default function Family() {
                                 })}
                                 {familyManagement.invited.length === 0 && <span className="text-center">Keine offenen Einladungen</span>}
                                 <div className="member-action mt-3">
-                                    <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')} disabled={isGuest}>
+                                    <button type="button" className="btn btn-primary" onClick={() => openDialog('invitationRef')} disabled={false}>
                                         Familienmitglied einladen
                                     </button>
                                 </div>

@@ -98,7 +98,7 @@ function UserPovider({ children }) {
         const defaultSettings = defaultUserSettings;
         const defaultFamilyName = 'Meine Familie';
         const defaultManagement = { invited: [], name: defaultFamilyName, member: [userID], id: newFamilyID };
-        const defaultUserProfile = { id: userID, name: username, photo: '' };
+        const defaultUserProfile = { id: userID, name: username, photo: '', created: new Date() };
         let newUser = user;
         newUser.displayName = username;
         setActiveUser(newUser);
@@ -297,7 +297,7 @@ function UserPovider({ children }) {
                     } else {
                         navigate('app/dashboard?page=Dashboard');
                     }
-                }, 2000);
+                }, 3000);
             } else {
                 setLoading(false);
                 setLoggedIn(false);
