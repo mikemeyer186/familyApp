@@ -13,6 +13,7 @@ Frameworks, Technologies and Libraries:
 - Vite
 - VitePWA
 - Firebase
+- Google Cloud Functions
 - JavaScript
 - SASS/SCSS
 - Bootstrap
