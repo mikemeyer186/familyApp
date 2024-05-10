@@ -3,6 +3,7 @@ import { useUser } from '../../contexts/userContext';
 import { deletePromptInFirestore, addChatInHistory, loadUserDataFromFirestore } from '../../services/firestore';
 import TypingLoader from '../global/typingLoader';
 import AssistantPrompt from './assistantPrompt';
+import ReactMarkdown from 'react-markdown';
 
 export default function AssistantChat({ chatHistory }) {
     const { familyID, familyManagement } = useUser();
@@ -98,7 +99,11 @@ export default function AssistantChat({ chatHistory }) {
                                     <TypingLoader />
                                 </div>
                             )}
-                            {chat.status.state === 'COMPLETED' && <div className="chat-response-text">{chat.response}</div>}
+                            {chat.status.state === 'COMPLETED' && (
+                                <div className="chat-response-text">
+                                    <ReactMarkdown>{chat.response}</ReactMarkdown>
+                                </div>
+                            )}
                             {chat.status.state === 'ERROR' && (
                                 <div className="chat-response-text">
                                     Es tut mir Leid, aber ich konnte deine Anfrage leider nicht beantworten. Gibt es etwas anderes bei dem ich dir
