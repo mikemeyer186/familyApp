@@ -5,7 +5,7 @@ An organizer app for families with many features such as calendar, journal, shop
 <br>
 ![familyApp_desktop](https://github.com/mikemeyer186/familyApp/assets/112903209/325dd452-695a-4da2-ac77-70c1903146b9)
 <br>
-![familyApp_mobile](https://github.com/mikemeyer186/familyApp/assets/112903209/33e322c0-3265-47f9-b05c-af82c747e8e9)
+![familyApp_mobile_](https://github.com/mikemeyer186/familyApp/assets/112903209/03f190b8-188e-497e-9303-b6017d8bc449)
 <br>
 <br>
 Frameworks, Technologies and Libraries:
