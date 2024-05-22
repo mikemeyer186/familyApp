@@ -9,7 +9,7 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['assets/fonts/*.ttf', 'assets/img/*.png', 'assets/img/*.webp', 'assets/icons/*.svg'],
             manifest: {
-                name: 'Family App',
+                name: 'familyApp',
                 short_name: 'familyApp',
                 display: 'standalone',
                 lang: 'de',
