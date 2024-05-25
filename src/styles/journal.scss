@@ -294,29 +294,40 @@
 
             .journal-searchbar {
                 outline: none;
-                width: 220px;
+                width: 210px;
                 border: $thin-border;
                 border-radius: $inner-radius;
 
                 &::placeholder {
                     color: $txt-light-grey;
+
+                    @media (max-width: $breakpoint-xxs) {
+                        font-size: 0.8rem;
+                    }
                 }
 
                 @media (max-width: $breakpoint-xxs) {
-                    width: 80%;
+                    width: 100%;
+                    padding-left: 2rem;
                 }
             }
 
-            .journal-csv-icon {
-                width: 42px;
-                height: 42px;
-                border-radius: 100%;
-                background-color: $logo-color-1;
-                border: 1px solid $logo-color-1;
-                flex-shrink: 0;
+            .journal-actions {
+                display: flex;
+                flex-direction: row;
 
-                &:hover {
-                    background-color: $logo-color-5;
+                .journal-csv-icon {
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 100%;
+                    background-color: $logo-color-1;
+                    border: 1px solid $logo-color-1;
+                    flex-shrink: 0;
+                    margin-left: 8px;
+
+                    &:hover {
+                        background-color: $logo-color-5;
+                    }
                 }
             }
         }
@@ -480,7 +491,8 @@
 }
 
 #journalNewRef,
-#journalEditRef {
+#journalEditRef,
+#journalTransferRef {
     #amount,
     #editAmount {
         text-align: center;
@@ -609,6 +621,35 @@
 
         @media (max-width: $breakpoint-xxs) {
             transform: translate(16px, -3px);
+        }
+    }
+
+    .fixed-costs-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 0px;
+
+        .fixed-costs-table {
+            padding: 32px 8px 8px 8px;
+            width: max-content;
+
+            .fixed-costs {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 64px;
+                margin-bottom: 4px;
+                border-bottom: $thin-border;
+
+                @media (max-width: $breakpoint-xxs) {
+                    gap: 16px;
+                }
+            }
+        }
+
+        .fixed-costs-empty {
+            text-align: center;
         }
     }
 }

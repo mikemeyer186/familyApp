@@ -12,6 +12,7 @@ function DialogProvider({ children }) {
     const journalNewRef = useRef();
     const journalEditRef = useRef();
     const journalDeleteRef = useRef();
+    const journalTransferRef = useRef();
     const listNewRef = useRef();
     const listEditRef = useRef();
     const listDeleteRef = useRef();
@@ -30,6 +31,7 @@ function DialogProvider({ children }) {
             journalNewRef,
             journalEditRef,
             journalDeleteRef,
+            journalTransferRef,
             listNewRef,
             listEditRef,
             listDeleteRef,

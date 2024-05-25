@@ -12,6 +12,7 @@ import DialogPWAInstall from './dialogPWAInstall';
 import DialogInvitation from '../profile/dialogInvitation';
 import DialogConnect from '../profile/dialogConnect';
 import DialogCreate from '../profile/dialogCreate';
+import DialogTransferData from '../journal/dialogTransferData';
 
 export default function Dialogs() {
     return (
@@ -24,6 +25,7 @@ export default function Dialogs() {
             <DialogNewData />
             <DialogEditData />
             <DialogDeleteData />
+            <DialogTransferData />
             <DialogNewList />
             <DialogEditList />
             <DialogDeleteList />
