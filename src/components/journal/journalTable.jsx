@@ -182,13 +182,14 @@ export default function JournalTable() {
                     <div className="journal-payments-empty">
                         <p>Buche Belege mit dem Button &quot;Neuer Beleg&quot; oder übertrage Fixkosten aus dem letzten Monat</p>
                         <Button
-                            className="journal-csv-icon"
+                            className="btn btn-primary"
                             type="button"
                             onClick={() => openDialog('journalTransferRef')}
                             tooltip="Fixkosten übertragen"
                             tooltipOptions={{ position: 'left' }}
                         >
-                            <img src="/assets/icons/journals.svg" alt="Übertragen" />
+                            <span>Übertragen</span>
+                            <img className="ms-2" src="/assets/icons/journals.svg" alt="Übertragen" />
                         </Button>
                     </div>
                 </>

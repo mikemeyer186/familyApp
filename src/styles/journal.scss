@@ -315,6 +315,20 @@
             .journal-actions {
                 display: flex;
                 flex-direction: row;
+
+                .journal-csv-icon {
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 100%;
+                    background-color: $logo-color-1;
+                    border: 1px solid $logo-color-1;
+                    flex-shrink: 0;
+                    margin-left: 8px;
+
+                    &:hover {
+                        background-color: $logo-color-5;
+                    }
+                }
             }
         }
 
@@ -472,20 +486,6 @@
                     opacity: 0.4;
                 }
             }
-        }
-    }
-
-    .journal-csv-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 100%;
-        background-color: $logo-color-1;
-        border: 1px solid $logo-color-1;
-        flex-shrink: 0;
-        margin-left: 8px;
-
-        &:hover {
-            background-color: $logo-color-5;
         }
     }
 }

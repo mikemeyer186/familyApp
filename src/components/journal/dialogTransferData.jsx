@@ -80,13 +80,13 @@ export default function DialogTransferData() {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5">Fixkosten kopieren</h1>
+                        <h1 className="modal-title fs-5">Fixkosten übertragen</h1>
                         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseDialog}></button>
                     </div>
                     <div className="modal-body">
                         <p>
-                            Wähle aus, von welchem Monat du die Fixkosten übernehmen möchtest. Die Fixkosten werden in den aktuellen Monat kopiert und
-                            können anschließend geändert werden.
+                            Wähle aus, von welchem Monat du die Fixkosten übernehmen möchtest. Die hier angezeigten Fixkosten werden in den aktuell
+                            ausgewählten Monat im Haushaltsbuch übertragen und können dann angepasst werden.
                         </p>
                         <div className="fixed-costs-wrapper">
                             <div className="form-input-group">
