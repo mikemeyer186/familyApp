@@ -1,13 +1,16 @@
 import { useRef, useState } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
+import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { useJournal } from '../../contexts/journalContext';
+import { useDialog } from '../../contexts/dialogContext';
 import JournalTableHeader from './journalTableHeader';
 import JournalTableExpansion from './journalTableExpansion';
 
 export default function JournalTable() {
     const { activeJournal, expandedRows, setExpansionData, setExpandedRows } = useJournal();
+    const { openDialog } = useDialog();
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -175,7 +178,20 @@ export default function JournalTable() {
                     ></Column>
                 </DataTable>
             ) : (
-                <div className="journal-payments-empty">Es wurden noch keine Belege gebucht</div>
+                <>
+                    <div className="journal-payments-empty">
+                        <p>Buche Belege mit dem Button &quot;Neuer Beleg&quot; oder übertrage Fixkosten aus dem letzten Monat</p>
+                        <Button
+                            className="journal-csv-icon"
+                            type="button"
+                            onClick={() => openDialog('journalTransferRef')}
+                            tooltip="Fixkosten übertragen"
+                            tooltipOptions={{ position: 'left' }}
+                        >
+                            <img src="/assets/icons/journals.svg" alt="Übertragen" />
+                        </Button>
+                    </div>
+                </>
             )}
         </div>
     );
