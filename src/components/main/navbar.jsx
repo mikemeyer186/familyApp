@@ -65,9 +65,7 @@ export default function Navbar() {
     async function handlePWAInstall() {
         if (deferredPrompt.current) {
             deferredPrompt.current.prompt();
-
             const choice = await deferredPrompt.current.userChoice;
-            console.log(choice);
 
             if (choice === 'accepted') {
                 deferredPrompt.current = null;
