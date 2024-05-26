@@ -2,27 +2,40 @@ import { useState } from 'react';
 import { useDialog } from '../../contexts/dialogContext';
 import { useJournal } from '../../contexts/journalContext';
 import { useUser } from '../../contexts/userContext';
-import { useAlert } from '../../contexts/alertContext';
 import months from '../../data/months';
 
 export default function DialogTransferData() {
     const date = new Date();
     const { dialogs, closeDialog } = useDialog();
-    const { journals } = useJournal();
-    const { activeYears } = useUser();
+    const { journals, selectedJournalId, addMultiplePayments } = useJournal();
+    const { activeUser, activeYears } = useUser();
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
-    const selectedJournalId = `${selectedYear}-${selectedMonth}`;
-    const filteredFixedCosts = setJournalData(selectedJournalId);
+    const selectedFixedCostsId = `${selectedYear}-${selectedMonth}`;
+    const filteredFixedCosts = setJournalData(selectedFixedCostsId);
     const defaultYears = activeYears;
     const defaultMonths = months;
     const convertedMonth = months[selectedMonth - 1];
 
     /**
-     * handles the transfer of fixed costs
+     * handles the transfer of fixed costs to actual selected month
      */
     function handleTransferData() {
-        console.log('transfer');
+        let transferCosts = [];
+
+        filteredFixedCosts.map((fixedCosts) => {
+            fixedCosts = {
+                ...fixedCosts,
+                date: new Date().toISOString(),
+                id: crypto.randomUUID(),
+                month: date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1),
+                user: activeUser.displayName,
+                year: date.getFullYear(),
+            };
+            transferCosts = [...transferCosts, fixedCosts];
+        });
+        addMultiplePayments(transferCosts);
+        closeDialog('journalTransferRef');
     }
 
     /**
@@ -72,8 +85,8 @@ export default function DialogTransferData() {
                     </div>
                     <div className="modal-body">
                         <p>
-                            Wähle aus, von welchem Monat du die Fixkosten übernehmen möchtest. Die Fixkosten werden dann in den aktuellen Monat
-                            kopiert und können dann geändert werden.
+                            Wähle aus, von welchem Monat du die Fixkosten übernehmen möchtest. Die Fixkosten werden in den aktuellen Monat kopiert und
+                            können anschließend geändert werden.
                         </p>
                         <div className="fixed-costs-wrapper">
                             <div className="form-input-group">
@@ -140,7 +153,12 @@ export default function DialogTransferData() {
                         <button type="button" className="btn btn-secondary" onClick={handleCloseDialog}>
                             Abbrechen
                         </button>
-                        <button type="button" className="btn btn-primary" onClick={handleTransferData}>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={handleTransferData}
+                            disabled={selectedJournalId === selectedFixedCostsId || filteredFixedCosts.length === 0}
+                        >
                             Kopieren
                         </button>
                     </div>

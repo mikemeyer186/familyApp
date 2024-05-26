@@ -42,6 +42,16 @@ function JournalProvider({ children }) {
     }
 
     /**
+     * adds multiple merged payments to firestore (actual selected month)
+     * @param {array} newPayments - new payments to add
+     */
+    async function addMultiplePayments(newPayments) {
+        const payment = [...newPayments, ...activePayment];
+        await addPaymentInFirestore(familyID, payment, selectedJournalId);
+        setSuccess('Die Belege wurden erfolgreich übertragen!');
+    }
+
+    /**
      * updates payment in firestore
      * @param {array} newPayment - edited payment
      * @param {string} journalId - id of journal to add payment to (format: YYYY-MM)
@@ -187,6 +197,7 @@ function JournalProvider({ children }) {
                 setJournals,
                 setIsJournalLoaded,
                 addNewPayment,
+                addMultiplePayments,
                 editPayment,
                 addEditedPayment,
                 setNewActivePayment,
