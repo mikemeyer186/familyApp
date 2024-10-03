@@ -10,7 +10,7 @@ export default function DialogTransferData() {
     const { journals, selectedJournalId, addMultiplePayments } = useJournal();
     const { activeUser, activeYears } = useUser();
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1));
+    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
     const selectedFixedCostsId = `${selectedYear}-${selectedMonth}`;
     const filteredFixedCosts = setJournalData(selectedFixedCostsId);
     const defaultYears = activeYears;
