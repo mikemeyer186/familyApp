@@ -12,7 +12,7 @@ function JournalProvider({ children }) {
     const [journals, setJournals] = useState([]);
     const [newActivePayment, setNewActivePayment] = useState([]);
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    const [selectedMonth, setSelectedMonth] = useState((date.getMonth() + 1).toString().padStart(2, '0'));
     const [isJournalLoaded, setIsJournalLoaded] = useState(false);
     const [expansionData, setExpansionData] = useState({});
     const [expandedRows, setExpandedRows] = useState(null);

@@ -105,11 +105,10 @@ export default function DialogNewData() {
      * @param {string} monthName - selected month from dropdown
      */
     function handleMonthSelection(monthName) {
-        let month = months.indexOf(monthName) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        setSelectedMonth(month);
+        const monthNumber = months.indexOf(monthName) + 1;
+        const monthString = monthNumber.toString().padStart(2, '0');
+
+        setSelectedMonth(monthString);
     }
 
     /**

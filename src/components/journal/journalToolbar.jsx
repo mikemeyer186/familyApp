@@ -17,11 +17,10 @@ export default function JournalToolbar() {
      * @param {string} month - month from dropdown
      */
     function handleChangeMonth(month) {
-        month = months.indexOf(month) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        setSelectedMonth(month);
+        const monthNumber = months.indexOf(month) + 1;
+        const monthString = monthNumber.toString().padStart(2, '0');
+
+        setSelectedMonth(monthString);
     }
 
     return (

@@ -7,15 +7,15 @@ import months from '../../data/months';
 export default function DialogTransferData() {
     const date = new Date();
     const { dialogs, closeDialog } = useDialog();
-    const { journals, selectedJournalId, addMultiplePayments } = useJournal();
+    const { journals, selectedJournalId, addMultiplePayments, selectedMonth } = useJournal();
     const { activeUser, activeYears } = useUser();
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-    const selectedFixedCostsId = `${selectedYear}-${selectedMonth}`;
+    const [selectedSourceMonth, setSelectedSourceMonth] = useState((date.getMonth() + 1).toString().padStart(2, '0'));
+    const selectedFixedCostsId = `${selectedYear}-${selectedSourceMonth}`;
     const filteredFixedCosts = setJournalData(selectedFixedCostsId);
     const defaultYears = activeYears;
     const defaultMonths = months;
-    const convertedMonth = months[selectedMonth - 1];
+    const convertedMonth = months[selectedSourceMonth - 1];
 
     /**
      * handles the transfer of fixed costs to actual selected month
@@ -28,7 +28,7 @@ export default function DialogTransferData() {
                 ...fixedCosts,
                 date: new Date().toISOString(),
                 id: crypto.randomUUID(),
-                month: date.getMonth() + 1 < 10 && '0' + (date.getMonth() + 1),
+                month: selectedMonth,
                 user: activeUser.displayName,
                 year: date.getFullYear(),
             };
@@ -68,11 +68,10 @@ export default function DialogTransferData() {
      * @param {string} month - month from dropdown
      */
     function handleChangeMonth(month) {
-        month = months.indexOf(month) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        setSelectedMonth(month);
+        const monthNumber = months.indexOf(month) + 1;
+        const monthString = monthNumber.toString().padStart(2, '0');
+
+        setSelectedSourceMonth(monthString);
     }
 
     return (

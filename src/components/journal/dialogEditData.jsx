@@ -155,12 +155,11 @@ export default function DialogEditData() {
      * @param {string} monthName - selected month in the form
      */
     function handleMonthSelection(monthName) {
-        let month = months.indexOf(monthName) + 1;
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        setSelectedMonth(month);
-        setNewPaymentMonth(month, selectedYear);
+        const monthNumber = months.indexOf(monthName) + 1;
+        const monthString = monthNumber.toString().padStart(2, '0');
+
+        setSelectedMonth(monthString);
+        setNewPaymentMonth(monthString, selectedYear);
     }
 
     /**
