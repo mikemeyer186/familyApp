@@ -6,7 +6,7 @@ import AssistantPrompt from './assistantPrompt';
 import ReactMarkdown from 'react-markdown';
 
 export default function AssistantChat({ chatHistory }) {
-    const { familyID, familyManagement } = useUser();
+    const { familyID, familyManagement, isGuest } = useUser();
     const [memberData, setMemberData] = useState([]);
     const endOfMessagesRef = useRef(null);
     const familyImages = memberData.reduce(
@@ -72,7 +72,15 @@ export default function AssistantChat({ chatHistory }) {
             <div className="chat-response">
                 <img className="chat-response-image" src="/assets/img/assistant_small.png" alt="AI" />
                 <div className="chat-response-text">
-                    Hi, wie kann ich dir helfen? Du kannst mich z. B. nach leckeren Rezepten fragen oder nach Ideen für spannende Aktivitäten.
+                    {isGuest ? (
+                        <div>
+                            Es tut mir Leid, aus Sicherheitsgründen steht der Assistent in der Testversion nicht zur Verfügung.
+                        </div>
+                    ) : (
+                        <div>
+                            Hi, wie kann ich dir helfen? Du kannst mich z. B. nach leckeren Rezepten fragen oder nach Ideen für spannende Aktivitäten.
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -106,8 +114,7 @@ export default function AssistantChat({ chatHistory }) {
                             )}
                             {chat.status.state === 'ERROR' && (
                                 <div className="chat-response-text">
-                                    Es tut mir Leid, aber ich konnte deine Anfrage leider nicht beantworten. Gibt es etwas anderes bei dem ich dir
-                                    helfen kann?
+                                    Es tut mir Leid, leider kann ich dir bei dieser Anfrage nicht weiterhelfen. Bitte versuche es später erneut.
                                 </div>
                             )}
                         </div>

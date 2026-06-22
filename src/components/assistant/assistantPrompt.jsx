@@ -3,7 +3,7 @@ import { useUser } from '../../contexts/userContext';
 import { addPromptInFirestore } from '../../services/firestore';
 
 export default function AssistantPrompt() {
-    const { familyID, activeUser } = useUser();
+    const { familyID, activeUser, isGuest } = useUser();
     const [prompt, setPrompt] = useState('');
 
     /**
@@ -30,9 +30,10 @@ export default function AssistantPrompt() {
                     placeholder="Stelle eine Frage..."
                     value={prompt || ''}
                     onChange={(event) => setPrompt(event.target.value)}
+                    disabled={isGuest}
                     required
                 />
-                <button className="btn btn-primary" type="submit" id="addListItemButton" disabled={prompt === ''}>
+                <button className="btn btn-primary" type="submit" id="addListItemButton" disabled={prompt === '' || isGuest}>
                     <img src="/assets/icons/send.svg" alt="Senden" />
                 </button>
             </div>

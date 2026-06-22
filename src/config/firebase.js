@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
@@ -15,7 +15,9 @@ const firebaseConfig = {
 
 // Initializing imported Firebase apps
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
 const dbInvitations = getFirestore(app, 'invitations');
 const auth = getAuth(app);
 const storage = getStorage(app);
